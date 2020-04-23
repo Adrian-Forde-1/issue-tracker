@@ -1,0 +1,63 @@
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const groupSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  users: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
+  ],
+  projects: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'project',
+    },
+  ],
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+});
+
+groupSchema.pre('save', async function (next) {
+  try {
+    //Generate a bcrypt salt
+    const salt = await bcrypt.genSalt(10);
+
+    //Hash the current password
+    const hashedPassword = await bcrypt.hash(this.password, salt);
+
+    //Assign the current password to the hashed password
+    this.password = hashedPassword;
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+groupSchema.methods.isValidPassword = async function (newPassword) {
+  try {
+    return await bcrypt.compare(newPassword, this.password);
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+const GroupModel = mongoose.model('group', groupSchema);
+
+module.exports = GroupModel;

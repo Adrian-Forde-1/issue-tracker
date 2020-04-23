@@ -1,0 +1,35 @@
+{
+  "name": "bug_tracker",
+  "version": "1.0.0",
+  "description": "",
+  "engines": {
+    "node": "12.15.0",
+    "npm": "6.13.4"
+  },
+  "main": "server.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^5.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.7",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.3",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon server.js",
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "client": "cd client && npm start",
+    "dev": "concurrently -c 'red,blue' -n 'server,client'  \" nodemon server.js \" \" npm run client \"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install-client && npm run build"
+  },
+  "author": "Adrian Forde",
+  "license": "ISC"
+}
