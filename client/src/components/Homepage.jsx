@@ -16,13 +16,17 @@ function Homepage(props) {
           <div className="header-content">
             <div className="row">
               <div className="col-12">
-                <h1>Tractor</h1>
-                <h5>Bug Tracker</h5>
+                <h1>Bug Tracker</h1>
+                <h5>Made By Adrian Forde</h5>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Eveniet assumenda ex ipsum quia nostrum porro. Ex odio
-                  consequuntur nihil, voluptatum perspiciatis culpa. Facere eum
-                  assumenda iste, veritatis natus delectus dolor?
+                  With this bug tracker, you are able to create individual
+                  projects and add labels to the bugs that you create in each
+                  project. You are also able to create new labels and add notes
+                  to each bug as a way of keeping up to data with the progress
+                  being made to fix the bug. A bug can be set from new bug to
+                  work in progress to fixed as a way to indicated what stage the
+                  bug is in. There is a simple implementation of groups for
+                  multiple people to work together
                 </p>
                 <Link to="/login" className="call-to-action">
                   Get Started
