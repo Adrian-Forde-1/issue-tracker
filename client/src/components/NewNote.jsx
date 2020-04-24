@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+//Components
+import GoBack from './GoBack';
+
 //React Router DOM
 import { Link, withRouter } from 'react-router-dom';
 
@@ -59,6 +62,7 @@ class NewNote extends Component {
   render() {
     return (
       <div className="new-note">
+        <GoBack />
         <div className="container">
           <div className="auth-form">
             <h2>

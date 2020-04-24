@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { generateColor } from '../util/generateColor';
 import axios from 'axios';
 
+//Components
+import GoBack from './GoBack';
+
 //Redux
 import store from '../redux/store';
 
@@ -100,6 +103,7 @@ class EditLabel extends Component {
     };
     return (
       <div className="add-label">
+        <GoBack />
         <div className="container">
           <div className="auth-form">
             <h2>Edit Label</h2>

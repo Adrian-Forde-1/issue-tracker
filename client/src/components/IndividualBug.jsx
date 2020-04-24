@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 
 //Components
 import DeleteModal from './DeleteModal';
+import GoBack from './GoBack';
 
 //React Router DOM
 import { withRouter, Link } from 'react-router-dom';
@@ -80,6 +81,7 @@ function IndividualBug(props) {
 
   return (
     <div className="individual-bug-container">
+      <GoBack />
       {Object.keys(bug).length > 0 && (
         <div className="container">
           {props.errors !== null && props.errors['bug']

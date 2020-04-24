@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+//Components
+import GoBack from './GoBack';
+
 //Redux
 import { connect } from 'react-redux';
 
@@ -56,6 +59,7 @@ class CreateGroupProject extends Component {
   render() {
     return (
       <div className="form-container">
+        <GoBack />
         <div className="container">
           <div className="auth-form">
             <h2>Create Project</h2>

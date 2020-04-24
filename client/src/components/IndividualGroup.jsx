@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 
 //Components
 import SearchBar from './SearchBar';
+import GoBack from './GoBack';
 
 //React Router DOM
 import { Link } from 'react-router-dom';
@@ -44,6 +45,7 @@ function IndividualGroup(props) {
 
   return (
     <div className="group-container">
+      <GoBack />
       <div className="container">
         {props.errors !== null &&
           props.errors['project'] &&

@@ -25,6 +25,40 @@ a {
 
 //Global Start
 
+.go-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  i {
+    color: white;
+  }
+}
+
+.breadcrumbs {
+  position: absolute;
+  top: 20px;
+  left: 9%;
+  ul {
+    display: flex;
+    li {
+      list-style: none;
+      font-size: 16px;
+      padding: 0px 5px;
+
+      a {
+        font-size: 16px;
+        text-decoration: none;
+        color: white;
+      }
+    }
+  }
+}
+
+.breadcrumb-current-page {
+  color: red;
+}
+
 .item-row {
   display: grid;
   gap: 10px;

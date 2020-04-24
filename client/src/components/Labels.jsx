@@ -7,8 +7,9 @@ import { toast } from 'react-toastify';
 //React Router DOM
 import { Link } from 'react-router-dom';
 
-//Component
+//Components
 import LabelPreview from './LabelPreview';
+import GoBack from './GoBack';
 
 //Redux
 import { connect } from 'react-redux';
@@ -31,6 +32,7 @@ function Labels(props) {
   }, [props.projects]);
   return (
     <div className="labels">
+      <GoBack />
       <h2>Labels</h2>
       {props.errors !== null &&
         props.errors['label'] &&

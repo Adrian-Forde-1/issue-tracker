@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+//Components
+import GoBack from './GoBack';
+
 export class JoinGroup extends Component {
   constructor(props) {
     super(props);
@@ -41,6 +44,7 @@ export class JoinGroup extends Component {
   render() {
     return (
       <div className="form-container">
+        <GoBack />
         <div className="container">
           <div className="auth-form">
             <h2>Join Group</h2>

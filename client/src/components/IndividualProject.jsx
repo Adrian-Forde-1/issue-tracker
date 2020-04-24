@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import SearchBar from './SearchBar';
 import BugPreview from './BugPreview';
 import DeleteModal from './DeleteModal';
+import GoBack from './GoBack';
 
 //React Router DOM
 import { withRouter, Link } from 'react-router-dom';
@@ -60,9 +61,9 @@ function IndividualProject(props) {
         changeProject(response.data);
       });
   }, []);
-
   return (
     <div className="project-container">
+      <GoBack />
       <div className="container">
         {props.errors !== null &&
           props.errors['project'] &&

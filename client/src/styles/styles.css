@@ -22,6 +22,45 @@ a p {
   color: white;
 }
 
+.go-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+}
+
+.go-back i {
+  color: white;
+}
+
+.breadcrumbs {
+  position: absolute;
+  top: 20px;
+  left: 9%;
+}
+
+.breadcrumbs ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.breadcrumbs ul li {
+  list-style: none;
+  font-size: 16px;
+  padding: 0px 5px;
+}
+
+.breadcrumbs ul li a {
+  font-size: 16px;
+  text-decoration: none;
+  color: white;
+}
+
+.breadcrumb-current-page {
+  color: red;
+}
+
 .item-row {
   display: -ms-grid;
   display: grid;

@@ -23,7 +23,8 @@ import NewNote from './components/NewNote';
 import CreateGroupProject from './components/CreateGroupProject';
 import JoinGroup from './components/JoinGroup';
 import IsAuthenticated from './components/IsAuthenticated';
-import IsNotAuthenticated from './components/IsNotAuthenticated.jsx';
+// import Breadcrumbs from './components/Breadcrumbs';
+// import IsNotAuthenticated from './components/IsNotAuthenticated.jsx';
 
 //React Router Dom
 import { Route, withRouter, Switch } from 'react-router-dom';
@@ -32,17 +33,7 @@ import { Route, withRouter, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function App(props) {
-  const { user } = props;
-
-  // useEffect(() => {
-  //   if (
-  //     props.location.pathname === '/' ||
-  //     props.location.pathname === '/login' ||
-  //     (props.location.pathname === '/signup' && user !== null)
-  //   ) {
-  //     props.history.replace('/manager');
-  //   }
-  // }, [props.location.pathname]);
+  // sessionStorage.setItem('breadcrumbs', JSON.stringify([]));
 
   toast.configure({
     position: toast.POSITION.TOP_CENTER,
@@ -51,6 +42,7 @@ function App(props) {
   return (
     <div className="App">
       <ToastContainer />
+      {/* <Breadcrumbs /> */}
       <Switch>
         <Route exact path="/" component={Homepage} />
         <Route exact path="/login" component={Login} />
