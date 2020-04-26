@@ -33,7 +33,7 @@ module.exports = {
           ProjectModal.findById(projectId).exec(function (err, project) {
             //If error occured when fecthing project, notify user
             if (err) {
-              console.err(err);
+              console.error(err);
               error.bug = 'Error when updating bugs in project';
               return res.status(500).json(errors);
             }
@@ -46,7 +46,7 @@ module.exports = {
               function (err, project) {
                 //If error occured when updating project, notify user
                 if (err) {
-                  console.err(err);
+                  console.error(err);
                   error.project = 'Error when updating bugs in project';
                   return res.status(500).json(errors);
                 }
@@ -85,7 +85,7 @@ module.exports = {
         ) {
           //If error occured, notify user
           if (err) {
-            console.err(err);
+            console.error(err);
             error.bug = 'Error occured when updating bug';
             return res.status(500).json(errors);
           }
@@ -114,7 +114,7 @@ module.exports = {
       BugModel.findByIdAndDelete(bugId).exec(function (err, bug) {
         //If error occured, notify user
         if (err) {
-          console.err(err);
+          console.error(err);
           errors.bug = 'Error occured when deleting bug';
           return res.status(500).json(errors);
         }

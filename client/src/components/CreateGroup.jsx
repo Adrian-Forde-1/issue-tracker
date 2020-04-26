@@ -8,7 +8,10 @@ import GoBack from './GoBack';
 import { connect } from 'react-redux';
 
 //Actions
-import { setErrors } from '../redux/actions/userActions';
+import {
+  setErrors,
+  clearCurrentSectionAndId,
+} from '../redux/actions/userActions';
 
 class CreateGroup extends Component {
   constructor(props) {
@@ -49,17 +52,17 @@ class CreateGroup extends Component {
         }
       )
       .then(() => {
-        this.props.history.goBack();
+        this.props.clearCurrentSectionAndId();
       })
       .catch((error) => {
         this.props.setErrors(error.response.data);
-        this.props.history.goBack();
+        this.props.clearCurrentSectionAndId();
       });
   };
   render() {
     return (
-      <div className="form-container">
-        <GoBack />
+      <div className="form-container no-top-nav">
+        <GoBack section="" id="" />
         <div className="container">
           <div className="auth-form">
             <h2>Create Group</h2>
@@ -95,6 +98,7 @@ class CreateGroup extends Component {
 
 const mapDispatchToProps = {
   setErrors,
+  clearCurrentSectionAndId,
 };
 
 export default connect(null, mapDispatchToProps)(CreateGroup);

@@ -30,7 +30,7 @@ module.exports = {
           }).exec(function (err, user) {
             //Error occured? Notify user
             if (err) {
-              console.err(err);
+              console.error(err);
               errors.user = 'Error occured when adding user to group';
               return res.status(500).json(errors);
             }
@@ -59,7 +59,7 @@ module.exports = {
       GroupModel.findById(groupId).exec(function (err, group) {
         //If an error occured when fetching group, return it
         if (err) {
-          console.err(err);
+          console.error(err);
           errors.group = 'Opps! Something went wrong';
           return res.status(500).json(errors);
         }
@@ -75,7 +75,7 @@ module.exports = {
             function (err, group) {
               //Error occured? Notify User
               if (err) {
-                console.err(err);
+                console.error(err);
                 let errors = {};
                 errors.group =
                   'Something went wrong when updating group information';
@@ -94,7 +94,7 @@ module.exports = {
               }).exec(function (err, user) {
                 //If an error occured, notify the user
                 if (err) {
-                  console.err(err);
+                  console.error(err);
                   errors.group = 'Error occured when leaving group';
                   return res.status(500).json(errors);
                 }
@@ -156,7 +156,7 @@ module.exports = {
         function (err, group) {
           //If an error occured while updating group with new user, notify user
           if (err) {
-            console.err(err);
+            console.error(err);
             errors.group = 'Error occured when adding user to group';
             return res.status(500).json(errors);
           }
@@ -168,7 +168,7 @@ module.exports = {
           }).exec(function (err, user) {
             //If something went wrong when updating user with new group list, notify user
             if (err) {
-              console.err(err);
+              console.error(err);
               errors.user = 'Error occured when updating user with new groups';
               return res.status(500).json(errors);
             }
@@ -193,7 +193,7 @@ module.exports = {
       const groupId = req.params.groupId;
       GroupModel.findByIdAndDelete(groupId).exec(async function (err, group) {
         if (err) {
-          console.err(err);
+          console.error(err);
           errors.group = 'Error occured when leaving group';
           return res.status(500).jsno(errors);
         }
@@ -202,7 +202,7 @@ module.exports = {
         await UserModel.find({ groups: group._id }).exec(function (err, users) {
           //If an error occurs, return an error string
           if (err) {
-            console.err(err);
+            console.error(err);
             let errors = {};
             errors.user =
               'Error occured when getting all users that are in the group';
@@ -220,7 +220,7 @@ module.exports = {
               (err, user) => {
                 //If there was an error when updating the user groups, return an error string
                 if (err) {
-                  console.err(err);
+                  console.error(err);
                   let errors = {};
                   errors.project =
                     'Error occured when removing group from user';
@@ -238,7 +238,7 @@ module.exports = {
           ProjectModel.findByIdAndDelete(project).exec(function (err, project) {
             //Error occured, notify user
             if (err) {
-              console.err(err);
+              console.error(err);
               let errors = {};
               errors.user = 'Error occured when removing project from group';
               return res.status(500).json(errors);
@@ -261,7 +261,7 @@ module.exports = {
         .exec(function (err, group) {
           //If error occured, notify user
           if (err) {
-            console.err(err);
+            console.error(err);
             let errors = {};
             errors.group = 'Error occured when fetching group';
             return res.status(500).json(errors);
@@ -276,17 +276,17 @@ module.exports = {
     }
   },
   getGroup: (req, res) => {
-    if (req.params.groupId) {
+    if (req.body.groupId) {
       let errors = {};
-      const groupId = req.params.groupId;
+      const groupId = req.body.groupId;
       GroupModel.findById(groupId)
         .populate('projects')
         .populate('users')
         .exec(function (err, group) {
           //If something went wrong when fetching group, notify user
           if (err) {
-            console.err(err);
-            errors.group = 'Error occured when fetching group';
+            console.error(err);
+            errors.group = 'Error occured';
             return res.status(500).json(errors);
           }
 

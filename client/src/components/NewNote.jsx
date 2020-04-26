@@ -61,13 +61,10 @@ class NewNote extends Component {
   };
   render() {
     return (
-      <div className="new-note">
-        <GoBack />
+      <div className="form-container">
         <div className="container">
           <div className="auth-form">
-            <h2>
-              <Link to="/">New Note</Link>
-            </h2>
+            <h2>New Note</h2>
             <form onSubmit={this.handleSubmit}>
               <div className="form-group">
                 <label htmlFor="note">Note</label>

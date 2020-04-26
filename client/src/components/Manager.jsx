@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
 
+//Resources
+import bugLogoWhite from '../resources/Images/Bug_Logo_White.svg';
+
 //Tostify
 import { toast } from 'react-toastify';
 
 //Components
 import AllProjects from './AllProjects';
 import AllGroups from './AllGroups';
+import SearchBar from './SearchBar';
+import IndividualProject from './IndividualProject';
+import IndividualGroup from './IndividualGroup';
+import IndividualBug from './IndividualBug';
+import Labels from './Labels';
+import AddLabel from './AddLabel';
+import EditLabel from './EditLabel';
+import NewBug from './NewBug';
+import CreateProject from './CreateProject';
+import CreateGroup from './CreateGroup';
+import CreateGroupProject from './CreateGroupProject';
 
 //React Router Dom
 import { Link } from 'react-router-dom';
@@ -14,14 +28,20 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //Actions
-import { logoutUser, clearErrors } from '../redux/actions/userActions';
-import SearchBar from './SearchBar';
+import {
+  logoutUser,
+  clearErrors,
+  clearCurrentSectionAndId,
+  setCurrentSection,
+  setCurrentId,
+} from '../redux/actions/userActions';
 
 class Manager extends Component {
   constructor(props) {
     super(props);
 
     this.onChange = this.onChange.bind(this);
+    this.changeSectionAndId = this.changeSectionAndId.bind(this);
 
     this.state = {
       section: 'projects',
@@ -31,11 +51,11 @@ class Manager extends Component {
 
   componentDidMount() {
     if (this.props.user !== null) {
-      document.querySelector('#groups').classList.add('hide');
-      document.querySelector('#projects').classList.remove('hide');
-
-      document.querySelector('#project-section-btn').style.border =
-        '1px solid white';
+      this.props.clearCurrentSectionAndId();
+      document
+        .querySelector('#groups-btn')
+        .classList.remove('selected-section');
+      document.querySelector('#projects-btn').classList.add('selected-section');
     }
   }
 
@@ -45,128 +65,150 @@ class Manager extends Component {
     });
   };
 
+  changeSectionAndId(section, id) {
+    this.setState({
+      section: section,
+      id: id,
+    });
+  }
+
   render() {
     if (this.props.user) {
       return (
         <div className="manager">
-          <div className="container">
-            {this.props.errors !== null &&
-              this.props.errors['project'] &&
-              !toast.isActive('projecttoast') &&
-              toast(this.props.errors.project, {
-                toastId: 'projecttoast',
-                type: 'error',
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000,
-                onClose: () => {
-                  this.props.clearErrors();
-                },
-              })}
-            {this.props.errors !== null &&
-              this.props.errors['group'] &&
-              !toast.isActive('grouptoast') &&
-              toast(this.props.errors.group, {
-                toastId: 'grouptoast',
-                type: 'error',
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000,
-                onClose: () => {
-                  this.props.clearErrors();
-                },
-              })}
+          {this.props.errors !== null &&
+            this.props.errors['project'] &&
+            !toast.isActive('projecttoast') &&
+            toast(this.props.errors.project, {
+              toastId: 'projecttoast',
+              type: 'error',
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 2000,
+              onClose: () => {
+                this.props.clearErrors();
+              },
+            })}
+          {this.props.errors !== null &&
+            this.props.errors['group'] &&
+            !toast.isActive('grouptoast') &&
+            toast(this.props.errors.group, {
+              toastId: 'grouptoast',
+              type: 'error',
+              position: toast.POSITION.TOP_CENTER,
+              autoClose: 2000,
+              onClose: () => {
+                this.props.clearErrors();
+              },
+            })}
 
-            <div className="manager-nav">
-              <ul>
-                <li>
-                  <button
-                    id="project-section-btn"
-                    onClick={(e) => {
-                      document.querySelector(
-                        '#group-section-btn'
-                      ).style.border = 'none';
-                      e.target.style.border = '1px solid white';
+          <div className="manager-side-nav">
+            <Link to="/">
+              <img src={bugLogoWhite} alt="" />
+            </Link>
+            <ul>
+              <li
+                id="projects-btn"
+                onClick={() => {
+                  this.setState({
+                    section: 'projects',
+                  });
 
-                      document.querySelector('#groups').classList.add('hide');
-                      document
-                        .querySelector('#projects')
-                        .classList.remove('hide');
+                  this.props.clearCurrentSectionAndId();
 
-                      this.setState({
-                        section: 'projects',
-                        search: '',
-                      });
-                    }}
-                  >
-                    Projects
-                  </button>
-                </li>
-                <li>
-                  <button
-                    id="group-section-btn"
-                    onClick={(e) => {
-                      document.querySelector(
-                        '#project-section-btn'
-                      ).style.border = 'none';
-                      e.target.style.border = '1px solid white';
+                  document
+                    .querySelector('#groups-btn')
+                    .classList.remove('selected-section');
+                  document
+                    .querySelector('#projects-btn')
+                    .classList.add('selected-section');
+                }}
+              >
+                Projects
+              </li>
+              <li
+                id="groups-btn"
+                onClick={() => {
+                  this.setState({
+                    section: 'groups',
+                  });
 
-                      document.querySelector('#projects').classList.add('hide');
-                      document
-                        .querySelector('#groups')
-                        .classList.remove('hide');
+                  this.props.clearCurrentSectionAndId();
 
-                      this.setState({
-                        section: 'groups',
-                        search: '',
-                      });
-                    }}
-                  >
-                    Groups
-                  </button>
-                </li>
-                {this.state.section === 'groups' ? (
-                  <div className="ml-auto d-flex">
-                    <li className="manager-action-btn">
-                      <Link to="/join/group">Join Group</Link>
-                    </li>
-                    <li className="manager-action-btn">
-                      <button
-                        onClick={() => {
-                          this.props.logoutUser(this.props.history);
-                        }}
-                      >
-                        Logout<i className="fas fa-door-open"></i>
-                      </button>
-                    </li>
+                  document
+                    .querySelector('#projects-btn')
+                    .classList.remove('selected-section');
+                  document
+                    .querySelector('#groups-btn')
+                    .classList.add('selected-section');
+                }}
+              >
+                Groups
+              </li>
+            </ul>
+          </div>
+          <div className="manager-content">
+            {this.props.currentSection === '' && (
+              <SearchBar
+                onChange={this.onChange}
+                search={this.state.search}
+                extraClass={'manager-search'}
+              />
+            )}
+            <div className="manager-section">
+              {this.state.section === 'projects' &&
+                this.props.currentSection === '' && (
+                  <div className="manager-section-container">
+                    <h3>Projects</h3>
+                    <AllProjects
+                      search={this.state.search}
+                      changeSectionAndId={this.changeSectionAndId}
+                    />
                   </div>
-                ) : (
-                  <li className="ml-auto manager-action-btn">
-                    <button
-                      onClick={() => {
-                        this.props.logoutUser(this.props.history);
-                      }}
-                    >
-                      Logout<i className="fas fa-door-open"></i>
-                    </button>
-                  </li>
                 )}
-              </ul>
-            </div>
-            <div className="manager-content">
-              <SearchBar onChange={this.onChange} search={this.state.search} />
-              <AllProjects search={this.state.search} />
-              <AllGroups search={this.state.search} />
+              {this.state.section === 'groups' &&
+                this.props.currentSection === '' && (
+                  <div className="manager-section-container">
+                    <h3>Groups</h3>
+                    <AllGroups search={this.state.search} />
+                  </div>
+                )}
+              {this.props.currentSection === 'project' &&
+                this.props.currentId !== '' && <IndividualProject />}
+              {this.props.currentSection === 'group' &&
+                this.props.currentId !== '' && <IndividualGroup />}
+              {this.props.currentSection === 'bug' &&
+                this.props.currentId !== '' && <IndividualBug />}
+              {this.props.currentSection === 'project/labels' &&
+                this.props.currentId !== '' && <Labels />}
+              {this.props.currentSection === 'project/create' && (
+                <CreateProject />
+              )}
+              {this.props.currentSection === 'group/create' && <CreateGroup />}
+              {this.props.currentSection === 'group/create/project' &&
+                this.props.currentId !== '' && <CreateGroupProject />}
+              {this.props.currentSection === 'project/label/create' &&
+                this.props.currentId !== '' && <AddLabel />}
+              {this.props.currentSection === 'project/label/edit' &&
+                this.props.currentId !== '' && <EditLabel />}
+              {this.props.currentSection === 'project/bug/new' &&
+                this.props.currentId !== '' && <NewBug />}
             </div>
           </div>
-          <Link
-            to={
-              this.state.section === 'projects'
-                ? '/create/project'
-                : '/create/group'
-            }
-            className="action-btn"
-          >
-            <i className="fas fa-plus"></i>
-          </Link>
+          {this.props.currentSection === '' && (
+            <i
+              className="fas fa-plus-square action-btn"
+              onClick={() => {
+                if (this.state.section === 'projects') {
+                  this.props.setCurrentSection('project/create');
+                  this.props.setCurrentId('');
+                }
+                if (this.state.section === 'groups') {
+                  this.props.setCurrentSection('group/create');
+                  this.props.setCurrentId('');
+                }
+              }}
+            ></i>
+          )}
         </div>
       );
     } else {
@@ -178,11 +220,16 @@ class Manager extends Component {
 const mapDispatchToProps = {
   logoutUser,
   clearErrors,
+  clearCurrentSectionAndId,
+  setCurrentSection,
+  setCurrentId,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user.user,
   errors: state.user.errors,
+  currentSection: state.user.currentSection,
+  currentId: state.user.currentId,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Manager);

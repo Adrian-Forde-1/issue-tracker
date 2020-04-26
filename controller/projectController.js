@@ -58,7 +58,7 @@ module.exports = {
           }).exec(function (err, user) {
             //Error occured? Notify user
             if (err) {
-              console.err(err);
+              console.error(err);
               errors.user = 'Error occured when adding project to user';
               return res.status(500).json(errors);
             }
@@ -68,7 +68,7 @@ module.exports = {
               GroupModel.findById(groupId).exec(function (err, group) {
                 //Error occured? Notify user
                 if (err) {
-                  console.err(err);
+                  console.error(err);
                   errors.user = 'Error occured when adding project to group';
                   return res.status(500).json(errors);
                 }
@@ -80,7 +80,7 @@ module.exports = {
                 }).exec(function (err, group) {
                   //Error occured? Notify user
                   if (err) {
-                    console.err(err);
+                    console.error(err);
                     errors.user = 'Error occured when adding user to group';
                     return res.status(500).json(errors);
                   }
@@ -123,7 +123,7 @@ module.exports = {
         }).exec(function (err, project) {
           //If an error occured while updating project, notify user
           if (err) {
-            console.err(err);
+            console.error(err);
             errors.project = 'Error occured when updating project';
             return res.status(500).json(errors);
           }
@@ -162,7 +162,7 @@ module.exports = {
           GroupModel.findById(project.group).exec(function (err, group) {
             //Error occured? Notify user
             if (err) {
-              console.err(err);
+              console.error(err);
               errors.project = 'An Error occured';
               return res.status(500).json(errors);
             }
@@ -175,7 +175,7 @@ module.exports = {
               ) {
                 //If something went wrong when deleting project, notify user
                 if (err) {
-                  console.err(err);
+                  console.error(err);
                   errors.project = 'Error occured when deleting project';
                   return res.status(500).json(errors);
                 }
@@ -183,7 +183,7 @@ module.exports = {
                 GroupModel.findById(project.group).exec(function (err, group) {
                   //Error occured? Notify user
                   if (err) {
-                    console.err(err);
+                    console.error(err);
                     errors.project =
                       'An Error occured when removing project from group';
                     return res.status(500).json(errors);
@@ -199,7 +199,7 @@ module.exports = {
                   }).exec(function (err, group) {
                     //Error occured? Notify user
                     if (err) {
-                      console.err(err);
+                      console.error(err);
                       errors.project =
                         'An Error occured when removing project from group';
                       return res.status(500).json(errors);
@@ -227,7 +227,7 @@ module.exports = {
             ) {
               //If something went wrong when deleting project, notify user
               if (err) {
-                console.err(err);
+                console.error(err);
                 errors.project = 'Error occured';
                 return res.status(500).json(errors);
               }
@@ -261,7 +261,7 @@ module.exports = {
         .exec(function (err, project) {
           //If something went wrong when looking for project, notify user
           if (err) {
-            console.err(err);
+            console.error(err);
             errors.project = 'Error occured when fetching project';
             return res.status(500).json(errors);
           }
@@ -275,7 +275,9 @@ module.exports = {
     let errors = {};
     const userId = req.user._id;
     //Find all projects created by a certain user
-    ProjectModel.find({ $and: [{ createdBy: userId }, { group: null }] })
+    ProjectModel.find({
+      $and: [{ createdBy: userId }, { group: null }, { archived: false }],
+    })
       .populate('bugs')
       .exec(function (err, projects) {
         //If something went wrong when fetching projects, notify user
@@ -298,7 +300,7 @@ module.exports = {
         ProjectModel.findById(projectId).exec(function (err, project) {
           //If error occured when fetching project, notfiy user
           if (err) {
-            console.err(err);
+            console.error(err);
             errors.project = 'Error occured when fetching project';
             return res.status(500).json(errors);
           }
@@ -322,7 +324,7 @@ module.exports = {
             function (err, project) {
               //If error occured when updating project labels, notfiy user
               if (err) {
-                console.err(err);
+                console.error(err);
                 errors.project = 'Error occured when updating project labels';
                 return res.status(500).json(errors);
               }
@@ -354,7 +356,7 @@ module.exports = {
         ProjectModel.findById(projectId).exec(function (err, project) {
           //If error occured when fetching project, notfiy user
           if (err) {
-            console.err(err);
+            console.error(err);
             errors.project = 'Error occured when fetching project';
             return res.status(500).json(errors);
           }
@@ -368,7 +370,7 @@ module.exports = {
             function (err, project) {
               //If error occured when updating project labels, notfiy user
               if (err) {
-                console.err(err);
+                console.error(err);
                 errors.project = 'Error occured when updating project labels';
                 return res.status(500).json(errors);
               }
@@ -400,7 +402,7 @@ module.exports = {
         ProjectModel.findById(projectId).exec(function (err, project) {
           //If error occured when fetching project, notfiy user
           if (err) {
-            console.err(err);
+            console.error(err);
             errors.project = 'Error occured when fetching project';
             return res.status(500).json(errors);
           }
@@ -424,7 +426,7 @@ module.exports = {
           }).exec(function (err, project) {
             //If error occured when updating project labels, notfiy user
             if (err) {
-              console.err(err);
+              console.error(err);
               errors.project = 'Error occured when updating project labels';
               return res.status(500).json(errors);
             }
@@ -442,6 +444,74 @@ module.exports = {
     } else {
       let errors = {};
       errors.project = 'Opps! Something went wrong';
+      return res.status(400).json(errors);
+    }
+  },
+  addToArchive: (req, res) => {
+    if (req.params.projectId) {
+      let errors = {};
+      let messages = {};
+      const projectId = req.params.projectId;
+
+      ProjectModel.findById(projectId).exec(function (err, project) {
+        //Error occrued? Notify User
+        if (err) {
+          errors.project = 'Error occured';
+          return res.status(500).json(errors);
+        }
+
+        //Everything went well, add project to archive
+        ProjectModel.findByIdAndUpdate(projectId, { archive: true }).exec(
+          function (err, project) {
+            //Error occrued? Notify User
+            if (err) {
+              errors.project = 'Error occured';
+              return res.status(500).json(errors);
+            }
+
+            //Everything went well, notify user
+            messages.project = 'Project successfully archived';
+            return res.json(messages);
+          }
+        );
+      });
+    } else {
+      let errors = {};
+      errors.project = 'Error occured';
+      return res.status(400).json(errors);
+    }
+  },
+  removeFromArchive: (req, res) => {
+    if (req.params.projectId) {
+      let errors = {};
+      let messages = {};
+      const projectId = req.params.projectId;
+
+      ProjectModel.findById(projectId).exec(function (err, project) {
+        //Error occrued? Notify User
+        if (err) {
+          errors.project = 'Error occured';
+          return res.status(500).json(errors);
+        }
+
+        //Everything went well, remove project from archive
+        ProjectModel.findByIdAndUpdate(projectId, { archive: false }).exec(
+          function (err, project) {
+            //Error occrued? Notify User
+            if (err) {
+              errors.project = 'Error occured';
+              return res.status(500).json(errors);
+            }
+
+            //Everything went well, notify user
+            messages.project = 'Project successfully removed from archived';
+            return res.json(messages);
+          }
+        );
+      });
+    } else {
+      let errors = {};
+      errors.project = 'Error occured';
       return res.status(400).json(errors);
     }
   },

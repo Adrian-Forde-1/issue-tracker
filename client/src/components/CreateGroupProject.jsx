@@ -8,7 +8,7 @@ import GoBack from './GoBack';
 import { connect } from 'react-redux';
 
 //Actions
-import { setErrors } from '../redux/actions/userActions';
+import { setErrors, setCurrentSection } from '../redux/actions/userActions';
 
 class CreateGroupProject extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class CreateGroupProject extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const groupId = this.props.match.params.groupId;
+    const groupId = this.props.currentId;
 
     const project = {
       name: this.state.name,
@@ -49,17 +49,17 @@ class CreateGroupProject extends Component {
         }
       )
       .then(() => {
-        this.props.history.goBack();
+        this.props.setCurrentSection('group');
       })
       .catch((error) => {
         this.props.setErrors(error.response.data);
-        this.props.history.goBack();
+        this.props.setCurrentSection('group');
       });
   };
   render() {
     return (
-      <div className="form-container">
-        <GoBack />
+      <div className="form-container no-top-nav">
+        <GoBack section="group" id={this.props.currentId} />
         <div className="container">
           <div className="auth-form">
             <h2>Create Project</h2>
@@ -96,6 +96,11 @@ class CreateGroupProject extends Component {
 
 const mapDispatchToProps = {
   setErrors,
+  setCurrentSection,
 };
 
-export default connect(null, mapDispatchToProps)(CreateGroupProject);
+const mapStateToProps = (state) => ({
+  currentId: state.user.currentId,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupProject);

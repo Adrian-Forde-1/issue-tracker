@@ -24,7 +24,7 @@ module.exports = {
           BugModel.findById(bugId).exec(function (err, bug) {
             //If something went wrong when fecthing bug, notify user,
             if (err) {
-              console.err(err);
+              console.error(err);
               errors.note = 'Error occured when adding note to bug';
               return res.this.status(500).json(error);
             }
@@ -37,7 +37,7 @@ module.exports = {
               function (err, bug) {
                 //If something went wrong when updating bug, notify user,
                 if (err) {
-                  console.err(err);
+                  console.error(err);
                   errors.note = 'Error occured when adding note to bug';
                   return res.this.status(500).json(error);
                 }
@@ -68,7 +68,7 @@ module.exports = {
       NoteModel.findByIdAndDelete(noteId).exec(function (err, note) {
         //If something went wrong when deleting note, notify user
         if (err) {
-          console.err(err);
+          console.error(err);
           errors.note = 'Error occured when deleting note';
           return res.status(500).json(errors);
         }
@@ -77,7 +77,7 @@ module.exports = {
         BugModel.findById(note.bug).exec(function (err, bug) {
           //If something went wrong when fetching bug, notify user
           if (err) {
-            console.err(err);
+            console.error(err);
             errors.note = 'Error occured when removing note from bug';
             return res.status(500).json(errors);
           }
@@ -93,7 +93,7 @@ module.exports = {
             function (err, bug) {
               //If something went wrong when updating bug notes, notify user
               if (err) {
-                console.err(err);
+                console.error(err);
                 errors.note = 'Error occured when updating bug notes';
                 return res.status(500).json(errors);
               }
@@ -123,7 +123,7 @@ module.exports = {
         function (err, note) {
           //If error occured when updating note with edit, notify user
           if (err) {
-            console.err(err);
+            console.error(err);
             errors.note = 'Error occured when updating note with edit';
             return res.status(500).json(errors);
           }

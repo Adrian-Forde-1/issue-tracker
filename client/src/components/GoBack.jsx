@@ -1,19 +1,31 @@
 import React from 'react';
 
-//React Router DOM
-import { withRouter } from 'react-router-dom';
+//Redux
+import { connect } from 'react-redux';
+//Actions
+import { setCurrentSection, setCurrentId } from '../redux/actions/userActions';
 
 function GoBack(props) {
   return (
     <div
       className="go-back"
       onClick={() => {
-        props.history.goBack();
+        props.setCurrentSection(props.section);
+        props.setCurrentId(props.id || props.currentId);
       }}
     >
-      <i className="fas fa-arrow-left"></i>
+      <i className="fas fa-arrow-alt-circle-left"></i>
     </div>
   );
 }
 
-export default withRouter(GoBack);
+const mapStateToProps = (state) => ({
+  currentId: state.user.currentId,
+});
+
+const mapDispatchToProps = {
+  setCurrentSection,
+  setCurrentId,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GoBack);

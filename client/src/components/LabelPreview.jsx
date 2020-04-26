@@ -3,12 +3,14 @@ import axios from 'axios';
 
 //Redux
 import store from '../redux/store';
+import { connect } from 'react-redux';
 
 //Actiosn
 import { getUserProjects } from '../redux/actions/projectActions';
-
-//React Router DOM
-import { withRouter, Link } from 'react-router-dom';
+import {
+  setCurrentSection,
+  setExtraIdInfo,
+} from '../redux/actions/userActions';
 
 function LabelPreview(props) {
   const { label, index, projectId } = props;
@@ -26,7 +28,7 @@ function LabelPreview(props) {
       })
       .then(() => {
         store.dispatch(getUserProjects(localStorage.getItem('token')));
-        props.history.push(`/project/${projectId}/labels`);
+        props.setCurrentSection('project/labels');
       });
   };
   return (
@@ -35,12 +37,24 @@ function LabelPreview(props) {
         <p>{label.name}</p>
       </div>
 
-      <Link to={`/project/${projectId}/label/${label._id}/edit`}>
-        <i className="far fa-edit"></i>
-      </Link>
-      <i className="far fa-trash-alt" onClick={deleteLabel}></i>
+      <div className="label-preview-actions">
+        <i
+          className="far fa-edit"
+          onClick={() => {
+            props.setCurrentSection('project/label/edit');
+            props.setExtraIdInfo(label._id);
+          }}
+        ></i>
+
+        <i className="far fa-trash-alt" onClick={deleteLabel}></i>
+      </div>
     </div>
   );
 }
 
-export default withRouter(LabelPreview);
+const mapDispatchToProps = {
+  setCurrentSection,
+  setExtraIdInfo,
+};
+
+export default connect(null, mapDispatchToProps)(LabelPreview);

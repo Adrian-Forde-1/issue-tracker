@@ -4,19 +4,28 @@ import ReactDOM from 'react-dom';
 //Components
 import DeleteModal from './DeleteModal';
 
-//React Router DOM
-import { withRouter } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+//Redux
+import { connect } from 'react-redux';
+
+//Actions
+import { setCurrentId, setCurrentSection } from '../redux/actions/userActions';
 
 function GroupPreview(props) {
   const { group } = props;
   return (
     <div className="preview">
-      <Link to={`/group/${group._id}`}>
-        <h2>{group.name}</h2>
-        <br />
-        <p>{group.description}</p>
-      </Link>
+      {/* <Link to={`/group/${group._id}`}>
+        <h6>{group.name}</h6>
+      </Link> */}
+
+      <button
+        onClick={() => {
+          props.setCurrentSection('group');
+          props.setCurrentId(group._id);
+        }}
+      >
+        {group.name}
+      </button>
       <button
         className="delete-btn"
         onClick={() => {
@@ -35,4 +44,9 @@ function GroupPreview(props) {
   );
 }
 
-export default withRouter(GroupPreview);
+const mapDispatchToProps = {
+  setCurrentSection,
+  setCurrentId,
+};
+
+export default connect(null, mapDispatchToProps)(GroupPreview);

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-//React Router DOM
-import { withRouter } from 'react-router-dom';
-
 //Redux
 import store from '../redux/store';
+import { connect } from 'react-redux';
 
 //Actions
 import { getUserGroups } from '../redux/actions/groupActions';
@@ -18,7 +16,7 @@ function AllGroupProjects(props) {
   const [projects, changeProjects] = useState([]);
 
   useEffect(() => {
-    const groupId = props.match.params.groupId;
+    const groupId = props.currentId;
 
     axios
       .get(`/api/group/${groupId}`, {
@@ -36,15 +34,18 @@ function AllGroupProjects(props) {
   }, []);
 
   return (
-    <div className="item-row" id="projects">
+    <div className="projects-container" id="projects">
       {projects && projects.length > 0 && props.search === ''
-        ? projects.map((project) => (
-            <ProjectPreview project={project} key={project._id} />
-          ))
+        ? projects.map((project) => {
+            if (project.archived === false) {
+              return <ProjectPreview project={project} key={project._id} />;
+            }
+          })
         : projects.map((project) => {
             if (
               project.name.toLowerCase().indexOf(props.search.toLowerCase()) >
-              -1
+                -1 &&
+              project.archived === false
             )
               return <ProjectPreview project={project} key={project._id} />;
           })}
@@ -52,4 +53,8 @@ function AllGroupProjects(props) {
   );
 }
 
-export default withRouter(AllGroupProjects);
+const mapStateToProps = (state) => ({
+  currentId: state.user.currentId,
+});
+
+export default connect(mapStateToProps)(AllGroupProjects);

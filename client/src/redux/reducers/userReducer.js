@@ -5,6 +5,10 @@ import {
   CLEAR_MESSAGES,
   SET_ERRORS,
   CLEAR_ERRORS,
+  SET_CURRENT_SECTION,
+  SET_CURRENT_ID,
+  CLEAR_CURRENT_SECTION_AND_ID,
+  SET_EXTRA_ID_INFO,
 } from '../actions/types';
 
 const initialState = {
@@ -12,6 +16,9 @@ const initialState = {
   errors: {},
   messages: {},
   authenticated: false,
+  currentSection: '',
+  currentId: '',
+  extraIdInfo: '',
 };
 
 const userReducer = (state = initialState, action) => {
@@ -46,6 +53,29 @@ const userReducer = (state = initialState, action) => {
         ...state,
         errors: {},
       };
+    case SET_CURRENT_SECTION:
+      return {
+        ...state,
+        currentSection: action.payload,
+      };
+    case SET_CURRENT_ID:
+      return {
+        ...state,
+        currentId: action.payload,
+      };
+    case SET_EXTRA_ID_INFO:
+      return {
+        ...state,
+        extraIdInfo: action.payload,
+      };
+    case CLEAR_CURRENT_SECTION_AND_ID:
+      return {
+        ...state,
+        currentSection: '',
+        currentId: '',
+        extraIdInfo: '',
+      };
+
     case LOGOUT_USER:
       return initialState;
     default:

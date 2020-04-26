@@ -2,14 +2,18 @@ import React from 'react';
 
 function SearchBar(props) {
   return (
-    <input
-      type="text"
-      name="search"
-      value={props.search}
-      className="search"
-      placeholder="Search by name"
-      onChange={props.onChange}
-    />
+    <div className={`search ${props.extraClass}`}>
+      <span>
+        <i className="fas fa-search"></i>
+      </span>
+      <input
+        type="text"
+        name="search"
+        value={props.search}
+        placeholder="Search by name"
+        onChange={props.onChange}
+      />
+    </div>
   );
 }
 

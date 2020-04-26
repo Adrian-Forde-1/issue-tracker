@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 //React Router Dom
 import { Link } from 'react-router-dom';
@@ -6,43 +6,63 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function Homepage(props) {
-  useEffect(() => {
-    if (props.authenticated === true) props.history.replace('/manager');
-  });
-  if (props.authenticated === false) {
-    return (
-      <div className="homepage">
-        <div className="container">
-          <div className="header-content">
-            <div className="row">
-              <div className="col-12">
-                <h1>Bug Tracker</h1>
-                <h5>Made By Adrian Forde</h5>
-                <p>
-                  With this bug tracker, you are able to create individual
-                  projects and add labels to the bugs that you create in each
-                  project. You are also able to create new labels and add notes
-                  to each bug as a way of keeping up to data with the progress
-                  being made to fix the bug. A bug can be set from new bug to
-                  work in progress to fixed as a way to indicated what stage the
-                  bug is in. There is a simple implementation of groups for
-                  multiple people to work together
-                </p>
-                <Link to="/login" className="call-to-action">
-                  Get Started
-                </Link>
-              </div>
+  return (
+    <header>
+      <div className="container">
+        <div className="header-content">
+          <div className="row">
+            <div className="col-lg-6">
+              {props.authenticated === false ? (
+                <div>
+                  <div className="mt-5"></div>
+                  <h1>
+                    Managing bugs <br /> was <span>never easier</span>
+                  </h1>
+                  <p>
+                    Create, manage and document your progress on fixing those
+                    nasty bugs in your app. Cooperate with a team to solve
+                    problems at a faster pace
+                  </p>
+                  <div className="header-links">
+                    <Link to="/signup" className="main-header-link">
+                      Try for free <i className="fas fa-arrow-right"></i>
+                    </Link>
+                    <Link to="/signup">
+                      <span>or</span> Contact Us
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="mt-5"></div>
+                  <h1>
+                    Welcome
+                    <br /> <span>{props.user.username}</span>.
+                  </h1>
+                  <p>
+                    Hope your able to solve those troublesome bugs today. Wish
+                    you all the best.
+                  </p>
+                  <div className="header-links">
+                    <Link to="/manager" className="main-header-link">
+                      Manager
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="col-lg-6">
+              <div className="mt-5"></div>
             </div>
           </div>
         </div>
       </div>
-    );
-  } else {
-    return null;
-  }
+    </header>
+  );
 }
 
 const mapStateToProps = (state) => ({
+  user: state.user.user,
   authenticated: state.user.authenticated,
 });
 

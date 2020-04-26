@@ -8,6 +8,10 @@ import {
   STOP_LOADING_UI,
   SET_MESSAGES,
   CLEAR_MESSAGES,
+  SET_CURRENT_SECTION,
+  SET_CURRENT_ID,
+  SET_EXTRA_ID_INFO,
+  CLEAR_CURRENT_SECTION_AND_ID,
 } from './types';
 
 export const loginUser = (user, history) => (dispatch) => {
@@ -64,7 +68,7 @@ export const logoutUser = (history) => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
   dispatch({ type: LOGOUT_USER });
   localStorage.removeItem('token');
-  history.push('/login');
+  history.push('/');
 };
 
 export const setErrors = (error) => (dispatch) => {
@@ -83,7 +87,7 @@ const getUser = (history) => (dispatch) => {
       dispatch({ type: CLEAR_ERRORS });
       dispatch({ type: SET_USER, payload: response.data });
       dispatch({ type: STOP_LOADING_UI });
-      history.push('/manager');
+      history.push('/');
     })
     .catch((error) => {
       dispatch({ type: STOP_LOADING_UI });
@@ -96,4 +100,17 @@ export const clearErrors = () => (dispatch) => {
 };
 export const clearMessages = () => (dispatch) => {
   dispatch({ type: CLEAR_MESSAGES });
+};
+
+export const setCurrentSection = (section) => (dispatch) => {
+  dispatch({ type: SET_CURRENT_SECTION, payload: section });
+};
+export const setCurrentId = (id) => (dispatch) => {
+  dispatch({ type: SET_CURRENT_ID, payload: id });
+};
+export const setExtraIdInfo = (id) => (dispatch) => {
+  dispatch({ type: SET_EXTRA_ID_INFO, payload: id });
+};
+export const clearCurrentSectionAndId = () => (dispatch) => {
+  dispatch({ type: CLEAR_CURRENT_SECTION_AND_ID });
 };

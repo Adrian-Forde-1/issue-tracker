@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import moment from 'moment';
 
 //Tostify
 import { toast } from 'react-toastify';
@@ -9,20 +10,23 @@ import { toast } from 'react-toastify';
 import DeleteModal from './DeleteModal';
 import GoBack from './GoBack';
 
-//React Router DOM
-import { withRouter, Link } from 'react-router-dom';
-
 //Redux
 import { connect } from 'react-redux';
 
 //Actions
-import { setErrors, clearErrors } from '../redux/actions/userActions';
+import {
+  setErrors,
+  clearErrors,
+  setCurrentSection,
+  setCurrentId,
+} from '../redux/actions/userActions';
 
 function IndividualBug(props) {
   const [bug, setBug] = useState({});
+  const [comment, setComment] = useState('');
 
   useEffect(() => {
-    const bugId = props.match.params.bugId;
+    const bugId = props.currentId;
     axios
       .get(`/api/bug/${bugId}`, {
         headers: { Authorization: localStorage.getItem('token') },
@@ -32,7 +36,8 @@ function IndividualBug(props) {
       })
       .catch((error) => {
         props.setErrors(error.response.data);
-        props.history.goBack();
+        props.setCurrentSection('project');
+        props.setCurrentId(bug.project.toString());
       });
   }, []);
 
@@ -75,15 +80,16 @@ function IndividualBug(props) {
       )
       .catch((error) => {
         props.setErrors(error.response.data);
-        props.history.goBack();
+        props.setCurrentSection('project');
+        props.setCurrentId(bug.project.toString());
       });
   };
 
   return (
-    <div className="individual-bug-container">
-      <GoBack />
+    <div className="individual-container">
       {Object.keys(bug).length > 0 && (
-        <div className="container">
+        <div className="container p-t-20">
+          <GoBack section="project" id={bug.project.toString()} />
           {props.errors !== null && props.errors['bug']
             ? !toast.isActive('bugtoast') &&
               toast(props.errors.bug, {
@@ -106,17 +112,35 @@ function IndividualBug(props) {
                   props.clearErrors();
                 },
               })}
-          <h3>
-            Bug Name: <span>{bug.name}</span>
+          <h3 className="bug-title">
+            <span>{bug.name}</span>{' '}
+            {bug.createdBy._id.toString() === props.user._id.toString() && (
+              <i
+                className="far fa-trash-alt"
+                onClick={() => {
+                  const element = document.createElement('div');
+                  element.classList.add('modal-element');
+                  document.querySelector('#modal-root').appendChild(element);
+                  ReactDOM.render(
+                    <DeleteModal
+                      item={bug}
+                      type={'bug'}
+                      history={props.history}
+                    />,
+                    element
+                  );
+                }}
+              ></i>
+            )}
           </h3>
-          <p className="text-center bug-title">Description</p>
-          <p className="individual-bug-description">{bug.description}</p>
           <div className="bug-creation-date">
-            <span>Created By </span>
-            {bug.createdBy.username}
-            <span> On </span>
-            {bug.createdAt.slice(0, 10)}
+            Created By
+            <span> {bug.createdBy.username} </span>
+            <span> &middot; </span>
+            {moment(bug.createdAt).fromNow()}
           </div>
+          <p className="individual-bug-description">{bug.description}</p>
+
           <div
             className="individual-bug-status-container"
             id="individual-bug-status-container"
@@ -132,48 +156,79 @@ function IndividualBug(props) {
             </div>
           </div>
 
-          {bug.createdBy._id.toString() === props.user._id.toString() && (
-            <div>
-              <button
-                className="delete-bug"
-                onClick={() => {
-                  const element = document.createElement('div');
-                  element.classList.add('modal-element');
-                  document.querySelector('#modal-root').appendChild(element);
-                  ReactDOM.render(
-                    <DeleteModal
-                      item={bug}
-                      type={'bug'}
-                      history={props.history}
-                    />,
-                    element
-                  );
-                }}
-              >
-                <i className="far fa-trash-alt"></i>
-              </button>
-            </div>
-          )}
-
-          <h2 className="bug-notes-title">Notes</h2>
-          <Link to={`/bug/${bug._id}/note/new`} className="add-note">
+          <h2 className="bug-comments-title">Comments</h2>
+          {/* <Link to={`/bug/${bug._id}/note/new`} className="add-comment">
             <i className="fas fa-plus"></i>
-          </Link>
+          </Link> */}
+          <div className="add-comment-container">
+            <textarea
+              name="newComment"
+              id="new-comment"
+              cols="30"
+              rows="10"
+              maxLength="500"
+              value={comment}
+              placeholder="New Comment"
+              className="new-comment"
+              onChange={(e) => {
+                setComment(e.target.value);
+              }}
+            ></textarea>
+            <button
+              className="submit-comment"
+              onClick={() => {
+                const newNote = {
+                  note: comment,
+                  bug: bug._id,
+                };
+
+                const username = props.user.username;
+                axios
+                  .post(
+                    '/api/note',
+                    { note: newNote, bugId: bug._id, username: username },
+                    {
+                      headers: { Authorization: localStorage.getItem('token') },
+                    }
+                  )
+                  .then(() => {
+                    const bugId = props.currentId;
+                    axios
+                      .get(`/api/bug/${bugId}`, {
+                        headers: {
+                          Authorization: localStorage.getItem('token'),
+                        },
+                      })
+                      .then((response) => {
+                        setBug(response.data);
+                        setComment('');
+                      })
+                      .catch((error) => {
+                        props.setErrors(error.response.data);
+                        props.setCurrentSection('project');
+                        props.setCurrentId(bug.project.toString());
+                      });
+                  })
+                  .catch((error) => {
+                    props.setErrors(error.response.data);
+                    props.setCurrentSection('project');
+                    props.setCurrentId(bug.project.toString());
+                  });
+              }}
+            >
+              Comment
+            </button>
+          </div>
           {bug.notes &&
             bug.notes.length > 0 &&
             bug.notes.map((note) => (
-              <div className="note-container" key={note._id}>
-                <div
-                  className="bug-note"
-                  onClick={(e) => {
-                    e.target.classList.toggle('opened');
-                  }}
-                >
-                  <p>{note.note}</p>
-                  <p className="note-date">
-                    Added by <span>{note.createdBy}</span> on{' '}
-                    <span>{note.createdAt.slice(0, 10)}</span>
+              <div className="comment-container" key={note._id}>
+                <div className="bug-comment">
+                  <p className="comment-date">
+                    <span>{note.createdBy}</span> &middot;
+                    <span> {moment(note.createdAt).fromNow()}</span>
                   </p>
+                  <p>{note.note}</p>
                 </div>
                 <i
                   className="far fa-trash-alt"
@@ -185,7 +240,7 @@ function IndividualBug(props) {
                         },
                       })
                       .then(() => {
-                        const bugId = props.match.params.bugId;
+                        const bugId = props.currentId;
                         axios
                           .get(`/api/bug/${bugId}`, {
                             headers: {
@@ -198,18 +253,20 @@ function IndividualBug(props) {
                           .catch((error) => {
                             // console.log(error.response.data);
                             props.setErrors(error.response.data);
-                            props.history.goBack();
+                            props.setCurrentSection('project');
+                            props.setCurrentId(bug.project.toString());
                           });
                       })
                       .catch((error) => {
                         props.setErrors(error.response.data);
-                        props.history.goBack();
+                        props.setCurrentSection('project');
+                        props.setCurrentId(bug.project.toString());
                       });
                   }}
                 ></i>
               </div>
             ))}
-          <div className="new-notes"></div>
+          {/* <div className="new-comments"></div> */}
         </div>
       )}
     </div>
@@ -219,15 +276,15 @@ function IndividualBug(props) {
 const mapDispatchToProps = {
   setErrors,
   clearErrors,
+  setCurrentSection,
+  setCurrentId,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user.user,
   projects: state.projects.projects,
   errors: state.user.errors,
+  currentId: state.user.currentId,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(IndividualBug));
+export default connect(mapStateToProps, mapDispatchToProps)(IndividualBug);

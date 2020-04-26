@@ -19,13 +19,19 @@ import { connect } from 'react-redux';
 
 //Actions
 import { getUserProjects } from '../redux/actions/projectActions';
+import {
+  setCurrentSection,
+  setCurrentId,
+  setErrors,
+} from '../redux/actions/userActions';
 
 function IndividualProject(props) {
   const [project, changeProject] = useState({});
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('All');
   const [user, changeUser] = useState({});
-  const projectId = props.match.params.projectId;
+  // const projectId = props.match.params.projectId;
+  const projectId = props.currentId;
 
   const handleSearchChange = (e) => {
     sessionStorage.setItem('project-search', e.target.value);
@@ -59,12 +65,32 @@ function IndividualProject(props) {
       })
       .then((response) => {
         changeProject(response.data);
+      })
+      .catch((error) => {
+        props.setErrors(error.response.data);
+        props.setCurrentSection('');
+        props.setCurrentId('');
       });
   }, []);
   return (
-    <div className="project-container">
-      <GoBack />
+    <div className="individual-container">
+      <GoBack section="" id="" />
       <div className="container">
+        <div className="search-and-filter">
+          <SearchBar
+            onChange={handleSearchChange}
+            search={search}
+            extraClass="search-extra-info"
+          />
+          {/* <div className="select-container">
+            <select name="" id="" value={filter} onChange={handleFilterChange}>
+              <option value="All">All</option>
+              <option value="New Bug">New Bug</option>
+              <option value="Work In Progress">Work In Progress</option>
+              <option value="Fixed">Fixed</option>
+            </select>
+          </div> */}
+        </div>
         {props.errors !== null &&
           props.errors['project'] &&
           !toast.isActive('projecttoast') &&
@@ -92,60 +118,78 @@ function IndividualProject(props) {
 
         {Object.keys(project).length > 0 && (
           <div>
-            <h2 className="project-name">{project.name}</h2>
-            <p
-              className="project-description"
-              onClick={(e) => {
-                e.target.classList.toggle('show-description');
-              }}
-            >
-              {project.description}
-            </p>
-            <div className="search-and-filter">
-              <SearchBar onChange={handleSearchChange} search={search} />
-              <div className="select-container">
-                <select
-                  name=""
-                  id=""
-                  value={filter}
-                  onChange={handleFilterChange}
-                >
-                  <option value="All">All</option>
-                  <option value="New Bug">New Bug</option>
-                  <option value="Work In Progress">Work In Progress</option>
-                  <option value="Fixed">Fixed</option>
-                </select>
-              </div>
-            </div>
-            <div className="action-bar">
-              <Link to={`/project/${project._id}/labels`}>
-                Labels <i className="fas fa-tags"></i>
-              </Link>
-
-              <Link to={`/project/${project._id}/bug/new`}>
-                New Bug <i className="fas fa-bug"></i>
-              </Link>
-
+            <h2 className="project-name">
+              {project.name}{' '}
               {project.createdBy.toString() === user._id.toString() && (
-                <button
-                  className="project-leave-delete"
-                  onClick={() => {
-                    const element = document.createElement('div');
-                    element.classList.add('modal-element');
-                    document.querySelector('#modal-root').appendChild(element);
-                    ReactDOM.render(
-                      <DeleteModal
-                        item={project}
-                        type={'project'}
-                        history={props.history}
-                      />,
-                      element
-                    );
-                  }}
-                >
-                  Delete <i className="far fa-trash-alt"></i>
-                </button>
+                <span>
+                  <i
+                    className="fas fa-archive"
+                    onClick={() => {
+                      axios
+                        .put(`/api/project/${project._id}/archive/add`, null, {
+                          headers: {
+                            Authorization: localStorage.getItem('token'),
+                          },
+                        })
+                        .then(() => {
+                          axios
+                            .get(`/api/project/${projectId}`, {
+                              headers: {
+                                Authorization: localStorage.getItem('token'),
+                              },
+                            })
+                            .then((response) => {
+                              changeProject(response.data);
+                            })
+                            .catch((error) => {
+                              props.setErrors(error.response.data);
+                              props.setCurrentSection('');
+                              props.setCurrentId('');
+                            });
+                        })
+                        .catch((error) => {
+                          props.setErrors(error.response.data);
+                          props.setCurrentSection('');
+                          props.setCurrentId('');
+                        });
+                    }}
+                  ></i>
+                  <i
+                    className="far fa-trash-alt"
+                    onClick={() => {
+                      const element = document.createElement('div');
+                      element.classList.add('modal-element');
+                      document
+                        .querySelector('#modal-root')
+                        .appendChild(element);
+                      ReactDOM.render(
+                        <DeleteModal item={project} type={'project'} />,
+                        element
+                      );
+                    }}
+                  ></i>
+                </span>
               )}
+            </h2>
+            <p className="project-description">{project.description}</p>
+
+            <div className="action-bar">
+              <button
+                onClick={() => {
+                  props.setCurrentSection('project/labels');
+                  props.setCurrentId(project._id);
+                }}
+              >
+                Labels <i className="fas fa-tags"></i>
+              </button>
+              <button
+                onClick={() => {
+                  props.setCurrentSection('project/bug/new');
+                  props.setCurrentId(project._id);
+                }}
+              >
+                New Bug <i className="fas fa-bug"></i>
+              </button>
             </div>
             <div className="bugs">
               {project.bugs &&
@@ -202,12 +246,16 @@ function IndividualProject(props) {
 
 const mapDispatchToProps = {
   getUserProjects,
+  setCurrentSection,
+  setCurrentId,
+  setErrors,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user.user,
   projects: state.projects.projects,
   errors: state.user.errors,
+  currentId: state.user.currentId,
 });
 
 export default connect(

@@ -1,4 +1,8 @@
 $red-color: #ff0000;
+$primary-color: #2e00b1;
+$text-color: #0f003a;
+$vector-background: #e4e3ff;
+$page-background: #fdfcff;
 
 * {
   margin: 0;
@@ -7,7 +11,7 @@ $red-color: #ff0000;
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 a {
@@ -27,11 +31,12 @@ a {
 
 .go-back {
   position: absolute;
-  top: 20px;
+  top: 25px;
   left: 20px;
   cursor: pointer;
   i {
-    color: white;
+    font-size: 24px;
+    color: $primary-color;
   }
 }
 
@@ -65,21 +70,29 @@ a {
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
 }
 
+.projects-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .submit-btn {
   display: block;
   position: relative;
   margin: 30px auto;
-  border: 1px solid $red-color;
+  border: 1px solid $text-color;
   padding: 0.5rem 1.5rem !important;
-  color: white !important;
+  color: $text-color;
+  background: white;
   font-size: 24px;
   font-weight: 400;
-  background: none;
   z-index: 1;
   transition: all 300ms ease-out;
 
   &:hover {
-    background: $red-color;
+    background: $text-color;
+    color: white;
   }
 }
 
@@ -91,14 +104,37 @@ a {
 }
 
 .search {
-  width: 100%;
-  margin-bottom: 1rem;
-  padding: 5px 10px;
-  // border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  // border: 1px solid white;
+  background: transparent;
   border: none;
-  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 5px 10px;
+  z-index: 2;
+  box-shadow: 0.5px 0.5px 2px grey;
+
+  span {
+    margin-right: 5px;
+  }
+
+  input {
+    border: none;
+
+    &:focus {
+      outline: $text-color;
+    }
+  }
+}
+
+.search-extra-info {
+  left: 0 !important;
+}
+
+.manager-search {
+  margin-left: 175px;
 }
 
 .modal-bg {
@@ -127,15 +163,15 @@ a {
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: $page-background;
+  color: $text-color;
 
   h5 {
     font-size: 20px;
     margin-bottom: 40px;
 
     span {
-      color: $red-color;
+      color: $primary-color;
     }
   }
 }
@@ -164,46 +200,61 @@ a {
     border-radius: 5px;
     border: none;
     background: rgba(255, 255, 255, 0.1);
-    color: white;
+    color: $primary-color;
+    border: 1px solid $primary-color;
 
     &:hover {
-      color: $red-color;
+      color: #fff;
+      background: $primary-color;
     }
   }
 }
 
 .action-bar {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   margin-bottom: 1rem;
   a {
-    background: rgba(255, 255, 255, 0.1);
-    margin-right: 10px;
+    background: $page-background;
+    margin-left: 10px;
     padding: 5px 10px;
     border: none;
-    color: white;
+    color: $primary-color;
+    border: 1px solid $primary-color;
+
+    &:hover {
+      background: $primary-color;
+      color: $page-background;
+
+      i {
+        color: $page-background;
+      }
+    }
     i {
-      color: $red-color;
+      color: $text-color;
     }
   }
   button {
-    background: rgba(255, 255, 255, 0.1);
+    background: $page-background;
     margin-right: 10px;
     padding: 5px 10px;
     border: none;
-    color: white;
+    color: $primary-color;
+    border: 1px solid $primary-color;
 
     &:nth-last-of-type(1) {
       margin: 0;
     }
-    a {
-      display: block;
-      width: 100%;
-      height: 100%;
-      color: white;
+    &:hover {
+      background: $primary-color;
+      color: $page-background;
+
+      i {
+        color: $page-background;
+      }
     }
     i {
-      color: $red-color;
+      color: $text-color;
     }
   }
 }
@@ -220,51 +271,165 @@ a {
 }
 //Global End
 
+//Navbar Start
+.navbar {
+  width: 100%;
+  padding: 30px 9% 10px 9%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  background: none;
+  z-index: 1000;
+}
+
+.logo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  background: transparent;
+  font-weight: 500;
+  font-size: 18px;
+  color: $primary-color;
+
+  span {
+    color: $text-color;
+  }
+
+  img {
+    margin-right: 10px;
+  }
+}
+
+.nav-list {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+  margin: auto 0px;
+}
+
+.nav-item {
+  list-style: none;
+  margin: 0px 15px;
+  text-transform: capitalize;
+  font-weight: 300;
+  transition: all 100ms ease-in-out;
+
+  a {
+    font-size: 18px;
+    color: $text-color;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: $text-color;
+    font-size: 18px;
+    font-weight: 300;
+    transition: all 100ms linear;
+
+    &:hover {
+      // font-weight: 500;
+      transform: scale(1.1);
+      color: $primary-color;
+    }
+  }
+
+  &:hover {
+    // font-weight: 500;
+    transform: scale(1.1);
+  }
+}
+//Navbar End
+
 //Homepage Start
-.homepage {
+// .homepage {
+//   width: 100%;
+//   height: 100vh;
+//   max-height: 100vh;
+//   background: url('../resources/Images/Home_Background.svg') no-repeat;
+//   background-position: center;
+//   background-position-y: top;
+//   background-size: auto;
+// }
+
+header {
+  background: $page-background;
   width: 100%;
   height: 100vh;
-  max-height: 100vh;
-  color: #181818;
-  color: white;
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-    url('../resources//Images/lady_bug_bg.jpg');
-  background-position: center;
-  background-size: auto;
+  padding-top: 120px;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: url('../resources/Images/Wave_Bottom.svg');
+    height: 225px;
+    background-size: auto;
+    background-position-x: center;
+  }
 }
 
 .header-content {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
 
-  > div {
-    width: 100%;
-    max-height: inherit;
-    overflow: hidden;
-  }
   h1 {
-    margin: 80px 0px 0px 0px;
+    margin: 80px 0px 20px 0px;
     font-weight: bolder;
-    font-size: 50px;
-    letter-spacing: 0.5rem;
-    text-transform: uppercase;
-    color: $red-color;
-  }
+    font-size: 36px;
+    letter-spacing: 2px;
+    text-align: left;
+    text-transform: capitalize;
+    color: $text-color;
 
-  h5 {
-    font-size: 18px;
-    margin: 10px 0px 80px 0px;
+    span {
+      color: $primary-color;
+    }
   }
 
   p {
-    padding: 0px 200px;
-    font-weight: 300;
+    color: $text-color;
+    margin-bottom: 20px;
+    text-align: left;
   }
+
+  a {
+    color: $text-color;
+    font-weight: 300;
+    margin: 0px 10px;
+
+    span {
+      margin: 0px 10px 0px 0px;
+    }
+  }
+}
+
+.main-header-link {
+  border-radius: 75px;
+  margin-left: 0px !important;
+  padding: 5px 20px;
+  font-weight: 300;
+  background: $primary-color;
+  color: $page-background !important;
+}
+
+.header-links {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .call-to-action {
@@ -316,14 +481,31 @@ a {
   width: 100%;
   min-height: 100vh;
   max-height: auto;
-  padding: 50px 25%;
+  position: relative;
+  overflow: hidden;
+  padding: 100px 25% 50px 25%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url('../resources//Images/lady_bug_bg.jpg');
+  background: $page-background;
   background-position: center;
   background-size: auto;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: url('../resources/Images/Wave_Bottom.svg');
+    height: 225px;
+    background-size: auto;
+    background-position-x: center;
+  }
+}
+
+.no-top-nav {
+  padding-top: 50px;
 }
 
 .auth-form {
@@ -331,22 +513,19 @@ a {
   padding: 50px 50px;
   position: relative;
   border-radius: 20px;
+  z-index: 10;
 
-  background: rgba(0, 0, 0, 0.7);
+  background: $text-color;
   h2 {
     text-align: center;
-    color: white;
-    a {
-      text-decoration: none;
-      color: white;
-    }
+    color: $page-background;
   }
 
   .form-group {
     margin: 30px;
     label {
       font-weight: 300;
-      color: $red-color;
+      color: $page-background;
     }
     input {
       width: 100%;
@@ -379,7 +558,7 @@ a {
 
     a {
       text-decoration: none;
-      color: $red-color;
+      color: $primary-color;
     }
   }
 }
@@ -389,11 +568,9 @@ a {
 .manager {
   min-height: 100vh;
   max-height: auto;
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-    url('../resources//Images/lady_bug_bg.jpg');
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
+  display: flex;
+  overflow-y: hidden;
+  background: $page-background;
 
   .container {
     padding-top: 50px;
@@ -405,17 +582,57 @@ a {
   }
 }
 
-.manager-nav {
+.manager-content {
+  position: relative;
+  flex: 1;
+  // padding-left: 175px;
+}
+
+.manager-section {
+  margin-left: 175px;
+  position: relative;
+  div {
+    h3 {
+      color: $text-color;
+      font-size: 34px;
+      font-weight: 300;
+      text-align: left;
+      padding-left: 1rem;
+      margin-bottom: 50px;
+    }
+  }
+}
+
+.manager-section-container {
+  margin-top: 85px;
+}
+
+.manager-side-nav {
+  width: 175px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  background: $text-color;
+
+  a {
+    img {
+      margin-top: 20px;
+    }
+  }
   ul {
     display: flex;
+    flex-direction: column;
+    margin-top: 30px;
     li {
-      margin: 0px 20px;
+      margin: 20px 0px;
       list-style: none;
-      button {
-        background: none;
-        border: none;
-        color: white;
-        padding: 5px 10px;
+      color: $page-background;
+      cursor: pointer;
+      font-weight: 300;
+      &.selected-section {
+        border-left: 4px solid $page-background;
       }
     }
   }
@@ -439,13 +656,21 @@ a {
 
 .preview {
   height: auto;
-  position: relative;
-  padding: 20px;
-  margin: 1px;
-  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 15px 15px;
+  margin: 10px 1rem;
+  background: $page-background;
+  box-shadow: 0.5px 0.5px 2px grey;
   // border-radius: 10px;
   color: white;
   cursor: pointer;
+
+  button {
+    border: none;
+    background: none;
+    color: $text-color;
+  }
 
   p {
     text-overflow: ellipsis;
@@ -455,61 +680,70 @@ a {
 }
 
 .delete-btn {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
+  margin-left: auto;
   border: none;
   background: none;
   i {
-    color: $red-color;
+    color: $text-color;
   }
 }
 
 .action-btn {
-  width: 4rem;
-  height: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 75px;
+  top: 20px;
   right: 75px;
-  border-radius: 50%;
-  border: none;
-  padding: 10px;
+  font-size: 24px;
   background: rgba(255, 255, 255, 0.1);
+  color: $text-color;
+  cursor: pointer;
 
   &:hover {
     text-decoration: none;
-  }
-  i {
-    font-size: 20px;
-    color: $red-color;
   }
 }
 //Manager End
 
 //Group Start
-.group-container {
+.individual-container {
   width: 100%;
-  min-height: 100vh;
-  padding: 50px 0px;
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-    url('../resources//Images/lady_bug_bg.jpg');
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
+  background: $page-background;
+
+  .container {
+    padding-top: 0px;
+    padding-left: 50px;
+    padding-bottom: 0px !important;
+  }
+}
+
+.p-t-20 {
+  padding-top: 20px !important;
 }
 
 .group-name {
-  color: white;
+  display: flex;
+  align-items: center;
+  color: $primary-color;
+  text-align: left;
+  margin-top: 85px;
+  margin-bottom: 30px;
+
+  i {
+    color: $text-color;
+    font-size: 16px;
+    margin-left: 30px;
+    cursor: pointer;
+  }
 }
 
 .group-id {
-  color: white;
+  color: $primary-color;
   font-weight: 300;
+  text-align: left;
   span {
-    color: $red-color;
+    color: $text-color;
   }
 }
 
@@ -552,38 +786,32 @@ a {
     }
   }
 }
-.project-container {
-  width: 100%;
-  min-height: 100vh;
-  padding: 50px 0px;
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-    url('../resources//Images/lady_bug_bg.jpg');
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
-}
 
 .project-name {
-  color: white;
+  display: flex;
+  align-items: center;
+  color: $primary-color;
+  text-align: left;
+  margin-top: 85px;
+  margin-bottom: 30px;
+
+  i {
+    color: $text-color;
+    font-size: 16px;
+    margin-left: 30px;
+    cursor: pointer;
+  }
 }
 
 .project-description {
-  width: 100%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  width: 500px;
+  margin-bottom: 50px;
   max-height: fit-content;
   display: block;
-  color: white;
-  font-weight: lighter;
-  overflow: hidden;
+  color: $text-color;
+  text-align: left;
+  font-weight: 300;
   cursor: pointer;
-}
-
-.show-description {
-  &.project-description {
-    text-overflow: initial;
-    white-space: initial;
-  }
 }
 
 //Project End
@@ -596,14 +824,23 @@ a {
   flex-direction: column;
   align-items: center;
   padding: 50px 0px;
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-    url('../resources//Images/lady_bug_bg.jpg');
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
+  background: $page-background;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: url('../resources/Images/Wave_Bottom.svg');
+    height: 225px;
+    background-size: auto;
+    background-position-x: center;
+  }
 
   h2 {
-    color: white;
+    color: $primary-color;
+    text-align: center;
     margin-bottom: 50px;
   }
 }
@@ -611,6 +848,7 @@ a {
 .label-preview {
   width: auto;
   display: flex;
+  position: relative;
   justify-content: space-around;
   align-items: center;
   margin: 10px 0px;
@@ -618,7 +856,7 @@ a {
   > div {
     min-width: 100px;
     max-width: auto;
-    padding: 10px 5px;
+    padding: 10px 10px;
   }
 
   p {
@@ -628,23 +866,16 @@ a {
   }
 
   i {
-    color: red;
+    color: $text-color;
     cursor: pointer;
     margin: 0px 10px;
   }
 }
 
-.add-label {
-  width: 100%;
-  min-height: 100vh;
-  padding: 50px 0px;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url('../resources//Images/lady_bug_bg.jpg');
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
+.label-preview-actions {
+  position: absolute;
+  right: -100px;
 }
-
 .color-picker {
   background: rgba(255, 255, 255, 0.1);
   border: none;
@@ -659,34 +890,31 @@ a {
 //Label End
 
 //Bug Start
-.new-bug {
-  width: 100%;
-  min-height: 100vh;
-  padding: 50px 0px;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url('../resources//Images/lady_bug_bg.jpg');
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
-}
 
 .bug-preview-container {
   display: flex;
   position: relative;
-
-  > a {
-    width: 98%;
+  div {
+    height: fit-content;
+    width: 100%;
+    border: none;
+    background: none;
   }
 }
 .bug-preview {
   height: 45px;
   display: flex;
   align-items: center;
-  padding: 5px 10px;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 5px 20px;
+  background: $page-background;
+  box-shadow: 1px 1px 2px grey;
   overflow: hidden;
   margin: 0px 20px 20px 0px;
   cursor: pointer;
+
+  i {
+    margin-left: auto;
+  }
 }
 
 span[id*='bug-status-'] {
@@ -694,77 +922,77 @@ span[id*='bug-status-'] {
 }
 
 .bug-name {
-  width: fit-content;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
-  color: $red-color;
-  margin-right: 30px;
+  color: $primary-color;
   line-height: 45px;
+  text-align: left;
   margin-bottom: 0px;
+  margin-right: 20px;
 }
 
 .bug-description {
-  color: white;
+  color: $text-color;
+  width: 500px;
+  text-align: left;
   position: relative;
+  margin: auto 0px;
   font-weight: 300;
   position: relative;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-bottom: 0px;
-  margin-right: 30px;
   overflow: hidden;
 }
 
 .bug-label {
-  width: fit-content;
-  white-space: nowrap;
+  max-width: 180px;
   display: block;
   color: white;
-  position: relative;
-  margin-left: auto;
-  padding: 5px 10px;
+  padding: 1px 15px;
+  border-radius: 75px;
 }
 
 .bug-status {
-  position: absolute;
-  right: 0px;
-  top: 10%;
-  transform: translateY(-10%);
-}
-
-.individual-bug-container {
-  width: 100%;
-  min-height: 100vh;
-  padding: 50px 0px;
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-    url('../resources//Images/lady_bug_bg.jpg');
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
-
-  > div {
-    color: white;
-  }
-
-  h3 {
-    margin-bottom: 50px;
-
-    span {
-      color: $red-color;
-    }
+  display: inline-block;
+  width: fit-content;
+  padding: 0px 20px;
+  text-align: center;
+  i {
+    text-align: center;
+    margin: auto;
   }
 }
+
 .bug-title {
-  color: $red-color;
+  display: flex;
+  align-items: center;
+  color: $text-color;
+  text-align: left;
+  font-weight: 500;
+  margin-bottom: 20px !important;
+  padding: 0px !important;
+
+  i {
+    font-size: 16px;
+    margin-left: 30px;
+    cursor: pointer;
+  }
 }
 
 .individual-bug-description {
   font-weight: 300;
+  text-align: left;
+  width: 600px;
+  // word-wrap: break-word;
+  // border: 1px solid red;
 }
 
 .individual-bug-status-container {
   display: flex;
-  justify-content: center;
-  margin: 50px auto 0px auto;
+  justify-content: flex-start;
+  margin-top: 50px;
   div {
     width: 150px;
     padding: 5px 10px;
@@ -788,80 +1016,76 @@ span[id*='bug-status-'] {
   }
 }
 
-.delete-bug {
-  margin-top: 50px;
-  background: none;
-  border: none;
-
-  i {
-    color: $red-color;
-  }
-}
-
 .bug-creation-date {
-  margin-top: 50px;
+  margin-top: 20px;
+  text-align: left;
+  color: $text-color;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 1rem;
   span {
-    color: $red-color;
+    color: $primary-color;
+    font-weight: 500;
   }
 }
 
-.bug-notes-title {
+.bug-comments-title {
   margin-top: 50px;
   text-align: center;
   font-weight: 300;
-  color: white;
+  color: $text-color;
 }
 
-.note-container {
+.comment-container {
   position: relative;
 
   i {
     position: absolute;
-    top: 5px;
+    top: 10px;
     right: -25px;
     cursor: pointer;
 
-    color: red;
+    color: $text-color;
   }
 }
 
-.bug-note {
+.bug-comment {
   position: relative;
   display: block;
-  padding: 5px 10px;
+  padding: 20px 20px;
   margin-bottom: 30px;
-  text-align: start;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  text-align: left;
+  box-shadow: 1px 1px 2px grey;
+  background: $page-background;
+  color: $text-color;
   cursor: pointer;
 
-  p {
-    word-wrap: break-word;
-    margin: auto;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: inherit;
-  }
+  // p {
+  //   word-wrap: break-word;
+  //   margin: auto;
+  //   white-space: nowrap;
+  //   overflow: hidden;
+  //   text-overflow: ellipsis;
+  //   line-height: inherit;
+  // }
 
-  p {
-    &.opened {
-      white-space: initial;
-    }
-  }
+  // p {
+  //   &.opened {
+  //     white-space: initial;
+  //   }
+  // }
 
-  .note-date {
-    position: absolute;
-    bottom: -20px;
-    right: 10px;
-    font-size: 10px;
+  .comment-date {
     span {
-      color: $red-color;
+      color: $primary-color;
+      &:nth-of-type(2) {
+        color: $text-color;
+      }
     }
   }
 }
 
-.add-note {
+.add-comment {
   width: 3rem;
   height: 3rem;
   margin: 20px auto 20px auto;
@@ -870,14 +1094,14 @@ span[id*='bug-status-'] {
   align-items: center;
   border-radius: 50%;
   background: none;
-  border: 1px solid white;
+  border: 1px solid $text-color;
   cursor: pointer;
   i {
-    color: white;
+    color: $text-color;
   }
 }
 
-.new-note-container {
+.new-comment-container {
   width: 100%;
   height: auto;
   display: flex;
@@ -888,55 +1112,55 @@ span[id*='bug-status-'] {
   }
 }
 
-.new-note {
-  width: 100%;
-  min-height: 100vh;
-  padding: 50px 0px;
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-    url('../resources//Images/lady_bug_bg.jpg');
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
+.add-comment-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 80px;
 }
 
+.new-comment {
+  width: 100%;
+  height: 200px;
+  font-size: 14px;
+  padding: 20px;
+  box-shadow: 1px 1px 2px grey;
+  resize: none;
+  border: none;
+}
+
+.submit-comment {
+  color: $page-background;
+  background: $primary-color;
+  padding: 5px 15px;
+  border-radius: 75px;
+  position: absolute;
+  bottom: -40px;
+  right: 0px;
+  font-size: 12px;
+  border: none;
+}
 //Bug End
 
 @media screen and (max-width: 992px) {
-  .form-container {
-    padding: 50px 15%;
-  }
-
   .header-content {
+    h1 {
+      text-align: center;
+    }
+
     p {
-      padding: 0px 100px;
-      font-weight: 300;
+      padding: 0px 150px;
+      text-align: center;
+    }
+
+    .header-links {
+      justify-content: center;
     }
   }
 }
 @media screen and (max-width: 768px) {
-  .form-container {
-    padding: 50px 10%;
-  }
-
-  .header-content {
-    p {
-      padding: 0px 50px;
-      font-size: 14px;
-    }
-  }
-
   .manager-action-btn {
     font-size: 14px;
-  }
-
-  .manager-nav {
-    ul {
-      li {
-        button {
-          font-size: 14px;
-        }
-      }
-    }
   }
 
   .action-btn {
@@ -969,7 +1193,7 @@ span[id*='bug-status-'] {
     font-size: 14px;
   }
 
-  .bug-note {
+  .bug-comment {
     p {
       font-size: 14px;
     }
@@ -978,40 +1202,16 @@ span[id*='bug-status-'] {
   .individual-bug-status-container {
     div {
       font-size: 14px;
+
+      &:nth-of-type(1) {
+        width: fit-content;
+      }
     }
   }
 }
 @media screen and (max-width: 576px) {
-  .form-container {
-    padding: 50px 0%;
-  }
-
-  .header-content {
-    h1 {
-      font-size: 40px;
-    }
-
-    h5 {
-      font-size: 16px;
-    }
-    p {
-      padding: 0px 0px;
-      font-size: 14px;
-    }
-  }
-
   .manager-action-btn {
     font-size: 12px;
-  }
-
-  .manager-nav {
-    ul {
-      li {
-        button {
-          font-size: 12px;
-        }
-      }
-    }
   }
 
   .action-bar {
@@ -1039,10 +1239,10 @@ span[id*='bug-status-'] {
     font-size: 12px;
   }
 
-  .note-container {
+  .comment-container {
     width: 95%;
   }
-  .bug-note {
+  .bug-comment {
     p {
       font-size: 12px;
     }
@@ -1066,15 +1266,5 @@ span[id*='bug-status-'] {
 @media screen and (max-width: 500px) {
   .manager-action-btn {
     font-size: 10px;
-  }
-
-  .manager-nav {
-    ul {
-      li {
-        button {
-          font-size: 10px;
-        }
-      }
-    }
   }
 }

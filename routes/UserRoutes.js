@@ -29,6 +29,8 @@ const {
   addLabel,
   deleteLabel,
   editLabel,
+  addToArchive,
+  removeFromArchive,
 } = require('../controller/projectController');
 
 //Bug Controller Imports
@@ -70,6 +72,12 @@ router.post('/project', passportJWT, createProject);
 router.post('/project/:projectId/label/create', passportJWT, addLabel);
 router.delete('/project/:projectId/label/:labelId', passportJWT, deleteLabel);
 router.put('/project/:projectId/label/:labelId/edit', passportJWT, editLabel);
+router.put('/project/:projectId/archive/add', passportJWT, addToArchive);
+router.put(
+  '/project/:projectId/archive/remove',
+  passportJWT,
+  removeFromArchive
+);
 router.put('/project/:projectId', passportJWT, editProject);
 router.delete('/project/:projectId', passportJWT, deleteProject);
 

@@ -114,7 +114,7 @@ module.exports = {
       UserModel.findByIdAndDelete(userId).exec(function (err, user) {
         //If error occured, notify user
         if (err) {
-          console.err(err);
+          console.error(err);
           errors.user = 'Error occured when attempting to delete user';
           return res.status(500).json(errors);
         }
@@ -137,7 +137,7 @@ module.exports = {
       //If error occured, notify user
       let errors = {};
       if (err) {
-        console.err(err);
+        console.error(err);
         errors.user = 'Error occured when fetching user data';
         return res.status(500).json(errors);
       }

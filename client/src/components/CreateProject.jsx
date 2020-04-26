@@ -8,7 +8,10 @@ import GoBack from './GoBack';
 import { connect } from 'react-redux';
 
 //Actions
-import { setErrors } from '../redux/actions/userActions';
+import {
+  setErrors,
+  clearCurrentSectionAndId,
+} from '../redux/actions/userActions';
 
 class CreateProject extends Component {
   constructor(props) {
@@ -46,17 +49,17 @@ class CreateProject extends Component {
         }
       )
       .then(() => {
-        this.props.history.goBack();
+        this.props.clearCurrentSectionAndId();
       })
       .catch((error) => {
-        this.props.history.goBack();
         this.props.setErrors(error);
+        this.props.clearCurrentSectionAndId();
       });
   };
   render() {
     return (
-      <div className="form-container">
-        <GoBack />
+      <div className="form-container no-top-nav">
+        <GoBack section="" id="" />
         <div className="container">
           <div className="auth-form">
             <h2>Create Project</h2>
@@ -93,6 +96,7 @@ class CreateProject extends Component {
 
 const mapDispatchToProps = {
   setErrors,
+  clearCurrentSectionAndId,
 };
 
 export default connect(null, mapDispatchToProps)(CreateProject);

@@ -7,9 +7,11 @@ import GoBack from './GoBack';
 
 //Redux
 import store from '../redux/store';
+import { connect } from 'react-redux';
 
 //Actions
 import { getUserProjects } from '../redux/actions/projectActions';
+import { setCurrentSection } from '../redux/actions/userActions';
 import { SET_MESSAGES, SET_ERRORS } from '../redux/actions/types';
 
 class EditLabel extends Component {
@@ -26,8 +28,8 @@ class EditLabel extends Component {
   }
 
   componentDidMount() {
-    const projectId = this.props.match.params.projectId;
-    const labelId = this.props.match.params.labelId;
+    const projectId = this.props.currentId;
+    const labelId = this.props.extraIdInfo;
     const project = store
       .getState()
       .projects.projects.find(
@@ -60,8 +62,8 @@ class EditLabel extends Component {
   sendRequest = (e) => {
     e.preventDefault();
 
-    const projectId = this.props.match.params.projectId;
-    const labelId = this.props.match.params.labelId;
+    const projectId = this.props.currentId;
+    const labelId = this.props.extraIdInfo;
 
     const label = {
       name: this.state.name,
@@ -79,11 +81,12 @@ class EditLabel extends Component {
         store
           .dispatch(getUserProjects(localStorage.getItem('token')))
           .then(() => {
-            this.props.history.goBack();
+            this.props.setCurrentSection('project/labels');
           });
       })
       .catch((error) => {
         store.dispatch({ type: SET_ERRORS, payload: error });
+        this.props.setCurrentSection('project/labels');
       });
   };
   render() {
@@ -102,8 +105,8 @@ class EditLabel extends Component {
       );
     };
     return (
-      <div className="add-label">
-        <GoBack />
+      <div className="form-container no-top-nav">
+        <GoBack section="project/labels" id={this.props.currentId} />
         <div className="container">
           <div className="auth-form">
             <h2>Edit Label</h2>
@@ -132,4 +135,13 @@ class EditLabel extends Component {
   }
 }
 
-export default EditLabel;
+const mapDispatchToProps = {
+  setCurrentSection,
+};
+
+const mapStateToProps = (state) => ({
+  currentId: state.user.currentId,
+  extraIdInfo: state.user.extraIdInfo,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditLabel);

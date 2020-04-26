@@ -53,9 +53,7 @@ class Signup extends Component {
         <div className="form-container">
           <div className="container">
             <div className="auth-form">
-              <h2>
-                <Link to="/">Sign Up</Link>
-              </h2>
+              <h2>Sign Up</h2>
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="username">Username</label>

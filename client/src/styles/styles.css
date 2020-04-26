@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 a {
@@ -24,13 +24,14 @@ a p {
 
 .go-back {
   position: absolute;
-  top: 20px;
+  top: 25px;
   left: 20px;
   cursor: pointer;
 }
 
 .go-back i {
-  color: white;
+  font-size: 24px;
+  color: #2e00b1;
 }
 
 .breadcrumbs {
@@ -69,23 +70,38 @@ a p {
       grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
 }
 
+.projects-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .submit-btn {
   display: block;
   position: relative;
   margin: 30px auto;
-  border: 1px solid #ff0000;
+  border: 1px solid #0f003a;
   padding: 0.5rem 1.5rem !important;
-  color: white !important;
+  color: #0f003a;
+  background: white;
   font-size: 24px;
   font-weight: 400;
-  background: none;
   z-index: 1;
   -webkit-transition: all 300ms ease-out;
   transition: all 300ms ease-out;
 }
 
 .submit-btn:hover {
-  background: #ff0000;
+  background: #0f003a;
+  color: white;
 }
 
 .hide#projects, .hide#groups {
@@ -93,12 +109,38 @@ a p {
 }
 
 .search {
-  width: 100%;
-  margin-bottom: 1rem;
-  padding: 5px 10px;
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent;
   border: none;
-  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 5px 10px;
+  z-index: 2;
+  -webkit-box-shadow: 0.5px 0.5px 2px grey;
+          box-shadow: 0.5px 0.5px 2px grey;
+}
+
+.search span {
+  margin-right: 5px;
+}
+
+.search input {
+  border: none;
+}
+
+.search input:focus {
+  outline: #0f003a;
+}
+
+.search-extra-info {
+  left: 0 !important;
+}
+
+.manager-search {
+  margin-left: 175px;
 }
 
 .modal-bg {
@@ -134,8 +176,8 @@ a p {
       -ms-flex-align: center;
           align-items: center;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: #fdfcff;
+  color: #0f003a;
 }
 
 .modal-body h5 {
@@ -144,7 +186,7 @@ a p {
 }
 
 .modal-body h5 span {
-  color: #ff0000;
+  color: #2e00b1;
 }
 
 .modal-close {
@@ -175,56 +217,71 @@ a p {
   border-radius: 5px;
   border: none;
   background: rgba(255, 255, 255, 0.1);
-  color: white;
+  color: #2e00b1;
+  border: 1px solid #2e00b1;
 }
 
 .modal-btn-container button:hover {
-  color: #ff0000;
+  color: #fff;
+  background: #2e00b1;
 }
 
 .action-bar {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   margin-bottom: 1rem;
 }
 
 .action-bar a {
-  background: rgba(255, 255, 255, 0.1);
-  margin-right: 10px;
+  background: #fdfcff;
+  margin-left: 10px;
   padding: 5px 10px;
   border: none;
-  color: white;
+  color: #2e00b1;
+  border: 1px solid #2e00b1;
+}
+
+.action-bar a:hover {
+  background: #2e00b1;
+  color: #fdfcff;
+}
+
+.action-bar a:hover i {
+  color: #fdfcff;
 }
 
 .action-bar a i {
-  color: #ff0000;
+  color: #0f003a;
 }
 
 .action-bar button {
-  background: rgba(255, 255, 255, 0.1);
+  background: #fdfcff;
   margin-right: 10px;
   padding: 5px 10px;
   border: none;
-  color: white;
+  color: #2e00b1;
+  border: 1px solid #2e00b1;
 }
 
 .action-bar button:nth-last-of-type(1) {
   margin: 0;
 }
 
-.action-bar button a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  color: white;
+.action-bar button:hover {
+  background: #2e00b1;
+  color: #fdfcff;
+}
+
+.action-bar button:hover i {
+  color: #fdfcff;
 }
 
 .action-bar button i {
-  color: #ff0000;
+  color: #0f003a;
 }
 
 .form-input-error {
@@ -240,60 +297,172 @@ a p {
   width: fit-content;
 }
 
-.homepage {
+.navbar {
+  width: 100%;
+  padding: 30px 9% 10px 9%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: none;
+  z-index: 1000;
+}
+
+.logo {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-transform: uppercase;
+  background: transparent;
+  font-weight: 500;
+  font-size: 18px;
+  color: #2e00b1;
+}
+
+.logo span {
+  color: #0f003a;
+}
+
+.logo img {
+  margin-right: 10px;
+}
+
+.nav-list {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin: auto 0px;
+}
+
+.nav-item {
+  list-style: none;
+  margin: 0px 15px;
+  text-transform: capitalize;
+  font-weight: 300;
+  -webkit-transition: all 100ms ease-in-out;
+  transition: all 100ms ease-in-out;
+}
+
+.nav-item a {
+  font-size: 18px;
+  color: #0f003a;
+}
+
+.nav-item a:hover {
+  color: #2e00b1;
+}
+
+.nav-item button {
+  background: none;
+  border: none;
+  color: #0f003a;
+  font-size: 18px;
+  font-weight: 300;
+  -webkit-transition: all 100ms linear;
+  transition: all 100ms linear;
+}
+
+.nav-item button:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  color: #2e00b1;
+}
+
+.nav-item:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+header {
+  background: #fdfcff;
   width: 100%;
   height: 100vh;
-  max-height: 100vh;
-  color: #181818;
-  color: white;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.9)), to(rgba(0, 0, 0, 0.9))), url("../resources//Images/lady_bug_bg.jpg");
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url("../resources//Images/lady_bug_bg.jpg");
-  background-position: center;
+  padding-top: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: url("../resources/Images/Wave_Bottom.svg");
+  height: 225px;
   background-size: auto;
+  background-position-x: center;
 }
 
 .header-content {
   width: 100%;
   height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  color: white;
-}
-
-.header-content > div {
-  width: 100%;
-  max-height: inherit;
-  overflow: hidden;
 }
 
 .header-content h1 {
-  margin: 80px 0px 0px 0px;
+  margin: 80px 0px 20px 0px;
   font-weight: bolder;
-  font-size: 50px;
-  letter-spacing: 0.5rem;
-  text-transform: uppercase;
-  color: #ff0000;
+  font-size: 36px;
+  letter-spacing: 2px;
+  text-align: left;
+  text-transform: capitalize;
+  color: #0f003a;
 }
 
-.header-content h5 {
-  font-size: 18px;
-  margin: 10px 0px 80px 0px;
+.header-content h1 span {
+  color: #2e00b1;
 }
 
 .header-content p {
-  padding: 0px 200px;
+  color: #0f003a;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.header-content a {
+  color: #0f003a;
   font-weight: 300;
+  margin: 0px 10px;
+}
+
+.header-content a span {
+  margin: 0px 10px 0px 0px;
+}
+
+.main-header-link {
+  border-radius: 75px;
+  margin-left: 0px !important;
+  padding: 5px 20px;
+  font-weight: 300;
+  background: #2e00b1;
+  color: #fdfcff !important;
+}
+
+.header-links {
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .call-to-action {
@@ -343,7 +512,9 @@ a p {
   width: 100%;
   min-height: 100vh;
   max-height: auto;
-  padding: 50px 25%;
+  position: relative;
+  overflow: hidden;
+  padding: 100px 25% 50px 25%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -353,10 +524,25 @@ a p {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.7)), to(rgba(0, 0, 0, 0.7))), url("../resources//Images/lady_bug_bg.jpg");
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../resources//Images/lady_bug_bg.jpg");
+  background: #fdfcff;
   background-position: center;
   background-size: auto;
+}
+
+.form-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: url("../resources/Images/Wave_Bottom.svg");
+  height: 225px;
+  background-size: auto;
+  background-position-x: center;
+}
+
+.no-top-nav {
+  padding-top: 50px;
 }
 
 .auth-form {
@@ -364,17 +550,13 @@ a p {
   padding: 50px 50px;
   position: relative;
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  background: #0f003a;
 }
 
 .auth-form h2 {
   text-align: center;
-  color: white;
-}
-
-.auth-form h2 a {
-  text-decoration: none;
-  color: white;
+  color: #fdfcff;
 }
 
 .auth-form .form-group {
@@ -383,7 +565,7 @@ a p {
 
 .auth-form .form-group label {
   font-weight: 300;
-  color: #ff0000;
+  color: #fdfcff;
 }
 
 .auth-form .form-group input {
@@ -417,17 +599,17 @@ a p {
 
 .auth-form p a {
   text-decoration: none;
-  color: #ff0000;
+  color: #2e00b1;
 }
 
 .manager {
   min-height: 100vh;
   max-height: auto;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.9)), to(rgba(0, 0, 0, 0.9))), url("../resources//Images/lady_bug_bg.jpg");
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url("../resources//Images/lady_bug_bg.jpg");
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow-y: hidden;
+  background: #fdfcff;
 }
 
 .manager .container {
@@ -439,22 +621,66 @@ a p {
   color: white;
 }
 
-.manager-nav ul {
+.manager-content {
+  position: relative;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.manager-section {
+  margin-left: 175px;
+  position: relative;
+}
+
+.manager-section div h3 {
+  color: #0f003a;
+  font-size: 34px;
+  font-weight: 300;
+  text-align: left;
+  padding-left: 1rem;
+  margin-bottom: 50px;
+}
+
+.manager-section-container {
+  margin-top: 85px;
+}
+
+.manager-side-nav {
+  width: 175px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  background: #0f003a;
+}
+
+.manager-side-nav a img {
+  margin-top: 20px;
+}
+
+.manager-side-nav ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 30px;
 }
 
-.manager-nav ul li {
-  margin: 0px 20px;
+.manager-side-nav ul li {
+  margin: 20px 0px;
   list-style: none;
+  color: #fdfcff;
+  cursor: pointer;
+  font-weight: 300;
 }
 
-.manager-nav ul li button {
-  background: none;
-  border: none;
-  color: white;
-  padding: 5px 10px;
+.manager-side-nav ul li.selected-section {
+  border-left: 4px solid #fdfcff;
 }
 
 .manager-action-btn {
@@ -482,12 +708,25 @@ a p {
 
 .preview {
   height: auto;
-  position: relative;
-  padding: 20px;
-  margin: 1px;
-  background: rgba(255, 255, 255, 0.1);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 15px 15px;
+  margin: 10px 1rem;
+  background: #fdfcff;
+  -webkit-box-shadow: 0.5px 0.5px 2px grey;
+          box-shadow: 0.5px 0.5px 2px grey;
   color: white;
   cursor: pointer;
+}
+
+.preview button {
+  border: none;
+  background: none;
+  color: #0f003a;
 }
 
 .preview p {
@@ -497,20 +736,16 @@ a p {
 }
 
 .delete-btn {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
+  margin-left: auto;
   border: none;
   background: none;
 }
 
 .delete-btn i {
-  color: #ff0000;
+  color: #0f003a;
 }
 
 .action-btn {
-  width: 4rem;
-  height: 4rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -521,45 +756,61 @@ a p {
       -ms-flex-align: center;
           align-items: center;
   position: fixed;
-  bottom: 75px;
+  top: 20px;
   right: 75px;
-  border-radius: 50%;
-  border: none;
-  padding: 10px;
+  font-size: 24px;
   background: rgba(255, 255, 255, 0.1);
+  color: #0f003a;
+  cursor: pointer;
 }
 
 .action-btn:hover {
   text-decoration: none;
 }
 
-.action-btn i {
-  font-size: 20px;
-  color: #ff0000;
+.individual-container {
+  width: 100%;
+  background: #fdfcff;
 }
 
-.group-container {
-  width: 100%;
-  min-height: 100vh;
-  padding: 50px 0px;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.9)), to(rgba(0, 0, 0, 0.9))), url("../resources//Images/lady_bug_bg.jpg");
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url("../resources//Images/lady_bug_bg.jpg");
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
+.individual-container .container {
+  padding-top: 0px;
+  padding-left: 50px;
+  padding-bottom: 0px !important;
+}
+
+.p-t-20 {
+  padding-top: 20px !important;
 }
 
 .group-name {
-  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #2e00b1;
+  text-align: left;
+  margin-top: 85px;
+  margin-bottom: 30px;
+}
+
+.group-name i {
+  color: #0f003a;
+  font-size: 16px;
+  margin-left: 30px;
+  cursor: pointer;
 }
 
 .group-id {
-  color: white;
+  color: #2e00b1;
   font-weight: 300;
+  text-align: left;
 }
 
 .group-id span {
-  color: #ff0000;
+  color: #0f003a;
 }
 
 .search-and-filter {
@@ -599,38 +850,37 @@ a p {
   z-index: 2;
 }
 
-.project-container {
-  width: 100%;
-  min-height: 100vh;
-  padding: 50px 0px;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.9)), to(rgba(0, 0, 0, 0.9))), url("../resources//Images/lady_bug_bg.jpg");
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url("../resources//Images/lady_bug_bg.jpg");
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
+.project-name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #2e00b1;
+  text-align: left;
+  margin-top: 85px;
+  margin-bottom: 30px;
 }
 
-.project-name {
-  color: white;
+.project-name i {
+  color: #0f003a;
+  font-size: 16px;
+  margin-left: 30px;
+  cursor: pointer;
 }
 
 .project-description {
-  width: 100%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  width: 500px;
+  margin-bottom: 50px;
   max-height: -webkit-fit-content;
   max-height: -moz-fit-content;
   max-height: fit-content;
   display: block;
-  color: white;
-  font-weight: lighter;
-  overflow: hidden;
+  color: #0f003a;
+  text-align: left;
+  font-weight: 300;
   cursor: pointer;
-}
-
-.show-description.project-description {
-  text-overflow: initial;
-  white-space: initial;
 }
 
 .labels {
@@ -647,15 +897,24 @@ a p {
       -ms-flex-align: center;
           align-items: center;
   padding: 50px 0px;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.9)), to(rgba(0, 0, 0, 0.9))), url("../resources//Images/lady_bug_bg.jpg");
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url("../resources//Images/lady_bug_bg.jpg");
-  background-position: center;
-  background-attachment: fixed;
+  background: #fdfcff;
+}
+
+.labels::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: url("../resources/Images/Wave_Bottom.svg");
+  height: 225px;
   background-size: auto;
+  background-position-x: center;
 }
 
 .labels h2 {
-  color: white;
+  color: #2e00b1;
+  text-align: center;
   margin-bottom: 50px;
 }
 
@@ -664,6 +923,7 @@ a p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  position: relative;
   -ms-flex-pack: distribute;
       justify-content: space-around;
   -webkit-box-align: center;
@@ -675,7 +935,7 @@ a p {
 .label-preview > div {
   min-width: 100px;
   max-width: auto;
-  padding: 10px 5px;
+  padding: 10px 10px;
 }
 
 .label-preview p {
@@ -685,20 +945,14 @@ a p {
 }
 
 .label-preview i {
-  color: red;
+  color: #0f003a;
   cursor: pointer;
   margin: 0px 10px;
 }
 
-.add-label {
-  width: 100%;
-  min-height: 100vh;
-  padding: 50px 0px;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.7)), to(rgba(0, 0, 0, 0.7))), url("../resources//Images/lady_bug_bg.jpg");
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../resources//Images/lady_bug_bg.jpg");
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
+.label-preview-actions {
+  position: absolute;
+  right: -100px;
 }
 
 .color-picker {
@@ -713,17 +967,6 @@ a p {
   height: 34px;
 }
 
-.new-bug {
-  width: 100%;
-  min-height: 100vh;
-  padding: 50px 0px;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.7)), to(rgba(0, 0, 0, 0.7))), url("../resources//Images/lady_bug_bg.jpg");
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../resources//Images/lady_bug_bg.jpg");
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
-}
-
 .bug-preview-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -731,8 +974,13 @@ a p {
   position: relative;
 }
 
-.bug-preview-container > a {
-  width: 98%;
+.bug-preview-container div {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 100%;
+  border: none;
+  background: none;
 }
 
 .bug-preview {
@@ -743,11 +991,17 @@ a p {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 5px 10px;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 5px 20px;
+  background: #fdfcff;
+  -webkit-box-shadow: 1px 1px 2px grey;
+          box-shadow: 1px 1px 2px grey;
   overflow: hidden;
   margin: 0px 20px 20px 0px;
   cursor: pointer;
+}
+
+.bug-preview i {
+  margin-left: auto;
 }
 
 span[id*='bug-status-'] {
@@ -755,87 +1009,86 @@ span[id*='bug-status-'] {
 }
 
 .bug-name {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
-  color: #ff0000;
-  margin-right: 30px;
+  color: #2e00b1;
   line-height: 45px;
+  text-align: left;
   margin-bottom: 0px;
+  margin-right: 20px;
 }
 
 .bug-description {
-  color: white;
+  color: #0f003a;
+  width: 500px;
+  text-align: left;
   position: relative;
+  margin: auto 0px;
   font-weight: 300;
   position: relative;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-bottom: 0px;
-  margin-right: 30px;
   overflow: hidden;
 }
 
 .bug-label {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  white-space: nowrap;
+  max-width: 180px;
   display: block;
   color: white;
-  position: relative;
-  margin-left: auto;
-  padding: 5px 10px;
+  padding: 1px 15px;
+  border-radius: 75px;
 }
 
 .bug-status {
-  position: absolute;
-  right: 0px;
-  top: 10%;
-  -webkit-transform: translateY(-10%);
-          transform: translateY(-10%);
+  display: inline-block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0px 20px;
+  text-align: center;
 }
 
-.individual-bug-container {
-  width: 100%;
-  min-height: 100vh;
-  padding: 50px 0px;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.9)), to(rgba(0, 0, 0, 0.9))), url("../resources//Images/lady_bug_bg.jpg");
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url("../resources//Images/lady_bug_bg.jpg");
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
-}
-
-.individual-bug-container > div {
-  color: white;
-}
-
-.individual-bug-container h3 {
-  margin-bottom: 50px;
-}
-
-.individual-bug-container h3 span {
-  color: #ff0000;
+.bug-status i {
+  text-align: center;
+  margin: auto;
 }
 
 .bug-title {
-  color: #ff0000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #0f003a;
+  text-align: left;
+  font-weight: 500;
+  margin-bottom: 20px !important;
+  padding: 0px !important;
+}
+
+.bug-title i {
+  font-size: 16px;
+  margin-left: 30px;
+  cursor: pointer;
 }
 
 .individual-bug-description {
   font-weight: 300;
+  text-align: left;
+  width: 600px;
 }
 
 .individual-bug-status-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  margin: 50px auto 0px auto;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin-top: 50px;
 }
 
 .individual-bug-status-container div {
@@ -860,79 +1113,61 @@ span[id*='bug-status-'] {
   border-color: #1e90ff;
 }
 
-.delete-bug {
-  margin-top: 50px;
-  background: none;
-  border: none;
-}
-
-.delete-bug i {
-  color: #ff0000;
-}
-
 .bug-creation-date {
-  margin-top: 50px;
+  margin-top: 20px;
+  text-align: left;
+  color: #0f003a;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 1rem;
 }
 
 .bug-creation-date span {
-  color: #ff0000;
+  color: #2e00b1;
+  font-weight: 500;
 }
 
-.bug-notes-title {
+.bug-comments-title {
   margin-top: 50px;
   text-align: center;
   font-weight: 300;
-  color: white;
+  color: #0f003a;
 }
 
-.note-container {
+.comment-container {
   position: relative;
 }
 
-.note-container i {
+.comment-container i {
   position: absolute;
-  top: 5px;
+  top: 10px;
   right: -25px;
   cursor: pointer;
-  color: red;
+  color: #0f003a;
 }
 
-.bug-note {
+.bug-comment {
   position: relative;
   display: block;
-  padding: 5px 10px;
+  padding: 20px 20px;
   margin-bottom: 30px;
-  text-align: start;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  text-align: left;
+  -webkit-box-shadow: 1px 1px 2px grey;
+          box-shadow: 1px 1px 2px grey;
+  background: #fdfcff;
+  color: #0f003a;
   cursor: pointer;
 }
 
-.bug-note p {
-  word-wrap: break-word;
-  margin: auto;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: inherit;
+.bug-comment .comment-date span {
+  color: #2e00b1;
 }
 
-.bug-note p.opened {
-  white-space: initial;
+.bug-comment .comment-date span:nth-of-type(2) {
+  color: #0f003a;
 }
 
-.bug-note .note-date {
-  position: absolute;
-  bottom: -20px;
-  right: 10px;
-  font-size: 10px;
-}
-
-.bug-note .note-date span {
-  color: #ff0000;
-}
-
-.add-note {
+.add-comment {
   width: 3rem;
   height: 3rem;
   margin: 20px auto 20px auto;
@@ -947,15 +1182,15 @@ span[id*='bug-status-'] {
           align-items: center;
   border-radius: 50%;
   background: none;
-  border: 1px solid white;
+  border: 1px solid #0f003a;
   cursor: pointer;
 }
 
-.add-note i {
-  color: white;
+.add-comment i {
+  color: #0f003a;
 }
 
-.new-note-container {
+.new-comment-container {
   width: 100%;
   height: auto;
   display: -webkit-box;
@@ -967,43 +1202,62 @@ span[id*='bug-status-'] {
           flex-direction: row;
 }
 
-.new-note-container i {
+.new-comment-container i {
   color: #ff0000;
 }
 
-.new-note {
+.add-comment-container {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 80px;
+}
+
+.new-comment {
   width: 100%;
-  min-height: 100vh;
-  padding: 50px 0px;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.9)), to(rgba(0, 0, 0, 0.9))), url("../resources//Images/lady_bug_bg.jpg");
-  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url("../resources//Images/lady_bug_bg.jpg");
-  background-position: center;
-  background-attachment: fixed;
-  background-size: auto;
+  height: 200px;
+  font-size: 14px;
+  padding: 20px;
+  -webkit-box-shadow: 1px 1px 2px grey;
+          box-shadow: 1px 1px 2px grey;
+  resize: none;
+  border: none;
+}
+
+.submit-comment {
+  color: #fdfcff;
+  background: #2e00b1;
+  padding: 5px 15px;
+  border-radius: 75px;
+  position: absolute;
+  bottom: -40px;
+  right: 0px;
+  font-size: 12px;
+  border: none;
 }
 
 @media screen and (max-width: 992px) {
-  .form-container {
-    padding: 50px 15%;
+  .header-content h1 {
+    text-align: center;
   }
   .header-content p {
-    padding: 0px 100px;
-    font-weight: 300;
+    padding: 0px 150px;
+    text-align: center;
+  }
+  .header-content .header-links {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .form-container {
-    padding: 50px 10%;
-  }
-  .header-content p {
-    padding: 0px 50px;
-    font-size: 14px;
-  }
   .manager-action-btn {
-    font-size: 14px;
-  }
-  .manager-nav ul li button {
     font-size: 14px;
   }
   .action-btn {
@@ -1026,32 +1280,21 @@ span[id*='bug-status-'] {
   .bug-creation-date {
     font-size: 14px;
   }
-  .bug-note p {
+  .bug-comment p {
     font-size: 14px;
   }
   .individual-bug-status-container div {
     font-size: 14px;
   }
+  .individual-bug-status-container div:nth-of-type(1) {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
 }
 
 @media screen and (max-width: 576px) {
-  .form-container {
-    padding: 50px 0%;
-  }
-  .header-content h1 {
-    font-size: 40px;
-  }
-  .header-content h5 {
-    font-size: 16px;
-  }
-  .header-content p {
-    padding: 0px 0px;
-    font-size: 14px;
-  }
   .manager-action-btn {
-    font-size: 12px;
-  }
-  .manager-nav ul li button {
     font-size: 12px;
   }
   .action-bar a {
@@ -1070,10 +1313,10 @@ span[id*='bug-status-'] {
   .bug-creation-date {
     font-size: 12px;
   }
-  .note-container {
+  .comment-container {
     width: 95%;
   }
-  .bug-note p {
+  .bug-comment p {
     font-size: 12px;
   }
   .individual-bug-status-container div {
@@ -1090,9 +1333,6 @@ span[id*='bug-status-'] {
 
 @media screen and (max-width: 500px) {
   .manager-action-btn {
-    font-size: 10px;
-  }
-  .manager-nav ul li button {
     font-size: 10px;
   }
 }

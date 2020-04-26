@@ -10,7 +10,9 @@ import store from '../redux/store';
 
 //Actions
 import { getUserProjects } from '../redux/actions/projectActions';
+import { setCurrentSection } from '../redux/actions/userActions';
 import { SET_MESSAGES, SET_ERRORS } from '../redux/actions/types';
+import { connect } from 'react-redux';
 
 class AddLabel extends Component {
   constructor(props) {
@@ -40,7 +42,7 @@ class AddLabel extends Component {
   sendRequest = (e) => {
     e.preventDefault();
 
-    const projectId = this.props.match.params.projectId;
+    const projectId = this.props.currentId;
 
     const label = {
       name: this.state.name,
@@ -58,7 +60,7 @@ class AddLabel extends Component {
         store
           .dispatch(getUserProjects(localStorage.getItem('token')))
           .then(() => {
-            this.props.history.goBack();
+            this.props.setCurrentSection('project/labels');
           });
       })
       .catch((error) => {
@@ -82,8 +84,8 @@ class AddLabel extends Component {
       );
     };
     return (
-      <div className="add-label">
-        <GoBack />
+      <div className="form-container">
+        <GoBack section="project/labels" id={this.props.currentId} />
         <div className="container">
           <div className="auth-form">
             <h2>Add Label</h2>
@@ -92,6 +94,7 @@ class AddLabel extends Component {
               <input
                 type="text"
                 name="name"
+                maxLength="15"
                 value={this.state.name}
                 onChange={this.handleChange}
               />
@@ -112,4 +115,12 @@ class AddLabel extends Component {
   }
 }
 
-export default AddLabel;
+const mapDisptchToProps = {
+  setCurrentSection,
+};
+
+const mapStateToProps = (state) => ({
+  currentId: state.user.currentId,
+});
+
+export default connect(mapStateToProps, mapDisptchToProps)(AddLabel);

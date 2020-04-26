@@ -93,8 +93,7 @@ class Login extends Component {
                 },
               })}
             <div className="auth-form">
-              <h2>
-                <Link to="/">Login</Link>
+              <h2>Login
               </h2>
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group">

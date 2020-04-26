@@ -18,13 +18,18 @@ import AllGroupProjects from './AllGroupProjects';
 import DeleteModal from './DeleteModal';
 
 //Actions
-import { clearErrors } from '../redux/actions/userActions';
+import {
+  clearErrors,
+  setErrors,
+  setCurrentSection,
+  setCurrentId,
+} from '../redux/actions/userActions';
 import { setProjects } from '../redux/actions/projectActions';
 
 function IndividualGroup(props) {
   const [group, changeGroup] = useState({});
   const [search, setSearch] = useState('');
-  const groupId = props.match.params.groupId;
+  const groupId = props.currentId;
 
   useEffect(() => {
     var fetchGroup = [...props.groups];
@@ -44,9 +49,10 @@ function IndividualGroup(props) {
   };
 
   return (
-    <div className="group-container">
-      <GoBack />
+    <div className="individual-container">
+      <GoBack secion="" id="" />
       <div className="container">
+        <SearchBar onChange={handleSearchChange} search={search} />
         {props.errors !== null &&
           props.errors['project'] &&
           !toast.isActive('projecttoast') &&
@@ -61,35 +67,24 @@ function IndividualGroup(props) {
           })}
         {Object.keys(group).length > 0 && (
           <div>
-            <h2 className="group-name">{group.name}</h2>
-            <p className="group-id">
-              <span>Id: </span>
-              {group._id}
-            </p>
-            <SearchBar onChange={handleSearchChange} search={search} />
-            <div className="action-bar">
+            <h2 className="group-name">
+              {group.name}{' '}
               {group.createdBy.toString() === props.user._id.toString() ? (
-                <button
-                  className="project-leave-delete"
+                <i
+                  className="far fa-trash-alt"
                   onClick={() => {
                     const element = document.createElement('div');
                     element.classList.add('modal-element');
                     document.querySelector('#modal-root').appendChild(element);
                     ReactDOM.render(
-                      <DeleteModal
-                        item={group}
-                        type={'group'}
-                        history={props.history}
-                      />,
+                      <DeleteModal item={group} type={'group'} />,
                       element
                     );
                   }}
-                >
-                  Delete <i className="far fa-trash-alt"></i>
-                </button>
+                ></i>
               ) : (
-                <button
-                  className="project-leave-delete"
+                <i
+                  className="fas fa-door-open"
                   onClick={() => {
                     axios
                       .put(`/api/leave/group/${groupId}`, null, {
@@ -98,34 +93,51 @@ function IndividualGroup(props) {
                         },
                       })
                       .then(() => {
-                        props.history.goBack();
+                        props.setCurrentSection('');
+                        props.setCurrentId('');
+                      })
+                      .catch((error) => {
+                        props.setErrors(error.response.data);
+                        props.setCurrentSection('');
+                        props.setCurrentId('');
                       });
                   }}
-                >
-                  Leave <i className="fas fa-door-open"></i>
-                </button>
+                ></i>
               )}
-            </div>
+            </h2>
+            <p className="group-id">
+              <span>Id: </span>
+              {group._id}
+            </p>
+            <div className="action-bar"></div>
             <AllGroupProjects search={search} />
           </div>
         )}
       </div>
-      <Link to={`/group/${groupId}/project/create`} className="action-btn">
-        <i className="fas fa-plus"></i>
-      </Link>
+      <i
+        className="fas fa-plus-square action-btn"
+        onClick={() => {
+          props.setCurrentSection('group/create/project');
+          props.setCurrentId(group._id);
+        }}
+      ></i>
     </div>
   );
 }
 
 const mapDispatchToProps = {
   setProjects,
+  setErrors,
   clearErrors,
+  setCurrentSection,
+  setCurrentId,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user.user,
   groups: state.groups.groups,
   errors: state.user.errors,
+  currentId: state.user.currentId,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(IndividualGroup);

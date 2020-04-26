@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+//Components
+import GoBack from './GoBack';
+
 //Redux
 import store from '../redux/store';
+import { connect } from 'react-redux';
 
 //Actions
 import { SET_MESSAGES, SET_ERRORS } from '../redux/actions/types';
 import { getUserProjects } from '../redux/actions/projectActions';
+import { setCurrentId, setCurrentSection } from '../redux/actions/userActions';
 
 class NewBug extends Component {
   constructor(props) {
@@ -24,7 +29,7 @@ class NewBug extends Component {
   }
 
   componentDidMount() {
-    const projectId = this.props.match.params.projectId;
+    const projectId = this.props.currentId;
 
     axios
       .get(`/api/project/${projectId}`, {
@@ -41,6 +46,11 @@ class NewBug extends Component {
           project: responseProject,
           label: initialLabel,
         });
+      })
+      .catch((error) => {
+        store.dispatch({ type: SET_ERRORS, payload: error });
+        this.props.setCurrentId(this.props.currentId);
+        this.props.setCurrentSection('project');
       });
   }
 
@@ -75,17 +85,20 @@ class NewBug extends Component {
         store
           .dispatch(getUserProjects(localStorage.getItem('token')))
           .then(() => {
-            // window.location = `/project/${this.state.project._id}`;
-            this.props.history.goBack();
+            this.props.setCurrentId(this.props.currentId);
+            this.props.setCurrentSection('project');
           });
       })
       .catch((error) => {
         store.dispatch({ type: SET_ERRORS, payload: error });
+        this.props.setCurrentId(this.props.currentId);
+        this.props.setCurrentSection('project');
       });
   };
   render() {
     return (
-      <div className="new-bug">
+      <div className="form-container no-top-nav">
+        <GoBack section="project" />
         <div className="container">
           <div className="auth-form">
             <h2>New Bug</h2>
@@ -140,4 +153,14 @@ class NewBug extends Component {
   }
 }
 
-export default NewBug;
+const mapDispatchToProps = {
+  setCurrentId,
+  setCurrentSection,
+};
+
+const mapStateToProps = (state) => ({
+  currentSection: state.user.currentSection,
+  currentId: state.user.currentId,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewBug);

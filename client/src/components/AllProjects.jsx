@@ -27,13 +27,15 @@ function AllProjects(props) {
   return (
     <div className="item-row" id="projects">
       {projects && projects.length > 0 && props.search === ''
-        ? projects.map((project) => (
-            <ProjectPreview project={project} key={project._id} />
-          ))
+        ? projects.map((project) => {
+            if (project.archived === false)
+              return <ProjectPreview project={project} key={project._id} />;
+          })
         : projects.map((project) => {
             if (
               project.name.toLowerCase().indexOf(props.search.toLowerCase()) >
-              -1
+                -1 &&
+              project.archived === false
             )
               return <ProjectPreview project={project} key={project._id} />;
           })}

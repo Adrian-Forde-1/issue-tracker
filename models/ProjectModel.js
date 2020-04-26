@@ -34,6 +34,10 @@ const projectSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'group',
     },
+    archived: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: { currentTime: () => Math.floor(Date.now() / 1000) } }
 );

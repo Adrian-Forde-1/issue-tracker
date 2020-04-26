@@ -4,9 +4,6 @@ import axios from 'axios';
 //Tostify
 import { toast } from 'react-toastify';
 
-//React Router DOM
-import { Link } from 'react-router-dom';
-
 //Components
 import LabelPreview from './LabelPreview';
 import GoBack from './GoBack';
@@ -15,11 +12,15 @@ import GoBack from './GoBack';
 import { connect } from 'react-redux';
 
 //Actions
-import { clearErrors } from '../redux/actions/userActions';
+import {
+  clearErrors,
+  setCurrentSection,
+  setCurrentId,
+} from '../redux/actions/userActions';
 
 function Labels(props) {
   const [project, setProject] = useState({});
-  const projectId = props.match.params.projectId;
+  const projectId = props.currentId;
 
   useEffect(() => {
     axios
@@ -32,7 +33,7 @@ function Labels(props) {
   }, [props.projects]);
   return (
     <div className="labels">
-      <GoBack />
+      <GoBack section="project" id={props.currentId} />
       <h2>Labels</h2>
       {props.errors !== null &&
         props.errors['label'] &&
@@ -55,20 +56,27 @@ function Labels(props) {
             key={index}
           />
         ))}
-      <Link to={`/project/${projectId}/label/create`} className="action-btn">
-        <i className="fas fa-plus"></i>
-      </Link>
+      <i
+        className="fas fa-plus-square action-btn add-label"
+        onClick={() => {
+          props.setCurrentSection('project/label/create');
+          props.setCurrentId(props.currentId);
+        }}
+      ></i>
     </div>
   );
 }
 
 const mapDispatchToProps = {
   clearErrors,
+  setCurrentSection,
+  setCurrentId,
 };
 
 const mapStateToProps = (state) => ({
   projects: state.projects.projects,
   errors: state.user.errors,
+  currentId: state.user.currentId,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Labels);

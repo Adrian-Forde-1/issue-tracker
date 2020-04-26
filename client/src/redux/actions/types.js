@@ -2,6 +2,12 @@
 export const SET_USER = 'SET_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 
+//Manager
+export const SET_CURRENT_SECTION = 'SET_CURRENT_SECTION';
+export const SET_CURRENT_ID = 'SET_CURRENT_ID';
+export const CLEAR_CURRENT_SECTION_AND_ID = 'CLEAR_CURRENT_SECTION_AND_ID';
+export const SET_EXTRA_ID_INFO = 'SET_EXTRA_ID_INFO';
+
 //Messages
 export const SET_MESSAGES = 'SET_MESSAGES';
 export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
