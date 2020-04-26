@@ -40,7 +40,7 @@ function Homepage(props) {
                     <br /> <span>{props.user.username}</span>.
                   </h1>
                   <p>
-                    Hope your able to solve those troublesome bugs today. Wish
+                    Hope you're able to solve those troublesome bugs today. Wish
                     you all the best.
                   </p>
                   <div className="header-links">
