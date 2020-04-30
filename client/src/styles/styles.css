@@ -1037,7 +1037,6 @@ header::after {
   border: none;
   padding: 5px 10px;
   color: white;
-  white-space: nowrap;
 }
 
 .show-color {
@@ -1370,9 +1369,9 @@ span[id*='bug-status-'] {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    -webkit-box-pack: space-evenly;
-        -ms-flex-pack: space-evenly;
-            justify-content: space-evenly;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
     background: #2e00b1;
   }
   .nav-list.nav-open {
@@ -1381,6 +1380,12 @@ span[id*='bug-status-'] {
   }
   .nav-open.hamburger {
     color: white;
+  }
+  .nav-item {
+    margin-top: 50px;
+  }
+  .nav-item:nth-of-type(1) {
+    margin-top: 100px;
   }
   .nav-item a,
   .nav-item button {
@@ -1457,6 +1462,16 @@ span[id*='bug-status-'] {
   .manager-action-btn {
     font-size: 14px;
   }
+  .header-content h1 {
+    font-size: 32px;
+  }
+  .header-content p {
+    font-size: 14px;
+    padding: 0px 100px;
+  }
+  .header-content a {
+    font-size: 14px;
+  }
   .action-bar a {
     font-size: 14px;
   }
@@ -1509,6 +1524,16 @@ span[id*='bug-status-'] {
   .manager-action-btn {
     font-size: 12px;
   }
+  .header-content h1 {
+    font-size: 28px;
+  }
+  .header-content p {
+    font-size: 12px;
+    padding: 0px 50px;
+  }
+  .header-content a {
+    font-size: 12px;
+  }
   .action-bar a {
     font-size: 12px;
   }
@@ -1536,6 +1561,9 @@ span[id*='bug-status-'] {
     font-size: 24px;
   }
   .form-container input {
+    font-size: 14px;
+  }
+  .form-container p {
     font-size: 14px;
   }
   .submit-btn {
@@ -1594,10 +1622,17 @@ span[id*='bug-status-'] {
   .show-color {
     height: 24px;
   }
+  .form-group {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+  }
   .form-container label {
     font-size: 12px;
   }
   .form-container input {
+    font-size: 12px;
+  }
+  .form-container p {
     font-size: 12px;
   }
   .submit-btn {

@@ -99,7 +99,7 @@ class AddLabel extends Component {
                 onChange={this.handleChange}
               />
             </div>
-            <div className="w-50 d-flex justify-content-center mx-auto">
+            <div className="w-100 d-flex justify-content-center mx-auto">
               <button className="color-picker mr-2" onClick={showColor}>
                 Generate Color <i className="fas fa-sync-alt"></i>
               </button>

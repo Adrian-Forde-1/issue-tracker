@@ -957,7 +957,7 @@ header {
   border: none;
   padding: 5px 10px;
   color: white;
-  white-space: nowrap;
+  // white-space: nowrap;
 }
 
 .show-color {
@@ -1261,7 +1261,7 @@ span[id*='bug-status-'] {
     transform: translateX(240px);
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     background: $primary-color;
 
     &.nav-open {
@@ -1276,6 +1276,11 @@ span[id*='bug-status-'] {
   }
 
   .nav-item {
+    &:nth-of-type(1) {
+      margin-top: 100px;
+    }
+
+    margin-top: 50px;
     a,
     button {
       color: white;
@@ -1361,10 +1366,20 @@ span[id*='bug-status-'] {
     font-size: 14px;
   }
 
-  // .action-btn {
-  //   bottom: 50px;
-  //   right: 50px;
-  // }
+  .header-content {
+    h1 {
+      font-size: 32px;
+    }
+
+    p {
+      font-size: 14px;
+      padding: 0px 100px;
+    }
+
+    a {
+      font-size: 14px;
+    }
+  }
 
   .action-bar {
     a {
@@ -1437,6 +1452,21 @@ span[id*='bug-status-'] {
     font-size: 12px;
   }
 
+  .header-content {
+    h1 {
+      font-size: 28px;
+    }
+
+    p {
+      font-size: 12px;
+      padding: 0px 50px;
+    }
+
+    a {
+      font-size: 12px;
+    }
+  }
+
   .action-bar {
     a {
       font-size: 12px;
@@ -1469,6 +1499,10 @@ span[id*='bug-status-'] {
     }
 
     input {
+      font-size: 14px;
+    }
+
+    p {
       font-size: 14px;
     }
     padding-left: 0px;
@@ -1552,12 +1586,21 @@ span[id*='bug-status-'] {
     height: 24px;
   }
 
+  .form-group {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+  }
+
   .form-container {
     label {
       font-size: 12px;
     }
 
     input {
+      font-size: 12px;
+    }
+
+    p {
       font-size: 12px;
     }
   }
