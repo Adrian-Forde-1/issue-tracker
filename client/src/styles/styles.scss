@@ -957,6 +957,7 @@ header {
   border: none;
   padding: 5px 10px;
   color: white;
+  white-space: nowrap;
 }
 
 .show-color {
@@ -1338,6 +1339,11 @@ span[id*='bug-status-'] {
     }
   }
 
+  .form-container {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+
   .bug-preview {
     width: 90%;
   }
@@ -1355,10 +1361,10 @@ span[id*='bug-status-'] {
     font-size: 14px;
   }
 
-  .action-btn {
-    bottom: 50px;
-    right: 50px;
-  }
+  // .action-btn {
+  //   bottom: 50px;
+  //   right: 50px;
+  // }
 
   .action-bar {
     a {
@@ -1375,6 +1381,19 @@ span[id*='bug-status-'] {
       width: 165px;
       font-size: 14px;
     }
+  }
+
+  .color-picker {
+    font-size: 14px;
+  }
+
+  .form-container {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  .submit-btn {
+    font-size: 20px;
   }
 
   .bug-creation-date {
@@ -1440,6 +1459,26 @@ span[id*='bug-status-'] {
     }
   }
 
+  .color-picker {
+    font-size: 12px;
+  }
+
+  .form-container {
+    h2 {
+      font-size: 24px;
+    }
+
+    input {
+      font-size: 14px;
+    }
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .submit-btn {
+    font-size: 16px;
+  }
+
   .bug-creation-date {
     font-size: 12px;
   }
@@ -1462,9 +1501,9 @@ span[id*='bug-status-'] {
   .action-btn {
     width: 3.5rem;
     height: 3.5rem;
-    font-size: 14px;
+    font-size: 24px;
     bottom: 50px;
-    right: 50px;
+    right: 30px;
   }
 
   .individual-container {
@@ -1507,6 +1546,24 @@ span[id*='bug-status-'] {
     padding-right: 0px !important;
     padding-left: 30px !important;
     margin-left: 0px !important;
+  }
+
+  .show-color {
+    height: 24px;
+  }
+
+  .form-container {
+    label {
+      font-size: 12px;
+    }
+
+    input {
+      font-size: 12px;
+    }
+  }
+
+  .submit-btn {
+    font-size: 14px;
   }
 
   .bug-preview {
