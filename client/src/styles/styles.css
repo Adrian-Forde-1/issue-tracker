@@ -1068,6 +1068,9 @@ header::after {
   display: grid;
   -ms-grid-columns: 2fr 2fr 1fr 6fr 1fr;
       grid-template-columns: 2fr 2fr 1fr 6fr 1fr;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 5px 20px;
   background: #fdfcff;
   -webkit-box-shadow: 1px 1px 2px grey;
@@ -1155,9 +1158,15 @@ span[id*='bug-status-'] {
 }
 
 .individual-bug-description {
-  font-weight: 300;
+  width: 500px;
+  margin-bottom: 50px;
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  display: block;
+  color: #0f003a;
   text-align: left;
-  width: 600px;
+  font-weight: 300;
 }
 
 .individual-bug-label {
@@ -1165,8 +1174,9 @@ span[id*='bug-status-'] {
   width: -moz-fit-content;
   width: fit-content;
   padding: 2px 15px;
-  color: #fdfcff;
   display: block;
+  float: left;
+  color: #fdfcff;
   margin-right: auto;
   border-radius: 75px;
 }
@@ -1456,9 +1466,6 @@ span[id*='bug-status-'] {
     width: 165px;
     font-size: 14px;
   }
-  .individual-bug-description {
-    font-size: 14px;
-  }
   .bug-creation-date {
     font-size: 14px;
   }
@@ -1497,11 +1504,14 @@ span[id*='bug-status-'] {
   .action-bar button {
     font-size: 12px;
   }
+  .go-back {
+    left: 10px;
+  }
+  .search-and-filter {
+    left: 15px;
+  }
   .search-and-filter select {
     width: 145px;
-    font-size: 12px;
-  }
-  .individual-bug-description {
     font-size: 12px;
   }
   .bug-creation-date {
@@ -1526,10 +1536,12 @@ span[id*='bug-status-'] {
   .individual-container {
     font-size: 12px;
   }
-  .project-description {
+  .project-description,
+  .individual-bug-description {
     width: 400px;
   }
-  .project-name {
+  .project-name,
+  .bug-title {
     font-size: 28px;
   }
   .bug-label {
@@ -1547,6 +1559,11 @@ span[id*='bug-status-'] {
   .manager-action-btn {
     font-size: 10px;
   }
+  .containers {
+    padding-right: 0px !important;
+    padding-left: 30px !important;
+    margin-left: 0px !important;
+  }
   .bug-preview {
     width: 100%;
     max-width: 100%;
@@ -1557,13 +1574,20 @@ span[id*='bug-status-'] {
   .bug-label {
     display: none;
   }
-  .project-name {
+  .bug-preview {
+    -ms-grid-columns: 2fr 9fr 1fr;
+        grid-template-columns: 2fr 9fr 1fr;
+  }
+  .project-name,
+  .bug-title {
     font-size: 24px;
   }
-  .project-name i {
+  .project-name i,
+  .bug-title i {
     font-size: 12px;
   }
-  .project-description {
+  .project-description,
+  .individual-bug-description {
     width: 250px;
   }
 }

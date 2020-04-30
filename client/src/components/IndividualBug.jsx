@@ -90,203 +90,209 @@ function IndividualBug(props) {
       {Object.keys(bug).length > 0 && (
         <GoBack section="project" id={bug.project._id} />
       )}
-      {Object.keys(bug).length > 0 && (
-        <div className="containers p-t-20">
-          {props.errors !== null && props.errors['bug']
-            ? !toast.isActive('bugtoast') &&
-              toast(props.errors.bug, {
-                toastId: 'bugtoast',
-                type: 'error',
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000,
-                onClose: () => {
-                  props.clearErrors();
-                },
-              })
-            : props.errors['note'] &&
-              !toast.isActive('notetoast') &&
-              toast(props.errors.note, {
-                toastId: 'notetoast',
-                type: 'error',
-                position: toast.POSITION.TOP_CENTER,
-                autoClose: 2000,
-                onClose: () => {
-                  props.clearErrors();
-                },
-              })}
-          <h3 className="bug-title">
-            <span>{bug.name}</span>{' '}
-            {bug.createdBy._id.toString() === props.user._id.toString() && (
-              <div>
-                {' '}
-                <i
-                  className="far fa-edit"
-                  onClick={() => {
-                    props.setCurrentSection('project/bug/edit');
-                    props.setCurrentId(props.currentId);
-                  }}
-                ></i>
-                <i
-                  className="far fa-trash-alt"
-                  onClick={() => {
-                    const element = document.createElement('div');
-                    element.classList.add('modal-element');
-                    document.querySelector('#modal-root').appendChild(element);
-                    ReactDOM.render(
-                      <DeleteModal
-                        item={bug}
-                        type={'bug'}
-                        history={props.history}
-                      />,
-                      element
-                    );
-                  }}
-                ></i>
+      <div className="container-fluid">
+        {Object.keys(bug).length > 0 && (
+          <div className="containers p-t-20">
+            {props.errors !== null && props.errors['bug']
+              ? !toast.isActive('bugtoast') &&
+                toast(props.errors.bug, {
+                  toastId: 'bugtoast',
+                  type: 'error',
+                  position: toast.POSITION.TOP_CENTER,
+                  autoClose: 2000,
+                  onClose: () => {
+                    props.clearErrors();
+                  },
+                })
+              : props.errors['note'] &&
+                !toast.isActive('notetoast') &&
+                toast(props.errors.note, {
+                  toastId: 'notetoast',
+                  type: 'error',
+                  position: toast.POSITION.TOP_CENTER,
+                  autoClose: 2000,
+                  onClose: () => {
+                    props.clearErrors();
+                  },
+                })}
+            <h3 className="bug-title">
+              <span>{bug.name}</span>{' '}
+              {bug.createdBy._id.toString() === props.user._id.toString() && (
+                <div>
+                  {' '}
+                  <i
+                    className="far fa-edit"
+                    onClick={() => {
+                      props.setCurrentSection('project/bug/edit');
+                      props.setCurrentId(props.currentId);
+                    }}
+                  ></i>
+                  <i
+                    className="far fa-trash-alt"
+                    onClick={() => {
+                      const element = document.createElement('div');
+                      element.classList.add('modal-element');
+                      document
+                        .querySelector('#modal-root')
+                        .appendChild(element);
+                      ReactDOM.render(
+                        <DeleteModal
+                          item={bug}
+                          type={'bug'}
+                          history={props.history}
+                        />,
+                        element
+                      );
+                    }}
+                  ></i>
+                </div>
+              )}
+            </h3>
+            <span
+              className="individual-bug-label"
+              style={{ background: `${bug.label.color}` }}
+            >
+              {bug.label.name}
+            </span>
+            <br />
+            <div className="bug-creation-date">
+              Created By
+              <span> {bug.createdBy.username} </span>
+              <span> &middot; </span>
+              {moment(bug.createdAt).fromNow()}
+            </div>
+            <p className="individual-bug-description">{bug.description}</p>
+
+            <div
+              className="individual-bug-status-container"
+              id="individual-bug-status-container"
+            >
+              <div id="new-bug" onClick={updateBug}>
+                New Bug
               </div>
-            )}
-          </h3>
-          <div
-            className="individual-bug-label"
-            style={{ background: `${bug.label.color}` }}
-          >
-            {bug.label.name}
-          </div>
-          <div className="bug-creation-date">
-            Created By
-            <span> {bug.createdBy.username} </span>
-            <span> &middot; </span>
-            {moment(bug.createdAt).fromNow()}
-          </div>
-          <p className="individual-bug-description">{bug.description}</p>
+              <div id="work-in-progress" onClick={updateBug}>
+                Work In Progress
+              </div>
+              <div id="fixed" onClick={updateBug}>
+                Fixed
+              </div>
+            </div>
 
-          <div
-            className="individual-bug-status-container"
-            id="individual-bug-status-container"
-          >
-            <div id="new-bug" onClick={updateBug}>
-              New Bug
-            </div>
-            <div id="work-in-progress" onClick={updateBug}>
-              Work In Progress
-            </div>
-            <div id="fixed" onClick={updateBug}>
-              Fixed
-            </div>
-          </div>
-
-          <h2 className="bug-comments-title">Comments</h2>
-          {/* <Link to={`/bug/${bug._id}/note/new`} className="add-comment">
+            <h2 className="bug-comments-title">Comments</h2>
+            {/* <Link to={`/bug/${bug._id}/note/new`} className="add-comment">
             <i className="fas fa-plus"></i>
           </Link> */}
-          <div className="add-comment-container">
-            <textarea
-              name="newComment"
-              id="new-comment"
-              cols="30"
-              rows="10"
-              maxLength="500"
-              value={comment}
-              placeholder="New Comment"
-              className="new-comment"
-              onChange={(e) => {
-                setComment(e.target.value);
-              }}
-            ></textarea>
-            <button
-              className="submit-comment"
-              onClick={() => {
-                const newNote = {
-                  note: comment,
-                  bug: bug._id,
-                };
+            <div className="add-comment-container">
+              <textarea
+                name="newComment"
+                id="new-comment"
+                cols="30"
+                rows="10"
+                maxLength="500"
+                value={comment}
+                placeholder="New Comment"
+                className="new-comment"
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+              ></textarea>
+              <button
+                className="submit-comment"
+                onClick={() => {
+                  const newNote = {
+                    note: comment,
+                    bug: bug._id,
+                  };
 
-                const username = props.user.username;
-                axios
-                  .post(
-                    '/api/note',
-                    { note: newNote, bugId: bug._id, username: username },
-                    {
-                      headers: { Authorization: localStorage.getItem('token') },
-                    }
-                  )
-                  .then(() => {
-                    const bugId = props.currentId;
-                    axios
-                      .get(`/api/bug/${bugId}`, {
+                  const username = props.user.username;
+                  axios
+                    .post(
+                      '/api/note',
+                      { note: newNote, bugId: bug._id, username: username },
+                      {
                         headers: {
                           Authorization: localStorage.getItem('token'),
                         },
-                      })
-                      .then((response) => {
-                        setBug(response.data);
-                        setComment('');
-                      })
-                      .catch((error) => {
-                        props.setErrors(error.response.data);
-                        props.setCurrentSection('project');
-                        props.setCurrentId(bug.project.toString());
-                      });
-                  })
-                  .catch((error) => {
-                    props.setErrors(error.response.data);
-                    props.setCurrentSection('project');
-                    props.setCurrentId(bug.project.toString());
-                  });
-              }}
-            >
-              Comment
-            </button>
-          </div>
-          {bug.notes &&
-            bug.notes.length > 0 &&
-            bug.notes.map((note) => (
-              <div className="comment-container" key={note._id}>
-                <div className="bug-comment">
-                  <p className="comment-date">
-                    <span>{note.createdBy}</span> &middot;
-                    <span> {moment(note.createdAt).fromNow()}</span>
-                  </p>
-                  <p>{note.note}</p>
+                      }
+                    )
+                    .then(() => {
+                      const bugId = props.currentId;
+                      axios
+                        .get(`/api/bug/${bugId}`, {
+                          headers: {
+                            Authorization: localStorage.getItem('token'),
+                          },
+                        })
+                        .then((response) => {
+                          setBug(response.data);
+                          setComment('');
+                        })
+                        .catch((error) => {
+                          props.setErrors(error.response.data);
+                          props.setCurrentSection('project');
+                          props.setCurrentId(bug.project.toString());
+                        });
+                    })
+                    .catch((error) => {
+                      props.setErrors(error.response.data);
+                      props.setCurrentSection('project');
+                      props.setCurrentId(bug.project.toString());
+                    });
+                }}
+              >
+                Comment
+              </button>
+            </div>
+            {bug.notes &&
+              bug.notes.length > 0 &&
+              bug.notes.map((note) => (
+                <div className="comment-container" key={note._id}>
+                  <div className="bug-comment">
+                    <p className="comment-date">
+                      <span>{note.createdBy}</span> &middot;
+                      <span> {moment(note.createdAt).fromNow()}</span>
+                    </p>
+                    <p>{note.note}</p>
+                  </div>
+                  <i
+                    className="far fa-trash-alt"
+                    onClick={() => {
+                      axios
+                        .delete(`/api/note/${note._id}`, {
+                          headers: {
+                            Authorization: localStorage.getItem('token'),
+                          },
+                        })
+                        .then(() => {
+                          const bugId = props.currentId;
+                          axios
+                            .get(`/api/bug/${bugId}`, {
+                              headers: {
+                                Authorization: localStorage.getItem('token'),
+                              },
+                            })
+                            .then((response) => {
+                              setBug(response.data);
+                            })
+                            .catch((error) => {
+                              // console.log(error.response.data);
+                              props.setErrors(error.response.data);
+                              props.setCurrentSection('project');
+                              props.setCurrentId(bug.project.toString());
+                            });
+                        })
+                        .catch((error) => {
+                          props.setErrors(error.response.data);
+                          props.setCurrentSection('project');
+                          props.setCurrentId(bug.project.toString());
+                        });
+                    }}
+                  ></i>
                 </div>
-                <i
-                  className="far fa-trash-alt"
-                  onClick={() => {
-                    axios
-                      .delete(`/api/note/${note._id}`, {
-                        headers: {
-                          Authorization: localStorage.getItem('token'),
-                        },
-                      })
-                      .then(() => {
-                        const bugId = props.currentId;
-                        axios
-                          .get(`/api/bug/${bugId}`, {
-                            headers: {
-                              Authorization: localStorage.getItem('token'),
-                            },
-                          })
-                          .then((response) => {
-                            setBug(response.data);
-                          })
-                          .catch((error) => {
-                            // console.log(error.response.data);
-                            props.setErrors(error.response.data);
-                            props.setCurrentSection('project');
-                            props.setCurrentId(bug.project.toString());
-                          });
-                      })
-                      .catch((error) => {
-                        props.setErrors(error.response.data);
-                        props.setCurrentSection('project');
-                        props.setCurrentId(bug.project.toString());
-                      });
-                  }}
-                ></i>
-              </div>
-            ))}
-          {/* <div className="new-comments"></div> */}
-        </div>
-      )}
+              ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -21,7 +21,7 @@ function Navbar(props) {
           <img src={bugLogo} alt="" /> <span>BUG </span> TRACKER
         </Link>
         <i
-          class="fas fa-bars hamburger"
+          className="fas fa-bars hamburger"
           onClick={() => {
             document.querySelector('.hamburger').classList.toggle('nav-open');
             document.querySelector('.nav-list').classList.toggle('nav-open');

@@ -983,7 +983,7 @@ header {
   width: 100%;
   display: grid;
   grid-template-columns: 2fr 2fr 1fr 6fr 1fr;
-  // align-items: center;
+  align-items: center;
   padding: 5px 20px;
   background: $page-background;
   box-shadow: 1px 1px 2px grey;
@@ -1063,18 +1063,21 @@ span[id*='bug-status-'] {
 }
 
 .individual-bug-description {
-  font-weight: 300;
+  width: 500px;
+  margin-bottom: 50px;
+  max-height: fit-content;
+  display: block;
+  color: $text-color;
   text-align: left;
-  width: 600px;
-  // word-wrap: break-word;
-  // border: 1px solid red;
+  font-weight: 300;
 }
 
 .individual-bug-label {
   width: fit-content;
   padding: 2px 15px;
-  color: $page-background;
   display: block;
+  float: left;
+  color: $page-background;
   margin-right: auto;
   border-radius: 75px;
 }
@@ -1374,10 +1377,6 @@ span[id*='bug-status-'] {
     }
   }
 
-  .individual-bug-description {
-    font-size: 14px;
-  }
-
   .bug-creation-date {
     font-size: 14px;
   }
@@ -1429,15 +1428,16 @@ span[id*='bug-status-'] {
     }
   }
 
+  .go-back {
+    left: 10px;
+  }
+
   .search-and-filter {
+    left: 15px;
     select {
       width: 145px;
       font-size: 12px;
     }
-  }
-
-  .individual-bug-description {
-    font-size: 12px;
   }
 
   .bug-creation-date {
@@ -1471,11 +1471,13 @@ span[id*='bug-status-'] {
     font-size: 12px;
   }
 
-  .project-description {
+  .project-description,
+  .individual-bug-description {
     width: 400px;
   }
 
-  .project-name {
+  .project-name,
+  .bug-title {
     font-size: 28px;
   }
 
@@ -1497,6 +1499,16 @@ span[id*='bug-status-'] {
     font-size: 10px;
   }
 
+  // .project-description {
+  //   width: 100% !important;
+  //   text-align: center;
+  // }
+  .containers {
+    padding-right: 0px !important;
+    padding-left: 30px !important;
+    margin-left: 0px !important;
+  }
+
   .bug-preview {
     width: 100%;
     max-width: 100%;
@@ -1510,7 +1522,12 @@ span[id*='bug-status-'] {
     display: none;
   }
 
-  .project-name {
+  .bug-preview {
+    grid-template-columns: 2fr 9fr 1fr;
+  }
+
+  .project-name,
+  .bug-title {
     font-size: 24px;
 
     i {
@@ -1518,7 +1535,8 @@ span[id*='bug-status-'] {
     }
   }
 
-  .project-description {
+  .project-description,
+  .individual-bug-description {
     width: 250px;
   }
 }
