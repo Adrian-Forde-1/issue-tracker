@@ -23,6 +23,7 @@ import {
   setCurrentSection,
   setCurrentId,
   setErrors,
+  clearErrors,
 } from '../redux/actions/userActions';
 
 function IndividualProject(props) {
@@ -67,15 +68,26 @@ function IndividualProject(props) {
         changeProject(response.data);
       })
       .catch((error) => {
-        props.setErrors(error.response.data);
+        props.setErrors(error);
         props.setCurrentSection('');
         props.setCurrentId('');
       });
   }, []);
   return (
     <div className="individual-container">
-      <GoBack section="" id="" />
-      <div className="container">
+      <GoBack
+        section={
+          project.archived === false
+            ? project.group
+              ? 'group'
+              : ''
+            : project.group
+            ? 'group/archived'
+            : 'project/archived'
+        }
+        id={project.group ? `${project.group}` : ''}
+      />
+      <div className="containers">
         <div className="search-and-filter">
           <SearchBar
             onChange={handleSearchChange}
@@ -117,41 +129,81 @@ function IndividualProject(props) {
           })}
 
         {Object.keys(project).length > 0 && (
-          <div>
+          <div className="container-fluid">
             <h2 className="project-name">
               {project.name}{' '}
               {project.createdBy.toString() === user._id.toString() && (
                 <span>
                   <i
-                    className="fas fa-archive"
+                    className={`fas fa-archive ${
+                      project.archived === true && 'remove-archive-sign'
+                    }`}
                     onClick={() => {
-                      axios
-                        .put(`/api/project/${project._id}/archive/add`, null, {
-                          headers: {
-                            Authorization: localStorage.getItem('token'),
-                          },
-                        })
-                        .then(() => {
-                          axios
-                            .get(`/api/project/${projectId}`, {
+                      if (project.archived === false) {
+                        axios
+                          .put(
+                            `/api/project/${project._id}/archive/add`,
+                            null,
+                            {
                               headers: {
                                 Authorization: localStorage.getItem('token'),
                               },
-                            })
-                            .then((response) => {
-                              changeProject(response.data);
-                            })
-                            .catch((error) => {
-                              props.setErrors(error.response.data);
-                              props.setCurrentSection('');
-                              props.setCurrentId('');
-                            });
-                        })
-                        .catch((error) => {
-                          props.setErrors(error.response.data);
-                          props.setCurrentSection('');
-                          props.setCurrentId('');
-                        });
+                            }
+                          )
+                          .then(() => {
+                            axios
+                              .get(`/api/project/${projectId}`, {
+                                headers: {
+                                  Authorization: localStorage.getItem('token'),
+                                },
+                              })
+                              .then((response) => {
+                                changeProject(response.data);
+                              })
+                              .catch((error) => {
+                                props.setErrors(error.response.data);
+                                props.setCurrentSection('');
+                                props.setCurrentId('');
+                              });
+                          })
+                          .catch((error) => {
+                            props.setErrors(error.response.data);
+                            props.setCurrentSection('');
+                            props.setCurrentId('');
+                          });
+                      } else {
+                        axios
+                          .put(
+                            `/api/project/${project._id}/archive/remove`,
+                            null,
+                            {
+                              headers: {
+                                Authorization: localStorage.getItem('token'),
+                              },
+                            }
+                          )
+                          .then(() => {
+                            axios
+                              .get(`/api/project/${projectId}`, {
+                                headers: {
+                                  Authorization: localStorage.getItem('token'),
+                                },
+                              })
+                              .then((response) => {
+                                changeProject(response.data);
+                              })
+                              .catch((error) => {
+                                props.setErrors(error.response.data);
+                                props.setCurrentSection('');
+                                props.setCurrentId('');
+                              });
+                          })
+                          .catch((error) => {
+                            props.setErrors(error.response.data);
+                            props.setCurrentSection('');
+                            props.setCurrentId('');
+                          });
+                      }
                     }}
                   ></i>
                   <i
@@ -163,7 +215,11 @@ function IndividualProject(props) {
                         .querySelector('#modal-root')
                         .appendChild(element);
                       ReactDOM.render(
-                        <DeleteModal item={project} type={'project'} />,
+                        <DeleteModal
+                          item={project}
+                          type={'project'}
+                          groupId={project.group}
+                        />,
                         element
                       );
                     }}
@@ -249,6 +305,7 @@ const mapDispatchToProps = {
   setCurrentSection,
   setCurrentId,
   setErrors,
+  clearErrors,
 };
 
 const mapStateToProps = (state) => ({

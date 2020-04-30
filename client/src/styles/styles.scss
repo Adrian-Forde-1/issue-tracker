@@ -27,6 +27,28 @@ a {
   }
 }
 
+//Utility Start
+.no-top-nav {
+  padding-top: 50px;
+}
+
+.p-t-0 {
+  padding-top: 0px !important;
+}
+
+.p-t-20 {
+  padding-top: 20px !important;
+}
+
+.p-t-85 {
+  padding-top: 85px !important;
+}
+
+.m-l-16 {
+  margin-left: 16px !important;
+}
+//Utility End
+
 //Global Start
 
 .go-back {
@@ -34,6 +56,7 @@ a {
   top: 25px;
   left: 20px;
   cursor: pointer;
+  z-index: 1000;
   i {
     font-size: 24px;
     color: $primary-color;
@@ -131,6 +154,10 @@ a {
 
 .search-extra-info {
   left: 0 !important;
+}
+
+.search-l-50 {
+  left: 50px !important;
 }
 
 .manager-search {
@@ -283,6 +310,21 @@ a {
   z-index: 1000;
 }
 
+.hamburger {
+  color: $primary-color;
+  font-size: 24px;
+  display: none;
+  visibility: hidden;
+  margin-left: auto;
+}
+.manager-hamburger {
+  color: $primary-color;
+  font-size: 24px;
+  display: none;
+  visibility: hidden;
+  margin-left: auto;
+}
+
 .logo {
   height: 100%;
   display: flex;
@@ -308,6 +350,7 @@ a {
   justify-content: flex-end;
   flex: 1;
   margin: auto 0px;
+  transition: all 300ms ease-in-out;
 }
 
 .nav-item {
@@ -504,10 +547,6 @@ header {
   }
 }
 
-.no-top-nav {
-  padding-top: 50px;
-}
-
 .auth-form {
   height: auto;
   padding: 50px 50px;
@@ -589,8 +628,10 @@ header {
 }
 
 .manager-section {
+  min-height: 100vh;
   margin-left: 175px;
   position: relative;
+  top: 0;
   div {
     h3 {
       color: $text-color;
@@ -664,7 +705,6 @@ header {
   box-shadow: 0.5px 0.5px 2px grey;
   // border-radius: 10px;
   color: white;
-  cursor: pointer;
 
   button {
     border: none;
@@ -680,12 +720,35 @@ header {
 }
 
 .delete-btn {
+  color: $text-color;
+  cursor: pointer;
+}
+
+.archive-btn {
   margin-left: auto;
-  border: none;
-  background: none;
-  i {
-    color: $text-color;
+  margin-right: 50px;
+  color: $text-color;
+  cursor: pointer;
+}
+
+.remove-archive-sign {
+  z-index: 1;
+  position: relative;
+  &::after {
+    content: '';
+    height: 2px;
+    width: 30px;
+    position: absolute;
+    top: 50%;
+    left: -7px;
+    background: $text-color;
+    transform: rotateZ(45deg);
+    z-index: -1;
   }
+}
+
+.archived-project-name {
+  padding-left: 0px !important;
 }
 
 .action-btn {
@@ -704,6 +767,14 @@ header {
     text-decoration: none;
   }
 }
+
+.extra-right {
+  right: 150px !important;
+}
+
+.margin-left-auto {
+  margin-left: auto !important;
+}
 //Manager End
 
 //Group Start
@@ -711,15 +782,22 @@ header {
   width: 100%;
   background: $page-background;
 
-  .container {
+  .containers {
+    width: 100%;
+    position: relative;
     padding-top: 0px;
     padding-left: 50px;
+    padding-right: 50px;
     padding-bottom: 0px !important;
-  }
-}
 
-.p-t-20 {
-  padding-top: 20px !important;
+    > div {
+      width: 100%;
+    }
+  }
+
+  .preview {
+    margin-left: 0px !important;
+  }
 }
 
 .group-name {
@@ -727,8 +805,7 @@ header {
   align-items: center;
   color: $primary-color;
   text-align: left;
-  margin-top: 85px;
-  margin-bottom: 30px;
+  padding-top: 85px;
 
   i {
     color: $text-color;
@@ -811,7 +888,6 @@ header {
   color: $text-color;
   text-align: left;
   font-weight: 300;
-  cursor: pointer;
 }
 
 //Project End
@@ -894,6 +970,7 @@ header {
 .bug-preview-container {
   display: flex;
   position: relative;
+  width: 100%;
   div {
     height: fit-content;
     width: 100%;
@@ -903,8 +980,10 @@ header {
 }
 .bug-preview {
   height: 45px;
-  display: flex;
-  align-items: center;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 6fr 1fr;
+  // align-items: center;
   padding: 5px 20px;
   background: $page-background;
   box-shadow: 1px 1px 2px grey;
@@ -935,7 +1014,8 @@ span[id*='bug-status-'] {
 
 .bug-description {
   color: $text-color;
-  width: 500px;
+  max-width: 500px;
+  min-width: auto;
   text-align: left;
   position: relative;
   margin: auto 0px;
@@ -948,6 +1028,7 @@ span[id*='bug-status-'] {
 
 .bug-label {
   max-width: 180px;
+  min-width: auto;
   display: block;
   color: white;
   padding: 1px 15px;
@@ -987,6 +1068,15 @@ span[id*='bug-status-'] {
   width: 600px;
   // word-wrap: break-word;
   // border: 1px solid red;
+}
+
+.individual-bug-label {
+  width: fit-content;
+  padding: 2px 15px;
+  color: $page-background;
+  display: block;
+  margin-right: auto;
+  border-radius: 75px;
 }
 
 .individual-bug-status-container {
@@ -1157,6 +1247,105 @@ span[id*='bug-status-'] {
       justify-content: center;
     }
   }
+
+  .nav-list {
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    right: 0px;
+    top: 0;
+    transform: translateX(240px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background: $primary-color;
+
+    &.nav-open {
+      transform: translateX(0px);
+    }
+  }
+
+  .nav-open {
+    &.hamburger {
+      color: white;
+    }
+  }
+
+  .nav-item {
+    a,
+    button {
+      color: white;
+      text-align: center;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  .hamburger {
+    display: inline;
+    visibility: visible;
+    z-index: 2000;
+    position: absolute;
+    top: 30px;
+    right: 50px;
+    cursor: pointer;
+  }
+
+  .manager-side-nav {
+    transform: translateX(-175px);
+
+    &.nav-open {
+      transform: translateX(0px);
+    }
+  }
+
+  .manager-section {
+    margin-left: 0px;
+  }
+
+  .manager-hamburger {
+    display: inline;
+    visibility: visible;
+    z-index: 2000;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+
+    &.nav-open {
+      transform: translate(175px);
+      i {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .manager-search {
+    margin-left: 40px;
+  }
+
+  .individual-container {
+    font-size: 14px;
+    .containers {
+      margin-left: 5px;
+      padding-right: 10px;
+      // margin-right: 5px !important;
+    }
+  }
+
+  .bug-preview {
+    width: 90%;
+  }
+
+  .bug-description {
+    max-width: 400px;
+  }
+
+  .bug-label {
+    max-width: 150px;
+  }
 }
 @media screen and (max-width: 768px) {
   .manager-action-btn {
@@ -1207,6 +1396,22 @@ span[id*='bug-status-'] {
         width: fit-content;
       }
     }
+  }
+
+  .bug-preview {
+    width: 80%;
+  }
+
+  .bug-description {
+    max-width: 270px;
+  }
+
+  .bug-label {
+    max-width: 120px;
+  }
+
+  .search {
+    font-size: 14px;
   }
 }
 @media screen and (max-width: 576px) {
@@ -1261,10 +1466,59 @@ span[id*='bug-status-'] {
     bottom: 50px;
     right: 50px;
   }
+
+  .individual-container {
+    font-size: 12px;
+  }
+
+  .project-description {
+    width: 400px;
+  }
+
+  .project-name {
+    font-size: 28px;
+  }
+
+  .bug-label {
+    max-width: 100px;
+  }
+
+  .bug-description {
+    max-width: 100px;
+  }
+
+  .search {
+    font-size: 12px;
+  }
 }
 
 @media screen and (max-width: 500px) {
   .manager-action-btn {
     font-size: 10px;
+  }
+
+  .bug-preview {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .bug-description {
+    display: none;
+  }
+
+  .bug-label {
+    display: none;
+  }
+
+  .project-name {
+    font-size: 24px;
+
+    i {
+      font-size: 12px;
+    }
+  }
+
+  .project-description {
+    width: 250px;
   }
 }

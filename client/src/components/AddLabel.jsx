@@ -84,7 +84,7 @@ class AddLabel extends Component {
       );
     };
     return (
-      <div className="form-container">
+      <div className="form-container p-t-0">
         <GoBack section="project/labels" id={this.props.currentId} />
         <div className="container">
           <div className="auth-form">

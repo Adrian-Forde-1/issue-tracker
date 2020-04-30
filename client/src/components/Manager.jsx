@@ -20,6 +20,10 @@ import NewBug from './NewBug';
 import CreateProject from './CreateProject';
 import CreateGroup from './CreateGroup';
 import CreateGroupProject from './CreateGroupProject';
+import ArchivedProjects from './ArchivedProjects';
+import EditBug from './EditBug';
+import ArchivedGroupProjects from './ArchivedGroupProjects';
+import JoinGroup from './JoinGroup';
 
 //React Router Dom
 import { Link } from 'react-router-dom';
@@ -148,6 +152,22 @@ class Manager extends Component {
           </div>
           <div className="manager-content">
             {this.props.currentSection === '' && (
+              <div className="manager-hamburger">
+                <i
+                  className="fas fa-caret-square-right "
+                  onClick={() => {
+                    document
+                      .querySelector('.manager-hamburger')
+                      .classList.toggle('nav-open');
+                    document
+                      .querySelector('.manager-side-nav')
+                      .classList.toggle('nav-open');
+                  }}
+                ></i>
+              </div>
+            )}
+
+            {this.props.currentSection === '' && (
               <SearchBar
                 onChange={this.onChange}
                 search={this.state.search}
@@ -172,26 +192,40 @@ class Manager extends Component {
                     <AllGroups search={this.state.search} />
                   </div>
                 )}
+
+              {/* Project */}
               {this.props.currentSection === 'project' &&
                 this.props.currentId !== '' && <IndividualProject />}
-              {this.props.currentSection === 'group' &&
-                this.props.currentId !== '' && <IndividualGroup />}
-              {this.props.currentSection === 'bug' &&
-                this.props.currentId !== '' && <IndividualBug />}
-              {this.props.currentSection === 'project/labels' &&
-                this.props.currentId !== '' && <Labels />}
-              {this.props.currentSection === 'project/create' && (
-                <CreateProject />
-              )}
-              {this.props.currentSection === 'group/create' && <CreateGroup />}
-              {this.props.currentSection === 'group/create/project' &&
-                this.props.currentId !== '' && <CreateGroupProject />}
               {this.props.currentSection === 'project/label/create' &&
                 this.props.currentId !== '' && <AddLabel />}
               {this.props.currentSection === 'project/label/edit' &&
                 this.props.currentId !== '' && <EditLabel />}
               {this.props.currentSection === 'project/bug/new' &&
                 this.props.currentId !== '' && <NewBug />}
+              {this.props.currentSection === 'project/bug/edit' &&
+                this.props.currentId !== '' && <EditBug />}
+              {this.props.currentSection === 'project/labels' &&
+                this.props.currentId !== '' && <Labels />}
+              {this.props.currentSection === 'project/create' && (
+                <CreateProject />
+              )}
+              {this.props.currentSection === 'project/archived' && (
+                <ArchivedProjects search={this.state.search} />
+              )}
+
+              {/* Bug */}
+              {this.props.currentSection === 'bug' &&
+                this.props.currentId !== '' && <IndividualBug />}
+
+              {/* Group */}
+              {this.props.currentSection === 'group/create' && <CreateGroup />}
+              {this.props.currentSection === 'group/join' && <JoinGroup />}
+              {this.props.currentSection === 'group/create/project' &&
+                this.props.currentId !== '' && <CreateGroupProject />}
+              {this.props.currentSection === 'group' &&
+                this.props.currentId !== '' && <IndividualGroup />}
+              {this.props.currentSection === 'group/archived' &&
+                this.props.currentId !== '' && <ArchivedGroupProjects />}
             </div>
           </div>
           {this.props.currentSection === '' && (
@@ -206,6 +240,24 @@ class Manager extends Component {
                   this.props.setCurrentSection('group/create');
                   this.props.setCurrentId('');
                 }
+              }}
+            ></i>
+          )}
+
+          {this.props.currentSection === '' &&
+            this.state.section === 'projects' && (
+              <i
+                className="fas fa-archive action-btn extra-right"
+                onClick={() => {
+                  this.props.setCurrentSection('project/archived');
+                }}
+              ></i>
+            )}
+          {this.props.currentSection === 'group' && (
+            <i
+              className="fas fa-archive action-btn extra-right"
+              onClick={() => {
+                this.props.setCurrentSection('group/archived');
               }}
             ></i>
           )}

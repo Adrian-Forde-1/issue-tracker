@@ -58,7 +58,7 @@ class CreateProject extends Component {
   };
   render() {
     return (
-      <div className="form-container no-top-nav">
+      <div className="form-container p-t-0">
         <GoBack section="" id="" />
         <div className="container">
           <div className="auth-form">

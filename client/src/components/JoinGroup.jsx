@@ -4,7 +4,13 @@ import axios from 'axios';
 //Components
 import GoBack from './GoBack';
 
-export class JoinGroup extends Component {
+//Redux
+import { connect } from 'react-redux';
+
+//Actions
+import { clearCurrentSectionAndId } from '../redux/actions/userActions';
+
+class JoinGroup extends Component {
   constructor(props) {
     super(props);
 
@@ -38,12 +44,12 @@ export class JoinGroup extends Component {
         { headers: { Authorization: localStorage.getItem('token') } }
       )
       .then(() => {
-        this.props.history.goBack();
+        this.props.clearCurrentSectionAndId();
       });
   };
   render() {
     return (
-      <div className="form-container">
+      <div className="form-container p-t-0">
         <GoBack />
         <div className="container">
           <div className="auth-form">
@@ -78,4 +84,12 @@ export class JoinGroup extends Component {
   }
 }
 
-export default JoinGroup;
+const mapDispatchToProps = {
+  clearCurrentSectionAndId,
+};
+
+const mapStateToProps = (state) => ({
+  currentId: state.user.currentId,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(JoinGroup);

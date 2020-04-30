@@ -74,7 +74,7 @@ function IndividualBug(props) {
 
     axios
       .put(
-        `/api/bug/${bug._id}`,
+        `/api/bug/${bug._id}/status`,
         { bug: newStatus },
         { headers: { Authorization: localStorage.getItem('token') } }
       )
@@ -88,8 +88,10 @@ function IndividualBug(props) {
   return (
     <div className="individual-container">
       {Object.keys(bug).length > 0 && (
-        <div className="container p-t-20">
-          <GoBack section="project" id={bug.project.toString()} />
+        <GoBack section="project" id={bug.project._id} />
+      )}
+      {Object.keys(bug).length > 0 && (
+        <div className="containers p-t-20">
           {props.errors !== null && props.errors['bug']
             ? !toast.isActive('bugtoast') &&
               toast(props.errors.bug, {
@@ -115,24 +117,40 @@ function IndividualBug(props) {
           <h3 className="bug-title">
             <span>{bug.name}</span>{' '}
             {bug.createdBy._id.toString() === props.user._id.toString() && (
-              <i
-                className="far fa-trash-alt"
-                onClick={() => {
-                  const element = document.createElement('div');
-                  element.classList.add('modal-element');
-                  document.querySelector('#modal-root').appendChild(element);
-                  ReactDOM.render(
-                    <DeleteModal
-                      item={bug}
-                      type={'bug'}
-                      history={props.history}
-                    />,
-                    element
-                  );
-                }}
-              ></i>
+              <div>
+                {' '}
+                <i
+                  className="far fa-edit"
+                  onClick={() => {
+                    props.setCurrentSection('project/bug/edit');
+                    props.setCurrentId(props.currentId);
+                  }}
+                ></i>
+                <i
+                  className="far fa-trash-alt"
+                  onClick={() => {
+                    const element = document.createElement('div');
+                    element.classList.add('modal-element');
+                    document.querySelector('#modal-root').appendChild(element);
+                    ReactDOM.render(
+                      <DeleteModal
+                        item={bug}
+                        type={'bug'}
+                        history={props.history}
+                      />,
+                      element
+                    );
+                  }}
+                ></i>
+              </div>
             )}
           </h3>
+          <div
+            className="individual-bug-label"
+            style={{ background: `${bug.label.color}` }}
+          >
+            {bug.label.name}
+          </div>
           <div className="bug-creation-date">
             Created By
             <span> {bug.createdBy.username} </span>

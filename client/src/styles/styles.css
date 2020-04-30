@@ -22,11 +22,32 @@ a p {
   color: white;
 }
 
+.no-top-nav {
+  padding-top: 50px;
+}
+
+.p-t-0 {
+  padding-top: 0px !important;
+}
+
+.p-t-20 {
+  padding-top: 20px !important;
+}
+
+.p-t-85 {
+  padding-top: 85px !important;
+}
+
+.m-l-16 {
+  margin-left: 16px !important;
+}
+
 .go-back {
   position: absolute;
   top: 25px;
   left: 20px;
   cursor: pointer;
+  z-index: 1000;
 }
 
 .go-back i {
@@ -137,6 +158,10 @@ a p {
 
 .search-extra-info {
   left: 0 !important;
+}
+
+.search-l-50 {
+  left: 50px !important;
 }
 
 .manager-search {
@@ -310,6 +335,22 @@ a p {
   z-index: 1000;
 }
 
+.hamburger {
+  color: #2e00b1;
+  font-size: 24px;
+  display: none;
+  visibility: hidden;
+  margin-left: auto;
+}
+
+.manager-hamburger {
+  color: #2e00b1;
+  font-size: 24px;
+  display: none;
+  visibility: hidden;
+  margin-left: auto;
+}
+
 .logo {
   height: 100%;
   display: -webkit-box;
@@ -345,6 +386,8 @@ a p {
       -ms-flex: 1;
           flex: 1;
   margin: auto 0px;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
 }
 
 .nav-item {
@@ -541,10 +584,6 @@ header::after {
   background-position-x: center;
 }
 
-.no-top-nav {
-  padding-top: 50px;
-}
-
 .auth-form {
   height: auto;
   padding: 50px 50px;
@@ -629,8 +668,10 @@ header::after {
 }
 
 .manager-section {
+  min-height: 100vh;
   margin-left: 175px;
   position: relative;
+  top: 0;
 }
 
 .manager-section div h3 {
@@ -720,7 +761,6 @@ header::after {
   -webkit-box-shadow: 0.5px 0.5px 2px grey;
           box-shadow: 0.5px 0.5px 2px grey;
   color: white;
-  cursor: pointer;
 }
 
 .preview button {
@@ -736,13 +776,37 @@ header::after {
 }
 
 .delete-btn {
-  margin-left: auto;
-  border: none;
-  background: none;
+  color: #0f003a;
+  cursor: pointer;
 }
 
-.delete-btn i {
+.archive-btn {
+  margin-left: auto;
+  margin-right: 50px;
   color: #0f003a;
+  cursor: pointer;
+}
+
+.remove-archive-sign {
+  z-index: 1;
+  position: relative;
+}
+
+.remove-archive-sign::after {
+  content: '';
+  height: 2px;
+  width: 30px;
+  position: absolute;
+  top: 50%;
+  left: -7px;
+  background: #0f003a;
+  -webkit-transform: rotateZ(45deg);
+          transform: rotateZ(45deg);
+  z-index: -1;
+}
+
+.archived-project-name {
+  padding-left: 0px !important;
 }
 
 .action-btn {
@@ -768,19 +832,34 @@ header::after {
   text-decoration: none;
 }
 
+.extra-right {
+  right: 150px !important;
+}
+
+.margin-left-auto {
+  margin-left: auto !important;
+}
+
 .individual-container {
   width: 100%;
   background: #fdfcff;
 }
 
-.individual-container .container {
+.individual-container .containers {
+  width: 100%;
+  position: relative;
   padding-top: 0px;
   padding-left: 50px;
+  padding-right: 50px;
   padding-bottom: 0px !important;
 }
 
-.p-t-20 {
-  padding-top: 20px !important;
+.individual-container .containers > div {
+  width: 100%;
+}
+
+.individual-container .preview {
+  margin-left: 0px !important;
 }
 
 .group-name {
@@ -792,8 +871,7 @@ header::after {
           align-items: center;
   color: #2e00b1;
   text-align: left;
-  margin-top: 85px;
-  margin-bottom: 30px;
+  padding-top: 85px;
 }
 
 .group-name i {
@@ -880,7 +958,6 @@ header::after {
   color: #0f003a;
   text-align: left;
   font-weight: 300;
-  cursor: pointer;
 }
 
 .labels {
@@ -972,6 +1049,7 @@ header::after {
   display: -ms-flexbox;
   display: flex;
   position: relative;
+  width: 100%;
 }
 
 .bug-preview-container div {
@@ -985,12 +1063,11 @@ header::after {
 
 .bug-preview {
   height: 45px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 2fr 2fr 1fr 6fr 1fr;
+      grid-template-columns: 2fr 2fr 1fr 6fr 1fr;
   padding: 5px 20px;
   background: #fdfcff;
   -webkit-box-shadow: 1px 1px 2px grey;
@@ -1022,7 +1099,8 @@ span[id*='bug-status-'] {
 
 .bug-description {
   color: #0f003a;
-  width: 500px;
+  max-width: 500px;
+  min-width: auto;
   text-align: left;
   position: relative;
   margin: auto 0px;
@@ -1035,6 +1113,7 @@ span[id*='bug-status-'] {
 
 .bug-label {
   max-width: 180px;
+  min-width: auto;
   display: block;
   color: white;
   padding: 1px 15px;
@@ -1079,6 +1158,17 @@ span[id*='bug-status-'] {
   font-weight: 300;
   text-align: left;
   width: 600px;
+}
+
+.individual-bug-label {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 2px 15px;
+  color: #fdfcff;
+  display: block;
+  margin-right: auto;
+  border-radius: 75px;
 }
 
 .individual-bug-status-container {
@@ -1254,6 +1344,98 @@ span[id*='bug-status-'] {
         -ms-flex-pack: center;
             justify-content: center;
   }
+  .nav-list {
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    right: 0px;
+    top: 0;
+    -webkit-transform: translateX(240px);
+            transform: translateX(240px);
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+    background: #2e00b1;
+  }
+  .nav-list.nav-open {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+  .nav-open.hamburger {
+    color: white;
+  }
+  .nav-item a,
+  .nav-item button {
+    color: white;
+    text-align: center;
+  }
+  .nav-item a:hover,
+  .nav-item button:hover {
+    color: white;
+  }
+  .hamburger {
+    display: inline;
+    visibility: visible;
+    z-index: 2000;
+    position: absolute;
+    top: 30px;
+    right: 50px;
+    cursor: pointer;
+  }
+  .manager-side-nav {
+    -webkit-transform: translateX(-175px);
+            transform: translateX(-175px);
+  }
+  .manager-side-nav.nav-open {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+  .manager-section {
+    margin-left: 0px;
+  }
+  .manager-hamburger {
+    display: inline;
+    visibility: visible;
+    z-index: 2000;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+  }
+  .manager-hamburger.nav-open {
+    -webkit-transform: translate(175px);
+            transform: translate(175px);
+  }
+  .manager-hamburger.nav-open i {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+  .manager-search {
+    margin-left: 40px;
+  }
+  .individual-container {
+    font-size: 14px;
+  }
+  .individual-container .containers {
+    margin-left: 5px;
+    padding-right: 10px;
+  }
+  .bug-preview {
+    width: 90%;
+  }
+  .bug-description {
+    max-width: 400px;
+  }
+  .bug-label {
+    max-width: 150px;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -1290,6 +1472,18 @@ span[id*='bug-status-'] {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
+  }
+  .bug-preview {
+    width: 80%;
+  }
+  .bug-description {
+    max-width: 270px;
+  }
+  .bug-label {
+    max-width: 120px;
+  }
+  .search {
+    font-size: 14px;
   }
 }
 
@@ -1329,11 +1523,48 @@ span[id*='bug-status-'] {
     bottom: 50px;
     right: 50px;
   }
+  .individual-container {
+    font-size: 12px;
+  }
+  .project-description {
+    width: 400px;
+  }
+  .project-name {
+    font-size: 28px;
+  }
+  .bug-label {
+    max-width: 100px;
+  }
+  .bug-description {
+    max-width: 100px;
+  }
+  .search {
+    font-size: 12px;
+  }
 }
 
 @media screen and (max-width: 500px) {
   .manager-action-btn {
     font-size: 10px;
+  }
+  .bug-preview {
+    width: 100%;
+    max-width: 100%;
+  }
+  .bug-description {
+    display: none;
+  }
+  .bug-label {
+    display: none;
+  }
+  .project-name {
+    font-size: 24px;
+  }
+  .project-name i {
+    font-size: 12px;
+  }
+  .project-description {
+    width: 250px;
   }
 }
 /*# sourceMappingURL=styles.css.map */

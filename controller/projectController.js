@@ -262,7 +262,7 @@ module.exports = {
           //If something went wrong when looking for project, notify user
           if (err) {
             console.error(err);
-            errors.project = 'Error occured when fetching project';
+            errors.project = 'Error occured';
             return res.status(500).json(errors);
           }
 
@@ -282,7 +282,7 @@ module.exports = {
       .exec(function (err, projects) {
         //If something went wrong when fetching projects, notify user
         if (err) {
-          errors.project = 'Error occured when fetching projects';
+          errors.project = 'Error occured';
           console.error(err);
           return res.status(500).json(errors);
         }
@@ -301,7 +301,7 @@ module.exports = {
           //If error occured when fetching project, notfiy user
           if (err) {
             console.error(err);
-            errors.project = 'Error occured when fetching project';
+            errors.project = 'Error occured';
             return res.status(500).json(errors);
           }
 
@@ -325,7 +325,7 @@ module.exports = {
               //If error occured when updating project labels, notfiy user
               if (err) {
                 console.error(err);
-                errors.project = 'Error occured when updating project labels';
+                errors.project = 'Error occured';
                 return res.status(500).json(errors);
               }
 
@@ -357,7 +357,7 @@ module.exports = {
           //If error occured when fetching project, notfiy user
           if (err) {
             console.error(err);
-            errors.project = 'Error occured when fetching project';
+            errors.project = 'Error occured';
             return res.status(500).json(errors);
           }
 
@@ -453,28 +453,20 @@ module.exports = {
       let messages = {};
       const projectId = req.params.projectId;
 
-      ProjectModel.findById(projectId).exec(function (err, project) {
-        //Error occrued? Notify User
-        if (err) {
-          errors.project = 'Error occured';
-          return res.status(500).json(errors);
-        }
-
-        //Everything went well, add project to archive
-        ProjectModel.findByIdAndUpdate(projectId, { archive: true }).exec(
-          function (err, project) {
-            //Error occrued? Notify User
-            if (err) {
-              errors.project = 'Error occured';
-              return res.status(500).json(errors);
-            }
-
-            //Everything went well, notify user
-            messages.project = 'Project successfully archived';
-            return res.json(messages);
+      //Everything went well, add project to archive
+      ProjectModel.findByIdAndUpdate(projectId, { archived: true }).exec(
+        function (err, project) {
+          //Error occrued? Notify User
+          if (err) {
+            errors.project = 'Error occured';
+            return res.status(500).json(errors);
           }
-        );
-      });
+
+          //Everything went well, notify user
+          messages.project = 'Project successfully archived';
+          return res.json(messages);
+        }
+      );
     } else {
       let errors = {};
       errors.project = 'Error occured';
@@ -487,32 +479,44 @@ module.exports = {
       let messages = {};
       const projectId = req.params.projectId;
 
-      ProjectModel.findById(projectId).exec(function (err, project) {
-        //Error occrued? Notify User
-        if (err) {
-          errors.project = 'Error occured';
-          return res.status(500).json(errors);
-        }
-
-        //Everything went well, remove project from archive
-        ProjectModel.findByIdAndUpdate(projectId, { archive: false }).exec(
-          function (err, project) {
-            //Error occrued? Notify User
-            if (err) {
-              errors.project = 'Error occured';
-              return res.status(500).json(errors);
-            }
-
-            //Everything went well, notify user
-            messages.project = 'Project successfully removed from archived';
-            return res.json(messages);
+      //Everything went well, remove project from archive
+      ProjectModel.findByIdAndUpdate(projectId, { archived: false }).exec(
+        function (err, project) {
+          //Error occrued? Notify User
+          if (err) {
+            errors.project = 'Error occured';
+            return res.status(500).json(errors);
           }
-        );
-      });
+
+          //Everything went well, notify user
+          messages.project = 'Project successfully removed from archived';
+          return res.json(messages);
+        }
+      );
     } else {
       let errors = {};
       errors.project = 'Error occured';
       return res.status(400).json(errors);
     }
+  },
+  getArchivedProjects: (req, res) => {
+    let errors = {};
+    const userId = req.user._id;
+    //Find all projects created by a certain user
+    ProjectModel.find({
+      $and: [{ createdBy: userId }, { group: null }, { archived: true }],
+    })
+      .populate('bugs')
+      .exec(function (err, projects) {
+        //If something went wrong when fetching projects, notify user
+        if (err) {
+          errors.project = 'Error occured';
+          console.error(err);
+          return res.status(500).json(errors);
+        }
+
+        //If everything went well, return projects
+        return res.json(projects);
+      });
   },
 };

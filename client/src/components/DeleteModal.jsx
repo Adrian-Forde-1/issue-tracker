@@ -7,17 +7,22 @@ import store from '../redux/store';
 //Actions
 import { getUserProjects } from '../redux/actions/projectActions';
 import { getUserGroups } from '../redux/actions/groupActions';
+import {
+  setCurrentSection,
+  setCurrentId,
+  clearCurrentSectionAndId,
+} from '../redux/actions/userActions';
 import { SET_ERRORS } from '../redux/actions/types';
 
 function DeleteModal(props) {
-  const { item, type, history } = props;
+  const { item, type, groupId } = props;
 
   const closeModal = () => {
     const element = document.querySelector('.modal-element');
     document.querySelector('#modal-root').removeChild(element);
   };
 
-  const deleteItem = (type, id, history, cb) => {
+  const deleteItem = (type, id, groupId, cb) => {
     axios
       .delete(`/api/${type}/${id}`, {
         headers: { Authorization: localStorage.getItem('token') },
@@ -25,21 +30,25 @@ function DeleteModal(props) {
       .then(() => {
         if (type === 'project') {
           store.dispatch(getUserProjects(localStorage.getItem('token')));
+          if (groupId !== null) {
+            store.dispatch(clearCurrentSectionAndId());
+            store.dispatch(setCurrentSection('group'));
+            store.dispatch(setCurrentId(groupId));
+            store.dispatch(getUserGroups(localStorage.getItem('token')));
+            // axios.get(`/api/group/${groupId}`, {headers: {Authorization: localStorage.getItem('token')}}).then(response => {
+
+            // })
+          }
           cb();
-          if (item['group'] !== null) {
-            if (history !== null) history.goBack();
-          } else if (history !== null) history.goBack();
         }
         if (type === 'bug') {
           store.dispatch(getUserProjects(localStorage.getItem('token')));
           cb();
-          if (history !== null) history.goBack();
         }
 
         if (type === 'group') {
           store.dispatch(getUserGroups(localStorage.getItem('token')));
           cb();
-          if (history !== null) history.goBack();
         }
       })
       .catch((error) => {
@@ -55,7 +64,7 @@ function DeleteModal(props) {
         <div className="modal-btn-container">
           <button
             onClick={() => {
-              deleteItem(type, item._id, history, closeModal);
+              deleteItem(type, item._id, groupId, closeModal);
             }}
           >
             Yes

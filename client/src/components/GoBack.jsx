@@ -10,6 +10,7 @@ function GoBack(props) {
     <div
       className="go-back"
       onClick={() => {
+        console.log(props.id);
         props.setCurrentSection(props.section);
         props.setCurrentId(props.id || props.currentId);
       }}

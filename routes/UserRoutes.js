@@ -13,10 +13,10 @@ const {
   createGroup,
   deleteGroup,
   leaveGroup,
-  getProjectsFromGroup,
   joinGroup,
   getGroup,
   getGroups,
+  getArchivedGroupProjects,
 } = require('../controller/groupController');
 
 //Project Controller Imports
@@ -31,6 +31,7 @@ const {
   editLabel,
   addToArchive,
   removeFromArchive,
+  getArchivedProjects,
 } = require('../controller/projectController');
 
 //Bug Controller Imports
@@ -38,6 +39,7 @@ const {
   createBug,
   deleteBug,
   editBug,
+  editBugStatus,
   getBug,
 } = require('../controller/bugController');
 
@@ -60,6 +62,11 @@ router.get('/user', passportJWT, getUser);
 // router.get('/projectsFromGroup/:groupId', passportJWT, getProjectsFromGroup);
 router.get('/group/:groupId', passportJWT, getGroup);
 router.get('/groups', passportJWT, getGroups);
+router.get(
+  '/group/:groupId/projects/archived',
+  passportJWT,
+  getArchivedGroupProjects
+);
 router.post('/group', passportJWT, createGroup);
 router.put('/leave/group/:groupId', passportJWT, leaveGroup);
 router.delete('/group/:groupId', passportJWT, deleteGroup);
@@ -68,6 +75,7 @@ router.post('/join/group', passportJWT, joinGroup);
 //Project Routes
 router.get('/project/:projectId', passportJWT, getProject);
 router.get('/projects', passportJWT, getProjects);
+router.get('/projects/archived', passportJWT, getArchivedProjects);
 router.post('/project', passportJWT, createProject);
 router.post('/project/:projectId/label/create', passportJWT, addLabel);
 router.delete('/project/:projectId/label/:labelId', passportJWT, deleteLabel);
@@ -85,6 +93,7 @@ router.delete('/project/:projectId', passportJWT, deleteProject);
 router.get('/bug/:bugId', passportJWT, getBug);
 router.post('/bug', passportJWT, createBug);
 router.put('/bug/:bugId', passportJWT, editBug);
+router.put('/bug/:bugId/status', passportJWT, editBugStatus);
 router.delete('/bug/:bugId', passportJWT, deleteBug);
 
 router.post('/note', passportJWT, createNote);

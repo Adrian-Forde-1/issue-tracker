@@ -32,16 +32,19 @@ function IndividualGroup(props) {
   const groupId = props.currentId;
 
   useEffect(() => {
-    var fetchGroup = [...props.groups];
-    fetchGroup = fetchGroup.find(
-      (group) => group._id.toString() === groupId.toString()
-    );
-
-    if (fetchGroup !== null) {
-      props.setProjects(fetchGroup.projects);
-      changeGroup(fetchGroup);
-    }
-  }, [props.groups]);
+    axios
+      .get(`/api/group/${groupId}`, {
+        headers: { Authorization: localStorage.getItem('token') },
+      })
+      .then((response) => {
+        changeGroup(response.data);
+      })
+      .catch((error) => {
+        props.setErrors(error);
+        props.setCurrentSection('');
+        props.setCurrentId('');
+      });
+  }, []);
 
   const handleSearchChange = (e) => {
     sessionStorage.setItem('project-search', e.target.value);
@@ -51,8 +54,12 @@ function IndividualGroup(props) {
   return (
     <div className="individual-container">
       <GoBack secion="" id="" />
-      <div className="container">
-        <SearchBar onChange={handleSearchChange} search={search} />
+      <div className="containers">
+        <SearchBar
+          onChange={handleSearchChange}
+          search={search}
+          extraClass="search-l-50"
+        />
         {props.errors !== null &&
           props.errors['project'] &&
           !toast.isActive('projecttoast') &&
@@ -70,46 +77,52 @@ function IndividualGroup(props) {
             <h2 className="group-name">
               {group.name}{' '}
               {group.createdBy.toString() === props.user._id.toString() ? (
-                <i
-                  className="far fa-trash-alt"
-                  onClick={() => {
-                    const element = document.createElement('div');
-                    element.classList.add('modal-element');
-                    document.querySelector('#modal-root').appendChild(element);
-                    ReactDOM.render(
-                      <DeleteModal item={group} type={'group'} />,
-                      element
-                    );
-                  }}
-                ></i>
+                <span>
+                  <i
+                    className="far fa-trash-alt"
+                    onClick={() => {
+                      const element = document.createElement('div');
+                      element.classList.add('modal-element');
+                      document
+                        .querySelector('#modal-root')
+                        .appendChild(element);
+                      ReactDOM.render(
+                        <DeleteModal item={group} type={'group'} />,
+                        element
+                      );
+                    }}
+                  ></i>
+                </span>
               ) : (
-                <i
-                  className="fas fa-door-open"
-                  onClick={() => {
-                    axios
-                      .put(`/api/leave/group/${groupId}`, null, {
-                        headers: {
-                          Authorization: localStorage.getItem('token'),
-                        },
-                      })
-                      .then(() => {
-                        props.setCurrentSection('');
-                        props.setCurrentId('');
-                      })
-                      .catch((error) => {
-                        props.setErrors(error.response.data);
-                        props.setCurrentSection('');
-                        props.setCurrentId('');
-                      });
-                  }}
-                ></i>
+                <span>
+                  <i
+                    className="fas fa-door-open"
+                    onClick={() => {
+                      axios
+                        .put(`/api/leave/group/${groupId}`, null, {
+                          headers: {
+                            Authorization: localStorage.getItem('token'),
+                          },
+                        })
+                        .then(() => {
+                          props.setCurrentSection('');
+                          props.setCurrentId('');
+                        })
+                        .catch((error) => {
+                          props.setErrors(error.response.data);
+                          props.setCurrentSection('');
+                          props.setCurrentId('');
+                        });
+                    }}
+                  ></i>
+                </span>
               )}
             </h2>
             <p className="group-id">
               <span>Id: </span>
               {group._id}
             </p>
-            <div className="action-bar"></div>
+
             <AllGroupProjects search={search} />
           </div>
         )}

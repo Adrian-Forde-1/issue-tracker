@@ -20,13 +20,25 @@ function Navbar(props) {
         <Link to="/" className="logo">
           <img src={bugLogo} alt="" /> <span>BUG </span> TRACKER
         </Link>
+        <i
+          class="fas fa-bars hamburger"
+          onClick={() => {
+            document.querySelector('.hamburger').classList.toggle('nav-open');
+            document.querySelector('.nav-list').classList.toggle('nav-open');
+          }}
+        ></i>
         <ul className="nav-list">
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link to="/aboutus">About Us</Link>
           </li>
           <li className="nav-item">
             <Link to="/pricing">Pricing</Link>
-          </li>
+          </li> */}
+          {authenticated === false && (
+            <li className="nav-item">
+              <Link to="/login">Login</Link>
+            </li>
+          )}
           {authenticated === false ? (
             <li className="nav-item">
               <Link to="/signup">Sign Up</Link>

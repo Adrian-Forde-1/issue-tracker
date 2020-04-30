@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 //Redux
 import store from '../redux/store';
+import { connect } from 'react-redux';
 
 //Actions
 import { getUserGroups } from '../redux/actions/groupActions';
+import { setCurrentSection } from '../redux/actions/userActions';
 
 //Compoenents
 import GroupPreview from './GroupPreview';
@@ -25,7 +27,16 @@ function AllGroups(props) {
   }, []);
 
   return (
-    <div className="item-row" id="groups">
+    <div className="d-flex flex-column" id="groups">
+      <div className="action-bar m-l-16">
+        <button
+          onClick={() => {
+            props.setCurrentSection('group/join');
+          }}
+        >
+          Join Group
+        </button>
+      </div>
       {groups && groups.length > 0 && props.search === ''
         ? groups.map((group) => <GroupPreview group={group} key={group._id} />)
         : groups.map((group) => {
@@ -38,4 +49,8 @@ function AllGroups(props) {
   );
 }
 
-export default AllGroups;
+const mapDispatchToProps = {
+  setCurrentSection,
+};
+
+export default connect(null, mapDispatchToProps)(AllGroups);

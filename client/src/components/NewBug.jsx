@@ -97,7 +97,7 @@ class NewBug extends Component {
   };
   render() {
     return (
-      <div className="form-container no-top-nav">
+      <div className="form-container p-t-0">
         <GoBack section="project" />
         <div className="container">
           <div className="auth-form">

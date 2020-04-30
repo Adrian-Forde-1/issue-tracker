@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 //Actions
 import { getUserGroups } from '../redux/actions/groupActions';
+import { clearCurrentSectionAndId } from '../redux/actions/userActions';
 import { SET_ERRORS } from '../redux/actions/types';
 
 //Components
@@ -28,13 +29,14 @@ function AllGroupProjects(props) {
       })
       .catch((error) => {
         store.dispatch({ type: SET_ERRORS, payload: error });
+        props.clearCurrentSectionAndId();
       });
 
     store.dispatch(getUserGroups(props.userId));
   }, []);
 
   return (
-    <div className="projects-container" id="projects">
+    <div className="d-flex flex-column">
       {projects && projects.length > 0 && props.search === ''
         ? projects.map((project) => {
             if (project.archived === false) {
@@ -53,8 +55,13 @@ function AllGroupProjects(props) {
   );
 }
 
+const mapDispatchToProps = {
+  clearCurrentSectionAndId,
+};
+
 const mapStateToProps = (state) => ({
   currentId: state.user.currentId,
+  projects: state.projects.projects,
 });
 
-export default connect(mapStateToProps)(AllGroupProjects);
+export default connect(mapStateToProps, mapDispatchToProps)(AllGroupProjects);

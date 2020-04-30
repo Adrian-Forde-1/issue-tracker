@@ -77,6 +77,44 @@ module.exports = {
         let errors = {};
         const bugId = req.params.bugId;
 
+        const bugInfo = req.body.bug;
+
+        BugModel.findByIdAndUpdate(bugId, {
+          $set: {
+            name: bugInfo.name,
+            description: bugInfo.description,
+            label: bugInfo.label,
+          },
+        }).exec(function (err, bug) {
+          //If error occured, notify user
+          if (err) {
+            console.error(err);
+            error.bug = 'Error occured when updating bug';
+            return res.status(500).json(errors);
+          }
+
+          //If everything went well, notify user
+          messages.bug = 'Successfully updated bug';
+          return res.json(messages);
+        });
+      } else {
+        let errors = {};
+        errors.bug = 'Bug Not Found';
+        return res.status(404).json(errors);
+      }
+    } else {
+      let errors = {};
+      errors.bug = 'Opps! Something went wrong';
+      return res.status(400).json(errors);
+    }
+  },
+  editBugStatus: (req, res) => {
+    if (req.body.bug) {
+      if (req.params.bugId) {
+        let messages = {};
+        let errors = {};
+        const bugId = req.params.bugId;
+
         const newStatus = req.body.bug;
 
         BugModel.findByIdAndUpdate(bugId, { status: newStatus }).exec(function (
@@ -134,7 +172,7 @@ module.exports = {
       let errors = {};
       const bugId = req.params.bugId;
       BugModel.findById(bugId)
-        .populate('createdBy notes')
+        .populate('createdBy notes project')
         .exec(function (err, bug) {
           //If something went wrong when fetching bug, notify user
           if (err) {

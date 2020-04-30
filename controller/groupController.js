@@ -276,9 +276,9 @@ module.exports = {
     }
   },
   getGroup: (req, res) => {
-    if (req.body.groupId) {
+    if (req.params.groupId) {
       let errors = {};
-      const groupId = req.body.groupId;
+      const groupId = req.params.groupId;
       GroupModel.findById(groupId)
         .populate('projects')
         .populate('users')
@@ -312,5 +312,32 @@ module.exports = {
         //If everything went well, return groups
         return res.json(groups);
       });
+  },
+  getArchivedGroupProjects: (req, res) => {
+    if (req.params.groupId) {
+      let errors = {};
+      const groupId = req.params.groupId;
+
+      GroupModel.findById(groupId)
+        .populate('projects')
+        .exec(function (err, group) {
+          //Error occured? Notify User
+          if (err) {
+            errors.group = 'Error Occured';
+            return res.status(500).json(errors);
+          }
+
+          //Everything went well? Continue
+          const archivedProjects = group.projects.filter(
+            (project) => project.archived === true
+          );
+
+          return res.json(archivedProjects);
+        });
+    } else {
+      let errors = {};
+      errors.group = 'Error occured';
+      return res.status(400).json(errors);
+    }
   },
 };

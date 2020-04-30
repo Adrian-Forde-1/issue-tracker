@@ -10,7 +10,6 @@ import Homepage from './components/Homepage';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Manager from './components/Manager';
-import JoinGroup from './components/JoinGroup';
 import IsAuthenticated from './components/IsAuthenticated';
 import Navbar from './components/Navbar';
 // import Breadcrumbs from './components/Breadcrumbs';
@@ -42,7 +41,6 @@ function App(props) {
         {/* <IsAuthenticated> */}
         <Route exact path="/manager" component={Manager} />
 
-        <Route exact path="/join/group" component={JoinGroup} />
         {/* </IsAuthenticated> */}
       </Switch>
     </div>

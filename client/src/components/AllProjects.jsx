@@ -25,7 +25,7 @@ function AllProjects(props) {
   }, []);
 
   return (
-    <div className="item-row" id="projects">
+    <div className="d-flex flex-column">
       {projects && projects.length > 0 && props.search === ''
         ? projects.map((project) => {
             if (project.archived === false)

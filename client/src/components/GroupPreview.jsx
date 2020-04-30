@@ -26,8 +26,9 @@ function GroupPreview(props) {
       >
         {group.name}
       </button>
-      <button
-        className="delete-btn"
+
+      <i
+        className="far fa-trash-alt delete-btn  margin-left-auto"
         onClick={() => {
           const element = document.createElement('div');
           element.classList.add('modal-element');
@@ -37,9 +38,7 @@ function GroupPreview(props) {
             element
           );
         }}
-      >
-        <i className="far fa-trash-alt"></i>
-      </button>
+      ></i>
     </div>
   );
 }
