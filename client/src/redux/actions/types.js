@@ -16,6 +16,7 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 //Groups
 export const SET_GROUPS = 'SET_GROUPS';
+export const SET_GROUP_UPDATED = 'SET_GROUP_UPDATED';
 
 //Projects
 export const SET_PROJECTS = 'SET_PROJECTS';

@@ -55,11 +55,13 @@ function IndividualGroup(props) {
     <div className="individual-container">
       <GoBack secion="" id="" />
       <div className="containers">
-        <SearchBar
-          onChange={handleSearchChange}
-          search={search}
-          extraClass="search-l-50"
-        />
+        <div className="search-and-filter">
+          <SearchBar
+            onChange={handleSearchChange}
+            search={search}
+            extraClass="search-extra-info"
+          />
+        </div>
         {props.errors !== null &&
           props.errors['project'] &&
           !toast.isActive('projecttoast') &&

@@ -1,4 +1,4 @@
-import { SET_GROUPS, SET_ERRORS } from './types';
+import { SET_GROUPS, SET_ERRORS, SET_GROUP_UPDATED } from './types';
 import axios from 'axios';
 
 export const getUserGroups = (userId) => async (dispatch) => {
@@ -12,4 +12,8 @@ export const getUserGroups = (userId) => async (dispatch) => {
     .catch((error) => {
       dispatch({ type: SET_ERRORS, payload: error.response.data });
     });
+};
+
+export const setGroupUpdated = (bool) => (dispatch) => {
+  dispatch({ type: SET_GROUP_UPDATED, payload: bool });
 };

@@ -152,19 +152,17 @@ class Manager extends Component {
           </div>
           <div className="manager-content">
             {this.props.currentSection === '' && (
-              <div className="manager-hamburger">
-                <i
-                  className="fas fa-caret-square-right "
-                  onClick={() => {
-                    document
-                      .querySelector('.manager-hamburger')
-                      .classList.toggle('nav-open');
-                    document
-                      .querySelector('.manager-side-nav')
-                      .classList.toggle('nav-open');
-                  }}
-                ></i>
-              </div>
+              <i
+                className="fas fa-caret-square-right manager-hamburger"
+                onClick={() => {
+                  document
+                    .querySelector('.manager-hamburger')
+                    .classList.toggle('nav-open');
+                  document
+                    .querySelector('.manager-side-nav')
+                    .classList.toggle('nav-open');
+                }}
+              ></i>
             )}
 
             {this.props.currentSection === '' && (

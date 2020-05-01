@@ -57,15 +57,17 @@ function ArchivedGroupProjects(props) {
   return (
     <div className="individual-container">
       <GoBack section="group" id={props.currentId} />
-      <div className="container">
-        <SearchBar
-          search={search}
-          onChange={onChange}
-          extraClass="search-l-50"
-        />
-        <h3 className="archived-project-name p-t-85">
+      <div className="containers">
+        <div className="search-and-filter">
+          <SearchBar
+            search={search}
+            onChange={onChange}
+            extraClass="search-extra-info"
+          />
+        </div>
+        <h2 className="archived-project-name p-t-85">
           Archived Group Projects
-        </h3>
+        </h2>
         {projects && projects.length > 0 && search === ''
           ? projects.map((project) => {
               if (project.archived === true)

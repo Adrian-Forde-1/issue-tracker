@@ -18,8 +18,10 @@ import {
   setErrors,
   clearCurrentSectionAndId,
 } from '../redux/actions/userActions';
+
 import { getUserProjects, setProjects } from '../redux/actions/projectActions';
-import { getUserGroups } from '../redux/actions/groupActions';
+
+import { getUserGroups, setGroupUpdated } from '../redux/actions/groupActions';
 
 function ProjectPreview(props) {
   const { project } = props;
@@ -50,9 +52,7 @@ function ProjectPreview(props) {
               })
               .then(() => {
                 if (project.group) {
-                  props.clearCurrentSectionAndId();
-                  props.setCurrentSection('group');
-                  props.setCurrentId(project.group);
+                  props.setGroupUpdated(true);
                 } else {
                   axios
                     .get(`/api/project/${project._id}`, {
@@ -122,6 +122,7 @@ const mapDispatchToProps = {
   setProjects,
   getUserGroups,
   clearCurrentSectionAndId,
+  setGroupUpdated,
 };
 
 export default connect(null, mapDispatchToProps)(withRouter(ProjectPreview));

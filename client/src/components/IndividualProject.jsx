@@ -129,7 +129,7 @@ function IndividualProject(props) {
           })}
 
         {Object.keys(project).length > 0 && (
-          <div className="container-fluid">
+          <div>
             <h2 className="project-name">
               {project.name}{' '}
               {project.createdBy.toString() === user._id.toString() && (
