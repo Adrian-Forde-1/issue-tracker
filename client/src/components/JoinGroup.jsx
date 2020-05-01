@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+//Tostify
+import { toast } from 'react-toastify';
+
 //Components
 import GoBack from './GoBack';
 
@@ -8,7 +11,10 @@ import GoBack from './GoBack';
 import { connect } from 'react-redux';
 
 //Actions
-import { clearCurrentSectionAndId } from '../redux/actions/userActions';
+import {
+  clearCurrentSectionAndId,
+  setErrors,
+} from '../redux/actions/userActions';
 
 class JoinGroup extends Component {
   constructor(props) {
@@ -45,12 +51,27 @@ class JoinGroup extends Component {
       )
       .then(() => {
         this.props.clearCurrentSectionAndId();
+      })
+      .catch((error) => {
+        this.props.setErrors(error);
       });
   };
   render() {
     return (
       <div className="form-container p-t-0">
-        <GoBack />
+        <GoBack section="" id="" />
+        {this.props.errors !== null &&
+          this.props.errors['group'] &&
+          !toast.isActive('grouptoast') &&
+          toast(this.props.errors.bug, {
+            toastId: 'grouptoast',
+            type: 'error',
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+            onClose: () => {
+              this.props.clearErrors();
+            },
+          })}
         <div className="container">
           <div className="auth-form">
             <h2>Join Group</h2>
@@ -74,6 +95,11 @@ class JoinGroup extends Component {
                   value={this.state.password}
                   onChange={this.handleChange}
                 />
+                {this.props.errors.password && (
+                  <div className="form-input-error">
+                    {this.props.errors.password}
+                  </div>
+                )}
               </div>
               <button className="submit-btn">Join Group</button>
             </form>
@@ -86,10 +112,12 @@ class JoinGroup extends Component {
 
 const mapDispatchToProps = {
   clearCurrentSectionAndId,
+  setErrors,
 };
 
 const mapStateToProps = (state) => ({
   currentId: state.user.currentId,
+  errors: state.user.errors,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(JoinGroup);

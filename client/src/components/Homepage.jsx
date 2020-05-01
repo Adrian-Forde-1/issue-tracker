@@ -3,6 +3,9 @@ import React from 'react';
 //React Router Dom
 import { Link } from 'react-router-dom';
 
+//Resources
+import Bug_Tracker_Homepage_Image from '../resources/Images/Bug_Tracker_Homepage_Image.svg';
+
 import { connect } from 'react-redux';
 
 function Homepage(props) {
@@ -27,9 +30,9 @@ function Homepage(props) {
                     <Link to="/signup" className="main-header-link">
                       Try for free <i className="fas fa-arrow-right"></i>
                     </Link>
-                    <Link to="/signup">
-                      <span>or</span> Contact Us
-                    </Link>
+                    {/* <Link to="/signup">
+                      <span>or</span> Login
+                    </Link> */}
                   </div>
                 </div>
               ) : (
@@ -51,8 +54,13 @@ function Homepage(props) {
                 </div>
               )}
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-6 d-md-none d-lg-block">
               <div className="mt-5"></div>
+              <img
+                src={Bug_Tracker_Homepage_Image}
+                alt="Man with hammmer infront computer indicating he is going to fix something"
+                className="img-fluid header-img"
+              />
             </div>
           </div>
         </div>

@@ -459,6 +459,18 @@ header {
       margin: 0px 10px 0px 0px;
     }
   }
+
+  .row {
+    .col-lg-6 {
+      position: relative !important;
+    }
+  }
+}
+
+.header-img {
+  position: absolute;
+  top: 0px;
+  left: 20%;
 }
 
 .main-header-link {
@@ -942,6 +954,7 @@ header {
   justify-content: space-around;
   align-items: center;
   margin: 10px 0px;
+  z-index: 20;
 
   > div {
     min-width: 100px;
@@ -1004,9 +1017,11 @@ header {
   box-shadow: 1px 1px 2px grey;
   overflow: hidden;
   margin: 0px 20px 20px 0px;
-  cursor: pointer;
 
   i {
+    &:nth-last-child(1) {
+      cursor: pointer;
+    }
     margin-left: auto;
   }
 }
@@ -1025,6 +1040,7 @@ span[id*='bug-status-'] {
   text-align: left;
   margin-bottom: 0px;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 .bug-description {
@@ -1046,6 +1062,7 @@ span[id*='bug-status-'] {
   min-width: auto;
   display: block;
   color: white;
+  white-space: nowrap;
   padding: 1px 15px;
   border-radius: 75px;
 }
@@ -1442,9 +1459,9 @@ span[id*='bug-status-'] {
     div {
       font-size: 14px;
 
-      &:nth-of-type(1) {
-        width: fit-content;
-      }
+      // &:nth-of-type(1) {
+      //   width: fit-content;
+      // }
     }
   }
 

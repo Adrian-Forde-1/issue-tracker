@@ -91,6 +91,7 @@ function IndividualBug(props) {
         <GoBack section="project" id={bug.project._id} />
       )}
       <div className="container-fluid">
+        {console.log(bug)}
         {Object.keys(bug).length > 0 && (
           <div className="containers p-t-20">
             {props.errors !== null && props.errors['bug']
@@ -139,7 +140,7 @@ function IndividualBug(props) {
                         <DeleteModal
                           item={bug}
                           type={'bug'}
-                          history={props.history}
+                          idInfo={bug.project._id}
                         />,
                         element
                       );

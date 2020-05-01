@@ -122,12 +122,6 @@ module.exports = {
       //Get the variables entered by the user
       const { groupId, password } = req.body.group;
 
-      console.log(
-        '|||||||||||||||||||||||||||||||| JOIN GROUP |||||||||||||||||||||||'
-      );
-      console.log(groupId);
-      console.log(password);
-
       //Search for the group in database
       const group = await GroupModel.findById(groupId);
 
@@ -138,14 +132,21 @@ module.exports = {
       }
 
       //Check to see if the password entered by the user matches the group's password
-      const isMatch = group.isValidPassword(password);
-
-      console.log(isMatch);
+      const isMatch = await group.isValidPassword(password);
 
       //If the passwords don't match, notify user
       if (!isMatch) {
-        errors.group = 'Incorrect password';
-        return res.status(401).json(group);
+        errors.password = 'Incorrect password';
+        return res.status(401).json(errors);
+      }
+
+      var inGroup = req.user.groups.some(
+        (group) => group.toString() === groupId.toString()
+      );
+
+      if (inGroup) {
+        errors.group = 'You are already part of this group';
+        return res.status(401).json(errors);
       }
 
       //If everything went ok, add user to group
@@ -157,7 +158,7 @@ module.exports = {
           //If an error occured while updating group with new user, notify user
           if (err) {
             console.error(err);
-            errors.group = 'Error occured when adding user to group';
+            errors.group = 'Error occured';
             return res.status(500).json(errors);
           }
 

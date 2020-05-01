@@ -490,6 +490,16 @@ header::after {
   margin: 0px 10px 0px 0px;
 }
 
+.header-content .row .col-lg-6 {
+  position: relative !important;
+}
+
+.header-img {
+  position: absolute;
+  top: 0px;
+  left: 20%;
+}
+
 .main-header-link {
   border-radius: 75px;
   margin-left: 0px !important;
@@ -1027,6 +1037,7 @@ header::after {
       -ms-flex-align: center;
           align-items: center;
   margin: 10px 0px;
+  z-index: 20;
 }
 
 .label-preview > div {
@@ -1097,11 +1108,14 @@ header::after {
           box-shadow: 1px 1px 2px grey;
   overflow: hidden;
   margin: 0px 20px 20px 0px;
-  cursor: pointer;
 }
 
 .bug-preview i {
   margin-left: auto;
+}
+
+.bug-preview i:nth-last-child(1) {
+  cursor: pointer;
 }
 
 span[id*='bug-status-'] {
@@ -1118,6 +1132,7 @@ span[id*='bug-status-'] {
   text-align: left;
   margin-bottom: 0px;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 .bug-description {
@@ -1139,6 +1154,7 @@ span[id*='bug-status-'] {
   min-width: auto;
   display: block;
   color: white;
+  white-space: nowrap;
   padding: 1px 15px;
   border-radius: 75px;
 }
@@ -1523,11 +1539,6 @@ span[id*='bug-status-'] {
   }
   .individual-bug-status-container div {
     font-size: 14px;
-  }
-  .individual-bug-status-container div:nth-of-type(1) {
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
-    width: fit-content;
   }
   .bug-preview {
     width: 80%;

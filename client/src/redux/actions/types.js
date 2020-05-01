@@ -20,6 +20,7 @@ export const SET_GROUP_UPDATED = 'SET_GROUP_UPDATED';
 
 //Projects
 export const SET_PROJECTS = 'SET_PROJECTS';
+export const SET_PROJECT_UPDATED = 'SET_PROJECT_UPDATED';
 
 //Bugs
 export const SET_BUGS = 'SET_BUGS';

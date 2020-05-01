@@ -5,7 +5,10 @@ import axios from 'axios';
 import store from '../redux/store';
 
 //Actions
-import { getUserProjects } from '../redux/actions/projectActions';
+import {
+  getUserProjects,
+  setProjectUpdated,
+} from '../redux/actions/projectActions';
 import { getUserGroups } from '../redux/actions/groupActions';
 import {
   setCurrentSection,
@@ -15,14 +18,14 @@ import {
 import { SET_ERRORS } from '../redux/actions/types';
 
 function DeleteModal(props) {
-  const { item, type, groupId } = props;
+  const { item, type, groupId, idInfo } = props;
 
   const closeModal = () => {
     const element = document.querySelector('.modal-element');
     document.querySelector('#modal-root').removeChild(element);
   };
 
-  const deleteItem = (type, id, groupId, cb) => {
+  const deleteItem = (type, id, groupId, idInfo, cb) => {
     axios
       .delete(`/api/${type}/${id}`, {
         headers: { Authorization: localStorage.getItem('token') },
@@ -42,7 +45,11 @@ function DeleteModal(props) {
           cb();
         }
         if (type === 'bug') {
-          store.dispatch(getUserProjects(localStorage.getItem('token')));
+          // store.dispatch(getUserProjects(localStorage.getItem('token')));
+          sessionStorage.setItem('deleteModalLog', item.project._id);
+          store.dispatch(setProjectUpdated(true));
+          store.dispatch(setCurrentId(idInfo));
+          store.dispatch(setCurrentSection('project'));
           cb();
         }
 
@@ -64,7 +71,7 @@ function DeleteModal(props) {
         <div className="modal-btn-container">
           <button
             onClick={() => {
-              deleteItem(type, item._id, groupId, closeModal);
+              deleteItem(type, item._id, groupId, idInfo, closeModal);
             }}
           >
             Yes

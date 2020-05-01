@@ -9,9 +9,6 @@ import { toast } from 'react-toastify';
 import SearchBar from './SearchBar';
 import GoBack from './GoBack';
 
-//React Router DOM
-import { Link } from 'react-router-dom';
-
 //Redux
 import { connect } from 'react-redux';
 import AllGroupProjects from './AllGroupProjects';
@@ -53,7 +50,7 @@ function IndividualGroup(props) {
 
   return (
     <div className="individual-container">
-      <GoBack secion="" id="" />
+      <GoBack section="" id="" />
       <div className="containers">
         <div className="search-and-filter">
           <SearchBar

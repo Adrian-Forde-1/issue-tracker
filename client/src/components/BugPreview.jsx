@@ -19,14 +19,16 @@ function BugPreview(props) {
   return (
     <div className="bug-preview-container">
       <div>
-        <div
-          className="bug-preview"
-          onClick={() => {
-            props.setCurrentSection('bug');
-            props.setCurrentId(bug._id);
-          }}
-        >
-          <p className="bug-name">{bug.name}</p>
+        <div className="bug-preview">
+          <p
+            className="bug-name"
+            onClick={() => {
+              props.setCurrentSection('bug');
+              props.setCurrentId(bug._id);
+            }}
+          >
+            {bug.name}
+          </p>
           <div
             style={{ background: `${bug.label.color}` }}
             className="bug-label"

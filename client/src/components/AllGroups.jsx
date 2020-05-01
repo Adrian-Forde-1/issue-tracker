@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+//Tostify
+import { toast } from 'react-toastify';
+
 //Redux
 import store from '../redux/store';
 import { connect } from 'react-redux';
@@ -26,8 +29,24 @@ function AllGroups(props) {
     };
   }, []);
 
+  // useEffect(() => {
+
+  // }, [props.allgroups])
+
   return (
     <div className="d-flex flex-column" id="groups">
+      {props.errors !== null &&
+        props.errors['group'] &&
+        !toast.isActive('grouptoast') &&
+        toast(props.errors.bug, {
+          toastId: 'grouptoast',
+          type: 'error',
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 2000,
+          onClose: () => {
+            props.clearErrors();
+          },
+        })}
       <div className="action-bar m-l-16">
         <button
           onClick={() => {
@@ -53,4 +72,9 @@ const mapDispatchToProps = {
   setCurrentSection,
 };
 
-export default connect(null, mapDispatchToProps)(AllGroups);
+const mapStateToProps = (state) => ({
+  allgroups: state.groups.groups,
+  errors: state.user.errors,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllGroups);

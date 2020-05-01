@@ -18,7 +18,10 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //Actions
-import { getUserProjects } from '../redux/actions/projectActions';
+import {
+  getUserProjects,
+  setProjectUpdated,
+} from '../redux/actions/projectActions';
 import {
   setCurrentSection,
   setCurrentId,
@@ -30,8 +33,6 @@ function IndividualProject(props) {
   const [project, changeProject] = useState({});
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('All');
-  const [user, changeUser] = useState({});
-  // const projectId = props.match.params.projectId;
   const projectId = props.currentId;
 
   const handleSearchChange = (e) => {
@@ -46,7 +47,6 @@ function IndividualProject(props) {
 
   useEffect(() => {
     props.getUserProjects(localStorage.getItem('token'));
-    const { user } = props;
 
     if (sessionStorage.getItem('project-search') !== null) {
       setSearch(sessionStorage.getItem('project-search'));
@@ -56,10 +56,6 @@ function IndividualProject(props) {
       setFilter(sessionStorage.getItem('project-filter'));
     }
 
-    changeUser(user);
-  }, []);
-
-  useEffect(() => {
     axios
       .get(`/api/project/${projectId}`, {
         headers: { Authorization: localStorage.getItem('token') },
@@ -68,24 +64,46 @@ function IndividualProject(props) {
         changeProject(response.data);
       })
       .catch((error) => {
+        console.log(error);
         props.setErrors(error);
         props.setCurrentSection('');
         props.setCurrentId('');
       });
   }, []);
+
+  useEffect(() => {
+    if (props.projectUpdated === true) {
+      axios
+        .get(`/api/project/${projectId}`, {
+          headers: { Authorization: localStorage.getItem('token') },
+        })
+        .then((response) => {
+          changeProject(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          props.setErrors(error);
+          props.setCurrentSection('');
+          props.setCurrentId('');
+        });
+
+      props.setProjectUpdated(false);
+    }
+  }, [props.projectUpdated]);
+
   return (
     <div className="individual-container">
       <GoBack
         section={
-          project.archived === false
-            ? project.group
+          project !== null && project.archived === false
+            ? project['group']
               ? 'group'
               : ''
-            : project.group
+            : project['group']
             ? 'group/archived'
             : 'project/archived'
         }
-        id={project.group ? `${project.group}` : ''}
+        id={project !== null && (project['group'] ? `${project['group']}` : '')}
       />
       <div className="containers">
         <div className="search-and-filter">
@@ -132,7 +150,7 @@ function IndividualProject(props) {
           <div>
             <h2 className="project-name">
               {project.name}{' '}
-              {project.createdBy.toString() === user._id.toString() && (
+              {project.createdBy.toString() === props.user._id.toString() && (
                 <span>
                   <i
                     className={`fas fa-archive ${
@@ -306,11 +324,13 @@ const mapDispatchToProps = {
   setCurrentId,
   setErrors,
   clearErrors,
+  setProjectUpdated,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user.user,
   projects: state.projects.projects,
+  projectUpdated: state.projects.projectUpdated,
   errors: state.user.errors,
   currentId: state.user.currentId,
 });
