@@ -54,7 +54,7 @@ function Homepage(props) {
                 </div>
               )}
             </div>
-            <div className="col-lg-6 d-md-none d-lg-block">
+            <div className="col-lg-6 d-none d-lg-block">
               <div className="mt-5"></div>
               <img
                 src={Bug_Tracker_Homepage_Image}
