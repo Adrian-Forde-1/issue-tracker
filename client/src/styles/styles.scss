@@ -555,8 +555,8 @@ header {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
-    background: url('../resources/Images/Wave_Bottom.svg');
+    width: 100vw;
+    background: url('../resources/Images/Wave_Bottom.svg') no-repeat;
     height: 225px;
     background-size: 110%;
     background-position-y: 20px;
@@ -935,8 +935,8 @@ header {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
-    background: url('../resources/Images/Wave_Bottom.svg');
+    width: 100vw;
+    background: url('../resources/Images/Wave_Bottom.svg') no-repeat;
     height: 225px;
     background-size: 110%;
     background-position-y: 20px;
