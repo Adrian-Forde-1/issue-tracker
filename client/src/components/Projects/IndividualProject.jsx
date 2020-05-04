@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import SearchBar from '../SearchBar';
 import BugPreview from '../Preview/BugPreview';
 import DeleteModal from '../DeleteModal';
+import SideNav from '../Navigation/SideNav';
 
 //React Router DOM
 import { withRouter, Link } from 'react-router-dom';
@@ -21,18 +22,13 @@ import {
   getUserProjects,
   setProjectUpdated,
 } from '../../redux/actions/projectActions';
-import {
-  setCurrentSection,
-  setCurrentId,
-  setErrors,
-  clearErrors,
-} from '../../redux/actions/userActions';
+import { setErrors, clearErrors } from '../../redux/actions/userActions';
 
 function IndividualProject(props) {
   const [project, changeProject] = useState({});
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('All');
-  const projectId = props.currentId;
+  const projectId = props.match.params.projectId;
 
   const handleSearchChange = (e) => {
     sessionStorage.setItem('project-search', e.target.value);
@@ -42,6 +38,10 @@ function IndividualProject(props) {
   const handleFilterChange = (e) => {
     sessionStorage.setItem('project-filter', e.target.value);
     setFilter(e.target.value);
+  };
+
+  const reRoute = () => {
+    props.history.replace('/projects');
   };
 
   useEffect(() => {
@@ -65,8 +65,7 @@ function IndividualProject(props) {
       .catch((error) => {
         console.log(error);
         props.setErrors(error);
-        props.setCurrentSection('');
-        props.setCurrentId('');
+        props.history.push('/projects');
       });
   }, []);
 
@@ -80,10 +79,8 @@ function IndividualProject(props) {
           changeProject(response.data);
         })
         .catch((error) => {
-          console.log(error);
           props.setErrors(error);
-          props.setCurrentSection('');
-          props.setCurrentId('');
+          props.history.push('/projects');
         });
 
       props.setProjectUpdated(false);
@@ -94,6 +91,7 @@ function IndividualProject(props) {
     <div className="individual-container">
       <div className="containers">
         <div className="search-and-filter">
+          <SideNav />
           <SearchBar
             onChange={handleSearchChange}
             search={search}
@@ -166,15 +164,13 @@ function IndividualProject(props) {
                                 changeProject(response.data);
                               })
                               .catch((error) => {
-                                props.setErrors(error.response.data);
-                                props.setCurrentSection('');
-                                props.setCurrentId('');
+                                props.setErrors(error);
+                                props.history.push('/projects');
                               });
                           })
                           .catch((error) => {
-                            props.setErrors(error.response.data);
-                            props.setCurrentSection('');
-                            props.setCurrentId('');
+                            props.setErrors(error);
+                            props.history.push('/projects');
                           });
                       } else {
                         axios
@@ -198,15 +194,13 @@ function IndividualProject(props) {
                                 changeProject(response.data);
                               })
                               .catch((error) => {
-                                props.setErrors(error.response.data);
-                                props.setCurrentSection('');
-                                props.setCurrentId('');
+                                props.setErrors(error);
+                                props.history.push('/projects');
                               });
                           })
                           .catch((error) => {
-                            props.setErrors(error.response.data);
-                            props.setCurrentSection('');
-                            props.setCurrentId('');
+                            props.setErrors(error);
+                            props.history.push('/projects');
                           });
                       }
                     }}
@@ -224,6 +218,7 @@ function IndividualProject(props) {
                           item={project}
                           type={'project'}
                           groupId={project.group}
+                          reRoute={reRoute}
                         />,
                         element
                       );
@@ -235,22 +230,12 @@ function IndividualProject(props) {
             <p className="project-description">{project.description}</p>
 
             <div className="action-bar">
-              <button
-                onClick={() => {
-                  props.setCurrentSection('project/labels');
-                  props.setCurrentId(project._id);
-                }}
-              >
+              <Link to={`/project/${project._id}/labels`}>
                 Labels <i className="fas fa-tags"></i>
-              </button>
-              <button
-                onClick={() => {
-                  props.setCurrentSection('project/bug/new');
-                  props.setCurrentId(project._id);
-                }}
-              >
+              </Link>
+              <Link to={`/project/${project._id}/new/bug`}>
                 New Bug <i className="fas fa-bug"></i>
-              </button>
+              </Link>
             </div>
             <div className="bugs">
               {project.bugs &&
@@ -307,8 +292,6 @@ function IndividualProject(props) {
 
 const mapDispatchToProps = {
   getUserProjects,
-  setCurrentSection,
-  setCurrentId,
   setErrors,
   clearErrors,
   setProjectUpdated,
@@ -319,7 +302,6 @@ const mapStateToProps = (state) => ({
   projects: state.projects.projects,
   projectUpdated: state.projects.projectUpdated,
   errors: state.user.errors,
-  currentId: state.user.currentId,
 });
 
 export default connect(

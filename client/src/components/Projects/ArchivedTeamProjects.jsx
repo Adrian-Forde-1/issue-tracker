@@ -6,7 +6,7 @@ import store from '../../redux/store';
 import { connect } from 'react-redux';
 
 //Actions
-import { getUserGroups } from '../../redux/actions/groupActions';
+import { getUserGroups } from '../../redux/actions/teamActions';
 import { clearCurrentSectionAndId } from '../../redux/actions/userActions';
 import { SET_ERRORS } from '../../redux/actions/types';
 

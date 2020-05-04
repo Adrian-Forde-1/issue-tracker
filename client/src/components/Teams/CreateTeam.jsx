@@ -7,7 +7,10 @@ import { connect } from 'react-redux';
 //Actions
 import { setErrors } from '../../redux/actions/userActions';
 
-class CreateGroupProject extends Component {
+//Components
+import SideNav from '../Navigation/SideNav';
+
+class CreateTeam extends Component {
   constructor(props) {
     super(props);
 
@@ -16,7 +19,7 @@ class CreateGroupProject extends Component {
 
     this.state = {
       name: '',
-      description: '',
+      password: '',
     };
   }
 
@@ -29,36 +32,36 @@ class CreateGroupProject extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const groupId = this.props.match.params.groupId;
+    var teamName = this.state.name;
+    teamName = teamName.charAt(0).toUpperCase() + teamName.slice(1);
 
-    const project = {
-      name: this.state.name,
-      description: this.state.description,
-      groupId,
+    const team = {
+      name: teamName,
+      password: this.state.password,
     };
 
     axios
       .post(
-        '/api/project',
-        { project: project },
+        '/api/team',
+        { team: team },
         {
           headers: { Authorization: localStorage.getItem('token') },
         }
       )
       .then(() => {
-        this.props.history.push(`/group/${groupId}`);
+        this.props.history.push('/teams');
       })
       .catch((error) => {
-        this.props.setErrors(error);
-        this.props.history.push(`/group/${groupId}`);
+        this.props.history.push('/teams');
       });
   };
   render() {
     return (
       <div className="form-container p-t-0">
-        <div className="container">
+        <SideNav />
+        <div className="container p-l-175">
           <div className="auth-form">
-            <h2>Create Project</h2>
+            <h2>Create Team</h2>
             <form onSubmit={this.handleSubmit}>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
@@ -71,17 +74,16 @@ class CreateGroupProject extends Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="description">Description</label>
+                <label htmlFor="password">Password</label>
                 <br />
-                <textarea
-                  type="text"
-                  name="description"
-                  maxLength="500"
-                  value={this.state.description}
+                <input
+                  type="password"
+                  name="password"
+                  value={this.state.password}
                   onChange={this.handleChange}
                 />
               </div>
-              <button className="submit-btn">Create Project</button>
+              <button className="submit-btn">Create Team</button>
             </form>
           </div>
         </div>
@@ -94,4 +96,4 @@ const mapDispatchToProps = {
   setErrors,
 };
 
-export default connect(mapDispatchToProps)(CreateGroupProject);
+export default connect(null, mapDispatchToProps)(CreateTeam);

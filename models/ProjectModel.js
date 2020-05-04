@@ -30,9 +30,9 @@ const projectSchema = new mongoose.Schema(
       type: Date,
       default: Date.now(),
     },
-    group: {
+    team: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'group',
+      ref: 'team',
     },
     archived: {
       type: Boolean,

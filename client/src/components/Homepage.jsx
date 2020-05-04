@@ -51,8 +51,8 @@ function Homepage(props) {
                     <Link to="/projects" className="main-header-link">
                       Projects
                     </Link>
-                    <Link to="/groups" className="main-header-link">
-                      Groups
+                    <Link to="/teams" className="main-header-link">
+                      Teams
                     </Link>
                   </div>
                 </div>

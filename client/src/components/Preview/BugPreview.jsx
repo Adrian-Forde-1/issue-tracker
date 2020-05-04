@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import DeleteModal from '../DeleteModal';
 
 //React Router DOM
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 function BugPreview(props) {
   const { bug, index, projectId } = props;
@@ -14,7 +14,10 @@ function BugPreview(props) {
     <div className="bug-preview-container">
       <div>
         <div className="bug-preview">
-          <Link to={`/project/${bug.project._id}/bug/${bug._id}`}>
+          <Link
+            to={`/project/${bug.project}/bug/${bug._id}`}
+            className="bug-name"
+          >
             {bug.name}
           </Link>
           <div
@@ -62,4 +65,4 @@ function BugPreview(props) {
   );
 }
 
-export default BugPreview;
+export default withRouter(BugPreview);

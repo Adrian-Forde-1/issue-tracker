@@ -44,6 +44,10 @@ a {
   padding-top: 85px !important;
 }
 
+.p-l-175 {
+  padding-left: 175px !important;
+}
+
 .m-l-16 {
   margin-left: 16px !important;
 }
@@ -121,7 +125,7 @@ a {
 
 .hide {
   &#projects,
-  &#groups {
+  &#teams {
     display: none;
   }
 }
@@ -134,7 +138,7 @@ a {
   font-size: 16px;
   position: absolute;
   top: 20px;
-  left: 20px;
+  left: 195px;
   padding: 5px 10px;
   z-index: 2;
   box-shadow: 0.5px 0.5px 2px grey;
@@ -178,7 +182,7 @@ a {
 }
 
 .modal-body {
-  width: 50%;
+  width: 40%;
   height: auto;
   padding: 20px 20px;
   position: relative;
@@ -243,8 +247,8 @@ a {
   margin-bottom: 1rem;
   a {
     background: $page-background;
-    margin-left: 10px;
     padding: 5px 10px;
+    margin-right: 20px;
     border: none;
     color: $primary-color;
     border: 1px solid $primary-color;
@@ -263,7 +267,6 @@ a {
   }
   button {
     background: $page-background;
-    margin-right: 10px;
     padding: 5px 10px;
     border: none;
     color: $primary-color;
@@ -394,6 +397,45 @@ a {
 }
 //Navbar End
 
+//Side Nav Start
+
+.side-nav {
+  width: 175px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  background: $text-color;
+
+  a {
+    img {
+      margin-top: 20px;
+    }
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    li {
+      margin: 20px 0px;
+      list-style: none;
+      color: $page-background;
+      cursor: pointer;
+      font-weight: 300;
+      &.selected-section {
+        border-left: 4px solid $page-background;
+      }
+
+      a {
+        color: $page-background;
+      }
+    }
+  }
+}
+
+//Side Nav End
+
 //Homepage Start
 // .homepage {
 //   width: 100%;
@@ -486,9 +528,14 @@ header {
 .header-links {
   padding: 0;
   margin: 0;
+  width: fit-content;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+  a {
+    cursor: pointer;
+  }
 }
 
 .call-to-action {
@@ -644,6 +691,16 @@ header {
   // padding-left: 175px;
 }
 
+.section-title {
+  color: $text-color;
+  font-size: 34px;
+  font-weight: 300;
+  text-align: left;
+  padding-left: 20px;
+  margin-bottom: 50px;
+  margin-top: 75px;
+}
+
 .manager-section {
   min-height: 100vh;
   margin-left: 175px;
@@ -716,14 +773,14 @@ header {
   height: auto;
   display: flex;
   align-items: center;
-  padding: 15px 15px;
+  padding: 15px 20px;
   margin: 10px 1rem;
   background: $page-background;
   box-shadow: 0.5px 0.5px 2px grey;
   // border-radius: 10px;
   color: white;
 
-  button {
+  a {
     border: none;
     background: none;
     color: $text-color;
@@ -789,7 +846,11 @@ header {
   font-size: 24px;
   background: rgba(255, 255, 255, 0.1);
   color: $text-color;
-  cursor: pointer;
+  z-index: 100;
+
+  i {
+    cursor: pointer;
+  }
 
   &:hover {
     text-decoration: none;
@@ -805,17 +866,17 @@ header {
 }
 //Manager End
 
-//Group Start
+//Team Start
 .individual-container {
   width: 100%;
   background: $page-background;
+  padding-left: 175px;
 
   .containers {
     width: 100%;
     position: relative;
     padding-top: 0px;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 20px;
     padding-bottom: 0px !important;
 
     > div {
@@ -828,7 +889,7 @@ header {
   }
 }
 
-.group-name {
+.team-name {
   display: flex;
   align-items: center;
   color: $primary-color;
@@ -843,7 +904,7 @@ header {
   }
 }
 
-.group-id {
+.team-id {
   color: $primary-color;
   font-weight: 300;
   text-align: left;
@@ -852,7 +913,7 @@ header {
   }
 }
 
-//Group End
+//Team End
 
 //Project Start
 .search-and-filter {

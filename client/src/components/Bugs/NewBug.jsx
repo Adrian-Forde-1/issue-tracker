@@ -16,6 +16,9 @@ import {
   setErrors,
 } from '../../redux/actions/userActions';
 
+//Components
+import SideNav from '../Navigation/SideNav';
+
 class NewBug extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +35,7 @@ class NewBug extends Component {
   }
 
   componentDidMount() {
-    const projectId = this.props.currentId;
+    const projectId = this.props.match.params.projectId;
 
     axios
       .get(`/api/project/${projectId}`, {
@@ -95,8 +98,9 @@ class NewBug extends Component {
   };
   render() {
     return (
-      <div className="form-container p-t-0">
-        <div className="container">
+      <div className="form-container">
+        <SideNav />
+        <div className="container p-l-175">
           <div className="auth-form">
             <h2>New Bug</h2>
             <form onSubmit={this.handleSubmit}>

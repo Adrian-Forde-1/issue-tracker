@@ -25,10 +25,10 @@ const userSchema = new mongoose.Schema({
       ref: 'project',
     },
   ],
-  groups: [
+  teams: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'group',
+      ref: 'team',
     },
   ],
 });

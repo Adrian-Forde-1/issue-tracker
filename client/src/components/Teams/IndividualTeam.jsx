@@ -5,12 +5,15 @@ import axios from 'axios';
 //Tostify
 import { toast } from 'react-toastify';
 
+//React Router DOM
+import { Link } from 'react-router-dom';
+
 //Components
 import SearchBar from '../SearchBar';
 
 //Redux
 import { connect } from 'react-redux';
-import AllGroupProjects from './AllGroupProjects';
+import AllTeamProjects from './AllTeamProjects';
 import DeleteModal from '../DeleteModal';
 
 //Actions
@@ -22,23 +25,22 @@ import {
 } from '../../redux/actions/userActions';
 import { setProjects } from '../../redux/actions/projectActions';
 
-function IndividualGroup(props) {
-  const [group, changeGroup] = useState({});
+function IndividualTeam(props) {
+  const [team, setTeam] = useState({});
   const [search, setSearch] = useState('');
-  const groupId = props.currentId;
+  const teamId = props.match.params.teamId;
 
   useEffect(() => {
     axios
-      .get(`/api/group/${groupId}`, {
+      .get(`/api/team/${teamId}`, {
         headers: { Authorization: localStorage.getItem('token') },
       })
       .then((response) => {
-        changeGroup(response.data);
+        setTeam(response.data);
       })
       .catch((error) => {
         props.setErrors(error);
-        props.setCurrentSection('');
-        props.setCurrentId('');
+        props.history.goBack();
       });
   }, []);
 
@@ -49,6 +51,15 @@ function IndividualGroup(props) {
 
   return (
     <div className="individual-container">
+      <Link to={`/team/${team._id}/project/create`} className="action-btn">
+        <i className="fas fa-plus-square "></i>
+      </Link>
+      <Link
+        to={`/team/${team._id}/archived`}
+        className="action-btn extra-right"
+      >
+        <i className="fas fa-archive "></i>
+      </Link>
       <div className="containers">
         <div className="search-and-filter">
           <SearchBar
@@ -69,11 +80,11 @@ function IndividualGroup(props) {
               props.clearErrors();
             },
           })}
-        {Object.keys(group).length > 0 && (
+        {Object.keys(team).length > 0 && (
           <div>
-            <h2 className="group-name">
-              {group.name}{' '}
-              {group.createdBy.toString() === props.user._id.toString() ? (
+            <h2 className="team-name">
+              {team.name}{' '}
+              {team.createdBy.toString() === props.user._id.toString() ? (
                 <span>
                   <i
                     className="far fa-trash-alt"
@@ -84,7 +95,7 @@ function IndividualGroup(props) {
                         .querySelector('#modal-root')
                         .appendChild(element);
                       ReactDOM.render(
-                        <DeleteModal item={group} type={'group'} />,
+                        <DeleteModal item={team} type={'team'} />,
                         element
                       );
                     }}
@@ -96,41 +107,32 @@ function IndividualGroup(props) {
                     className="fas fa-door-open"
                     onClick={() => {
                       axios
-                        .put(`/api/leave/group/${groupId}`, null, {
+                        .put(`/api/leave/team/${teamId}`, null, {
                           headers: {
                             Authorization: localStorage.getItem('token'),
                           },
                         })
                         .then(() => {
-                          props.setCurrentSection('');
-                          props.setCurrentId('');
+                          props.history.replace('/teams');
                         })
                         .catch((error) => {
-                          props.setErrors(error.response.data);
-                          props.setCurrentSection('');
-                          props.setCurrentId('');
+                          props.setErrors(error);
+                          props.history.push('/teams');
                         });
                     }}
                   ></i>
                 </span>
               )}
             </h2>
-            <p className="group-id">
+            <p className="team-id">
               <span>Id: </span>
-              {group._id}
+              {team._id}
             </p>
 
-            <AllGroupProjects search={search} />
+            <AllTeamProjects search={search} />
           </div>
         )}
       </div>
-      <i
-        className="fas fa-plus-square action-btn"
-        onClick={() => {
-          props.setCurrentSection('group/create/project');
-          props.setCurrentId(group._id);
-        }}
-      ></i>
     </div>
   );
 }
@@ -145,9 +147,9 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   user: state.user.user,
-  groups: state.groups.groups,
+  teams: state.teams.teams,
   errors: state.user.errors,
   currentId: state.user.currentId,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(IndividualGroup);
+export default connect(mapStateToProps, mapDispatchToProps)(IndividualTeam);

@@ -18,10 +18,10 @@ const bugSchema = new mongoose.Schema({
     name: String,
     color: String,
   },
-  notes: [
+  comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'note',
+      ref: 'comment',
     },
   ],
   project: {

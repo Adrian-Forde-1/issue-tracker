@@ -5,6 +5,9 @@ import axios from 'axios';
 //Components
 import DeleteModal from '../DeleteModal';
 
+//React Router DOM
+import { Link, withRouter } from 'react-router-dom';
+
 //Redux
 import { connect } from 'react-redux';
 
@@ -13,26 +16,19 @@ import {
   setCurrentId,
   setCurrentSection,
 } from '../../redux/actions/userActions';
-import { getUserGroups } from '../../redux/actions/groupActions';
+import { getUserTeams } from '../../redux/actions/teamActions';
 
-function GroupPreview(props) {
-  const { group } = props;
+function TeamPreview(props) {
+  const { team } = props;
   return (
     <div className="preview">
-      {/* <Link to={`/group/${group._id}`}>
-        <h6>{group.name}</h6>
+      {/* <Link to={`/team/${team._id}`}>
+        <h6>{team.name}</h6>
       </Link> */}
 
-      <button
-        onClick={() => {
-          props.setCurrentSection('group');
-          props.setCurrentId(group._id);
-        }}
-      >
-        {group.name}
-      </button>
+      <Link to={`/team/${team._id}`}>{team.name}</Link>
 
-      {group.createdBy.toString() === props.user._id.toString() ? (
+      {team.createdBy.toString() === props.user._id.toString() ? (
         <span className="margin-left-auto">
           <i
             className="far fa-trash-alt delete-btn"
@@ -41,7 +37,7 @@ function GroupPreview(props) {
               element.classList.add('modal-element');
               document.querySelector('#modal-root').appendChild(element);
               ReactDOM.render(
-                <DeleteModal item={group} type={'group'} />,
+                <DeleteModal item={team} type={'team'} />,
                 element
               );
             }}
@@ -53,13 +49,13 @@ function GroupPreview(props) {
             className="fas fa-door-open delete-btn"
             onClick={() => {
               axios
-                .put(`/api/leave/group/${group._id}`, null, {
+                .put(`/api/leave/team/${team._id}`, null, {
                   headers: {
                     Authorization: localStorage.getItem('token'),
                   },
                 })
                 .then(() => {
-                  props.getUserGroups(props.user._id);
+                  props.getUserTeams(props.user._id);
                 })
                 .catch((error) => {
                   props.setErrors(error.response.data);
@@ -77,11 +73,14 @@ function GroupPreview(props) {
 const mapDispatchToProps = {
   setCurrentSection,
   setCurrentId,
-  getUserGroups,
+  getUserTeams,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user.user,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupPreview);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(TeamPreview));

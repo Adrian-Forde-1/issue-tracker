@@ -6,28 +6,20 @@ import axios from 'axios';
 import DeleteModal from '../DeleteModal';
 
 //React Router DOM
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 //Redux
 import { connect } from 'react-redux';
 
 //Actions
-import {
-  setCurrentId,
-  setCurrentSection,
-  setErrors,
-  clearCurrentSectionAndId,
-} from '../../redux/actions/userActions';
+import { setErrors } from '../../redux/actions/userActions';
 
 import {
   getUserProjects,
   setProjects,
 } from '../../redux/actions/projectActions';
 
-import {
-  getUserGroups,
-  setGroupUpdated,
-} from '../../redux/actions/groupActions';
+import { getUserTeams, setTeamUpdated } from '../../redux/actions/teamActions';
 
 function ProjectPreview(props) {
   const { project } = props;
@@ -37,14 +29,7 @@ function ProjectPreview(props) {
         <h6>{project.name}</h6>
       </Link> */}
 
-      <button
-        onClick={() => {
-          props.setCurrentSection('project');
-          props.setCurrentId(project._id);
-        }}
-      >
-        {project.name}
-      </button>
+      <Link to={`/project/${project._id}`}>{project.name}</Link>
 
       <i
         className={`fas fa-archive archive-btn ${props.extraIconClass}`}
@@ -58,7 +43,7 @@ function ProjectPreview(props) {
               })
               .then(() => {
                 if (project.group) {
-                  props.setGroupUpdated(true);
+                  props.setTeamUpdated(true);
                 } else {
                   axios
                     .get(`/api/project/${project._id}`, {
@@ -66,20 +51,18 @@ function ProjectPreview(props) {
                         Authorization: localStorage.getItem('token'),
                       },
                     })
-                    .then((response) => {
+                    .then(() => {
                       props.getUserProjects(localStorage.getItem('token'));
                     })
                     .catch((error) => {
                       props.setErrors(error.response.data);
-                      props.setCurrentSection('');
-                      props.setCurrentId('');
+                      props.history.goBack();
                     });
                 }
               })
               .catch((error) => {
                 props.setErrors(error.response.data);
-                props.setCurrentSection('');
-                props.setCurrentId('');
+                props.history.location('/projects');
               });
           } else {
             axios
@@ -93,8 +76,7 @@ function ProjectPreview(props) {
               })
               .catch((error) => {
                 props.setErrors(error);
-                props.setCurrentSection('');
-                props.setCurrentId('');
+                props.history.location('/projects/archived');
               });
           }
         }}
@@ -121,14 +103,11 @@ function ProjectPreview(props) {
 }
 
 const mapDispatchToProps = {
-  setCurrentSection,
-  setCurrentId,
   setErrors,
   getUserProjects,
   setProjects,
-  getUserGroups,
-  clearCurrentSectionAndId,
-  setGroupUpdated,
+  getUserTeams,
+  setTeamUpdated,
 };
 
 export default connect(null, mapDispatchToProps)(withRouter(ProjectPreview));

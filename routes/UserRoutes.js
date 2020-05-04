@@ -8,16 +8,16 @@ const passportConfig = require('../passport');
 //User Controller Imports
 const { login, signUp, getUser } = require('../controller/userController');
 
-//Group Controller Imports
+//Team Controller Imports
 const {
-  createGroup,
-  deleteGroup,
-  leaveGroup,
-  joinGroup,
-  getGroup,
-  getGroups,
-  getArchivedGroupProjects,
-} = require('../controller/groupController');
+  createTeam,
+  deleteTeam,
+  leaveTeam,
+  joinTeam,
+  getTeam,
+  getTeams,
+  getArchivedTeamProjects,
+} = require('../controller/teamController');
 
 //Project Controller Imports
 const {
@@ -43,12 +43,12 @@ const {
   getBug,
 } = require('../controller/bugController');
 
-//Note Controller Imports
+//Comment Controller Imports
 const {
-  createNote,
-  editNote,
-  deleteNote,
-} = require('../controller/noteController');
+  createComment,
+  editComment,
+  deleteComment,
+} = require('../controller/commentController');
 
 const passportLocal = passport.authenticate('local', { session: true });
 const passportJWT = passport.authenticate('jwt', { session: true });
@@ -58,19 +58,19 @@ router.post('/login', passportLocal, login);
 router.post('/signup', signUp);
 router.get('/user', passportJWT, getUser);
 
-//Group Routes
-// router.get('/projectsFromGroup/:groupId', passportJWT, getProjectsFromGroup);
-router.get('/group/:groupId', passportJWT, getGroup);
-router.get('/groups', passportJWT, getGroups);
+//Team Routes
+// router.get('/projectsFromTeam/:teamId', passportJWT, getProjectsFromTeam);
+router.get('/team/:teamId', passportJWT, getTeam);
+router.get('/teams', passportJWT, getTeams);
 router.get(
-  '/group/:groupId/projects/archived',
+  '/team/:teamId/projects/archived',
   passportJWT,
-  getArchivedGroupProjects
+  getArchivedTeamProjects
 );
-router.post('/group', passportJWT, createGroup);
-router.put('/leave/group/:groupId', passportJWT, leaveGroup);
-router.delete('/group/:groupId', passportJWT, deleteGroup);
-router.post('/join/group', passportJWT, joinGroup);
+router.post('/team', passportJWT, createTeam);
+router.put('/leave/team/:teamId', passportJWT, leaveTeam);
+router.delete('/team/:teamId', passportJWT, deleteTeam);
+router.post('/join/team', passportJWT, joinTeam);
 
 //Project Routes
 router.get('/project/:projectId', passportJWT, getProject);
@@ -96,7 +96,7 @@ router.put('/bug/:bugId', passportJWT, editBug);
 router.put('/bug/:bugId/status', passportJWT, editBugStatus);
 router.delete('/bug/:bugId', passportJWT, deleteBug);
 
-router.post('/note', passportJWT, createNote);
-router.put('/note/:noteId', passportJWT, editNote);
-router.delete('/note/:noteId', passportJWT, deleteNote);
+router.post('/comment', passportJWT, createComment);
+router.put('/comment/:commentId', passportJWT, editComment);
+router.delete('/comment/:commentId', passportJWT, deleteComment);
 module.exports = router;

@@ -26,27 +26,35 @@ class EditLabel extends Component {
   }
 
   componentDidMount() {
-    const projectId = this.props.match.parmas.projectId;
+    const projectId = this.props.match.params.projectId;
     const labelId = this.props.match.params.labelId;
-    const project = this.props.projects.find(
-      (project) => project._id.toString() === projectId.toString()
-    );
+    var label;
 
-    const label = project.labels.find(
-      (label) => label._id.toString() === labelId.toString()
-    );
+    axios
+      .get(`/api/project/${projectId}`, {
+        headers: { Authorization: localStorage.getItem('token') },
+      })
+      .then((response) => {
+        label = response.data.labels.find(
+          (label) => label._id.toString() === labelId.toString()
+        );
 
-    this.setState(
-      {
-        name: label.name,
-        color: label.color,
-      },
-      () => {
-        document.querySelector(
-          '.show-color'
-        ).style.background = `${this.state.color}`;
-      }
-    );
+        this.setState(
+          {
+            name: label.name,
+            color: label.color,
+          },
+          () => {
+            document.querySelector(
+              '.show-color'
+            ).style.background = `${this.state.color}`;
+          }
+        );
+      })
+      .catch((error) => {
+        this.props.setErrors(error);
+        this.props.history.goBack();
+      });
   }
 
   handleChange = (e) => {
@@ -59,7 +67,7 @@ class EditLabel extends Component {
     e.preventDefault();
 
     const projectId = this.props.match.params.projectId;
-    const labelId = this.props.props.match.params.labelId;
+    const labelId = this.props.match.params.labelId;
 
     const label = {
       name: this.state.name,
@@ -79,6 +87,7 @@ class EditLabel extends Component {
       })
       .catch((error) => {
         this.props.setErrors(error);
+        this.props.history.goBack();
       });
   };
   render() {

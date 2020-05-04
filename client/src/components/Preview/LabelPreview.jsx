@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 
 //React Router DOM
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 //Redux
 import { connect } from 'react-redux';
@@ -36,7 +36,7 @@ function LabelPreview(props) {
       </div>
 
       <div className="label-preview-actions">
-        <Link to={`/project/${projectId}/labels`}>
+        <Link to={`/project/${projectId}/label/${label._id}/edit`}>
           <i className="far fa-edit"></i>
         </Link>
 
@@ -50,4 +50,4 @@ const mapDispatchToProps = {
   getUserProjects,
 };
 
-export default connect(null, mapDispatchToProps)(LabelPreview);
+export default connect(null, mapDispatchToProps)(withRouter(LabelPreview));

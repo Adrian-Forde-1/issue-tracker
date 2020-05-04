@@ -10,6 +10,9 @@ import { connect } from 'react-redux';
 //Actions
 import { setErrors } from '../../redux/actions/userActions';
 
+//Components
+import SideNav from '../Navigation/SideNav';
+
 class JoinGroup extends Component {
   constructor(props) {
     super(props);
@@ -65,7 +68,8 @@ class JoinGroup extends Component {
               this.props.clearErrors();
             },
           })}
-        <div className="container">
+        <SideNav />
+        <div className="container p-l-175">
           <div className="auth-form">
             <h2>Join Group</h2>
             <form onSubmit={this.handleSubmit}>

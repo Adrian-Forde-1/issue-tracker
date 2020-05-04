@@ -9,23 +9,19 @@ import {
   getUserProjects,
   setProjectUpdated,
 } from '../redux/actions/projectActions';
-import { getUserGroups } from '../redux/actions/groupActions';
-import {
-  setCurrentSection,
-  setCurrentId,
-  clearCurrentSectionAndId,
-} from '../redux/actions/userActions';
+import { getUserTeams, setTeamUpdated } from '../redux/actions/teamActions';
 import { SET_ERRORS } from '../redux/actions/types';
 
 function DeleteModal(props) {
-  const { item, type, groupId, idInfo } = props;
+  const { item, type, teamId, reRoute } = props;
 
   const closeModal = () => {
     const element = document.querySelector('.modal-element');
     document.querySelector('#modal-root').removeChild(element);
+    if (reRoute !== null && typeof reRoute === 'function') reRoute();
   };
 
-  const deleteItem = (type, id, groupId, idInfo, cb) => {
+  const deleteItem = (type, id, teamId, cb) => {
     axios
       .delete(`/api/${type}/${id}`, {
         headers: { Authorization: localStorage.getItem('token') },
@@ -33,28 +29,21 @@ function DeleteModal(props) {
       .then(() => {
         if (type === 'project') {
           store.dispatch(getUserProjects(localStorage.getItem('token')));
-          if (groupId !== null) {
-            store.dispatch(clearCurrentSectionAndId());
-            store.dispatch(setCurrentSection('group'));
-            store.dispatch(setCurrentId(groupId));
-            store.dispatch(getUserGroups(localStorage.getItem('token')));
-            // axios.get(`/api/group/${groupId}`, {headers: {Authorization: localStorage.getItem('token')}}).then(response => {
 
-            // })
+          if (teamId !== null) {
+            store.dispatch(getUserTeams(localStorage.getItem('token')));
+            store.dispatch(setTeamUpdated(true));
           }
           cb();
         }
         if (type === 'bug') {
-          // store.dispatch(getUserProjects(localStorage.getItem('token')));
-          sessionStorage.setItem('deleteModalLog', item.project._id);
           store.dispatch(setProjectUpdated(true));
-          store.dispatch(setCurrentId(idInfo));
-          store.dispatch(setCurrentSection('project'));
+          props.history.replace(`/project/${item.project._id}`);
           cb();
         }
 
-        if (type === 'group') {
-          store.dispatch(getUserGroups(localStorage.getItem('token')));
+        if (type === 'team') {
+          store.dispatch(getUserTeams(localStorage.getItem('token')));
           cb();
         }
       })
@@ -71,7 +60,7 @@ function DeleteModal(props) {
         <div className="modal-btn-container">
           <button
             onClick={() => {
-              deleteItem(type, item._id, groupId, idInfo, closeModal);
+              deleteItem(type, item._id, teamId, closeModal);
             }}
           >
             Yes

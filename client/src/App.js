@@ -19,10 +19,9 @@ import Manager from './components/Manager';
 import IsAuthenticated from './components/IsAuthenticated';
 import Navbar from './components/Navbar';
 import { connect } from 'react-redux';
-import AllGroups from './components/Groups/AllGroups';
-import IndividualGroup from './components/Groups/IndividualGroup';
-import CreateGroup from './components/Groups/CreateGroup';
-import CreateGroupProject from './components/Groups/CreateGroupProject';
+import AllTeams from './components/Teams/AllTeams';
+import IndividualTeam from './components/Teams/IndividualTeam';
+import CreateTeam from './components/Teams/CreateTeam';
 import IndividualProject from './components/Projects/IndividualProject';
 import CreateProject from './components/Projects/CreateProject';
 import Labels from './components/Labels/Labels';
@@ -32,9 +31,10 @@ import IndividualBug from './components/Bugs/IndividualBug';
 import NewBug from './components/Bugs/NewBug';
 import EditBug from './components/Bugs/EditBug';
 import AllProjects from './components/Projects/AllProjects';
-import JoinGroup from './components/Groups/JoinGroup';
 import ArchivedProjects from './components/Projects/ArchivedProjects';
-import ArchivedGroupProjects from './components/Projects/ArchivedGroupProjects';
+import ArchivedTeamProjects from './components/Projects/ArchivedTeamProjects';
+import CreateTeamProject from './components/Teams/CreateTeamProject';
+import JoinTeam from './components/Teams/JoinTeam';
 
 function App() {
   toast.configure({
@@ -54,23 +54,27 @@ function App() {
         {/* <IsAuthenticated> */}
         <Route exact path="/manager" component={Manager} />
 
-        {/* Group */}
-        <Route exact path="/groups" component={AllGroups} />
-        <Route exact path="/group/:groupId" component={IndividualGroup} />
-        <Route exact path="/group/create" component={CreateGroup} />
-        <Route exact path="/group/archived" component={ArchivedGroupProjects} />
+        {/* Team */}
+        <Route exact path="/teams" component={AllTeams} />
+        <Route exact path="/team/:teamId" component={IndividualTeam} />
+        <Route exact path="/create/team" component={CreateTeam} />
         <Route
           exact
-          path="/group/:groupId/project/create"
-          component={CreateGroupProject}
+          path="/team/:teamId/archived"
+          component={ArchivedTeamProjects}
         />
-        <Route exact path="/group/join" component={JoinGroup} />
+        <Route
+          exact
+          path="/team/:teamId/project/create"
+          component={CreateTeamProject}
+        />
+        <Route exact path="/join/team" component={JoinTeam} />
 
         {/* Project */}
         <Route exact path="/projects" component={AllProjects} />
         <Route exact path="/project/:projectId" component={IndividualProject} />
-        <Route exact path="/project/create" component={CreateProject} />
-        <Route exact path="/project/archived" component={ArchivedProjects} />
+        <Route exact path="/create/project" component={CreateProject} />
+        <Route exact path="/projects/archived" component={ArchivedProjects} />
 
         {/* Labels */}
         <Route exact path="/project/:projectId/labels" component={Labels} />
@@ -79,7 +83,11 @@ function App() {
           path="/project/:projectId/label/:labelId/edit"
           component={EditLabel}
         />
-        <Route exact path="/create/label" component={AddLabel} />
+        <Route
+          exact
+          path="/project/:projectId/label/add"
+          component={AddLabel}
+        />
 
         {/* Bug */}
         <Route
@@ -87,7 +95,7 @@ function App() {
           path="/project/:projectId/bug/:bugId"
           component={IndividualBug}
         />
-        <Route exact path="/create/bug" component={NewBug} />
+        <Route exact path="/project/:projectId/new/bug" component={NewBug} />
         <Route
           exact
           path="/project/:projectId/bug/:bugId/edit"

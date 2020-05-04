@@ -14,7 +14,11 @@ import { logoutUser } from '../redux/actions/userActions';
 
 function Navbar(props) {
   const { authenticated } = props;
-  if (props.location.pathname !== '/manager') {
+  if (
+    props.location.pathname === '/' ||
+    props.location.pathname === '/login' ||
+    props.location.pathname === 'signup'
+  ) {
     return (
       <div className="navbar">
         <Link to="/" className="logo">
@@ -39,15 +43,12 @@ function Navbar(props) {
               <Link to="/login">Login</Link>
             </li>
           )}
-          {authenticated === false ? (
+          {authenticated === false && (
             <li className="nav-item">
               <Link to="/signup">Sign Up</Link>
             </li>
-          ) : (
-            <li className="nav-item">
-              <Link to="/manager">Manager</Link>
-            </li>
           )}
+
           {authenticated === true && (
             <li className="nav-item">
               <button

@@ -14,9 +14,9 @@ export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
 export const SET_ERRORS = 'SET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
-//Groups
-export const SET_GROUPS = 'SET_GROUPS';
-export const SET_GROUP_UPDATED = 'SET_GROUP_UPDATED';
+//Teams
+export const SET_TEAMS = 'SET_TEAMS';
+export const SET_TEAM_UPDATED = 'SET_TEAM_UPDATED';
 
 //Projects
 export const SET_PROJECTS = 'SET_PROJECTS';

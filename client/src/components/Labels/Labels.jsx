@@ -4,22 +4,22 @@ import axios from 'axios';
 //Tostify
 import { toast } from 'react-toastify';
 
-//Components
-import LabelPreview from '../Preview/LabelPreview';
+//React Router DOM
+import { Link } from 'react-router-dom';
 
 //Redux
 import { connect } from 'react-redux';
 
 //Actions
-import {
-  clearErrors,
-  setCurrentSection,
-  setCurrentId,
-} from '../../redux/actions/userActions';
+import { clearErrors } from '../../redux/actions/userActions';
+
+//Components
+import LabelPreview from '../Preview/LabelPreview';
+import SideNav from '../Navigation/SideNav';
 
 function Labels(props) {
   const [project, setProject] = useState({});
-  const projectId = props.currentId;
+  const projectId = props.match.params.projectId;
 
   useEffect(() => {
     axios
@@ -31,7 +31,8 @@ function Labels(props) {
       });
   }, [props.projects]);
   return (
-    <div className="labels">
+    <div className="labels p-l-175">
+      <SideNav />
       <h2>Labels</h2>
       {props.errors !== null &&
         props.errors['label'] &&
@@ -54,27 +55,20 @@ function Labels(props) {
             key={index}
           />
         ))}
-      <i
-        className="fas fa-plus-square action-btn add-label"
-        onClick={() => {
-          props.setCurrentSection('project/label/create');
-          props.setCurrentId(props.currentId);
-        }}
-      ></i>
+      <Link to={`/project/${project._id}/label/add`}>
+        <i className="fas fa-plus-square action-btn add-label"></i>
+      </Link>
     </div>
   );
 }
 
 const mapDispatchToProps = {
   clearErrors,
-  setCurrentSection,
-  setCurrentId,
 };
 
 const mapStateToProps = (state) => ({
   projects: state.projects.projects,
   errors: state.user.errors,
-  currentId: state.user.currentId,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Labels);

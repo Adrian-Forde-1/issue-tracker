@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const noteSchema = new mongoose.Schema(
+const commentSchema = new mongoose.Schema(
   {
-    note: {
+    comment: {
       type: String,
       maxlength: 500,
     },
@@ -21,6 +21,6 @@ const noteSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const NoteModel = mongoose.model('note', noteSchema);
+const CommentModel = mongoose.model('comment', commentSchema);
 
-module.exports = NoteModel;
+module.exports = CommentModel;

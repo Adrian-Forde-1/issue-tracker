@@ -50,13 +50,14 @@ class AddLabel extends Component {
       )
       .then((response) => {
         this.props.setMessages(response);
-        this.props.getUserProjects(localStorage.getItem('token')).then(() => {
-          this.props.history.goBack();
-        });
+        this.props.getUserProjects(localStorage.getItem('token'));
+        this.props.history.push(`/project/${projectId}/labels`);
       })
       .catch((error) => {
-        this.props.setErrors(error);
-        this.props.history.goBack();
+        if (error['response']) {
+          this.props.setErrors(error);
+          this.props.history.goBack();
+        }
       });
   };
   render() {
@@ -111,4 +112,4 @@ const mapDisptchToProps = {
   getUserProjects,
 };
 
-export default connect(mapDisptchToProps)(AddLabel);
+export default connect(null, mapDisptchToProps)(AddLabel);

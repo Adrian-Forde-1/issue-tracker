@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const groupSchema = new mongoose.Schema({
+const teamSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -33,7 +33,7 @@ const groupSchema = new mongoose.Schema({
   },
 });
 
-groupSchema.pre('save', async function (next) {
+teamSchema.pre('save', async function (next) {
   try {
     //Generate a bcrypt salt
     const salt = await bcrypt.genSalt(10);
@@ -50,7 +50,7 @@ groupSchema.pre('save', async function (next) {
   }
 });
 
-groupSchema.methods.isValidPassword = async function (newPassword) {
+teamSchema.methods.isValidPassword = async function (newPassword) {
   try {
     return await bcrypt.compare(newPassword, this.password);
   } catch (err) {
@@ -58,6 +58,6 @@ groupSchema.methods.isValidPassword = async function (newPassword) {
   }
 };
 
-const GroupModel = mongoose.model('group', groupSchema);
+const TeamModel = mongoose.model('team', teamSchema);
 
-module.exports = GroupModel;
+module.exports = TeamModel;

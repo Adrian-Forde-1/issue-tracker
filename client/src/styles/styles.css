@@ -38,6 +38,10 @@ a p {
   padding-top: 85px !important;
 }
 
+.p-l-175 {
+  padding-left: 175px !important;
+}
+
 .m-l-16 {
   margin-left: 16px !important;
 }
@@ -125,7 +129,7 @@ a p {
   color: white;
 }
 
-.hide#projects, .hide#groups {
+.hide#projects, .hide#teams {
   display: none;
 }
 
@@ -137,7 +141,7 @@ a p {
   font-size: 16px;
   position: absolute;
   top: 20px;
-  left: 20px;
+  left: 195px;
   padding: 5px 10px;
   z-index: 2;
   -webkit-box-shadow: 0.5px 0.5px 2px grey;
@@ -179,7 +183,7 @@ a p {
 }
 
 .modal-body {
-  width: 50%;
+  width: 40%;
   height: auto;
   padding: 20px 20px;
   position: relative;
@@ -263,8 +267,8 @@ a p {
 
 .action-bar a {
   background: #fdfcff;
-  margin-left: 10px;
   padding: 5px 10px;
+  margin-right: 20px;
   border: none;
   color: #2e00b1;
   border: 1px solid #2e00b1;
@@ -285,7 +289,6 @@ a p {
 
 .action-bar button {
   background: #fdfcff;
-  margin-right: 10px;
   padding: 5px 10px;
   border: none;
   color: #2e00b1;
@@ -434,6 +437,47 @@ a p {
           transform: scale(1.1);
 }
 
+.side-nav {
+  width: 175px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  background: #0f003a;
+}
+
+.side-nav a img {
+  margin-top: 20px;
+}
+
+.side-nav ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 30px;
+}
+
+.side-nav ul li {
+  margin: 20px 0px;
+  list-style: none;
+  color: #fdfcff;
+  cursor: pointer;
+  font-weight: 300;
+}
+
+.side-nav ul li.selected-section {
+  border-left: 4px solid #fdfcff;
+}
+
+.side-nav ul li a {
+  color: #fdfcff;
+}
+
 header {
   background: #fdfcff;
   width: 100%;
@@ -513,6 +557,9 @@ header::after {
 .header-links {
   padding: 0;
   margin: 0;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -522,6 +569,10 @@ header::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.header-links a {
+  cursor: pointer;
 }
 
 .call-to-action {
@@ -684,6 +735,16 @@ header::after {
           flex: 1;
 }
 
+.section-title {
+  color: #0f003a;
+  font-size: 34px;
+  font-weight: 300;
+  text-align: left;
+  padding-left: 20px;
+  margin-bottom: 50px;
+  margin-top: 75px;
+}
+
 .manager-section {
   min-height: 100vh;
   margin-left: 175px;
@@ -772,7 +833,7 @@ header::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 15px 15px;
+  padding: 15px 20px;
   margin: 10px 1rem;
   background: #fdfcff;
   -webkit-box-shadow: 0.5px 0.5px 2px grey;
@@ -780,7 +841,7 @@ header::after {
   color: white;
 }
 
-.preview button {
+.preview a {
   border: none;
   background: none;
   color: #0f003a;
@@ -857,6 +918,10 @@ header::after {
   font-size: 24px;
   background: rgba(255, 255, 255, 0.1);
   color: #0f003a;
+  z-index: 100;
+}
+
+.action-btn i {
   cursor: pointer;
 }
 
@@ -875,14 +940,14 @@ header::after {
 .individual-container {
   width: 100%;
   background: #fdfcff;
+  padding-left: 175px;
 }
 
 .individual-container .containers {
   width: 100%;
   position: relative;
   padding-top: 0px;
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 20px;
   padding-bottom: 0px !important;
 }
 
@@ -894,7 +959,7 @@ header::after {
   margin-left: 0px !important;
 }
 
-.group-name {
+.team-name {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -906,20 +971,20 @@ header::after {
   padding-top: 85px;
 }
 
-.group-name i {
+.team-name i {
   color: #0f003a;
   font-size: 16px;
   margin-left: 30px;
   cursor: pointer;
 }
 
-.group-id {
+.team-id {
   color: #2e00b1;
   font-weight: 300;
   text-align: left;
 }
 
-.group-id span {
+.team-id span {
   color: #0f003a;
 }
 

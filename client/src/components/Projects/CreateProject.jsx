@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+//Components
+import SideNav from '../Navigation/SideNav';
+
 //Redux
 import { connect } from 'react-redux';
 
@@ -53,7 +56,8 @@ class CreateProject extends Component {
   render() {
     return (
       <div className="form-container p-t-0">
-        <div className="container">
+        <SideNav />
+        <div className="container p-l-175">
           <div className="auth-form">
             <h2>Create Project</h2>
             <form onSubmit={this.handleSubmit}>

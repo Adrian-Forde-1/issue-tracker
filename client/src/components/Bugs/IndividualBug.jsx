@@ -6,9 +6,6 @@ import moment from 'moment';
 //Tostify
 import { toast } from 'react-toastify';
 
-//Components
-import DeleteModal from '../DeleteModal';
-
 //React Router DOM
 import { Link } from 'react-router-dom';
 
@@ -17,6 +14,10 @@ import { connect } from 'react-redux';
 
 //Actions
 import { setErrors, clearErrors } from '../../redux/actions/userActions';
+
+//Components
+import DeleteModal from '../DeleteModal';
+import SideNav from '../Navigation/SideNav';
 
 function IndividualBug(props) {
   const [bug, setBug] = useState({});
@@ -32,7 +33,7 @@ function IndividualBug(props) {
         setBug(response.data);
       })
       .catch((error) => {
-        props.setErrors(error.response.data);
+        props.setErrors(error);
         props.history.goBack();
       });
   }, []);
@@ -80,8 +81,13 @@ function IndividualBug(props) {
       });
   };
 
+  const reRoute = () => {
+    props.history.replace(`/project/${bug.project._id}`);
+  };
+
   return (
     <div className="individual-container">
+      <SideNav />
       <div className="container-fluid">
         {Object.keys(bug).length > 0 && (
           <div className="containers p-t-20">
@@ -96,10 +102,10 @@ function IndividualBug(props) {
                     props.clearErrors();
                   },
                 })
-              : props.errors['note'] &&
-                !toast.isActive('notetoast') &&
-                toast(props.errors.note, {
-                  toastId: 'notetoast',
+              : props.errors['comment'] &&
+                !toast.isActive('commenttoast') &&
+                toast(props.errors.comment, {
+                  toastId: 'commenttoast',
                   type: 'error',
                   position: toast.POSITION.TOP_CENTER,
                   autoClose: 2000,
@@ -126,7 +132,7 @@ function IndividualBug(props) {
                         <DeleteModal
                           item={bug}
                           type={'bug'}
-                          idInfo={bug.project._id}
+                          reRoute={reRoute}
                         />,
                         element
                       );
@@ -166,7 +172,7 @@ function IndividualBug(props) {
             </div>
 
             <h2 className="bug-comments-title">Comments</h2>
-            {/* <Link to={`/bug/${bug._id}/note/new`} className="add-comment">
+            {/* <Link to={`/bug/${bug._id}/comment/new`} className="add-comment">
             <i className="fas fa-plus"></i>
           </Link> */}
             <div className="add-comment-container">
@@ -186,16 +192,20 @@ function IndividualBug(props) {
               <button
                 className="submit-comment"
                 onClick={() => {
-                  const newNote = {
-                    note: comment,
+                  const newComment = {
+                    comment: comment,
                     bug: bug._id,
                   };
 
                   const username = props.user.username;
                   axios
                     .post(
-                      '/api/note',
-                      { note: newNote, bugId: bug._id, username: username },
+                      '/api/comment',
+                      {
+                        comment: newComment,
+                        bugId: bug._id,
+                        username: username,
+                      },
                       {
                         headers: {
                           Authorization: localStorage.getItem('token'),
@@ -215,12 +225,12 @@ function IndividualBug(props) {
                           setComment('');
                         })
                         .catch((error) => {
-                          props.setErrors(error.response.data);
+                          props.setErrors(error);
                           props.history.goBack();
                         });
                     })
                     .catch((error) => {
-                      props.setErrors(error.response.data);
+                      props.setErrors(error);
                       props.history.goBack();
                     });
                 }}
@@ -228,22 +238,22 @@ function IndividualBug(props) {
                 Comment
               </button>
             </div>
-            {bug.notes &&
-              bug.notes.length > 0 &&
-              bug.notes.map((note) => (
-                <div className="comment-container" key={note._id}>
+            {bug.comments &&
+              bug.comments.length > 0 &&
+              bug.comments.map((comment) => (
+                <div className="comment-container" key={comment._id}>
                   <div className="bug-comment">
                     <p className="comment-date">
-                      <span>{note.createdBy}</span> &middot;
-                      <span> {moment(note.createdAt).fromNow()}</span>
+                      <span>{comment.createdBy}</span> &middot;
+                      <span> {moment(comment.createdAt).fromNow()}</span>
                     </p>
-                    <p>{note.note}</p>
+                    <p>{comment.comment}</p>
                   </div>
                   <i
                     className="far fa-trash-alt"
                     onClick={() => {
                       axios
-                        .delete(`/api/note/${note._id}`, {
+                        .delete(`/api/comment/${comment._id}`, {
                           headers: {
                             Authorization: localStorage.getItem('token'),
                           },
@@ -260,12 +270,12 @@ function IndividualBug(props) {
                               setBug(response.data);
                             })
                             .catch((error) => {
-                              props.setErrors(error.response.data);
+                              props.setErrors(error);
                               props.history.goBack();
                             });
                         })
                         .catch((error) => {
-                          props.setErrors(error.response.data);
+                          props.setErrors(error);
                           props.history.goBack();
                         });
                     }}

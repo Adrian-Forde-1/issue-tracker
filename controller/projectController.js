@@ -1,6 +1,6 @@
 const ProjectModel = require('../models/ProjectModel');
 const UserModel = require('../models/UserModel');
-const GroupModel = require('../models/GroupModel');
+const TeamModel = require('../models/TeamModel');
 
 module.exports = {
   //Create Project
@@ -9,9 +9,9 @@ module.exports = {
       let messages = {};
       let errors = {};
 
-      const group = req.body.project.groupId || null;
-      console.log('||||||||||||||||||| Group Id |||||||||||||||||||');
-      console.log(group);
+      const team = req.body.project.teamId || null;
+      console.log('||||||||||||||||||| Team Id |||||||||||||||||||');
+      console.log(team);
 
       const defaultLabels = [
         {
@@ -43,7 +43,7 @@ module.exports = {
         createdBy: req.user._id,
         labels: defaultLabels,
         createdBy: req.user._id,
-        group,
+        team,
       });
 
       //Save a new project to the database
@@ -63,25 +63,25 @@ module.exports = {
               return res.status(500).json(errors);
             }
 
-            if (req.body.project.groupId) {
-              const groupId = req.body.project.groupId;
-              GroupModel.findById(groupId).exec(function (err, group) {
+            if (req.body.project.teamId) {
+              const teamId = req.body.project.teamId;
+              TeamModel.findById(teamId).exec(function (err, team) {
                 //Error occured? Notify user
                 if (err) {
                   console.error(err);
-                  errors.user = 'Error occured when adding project to group';
+                  errors.user = 'Error occured when adding project to team';
                   return res.status(500).json(errors);
                 }
 
-                const newProjectsArray = [...group.projects, project._id];
+                const newProjectsArray = [...team.projects, project._id];
 
-                GroupModel.findByIdAndUpdate(groupId, {
+                TeamModel.findByIdAndUpdate(teamId, {
                   projects: newProjectsArray,
-                }).exec(function (err, group) {
+                }).exec(function (err, team) {
                   //Error occured? Notify user
                   if (err) {
                     console.error(err);
-                    errors.user = 'Error occured when adding user to group';
+                    errors.user = 'Error occured';
                     return res.status(500).json(errors);
                   }
 
@@ -157,9 +157,9 @@ module.exports = {
           return res.status(500).json(errors);
         }
 
-        //Check to see if the project is in a group, if so, then the group creator has permission to delete the project
-        if (project.group) {
-          GroupModel.findById(project.group).exec(function (err, group) {
+        //Check to see if the project is in a team, if so, then the team creator has permission to delete the project
+        if (project.team) {
+          TeamModel.findById(project.team).exec(function (err, team) {
             //Error occured? Notify user
             if (err) {
               console.error(err);
@@ -167,8 +167,8 @@ module.exports = {
               return res.status(500).json(errors);
             }
 
-            //Check to see if the person deleting the project is the same person who created the group
-            if (group.createdBy.toString() === req.user._id.toString()) {
+            //Check to see if the person deleting the project is the same person who created the team
+            if (team.createdBy.toString() === req.user._id.toString()) {
               ProjectModel.findByIdAndDelete(projectId).exec(function (
                 err,
                 project
@@ -176,32 +176,30 @@ module.exports = {
                 //If something went wrong when deleting project, notify user
                 if (err) {
                   console.error(err);
-                  errors.project = 'Error occured when deleting project';
+                  errors.project = 'Error occured';
                   return res.status(500).json(errors);
                 }
 
-                GroupModel.findById(project.group).exec(function (err, group) {
+                TeamModel.findById(project.team).exec(function (err, team) {
                   //Error occured? Notify user
                   if (err) {
                     console.error(err);
-                    errors.project =
-                      'An Error occured when removing project from group';
+                    errors.project = 'Error occured';
                     return res.status(500).json(errors);
                   }
 
-                  const newProjectsArray = group.projects.filter(
-                    (groupProject) =>
-                      groupProject.toString() !== project._id.toString()
+                  const newProjectsArray = team.projects.filter(
+                    (teamProject) =>
+                      teamProject.toString() !== project._id.toString()
                   );
 
-                  GroupModel.findByIdAndUpdate(project.group, {
+                  TeamModel.findByIdAndUpdate(project.team, {
                     projects: newProjectsArray,
-                  }).exec(function (err, group) {
+                  }).exec(function (err, team) {
                     //Error occured? Notify user
                     if (err) {
                       console.error(err);
-                      errors.project =
-                        'An Error occured when removing project from group';
+                      errors.project = 'Error occured';
                       return res.status(500).json(errors);
                     }
 
@@ -276,7 +274,7 @@ module.exports = {
     const userId = req.user._id;
     //Find all projects created by a certain user
     ProjectModel.find({
-      $and: [{ createdBy: userId }, { group: null }, { archived: false }],
+      $and: [{ createdBy: userId }, { team: null }, { archived: false }],
     })
       .populate('bugs')
       .exec(function (err, projects) {
@@ -504,7 +502,7 @@ module.exports = {
     const userId = req.user._id;
     //Find all projects created by a certain user
     ProjectModel.find({
-      $and: [{ createdBy: userId }, { group: null }, { archived: true }],
+      $and: [{ createdBy: userId }, { team: null }, { archived: true }],
     })
       .populate('bugs')
       .exec(function (err, projects) {

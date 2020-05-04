@@ -4,11 +4,11 @@ import axios from 'axios';
 //Redux
 import { connect } from 'react-redux';
 
+//React Router DOM
+import { withRouter } from 'react-router-dom';
+
 //Actions
-import {
-  getUserGroups,
-  setGroupUpdated,
-} from '../../redux/actions/groupActions';
+import { getUserTeams, setTeamUpdated } from '../../redux/actions/teamActions';
 import {
   clearCurrentSectionAndId,
   setErrors,
@@ -16,54 +16,58 @@ import {
 
 //Components
 import ProjectPreview from '../Preview/ProjectPreview';
+import SideNav from '../Navigation/SideNav';
+import SearchBar from '../SearchBar';
 
-function AllGroupProjects(props) {
+function AllTeamProjects(props) {
   const [projects, changeProjects] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
-    const groupId = props.match.params.groupId;
+    const teamId = props.match.params.teamId;
 
     axios
-      .get(`/api/group/${groupId}`, {
+      .get(`/api/team/${teamId}`, {
         headers: { Authorization: localStorage.getItem('token') },
       })
       .then((response) => {
-        const group = response.data;
-        changeProjects(group.projects);
+        const team = response.data;
+        changeProjects(team.projects);
       })
       .catch((error) => {
         props.setErrors(error);
         props.clearCurrentSectionAndId();
       });
 
-    props.getUserGroups(props.userId);
+    props.getUserTeams(props.userId);
   }, []);
 
   useEffect(() => {
-    if (props.groupUpdated === true) {
-      const groupId = props.currentId;
+    if (props.teamUpdated === true) {
+      const teamId = props.match.params.teamId;
 
       axios
-        .get(`/api/group/${groupId}`, {
+        .get(`/api/team/${teamId}`, {
           headers: { Authorization: localStorage.getItem('token') },
         })
         .then((response) => {
-          const group = response.data;
-          changeProjects(group.projects);
+          const team = response.data;
+          changeProjects(team.projects);
         })
         .catch((error) => {
           props.setErrors(error);
           props.clearCurrentSectionAndId();
         });
 
-      props.getUserGroups(props.userId);
+      props.getUserTeams(props.userId);
 
-      props.setGroupUpdated(false);
+      props.setTeamUpdated(false);
     }
-  }, [props.groupUpdated]);
+  }, [props.teamUpdated]);
 
   return (
     <div className="d-flex flex-column">
+      <SideNav />
       {projects && projects.length > 0 && props.search === ''
         ? projects.map((project) => {
             if (project.archived === false) {
@@ -84,15 +88,18 @@ function AllGroupProjects(props) {
 
 const mapDispatchToProps = {
   clearCurrentSectionAndId,
-  setGroupUpdated,
+  setTeamUpdated,
   setErrors,
-  getUserGroups,
+  getUserTeams,
 };
 
 const mapStateToProps = (state) => ({
   currentId: state.user.currentId,
   projects: state.projects.projects,
-  groupUpdated: state.groups.groupUpdated,
+  teamUpdated: state.teams.teamUpdated,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllGroupProjects);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(AllTeamProjects));

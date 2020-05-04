@@ -19,7 +19,7 @@ module.exports = {
         name,
         description,
         label,
-        notes: [],
+        comments: [],
         status: NEW_BUG,
         project: projectId,
         createdBy: req.user._id,
@@ -172,7 +172,7 @@ module.exports = {
       let errors = {};
       const bugId = req.params.bugId;
       BugModel.findById(bugId)
-        .populate('createdBy notes project')
+        .populate('createdBy comments project')
         .exec(function (err, bug) {
           //If something went wrong when fetching bug, notify user
           if (err) {
