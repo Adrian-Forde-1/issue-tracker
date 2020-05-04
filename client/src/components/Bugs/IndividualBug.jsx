@@ -7,26 +7,23 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 
 //Components
-import DeleteModal from './DeleteModal';
-import GoBack from './GoBack';
+import DeleteModal from '../DeleteModal';
+
+//React Router DOM
+import { Link } from 'react-router-dom';
 
 //Redux
 import { connect } from 'react-redux';
 
 //Actions
-import {
-  setErrors,
-  clearErrors,
-  setCurrentSection,
-  setCurrentId,
-} from '../redux/actions/userActions';
+import { setErrors, clearErrors } from '../../redux/actions/userActions';
 
 function IndividualBug(props) {
   const [bug, setBug] = useState({});
   const [comment, setComment] = useState('');
 
   useEffect(() => {
-    const bugId = props.currentId;
+    const bugId = props.match.params.bugId;
     axios
       .get(`/api/bug/${bugId}`, {
         headers: { Authorization: localStorage.getItem('token') },
@@ -36,8 +33,7 @@ function IndividualBug(props) {
       })
       .catch((error) => {
         props.setErrors(error.response.data);
-        props.setCurrentSection('project');
-        props.setCurrentId(bug.project.toString());
+        props.history.goBack();
       });
   }, []);
 
@@ -79,19 +75,14 @@ function IndividualBug(props) {
         { headers: { Authorization: localStorage.getItem('token') } }
       )
       .catch((error) => {
-        props.setErrors(error.response.data);
-        props.setCurrentSection('project');
-        props.setCurrentId(bug.project.toString());
+        props.setErrors(error);
+        props.history.goBack();
       });
   };
 
   return (
     <div className="individual-container">
-      {Object.keys(bug).length > 0 && (
-        <GoBack section="project" id={bug.project._id} />
-      )}
       <div className="container-fluid">
-        {console.log(bug)}
         {Object.keys(bug).length > 0 && (
           <div className="containers p-t-20">
             {props.errors !== null && props.errors['bug']
@@ -120,14 +111,9 @@ function IndividualBug(props) {
               <span>{bug.name}</span>{' '}
               {bug.createdBy._id.toString() === props.user._id.toString() && (
                 <div>
-                  {' '}
-                  <i
-                    className="far fa-edit"
-                    onClick={() => {
-                      props.setCurrentSection('project/bug/edit');
-                      props.setCurrentId(props.currentId);
-                    }}
-                  ></i>
+                  <Link to={`/project/:projectId/bug/:bugId/edit`}>
+                    <i className="far fa-edit"></i>
+                  </Link>
                   <i
                     className="far fa-trash-alt"
                     onClick={() => {
@@ -217,7 +203,7 @@ function IndividualBug(props) {
                       }
                     )
                     .then(() => {
-                      const bugId = props.currentId;
+                      const bugId = props.match.params.bugId;
                       axios
                         .get(`/api/bug/${bugId}`, {
                           headers: {
@@ -230,14 +216,12 @@ function IndividualBug(props) {
                         })
                         .catch((error) => {
                           props.setErrors(error.response.data);
-                          props.setCurrentSection('project');
-                          props.setCurrentId(bug.project.toString());
+                          props.history.goBack();
                         });
                     })
                     .catch((error) => {
                       props.setErrors(error.response.data);
-                      props.setCurrentSection('project');
-                      props.setCurrentId(bug.project.toString());
+                      props.history.goBack();
                     });
                 }}
               >
@@ -265,7 +249,7 @@ function IndividualBug(props) {
                           },
                         })
                         .then(() => {
-                          const bugId = props.currentId;
+                          const bugId = props.match.params.bugId;
                           axios
                             .get(`/api/bug/${bugId}`, {
                               headers: {
@@ -276,16 +260,13 @@ function IndividualBug(props) {
                               setBug(response.data);
                             })
                             .catch((error) => {
-                              // console.log(error.response.data);
                               props.setErrors(error.response.data);
-                              props.setCurrentSection('project');
-                              props.setCurrentId(bug.project.toString());
+                              props.history.goBack();
                             });
                         })
                         .catch((error) => {
                           props.setErrors(error.response.data);
-                          props.setCurrentSection('project');
-                          props.setCurrentId(bug.project.toString());
+                          props.history.goBack();
                         });
                     }}
                   ></i>
@@ -301,15 +282,12 @@ function IndividualBug(props) {
 const mapDispatchToProps = {
   setErrors,
   clearErrors,
-  setCurrentSection,
-  setCurrentId,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user.user,
   projects: state.projects.projects,
   errors: state.user.errors,
-  currentId: state.user.currentId,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(IndividualBug);

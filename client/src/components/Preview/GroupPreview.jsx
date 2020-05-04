@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 //Components
-import DeleteModal from './DeleteModal';
+import DeleteModal from '../DeleteModal';
 
 //Redux
 import { connect } from 'react-redux';
 
 //Actions
-import { setCurrentId, setCurrentSection } from '../redux/actions/userActions';
-import { getUserGroups } from '../redux/actions/groupActions';
+import {
+  setCurrentId,
+  setCurrentSection,
+} from '../../redux/actions/userActions';
+import { getUserGroups } from '../../redux/actions/groupActions';
 
 function GroupPreview(props) {
   const { group } = props;

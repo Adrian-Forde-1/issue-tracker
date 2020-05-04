@@ -6,13 +6,12 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 //Components
-import SearchBar from './SearchBar';
-import GoBack from './GoBack';
+import SearchBar from '../SearchBar';
 
 //Redux
 import { connect } from 'react-redux';
 import AllGroupProjects from './AllGroupProjects';
-import DeleteModal from './DeleteModal';
+import DeleteModal from '../DeleteModal';
 
 //Actions
 import {
@@ -20,8 +19,8 @@ import {
   setErrors,
   setCurrentSection,
   setCurrentId,
-} from '../redux/actions/userActions';
-import { setProjects } from '../redux/actions/projectActions';
+} from '../../redux/actions/userActions';
+import { setProjects } from '../../redux/actions/projectActions';
 
 function IndividualGroup(props) {
   const [group, changeGroup] = useState({});
@@ -50,7 +49,6 @@ function IndividualGroup(props) {
 
   return (
     <div className="individual-container">
-      <GoBack section="" id="" />
       <div className="containers">
         <div className="search-and-filter">
           <SearchBar

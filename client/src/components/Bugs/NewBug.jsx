@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-//Components
-import GoBack from './GoBack';
-
 //Redux
-import store from '../redux/store';
 import { connect } from 'react-redux';
 
+//React Router DOM
+import { withRouter } from 'react-router-dom';
+
 //Actions
-import { SET_MESSAGES, SET_ERRORS } from '../redux/actions/types';
-import { getUserProjects } from '../redux/actions/projectActions';
-import { setCurrentId, setCurrentSection } from '../redux/actions/userActions';
+import { SET_MESSAGES, SET_ERRORS } from '../../redux/actions/types';
+import { getUserProjects } from '../../redux/actions/projectActions';
+import {
+  setCurrentId,
+  setCurrentSection,
+  setErrors,
+} from '../../redux/actions/userActions';
 
 class NewBug extends Component {
   constructor(props) {
@@ -48,7 +51,7 @@ class NewBug extends Component {
         });
       })
       .catch((error) => {
-        store.dispatch({ type: SET_ERRORS, payload: error });
+        this.props.setErrors(error);
         this.props.setCurrentId(this.props.currentId);
         this.props.setCurrentSection('project');
       });
@@ -80,17 +83,12 @@ class NewBug extends Component {
         { bug: bug },
         { headers: { Authorization: localStorage.getItem('token') } }
       )
-      .then((response) => {
-        store.dispatch({ type: SET_MESSAGES, payload: response.data });
-        store
-          .dispatch(getUserProjects(localStorage.getItem('token')))
-          .then(() => {
-            this.props.setCurrentId(this.props.currentId);
-            this.props.setCurrentSection('project');
-          });
+      .then(() => {
+        this.props.getUserProjects(localStorage.getItem('token'));
+        this.props.history.goBack();
       })
       .catch((error) => {
-        store.dispatch({ type: SET_ERRORS, payload: error });
+        this.props.setErrors(error);
         this.props.setCurrentId(this.props.currentId);
         this.props.setCurrentSection('project');
       });
@@ -98,7 +96,6 @@ class NewBug extends Component {
   render() {
     return (
       <div className="form-container p-t-0">
-        <GoBack section="project" />
         <div className="container">
           <div className="auth-form">
             <h2>New Bug</h2>
@@ -156,6 +153,8 @@ class NewBug extends Component {
 const mapDispatchToProps = {
   setCurrentId,
   setCurrentSection,
+  setErrors,
+  getUserProjects,
 };
 
 const mapStateToProps = (state) => ({
@@ -163,4 +162,4 @@ const mapStateToProps = (state) => ({
   currentId: state.user.currentId,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewBug);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewBug));

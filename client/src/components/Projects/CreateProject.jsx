@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-//Components
-import GoBack from './GoBack';
-
 //Redux
 import { connect } from 'react-redux';
 
 //Actions
-import { setErrors, setCurrentSection } from '../redux/actions/userActions';
+import { setErrors } from '../../redux/actions/userActions';
 
-class CreateGroupProject extends Component {
+class CreateProject extends Component {
   constructor(props) {
     super(props);
 
@@ -32,12 +29,9 @@ class CreateGroupProject extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const groupId = this.props.currentId;
-
     const project = {
       name: this.state.name,
       description: this.state.description,
-      groupId,
     };
 
     axios
@@ -49,17 +43,16 @@ class CreateGroupProject extends Component {
         }
       )
       .then(() => {
-        this.props.setCurrentSection('group');
+        this.props.history.push('/projects');
       })
       .catch((error) => {
-        this.props.setErrors(error.response.data);
-        this.props.setCurrentSection('group');
+        this.props.setErrors(error);
+        this.props.history.push('/projects');
       });
   };
   render() {
     return (
       <div className="form-container p-t-0">
-        <GoBack section="group" id={this.props.currentId} />
         <div className="container">
           <div className="auth-form">
             <h2>Create Project</h2>
@@ -96,11 +89,6 @@ class CreateGroupProject extends Component {
 
 const mapDispatchToProps = {
   setErrors,
-  setCurrentSection,
 };
 
-const mapStateToProps = (state) => ({
-  currentId: state.user.currentId,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupProject);
+export default connect(null, mapDispatchToProps)(CreateProject);

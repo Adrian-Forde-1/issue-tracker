@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-//Components
-import GoBack from './GoBack';
-
 //React Router DOM
 import { Link, withRouter } from 'react-router-dom';
 
@@ -11,7 +8,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 //Actions
-import { setErrors } from '../redux/actions/userActions';
+import { setErrors } from '../../redux/actions/userActions';
 
 class NewNote extends Component {
   constructor(props) {

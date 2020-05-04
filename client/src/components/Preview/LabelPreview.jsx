@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 
+//React Router DOM
+import { Link } from 'react-router-dom';
+
 //Redux
-import store from '../redux/store';
 import { connect } from 'react-redux';
 
 //Actiosn
-import { getUserProjects } from '../redux/actions/projectActions';
-import {
-  setCurrentSection,
-  setExtraIdInfo,
-} from '../redux/actions/userActions';
+import { getUserProjects } from '../../redux/actions/projectActions';
 
 function LabelPreview(props) {
   const { label, index, projectId } = props;
@@ -27,8 +25,8 @@ function LabelPreview(props) {
         headers: { Authorization: localStorage.getItem('token') },
       })
       .then(() => {
-        store.dispatch(getUserProjects(localStorage.getItem('token')));
-        props.setCurrentSection('project/labels');
+        props.getUserProjects(localStorage.getItem('token'));
+        props.history.replace(`/project/${projectId}/labels`);
       });
   };
   return (
@@ -38,13 +36,9 @@ function LabelPreview(props) {
       </div>
 
       <div className="label-preview-actions">
-        <i
-          className="far fa-edit"
-          onClick={() => {
-            props.setCurrentSection('project/label/edit');
-            props.setExtraIdInfo(label._id);
-          }}
-        ></i>
+        <Link to={`/project/${projectId}/labels`}>
+          <i className="far fa-edit"></i>
+        </Link>
 
         <i className="far fa-trash-alt" onClick={deleteLabel}></i>
       </div>
@@ -53,8 +47,7 @@ function LabelPreview(props) {
 }
 
 const mapDispatchToProps = {
-  setCurrentSection,
-  setExtraIdInfo,
+  getUserProjects,
 };
 
 export default connect(null, mapDispatchToProps)(LabelPreview);

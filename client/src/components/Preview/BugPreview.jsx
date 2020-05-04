@@ -2,16 +2,10 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 //Components
-import DeleteModal from './DeleteModal';
+import DeleteModal from '../DeleteModal';
 
 //React Router DOM
 import { Link } from 'react-router-dom';
-
-//Redux
-import { connect } from 'react-redux';
-
-//Actions
-import { setCurrentSection, setCurrentId } from '../redux/actions/userActions';
 
 function BugPreview(props) {
   const { bug, index, projectId } = props;
@@ -20,15 +14,9 @@ function BugPreview(props) {
     <div className="bug-preview-container">
       <div>
         <div className="bug-preview">
-          <p
-            className="bug-name"
-            onClick={() => {
-              props.setCurrentSection('bug');
-              props.setCurrentId(bug._id);
-            }}
-          >
+          <Link to={`/project/${bug.project._id}/bug/${bug._id}`}>
             {bug.name}
-          </p>
+          </Link>
           <div
             style={{ background: `${bug.label.color}` }}
             className="bug-label"
@@ -74,9 +62,4 @@ function BugPreview(props) {
   );
 }
 
-const mapDispatchToProps = {
-  setCurrentSection,
-  setCurrentId,
-};
-
-export default connect(null, mapDispatchToProps)(BugPreview);
+export default BugPreview;

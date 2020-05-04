@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 //Components
-import DeleteModal from './DeleteModal';
+import DeleteModal from '../DeleteModal';
 
 //React Router DOM
 import { withRouter } from 'react-router-dom';
@@ -17,11 +17,17 @@ import {
   setCurrentSection,
   setErrors,
   clearCurrentSectionAndId,
-} from '../redux/actions/userActions';
+} from '../../redux/actions/userActions';
 
-import { getUserProjects, setProjects } from '../redux/actions/projectActions';
+import {
+  getUserProjects,
+  setProjects,
+} from '../../redux/actions/projectActions';
 
-import { getUserGroups, setGroupUpdated } from '../redux/actions/groupActions';
+import {
+  getUserGroups,
+  setGroupUpdated,
+} from '../../redux/actions/groupActions';
 
 function ProjectPreview(props) {
   const { project } = props;

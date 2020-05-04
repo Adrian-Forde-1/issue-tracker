@@ -4,34 +4,20 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 //Redux
-import store from '../redux/store';
 import { connect } from 'react-redux';
 
 //Actions
-import { getUserGroups } from '../redux/actions/groupActions';
-import { setCurrentSection } from '../redux/actions/userActions';
+import { setCurrentSection } from '../../redux/actions/userActions';
 
 //Compoenents
-import GroupPreview from './GroupPreview';
+import GroupPreview from '../Preview/GroupPreview';
 
 function AllGroups(props) {
   const [groups, changeGroups] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = store.subscribe(() => {
-      changeGroups(store.getState().groups.groups);
-    });
-
-    store.dispatch(getUserGroups(props.userId));
-
-    return () => {
-      unsubscribe();
-    };
+    changeGroups(props.groups);
   }, []);
-
-  // useEffect(() => {
-
-  // }, [props.allgroups])
 
   return (
     <div className="d-flex flex-column" id="groups">
@@ -73,7 +59,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
-  allgroups: state.groups.groups,
+  groups: state.groups.groups,
   errors: state.user.errors,
 });
 

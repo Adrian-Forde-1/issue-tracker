@@ -15,7 +15,7 @@ function Homepage(props) {
         <div className="header-content">
           <div className="row">
             <div className="col-lg-6">
-              {props.authenticated === false ? (
+              {props.authenticated === false && (
                 <div>
                   <div className="mt-5"></div>
                   <h1>
@@ -35,7 +35,8 @@ function Homepage(props) {
                     </Link> */}
                   </div>
                 </div>
-              ) : (
+              )}
+              {props.authenticated === true && (
                 <div>
                   <div className="mt-5"></div>
                   <h1>
@@ -47,8 +48,11 @@ function Homepage(props) {
                     you all the best.
                   </p>
                   <div className="header-links">
-                    <Link to="/manager" className="main-header-link">
-                      Manager
+                    <Link to="/projects" className="main-header-link">
+                      Projects
+                    </Link>
+                    <Link to="/groups" className="main-header-link">
+                      Groups
                     </Link>
                   </div>
                 </div>

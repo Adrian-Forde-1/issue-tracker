@@ -7,23 +7,23 @@ import bugLogoWhite from '../resources/Images/Bug_Logo_White.svg';
 import { toast } from 'react-toastify';
 
 //Components
-import AllProjects from './AllProjects';
-import AllGroups from './AllGroups';
+// import AllProjects from './AllProjects';
+// import AllGroups from './AllGroups';
 import SearchBar from './SearchBar';
-import IndividualProject from './IndividualProject';
-import IndividualGroup from './IndividualGroup';
-import IndividualBug from './IndividualBug';
-import Labels from './Labels';
-import AddLabel from './AddLabel';
-import EditLabel from './EditLabel';
-import NewBug from './NewBug';
-import CreateProject from './CreateProject';
-import CreateGroup from './CreateGroup';
-import CreateGroupProject from './CreateGroupProject';
-import ArchivedProjects from './ArchivedProjects';
-import EditBug from './EditBug';
-import ArchivedGroupProjects from './ArchivedGroupProjects';
-import JoinGroup from './JoinGroup';
+// import IndividualProject from './Projects/IndividualProject';
+// import IndividualGroup from './Groups/IndividualGroup';
+// import IndividualBug from './IndividualBug';
+// import Labels from './Labels/Labels';
+// import AddLabel from './AddLabel';
+// import EditLabel from './EditLabel';
+// import NewBug from './NewBug';
+// import CreateProject from './CreateProject';
+// import CreateGroup from './CreateGroup';
+// import CreateGroupProject from './CreateGroupProject';
+// import ArchivedProjects from './ArchivedProjects';
+// import EditBug from './EditBug';
+// import ArchivedGroupProjects from './Projects/ArchivedGroupProjects';
+// import JoinGroup from './JoinGroup';
 
 //React Router Dom
 import { Link } from 'react-router-dom';
@@ -173,7 +173,7 @@ class Manager extends Component {
               />
             )}
             <div className="manager-section">
-              {this.state.section === 'projects' &&
+              {/* {this.state.section === 'projects' &&
                 this.props.currentSection === '' && (
                   <div className="manager-section-container">
                     <h3>Projects</h3>
@@ -189,10 +189,9 @@ class Manager extends Component {
                     <h3>Groups</h3>
                     <AllGroups search={this.state.search} />
                   </div>
-                )}
+                )} */}
 
-              {/* Project */}
-              {this.props.currentSection === 'project' &&
+              {/* {this.props.currentSection === 'project' &&
                 this.props.currentId !== '' && <IndividualProject />}
               {this.props.currentSection === 'project/label/create' &&
                 this.props.currentId !== '' && <AddLabel />}
@@ -209,24 +208,22 @@ class Manager extends Component {
               )}
               {this.props.currentSection === 'project/archived' && (
                 <ArchivedProjects search={this.state.search} />
-              )}
+              )} */}
 
-              {/* Bug */}
-              {this.props.currentSection === 'bug' &&
-                this.props.currentId !== '' && <IndividualBug />}
+              {/* {this.props.currentSection === 'bug' &&
+                this.props.currentId !== '' && <IndividualBug />} */}
 
-              {/* Group */}
-              {this.props.currentSection === 'group/create' && <CreateGroup />}
+              {/* {this.props.currentSection === 'group/create' && <CreateGroup />}
               {this.props.currentSection === 'group/join' && <JoinGroup />}
               {this.props.currentSection === 'group/create/project' &&
                 this.props.currentId !== '' && <CreateGroupProject />}
               {this.props.currentSection === 'group' &&
                 this.props.currentId !== '' && <IndividualGroup />}
               {this.props.currentSection === 'group/archived' &&
-                this.props.currentId !== '' && <ArchivedGroupProjects />}
+                this.props.currentId !== '' && <ArchivedGroupProjects />} */}
             </div>
           </div>
-          {this.props.currentSection === '' && (
+          {/* {this.props.currentSection === '' && (
             <i
               className="fas fa-plus-square action-btn"
               onClick={() => {
@@ -258,7 +255,7 @@ class Manager extends Component {
                 this.props.setCurrentSection('group/archived');
               }}
             ></i>
-          )}
+          )} */}
         </div>
       );
     } else {

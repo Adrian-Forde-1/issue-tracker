@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import { generateColor } from '../util/generateColor';
+import { generateColor } from '../../util/generateColor';
 import axios from 'axios';
 
-//Components
-import GoBack from './GoBack';
+//React Router DOM
+import { withRouter } from 'react-router-dom';
 
 //Redux
-import store from '../redux/store';
 import { connect } from 'react-redux';
 
 //Actions
-import { getUserProjects } from '../redux/actions/projectActions';
-import { setCurrentSection } from '../redux/actions/userActions';
-import { SET_MESSAGES, SET_ERRORS } from '../redux/actions/types';
+import { getUserProjects } from '../../redux/actions/projectActions';
+import { setErrors } from '../../redux/actions/userActions';
 
 class EditLabel extends Component {
   constructor(props) {
@@ -28,13 +26,11 @@ class EditLabel extends Component {
   }
 
   componentDidMount() {
-    const projectId = this.props.currentId;
-    const labelId = this.props.extraIdInfo;
-    const project = store
-      .getState()
-      .projects.projects.find(
-        (project) => project._id.toString() === projectId.toString()
-      );
+    const projectId = this.props.match.parmas.projectId;
+    const labelId = this.props.match.params.labelId;
+    const project = this.props.projects.find(
+      (project) => project._id.toString() === projectId.toString()
+    );
 
     const label = project.labels.find(
       (label) => label._id.toString() === labelId.toString()
@@ -62,8 +58,8 @@ class EditLabel extends Component {
   sendRequest = (e) => {
     e.preventDefault();
 
-    const projectId = this.props.currentId;
-    const labelId = this.props.extraIdInfo;
+    const projectId = this.props.match.params.projectId;
+    const labelId = this.props.props.match.params.labelId;
 
     const label = {
       name: this.state.name,
@@ -76,17 +72,13 @@ class EditLabel extends Component {
         { label: label },
         { headers: { Authorization: localStorage.getItem('token') } }
       )
-      .then((response) => {
-        store.dispatch({ type: SET_MESSAGES, payload: response.data });
-        store
-          .dispatch(getUserProjects(localStorage.getItem('token')))
-          .then(() => {
-            this.props.setCurrentSection('project/labels');
-          });
+      .then(() => {
+        this.props.getUserProjects(localStorage.getItem('token')).then(() => {
+          this.props.history.goBack();
+        });
       })
       .catch((error) => {
-        store.dispatch({ type: SET_ERRORS, payload: error });
-        this.props.setCurrentSection('project/labels');
+        this.props.setErrors(error);
       });
   };
   render() {
@@ -106,7 +98,6 @@ class EditLabel extends Component {
     };
     return (
       <div className="form-container p-t-0">
-        <GoBack section="project/labels" id={this.props.currentId} />
         <div className="container">
           <div className="auth-form">
             <h2>Edit Label</h2>
@@ -136,12 +127,16 @@ class EditLabel extends Component {
 }
 
 const mapDispatchToProps = {
-  setCurrentSection,
+  setErrors,
+  getUserProjects,
 };
 
 const mapStateToProps = (state) => ({
-  currentId: state.user.currentId,
   extraIdInfo: state.user.extraIdInfo,
+  projects: state.projects.projects,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditLabel);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EditLabel));

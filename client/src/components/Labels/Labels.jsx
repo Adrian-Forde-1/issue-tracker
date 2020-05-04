@@ -5,8 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 //Components
-import LabelPreview from './LabelPreview';
-import GoBack from './GoBack';
+import LabelPreview from '../Preview/LabelPreview';
 
 //Redux
 import { connect } from 'react-redux';
@@ -16,7 +15,7 @@ import {
   clearErrors,
   setCurrentSection,
   setCurrentId,
-} from '../redux/actions/userActions';
+} from '../../redux/actions/userActions';
 
 function Labels(props) {
   const [project, setProject] = useState({});
@@ -33,7 +32,6 @@ function Labels(props) {
   }, [props.projects]);
   return (
     <div className="labels">
-      <GoBack section="project" id={props.currentId} />
       <h2>Labels</h2>
       {props.errors !== null &&
         props.errors['label'] &&

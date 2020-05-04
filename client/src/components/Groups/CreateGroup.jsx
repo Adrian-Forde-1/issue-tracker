@@ -1,22 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-//Tostify
-import { toast } from 'react-toastify';
-
-//Components
-import GoBack from './GoBack';
-
 //Redux
 import { connect } from 'react-redux';
 
 //Actions
-import {
-  clearCurrentSectionAndId,
-  setErrors,
-} from '../redux/actions/userActions';
+import { setErrors } from '../../redux/actions/userActions';
 
-class JoinGroup extends Component {
+class CreateGroup extends Component {
   constructor(props) {
     super(props);
 
@@ -24,7 +15,7 @@ class JoinGroup extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-      id: '',
+      name: '',
       password: '',
     };
   }
@@ -38,51 +29,43 @@ class JoinGroup extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
+    var groupName = this.state.name;
+    groupName = groupName.charAt(0).toUpperCase() + groupName.slice(1);
+
     const group = {
-      groupId: this.state.id,
+      name: groupName,
       password: this.state.password,
     };
 
     axios
       .post(
-        '/api/join/group',
+        '/api/group',
         { group: group },
-        { headers: { Authorization: localStorage.getItem('token') } }
+        {
+          headers: { Authorization: localStorage.getItem('token') },
+        }
       )
       .then(() => {
-        this.props.clearCurrentSectionAndId();
+        this.props.history.push('/groups');
       })
       .catch((error) => {
-        this.props.setErrors(error);
+        this.props.history.push('/groups');
       });
   };
   render() {
     return (
       <div className="form-container p-t-0">
-        <GoBack section="" id="" />
-        {this.props.errors !== null &&
-          this.props.errors['group'] &&
-          !toast.isActive('grouptoast') &&
-          toast(this.props.errors.bug, {
-            toastId: 'grouptoast',
-            type: 'error',
-            position: toast.POSITION.TOP_CENTER,
-            autoClose: 2000,
-            onClose: () => {
-              this.props.clearErrors();
-            },
-          })}
         <div className="container">
           <div className="auth-form">
-            <h2>Join Group</h2>
+            <h2>Create Group</h2>
             <form onSubmit={this.handleSubmit}>
               <div className="form-group">
-                <label htmlFor="id">Id</label>
+                <label htmlFor="name">Name</label>
                 <br />
                 <input
                   type="text"
-                  name="id"
-                  value={this.state.id}
+                  name="name"
+                  value={this.state.name}
                   onChange={this.handleChange}
                 />
               </div>
@@ -95,13 +78,8 @@ class JoinGroup extends Component {
                   value={this.state.password}
                   onChange={this.handleChange}
                 />
-                {this.props.errors.password && (
-                  <div className="form-input-error">
-                    {this.props.errors.password}
-                  </div>
-                )}
               </div>
-              <button className="submit-btn">Join Group</button>
+              <button className="submit-btn">Create Group</button>
             </form>
           </div>
         </div>
@@ -111,13 +89,7 @@ class JoinGroup extends Component {
 }
 
 const mapDispatchToProps = {
-  clearCurrentSectionAndId,
   setErrors,
 };
 
-const mapStateToProps = (state) => ({
-  currentId: state.user.currentId,
-  errors: state.user.errors,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(JoinGroup);
+export default connect(null, mapDispatchToProps)(CreateGroup);

@@ -5,11 +5,10 @@ import axios from 'axios';
 //Tostify
 import { toast } from 'react-toastify';
 
-//Component
-import SearchBar from './SearchBar';
-import BugPreview from './BugPreview';
-import DeleteModal from './DeleteModal';
-import GoBack from './GoBack';
+//Components
+import SearchBar from '../SearchBar';
+import BugPreview from '../Preview/BugPreview';
+import DeleteModal from '../DeleteModal';
 
 //React Router DOM
 import { withRouter, Link } from 'react-router-dom';
@@ -21,13 +20,13 @@ import { connect } from 'react-redux';
 import {
   getUserProjects,
   setProjectUpdated,
-} from '../redux/actions/projectActions';
+} from '../../redux/actions/projectActions';
 import {
   setCurrentSection,
   setCurrentId,
   setErrors,
   clearErrors,
-} from '../redux/actions/userActions';
+} from '../../redux/actions/userActions';
 
 function IndividualProject(props) {
   const [project, changeProject] = useState({});
@@ -93,18 +92,6 @@ function IndividualProject(props) {
 
   return (
     <div className="individual-container">
-      <GoBack
-        section={
-          project !== null && project.archived === false
-            ? project['group']
-              ? 'group'
-              : ''
-            : project['group']
-            ? 'group/archived'
-            : 'project/archived'
-        }
-        id={project !== null && (project['group'] ? `${project['group']}` : '')}
-      />
       <div className="containers">
         <div className="search-and-filter">
           <SearchBar

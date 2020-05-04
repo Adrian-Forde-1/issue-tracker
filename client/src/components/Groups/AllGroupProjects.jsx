@@ -2,22 +2,26 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 //Redux
-import store from '../redux/store';
 import { connect } from 'react-redux';
 
 //Actions
-import { getUserGroups, setGroupUpdated } from '../redux/actions/groupActions';
-import { clearCurrentSectionAndId } from '../redux/actions/userActions';
-import { SET_ERRORS } from '../redux/actions/types';
+import {
+  getUserGroups,
+  setGroupUpdated,
+} from '../../redux/actions/groupActions';
+import {
+  clearCurrentSectionAndId,
+  setErrors,
+} from '../../redux/actions/userActions';
 
 //Components
-import ProjectPreview from './ProjectPreview';
+import ProjectPreview from '../Preview/ProjectPreview';
 
 function AllGroupProjects(props) {
   const [projects, changeProjects] = useState([]);
 
   useEffect(() => {
-    const groupId = props.currentId;
+    const groupId = props.match.params.groupId;
 
     axios
       .get(`/api/group/${groupId}`, {
@@ -28,11 +32,11 @@ function AllGroupProjects(props) {
         changeProjects(group.projects);
       })
       .catch((error) => {
-        store.dispatch({ type: SET_ERRORS, payload: error });
+        props.setErrors(error);
         props.clearCurrentSectionAndId();
       });
 
-    store.dispatch(getUserGroups(props.userId));
+    props.getUserGroups(props.userId);
   }, []);
 
   useEffect(() => {
@@ -48,11 +52,11 @@ function AllGroupProjects(props) {
           changeProjects(group.projects);
         })
         .catch((error) => {
-          store.dispatch({ type: SET_ERRORS, payload: error });
+          props.setErrors(error);
           props.clearCurrentSectionAndId();
         });
 
-      store.dispatch(getUserGroups(props.userId));
+      props.getUserGroups(props.userId);
 
       props.setGroupUpdated(false);
     }
@@ -81,6 +85,8 @@ function AllGroupProjects(props) {
 const mapDispatchToProps = {
   clearCurrentSectionAndId,
   setGroupUpdated,
+  setErrors,
+  getUserGroups,
 };
 
 const mapStateToProps = (state) => ({

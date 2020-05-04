@@ -1,31 +1,27 @@
 import React, { useEffect, useState } from 'react';
 
 //Redux
-import store from '../redux/store';
+import { connect } from 'react-redux';
 
 //Actions
-import { getUserProjects } from '../redux/actions/projectActions';
+import { getUserProjects } from '../../redux/actions/projectActions';
 
 //Components
-import ProjectPreview from './ProjectPreview';
+import ProjectPreview from '../Preview/ProjectPreview';
 
 function AllProjects(props) {
   const [projects, changeProjects] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = store.subscribe(() => {
-      changeProjects(store.getState().projects.projects);
-    });
-
-    store.dispatch(getUserProjects(props.userId));
-
-    return () => {
-      unsubscribe();
-    };
+    changeProjects(props.projects);
   }, []);
+  useEffect(() => {
+    changeProjects(props.projects);
+  }, [props.projects]);
 
   return (
     <div className="d-flex flex-column">
+      {console.log(projects)}
       {projects && projects.length > 0 && props.search === ''
         ? projects.map((project) => {
             if (project.archived === false)
@@ -43,4 +39,12 @@ function AllProjects(props) {
   );
 }
 
-export default AllProjects;
+const mapDispatchToProps = {
+  getUserProjects,
+};
+
+const mapStateToProps = (state) => ({
+  projects: state.projects.projects,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllProjects);

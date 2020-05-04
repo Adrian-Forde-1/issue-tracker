@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-//Components
-import GoBack from './GoBack';
-
 //Redux
 import { connect } from 'react-redux';
 
 //Actions
-import {
-  setCurrentSection,
-  setCurrentId,
-  setErrors,
-} from '../redux/actions/userActions';
+import { setErrors } from '../../redux/actions/userActions';
 
 class EditBug extends Component {
   constructor(props) {
@@ -28,7 +21,7 @@ class EditBug extends Component {
   }
 
   componentDidMount() {
-    const bugId = this.props.currentId;
+    const bugId = this.props.match.params.bugId;
     axios
       .get(`/api/bug/${bugId}`, {
         headers: { Authorization: localStorage.getItem('token') },
@@ -40,8 +33,7 @@ class EditBug extends Component {
       })
       .catch((error) => {
         this.props.setErrors(error);
-        this.props.setCurrentSection('project/bug');
-        this.props.setCurrentId(this.props.currentId);
+        this.props.history.goBack();
       });
   }
 
@@ -79,13 +71,11 @@ class EditBug extends Component {
         { headers: { Authorization: localStorage.getItem('token') } }
       )
       .then(() => {
-        this.props.setCurrentSection('bug');
-        this.props.setCurrentId(this.state.bug._id);
+        this.props.history.goBack();
       })
       .catch((error) => {
         this.props.setErrors(error);
-        this.props.setCurrentSection('bug');
-        this.props.setCurrentId(this.state.bug._id);
+        this.props.history.goBack();
       });
   };
   render() {
@@ -93,7 +83,6 @@ class EditBug extends Component {
       <div>
         {Object.keys(this.state.bug).length > 0 && (
           <div className="form-container no-top-nav">
-            <GoBack section="bug" id={this.state.bug._id} />
             <div className="container">
               <div className="auth-form">
                 <h2>Edit Bug</h2>
@@ -151,13 +140,7 @@ class EditBug extends Component {
 }
 
 const mapDispatchToProps = {
-  setCurrentSection,
-  setCurrentId,
   setErrors,
 };
 
-const mapStateToProps = (state) => ({
-  currentId: state.user.currentId,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditBug);
+export default connect(mapDispatchToProps)(EditBug);
