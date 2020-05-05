@@ -7,6 +7,9 @@ import { getUserProjects } from '../../redux/actions/projectActions';
 import { setMessages, setErrors } from '../../redux/actions/userActions';
 import { connect } from 'react-redux';
 
+//Components
+import SideNav from '../Navigation/SideNav';
+
 class AddLabel extends Component {
   constructor(props) {
     super(props);
@@ -49,9 +52,8 @@ class AddLabel extends Component {
         { headers: { Authorization: localStorage.getItem('token') } }
       )
       .then((response) => {
+        this.props.history.goBack();
         this.props.setMessages(response);
-        this.props.getUserProjects(localStorage.getItem('token'));
-        this.props.history.push(`/project/${projectId}/labels`);
       })
       .catch((error) => {
         if (error['response']) {
@@ -77,7 +79,8 @@ class AddLabel extends Component {
     };
     return (
       <div className="form-container p-t-0">
-        <div className="container">
+        <SideNav />
+        <div className="container p-l-175">
           <div className="auth-form">
             <h2>Add Label</h2>
             <div className="form-group">
@@ -88,6 +91,7 @@ class AddLabel extends Component {
                 maxLength="15"
                 value={this.state.name}
                 onChange={this.handleChange}
+                required
               />
             </div>
             <div className="w-100 d-flex justify-content-center mx-auto">

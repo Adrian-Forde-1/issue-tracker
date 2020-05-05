@@ -346,7 +346,7 @@ a p {
   margin-left: auto;
 }
 
-.manager-hamburger {
+.projects-groups-hamburger {
   color: #2e00b1;
   height: -webkit-fit-content;
   height: -moz-fit-content;
@@ -487,17 +487,28 @@ header {
   overflow: hidden;
 }
 
-header::after {
-  content: '';
+.header-bottom-graphic {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100vw;
-  background: url("../resources/Images/Wave_Bottom.svg") no-repeat;
-  height: 225px;
-  background-size: 110%;
-  background-position-y: 20px;
-  background-position-x: center;
+  width: 100%;
+  height: 30%;
+}
+
+.header-bottom-graphic div {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.header-bottom-graphic div img {
+  position: absolute;
+  left: 0;
+  bottom: 0%;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .header-content {
@@ -647,7 +658,7 @@ header::after {
   width: 100vw;
   background: url("../resources/Images/Wave_Bottom.svg") no-repeat;
   height: 225px;
-  background-size: 110%;
+  background-size: cover;
   background-position-y: 20px;
   background-position-x: center;
 }
@@ -709,6 +720,21 @@ header::after {
   color: #2e00b1;
 }
 
+.form-check-input {
+  cursor: pointer;
+}
+
+.check-label {
+  padding: 2px 5px;
+  border-radius: 5px;
+  text-align: center;
+  margin-left: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  min-width: 100px;
+  cursor: pointer;
+}
+
 .manager {
   min-height: 100vh;
   max-height: auto;
@@ -763,43 +789,6 @@ header::after {
 
 .manager-section-container {
   margin-top: 85px;
-}
-
-.manager-side-nav {
-  width: 175px;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 1000;
-  background: #0f003a;
-}
-
-.manager-side-nav a img {
-  margin-top: 20px;
-}
-
-.manager-side-nav ul {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  margin-top: 30px;
-}
-
-.manager-side-nav ul li {
-  margin: 20px 0px;
-  list-style: none;
-  color: #fdfcff;
-  cursor: pointer;
-  font-weight: 300;
-}
-
-.manager-side-nav ul li.selected-section {
-  border-left: 4px solid #fdfcff;
 }
 
 .manager-action-btn {
@@ -948,6 +937,7 @@ header::after {
   position: relative;
   padding-top: 0px;
   padding-left: 20px;
+  padding-right: 20px;
   padding-bottom: 0px !important;
 }
 
@@ -1148,6 +1138,10 @@ header::after {
   display: -ms-flexbox;
   display: flex;
   position: relative;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin-bottom: 20px;
   width: 100%;
 }
 
@@ -1165,17 +1159,38 @@ header::after {
   width: 100%;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 2fr 2fr 1fr 6fr 1fr;
-      grid-template-columns: 2fr 2fr 1fr 6fr 1fr;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   padding: 5px 20px;
   background: #fdfcff;
-  -webkit-box-shadow: 1px 1px 2px grey;
-          box-shadow: 1px 1px 2px grey;
+  -webkit-box-shadow: 1px 1px 2px #2e00b1;
+          box-shadow: 1px 1px 2px #2e00b1;
   overflow: hidden;
-  margin: 0px 20px 20px 0px;
+  margin: 0px 20px 0px 0px;
+}
+
+.bug-preview .bug-preview-first-div {
+  display: -ms-grid;
+  display: grid;
+  gap: 5px;
+  -ms-grid-columns: 1fr 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.bug-preview .bug-preview-second-div {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 11fr 1fr;
+      grid-template-columns: 11fr 1fr;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .bug-preview i {
@@ -1191,7 +1206,7 @@ span[id*='bug-status-'] {
 }
 
 .bug-name {
-  width: 100px;
+  width: auto;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1205,8 +1220,7 @@ span[id*='bug-status-'] {
 
 .bug-description {
   color: #0f003a;
-  max-width: 500px;
-  min-width: auto;
+  width: auto;
   text-align: left;
   position: relative;
   margin: auto 0px;
@@ -1255,6 +1269,10 @@ span[id*='bug-status-'] {
   padding: 0px !important;
 }
 
+.bug-title a {
+  color: #0f003a;
+}
+
 .bug-title i {
   font-size: 16px;
   margin-left: 30px;
@@ -1273,10 +1291,19 @@ span[id*='bug-status-'] {
   font-weight: 300;
 }
 
+.individual-bug-label-container {
+  display: -ms-grid;
+  display: grid;
+  gap: 5px;
+  max-width: 50%;
+  margin-right: auto;
+  -ms-grid-columns: (minmax(150px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
 .individual-bug-label {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
+  min-width: 150px;
+  width: auto;
   padding: 2px 15px;
   display: block;
   float: left;
@@ -1509,20 +1536,23 @@ span[id*='bug-status-'] {
     right: 50px;
     cursor: pointer;
   }
-  .manager-side-nav {
+  .p-l-175 {
+    padding-left: 0px !important;
+  }
+  .side-nav {
     -webkit-transform: translateX(-175px);
             transform: translateX(-175px);
     -webkit-transition: all 300ms ease-in-out;
     transition: all 300ms ease-in-out;
   }
-  .manager-side-nav.nav-open {
+  .side-nav.nav-open {
     -webkit-transform: translateX(0px);
             transform: translateX(0px);
   }
   .manager-section {
     margin-left: 0px;
   }
-  .manager-hamburger {
+  .projects-groups-hamburger {
     display: inline;
     visibility: visible;
     z-index: 20000;
@@ -1533,7 +1563,7 @@ span[id*='bug-status-'] {
     -webkit-transition: all 300ms ease-in-out;
     transition: all 300ms ease-in-out;
   }
-  .manager-hamburger.nav-open {
+  .projects-groups-hamburger.nav-open {
     -webkit-transform: translate(175px) rotate(180deg);
             transform: translate(175px) rotate(180deg);
   }
@@ -1542,9 +1572,10 @@ span[id*='bug-status-'] {
   }
   .individual-container {
     font-size: 14px;
+    padding-left: 30px;
   }
   .individual-container .containers {
-    margin-left: 5px;
+    margin-left: 0px;
     padding-right: 10px;
   }
   .form-container {
@@ -1606,6 +1637,10 @@ span[id*='bug-status-'] {
     font-size: 14px;
   }
   .individual-bug-status-container div {
+    font-size: 14px;
+  }
+  .individual-bug-label {
+    min-width: 100px;
     font-size: 14px;
   }
   .bug-preview {

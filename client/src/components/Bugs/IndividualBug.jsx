@@ -18,6 +18,7 @@ import { setErrors, clearErrors } from '../../redux/actions/userActions';
 //Components
 import DeleteModal from '../DeleteModal';
 import SideNav from '../Navigation/SideNav';
+import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
 
 function IndividualBug(props) {
   const [bug, setBug] = useState({});
@@ -87,6 +88,7 @@ function IndividualBug(props) {
 
   return (
     <div className="individual-container">
+      <ProjectsGroupsHamburger />
       <SideNav />
       <div className="container-fluid">
         {Object.keys(bug).length > 0 && (
@@ -117,7 +119,7 @@ function IndividualBug(props) {
               <span>{bug.name}</span>{' '}
               {bug.createdBy._id.toString() === props.user._id.toString() && (
                 <div>
-                  <Link to={`/project/:projectId/bug/:bugId/edit`}>
+                  <Link to={`/project/${bug.project._id}/bug/${bug._id}/edit`}>
                     <i className="far fa-edit"></i>
                   </Link>
                   <i
@@ -141,12 +143,19 @@ function IndividualBug(props) {
                 </div>
               )}
             </h3>
-            <span
-              className="individual-bug-label"
-              style={{ background: `${bug.label.color}` }}
-            >
-              {bug.label.name}
-            </span>
+            <div className="individual-bug-label-container">
+              {bug['labels'] &&
+                bug.labels.length > 0 &&
+                bug.labels.map((label, index) => (
+                  <span
+                    className="individual-bug-label"
+                    style={{ background: `${label.color}` }}
+                    key={index}
+                  >
+                    {label.name}
+                  </span>
+                ))}
+            </div>
             <br />
             <div className="bug-creation-date">
               Created By

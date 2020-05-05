@@ -6,7 +6,6 @@ import bugLogoWhite from '../../resources/Images/Bug_Logo_White.svg';
 
 function SideNav(props) {
   useEffect(() => {
-    console.log(props.location.pathname);
     if (props.location.pathname.indexOf('project') > -1)
       document.querySelector('#project-link').classList.add('selected-section');
     if (props.location.pathname.indexOf('team') > -1)

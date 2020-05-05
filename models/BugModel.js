@@ -14,10 +14,12 @@ const bugSchema = new mongoose.Schema({
     type: Object,
     required: true,
   },
-  label: {
-    name: String,
-    color: String,
-  },
+  labels: [
+    {
+      name: String,
+      color: String,
+    },
+  ],
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,

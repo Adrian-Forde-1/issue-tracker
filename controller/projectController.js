@@ -310,9 +310,11 @@ module.exports = {
 
           //If it does, notfiy user
           if (hasLabel) {
-            errors.project = 'That label already exists';
+            errors.label = 'That label already exists';
             return res.status(400).json(errors);
           }
+
+          console.log(req.body.label);
 
           //If everything went well continue
           const newLabels = [...project.labels, req.body.label];

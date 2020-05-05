@@ -151,19 +151,9 @@ class Manager extends Component {
             </ul>
           </div>
           <div className="manager-content">
-            {this.props.currentSection === '' && (
-              <i
-                className="fas fa-caret-square-right manager-hamburger"
-                onClick={() => {
-                  document
-                    .querySelector('.manager-hamburger')
-                    .classList.toggle('nav-open');
-                  document
-                    .querySelector('.manager-side-nav')
-                    .classList.toggle('nav-open');
-                }}
-              ></i>
-            )}
+            {/* {this.props.currentSection === '' && (
+              
+            )} */}
 
             {this.props.currentSection === '' && (
               <SearchBar

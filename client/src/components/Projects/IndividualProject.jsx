@@ -5,12 +5,6 @@ import axios from 'axios';
 //Tostify
 import { toast } from 'react-toastify';
 
-//Components
-import SearchBar from '../SearchBar';
-import BugPreview from '../Preview/BugPreview';
-import DeleteModal from '../DeleteModal';
-import SideNav from '../Navigation/SideNav';
-
 //React Router DOM
 import { withRouter, Link } from 'react-router-dom';
 
@@ -23,6 +17,13 @@ import {
   setProjectUpdated,
 } from '../../redux/actions/projectActions';
 import { setErrors, clearErrors } from '../../redux/actions/userActions';
+
+//Components
+import SearchBar from '../SearchBar';
+import BugPreview from '../Preview/BugPreview';
+import DeleteModal from '../DeleteModal';
+import SideNav from '../Navigation/SideNav';
+import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
 
 function IndividualProject(props) {
   const [project, changeProject] = useState({});
@@ -64,8 +65,10 @@ function IndividualProject(props) {
       })
       .catch((error) => {
         console.log(error);
-        props.setErrors(error);
-        props.history.push('/projects');
+        if (error['reponse']) {
+          props.setErrors(error);
+          props.history.push('/projects');
+        }
       });
   }, []);
 
@@ -89,9 +92,10 @@ function IndividualProject(props) {
 
   return (
     <div className="individual-container">
+      <ProjectsGroupsHamburger />
+      <SideNav />
       <div className="containers">
         <div className="search-and-filter">
-          <SideNav />
           <SearchBar
             onChange={handleSearchChange}
             search={search}

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 //Resources
 import Bug_Tracker_Homepage_Image from '../resources/Images/Bug_Tracker_Homepage_Image.svg';
+import Wave_Bottom from '../resources/Images/Wave_Bottom.svg';
 
 import { connect } from 'react-redux';
 
@@ -13,6 +14,11 @@ function Homepage(props) {
     <header>
       <div className="container">
         <div className="header-content">
+          <div className="header-bottom-graphic">
+            <div>
+              <img src={Wave_Bottom} alt="" />
+            </div>
+          </div>
           <div className="row">
             <div className="col-lg-6">
               {props.authenticated === false && (

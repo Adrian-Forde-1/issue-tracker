@@ -7,13 +7,17 @@ import { connect } from 'react-redux';
 //Actions
 import { setErrors } from '../../redux/actions/userActions';
 
+//Components
+import SideNav from '../Navigation/SideNav';
+import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
+
 class EditBug extends Component {
   constructor(props) {
     super(props);
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    this.handleLabelChange = this.handleLabelChange.bind(this);
+    this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
 
     this.state = {
       bug: {},
@@ -37,6 +41,17 @@ class EditBug extends Component {
       });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.bug.labels !== this.state.bug.labels) {
+      if (this.state.bug['labels']) {
+        this.state.bug.labels.forEach((label, index) => {
+          document.querySelector(`#check${label._id}`).checked = true;
+          // console.log(`#check${index}`);
+        });
+      }
+    }
+  }
+
   handleNameChange = (e) => {
     const bug = this.state.bug;
     bug.name = e.target.value;
@@ -51,15 +66,29 @@ class EditBug extends Component {
       bug,
     });
   };
-  handleLabelChange = (e) => {
-    const bug = this.state.bug;
-    const label = this.state.bug.project.labels.find(
-      (label) => label.name.toString() === e.target.value.toString()
-    );
-    bug.label = label;
-    this.setState({
-      bug,
-    });
+
+  handleCheckBoxChange = (e) => {
+    if (e.target.checked) {
+      const bug = this.state.bug;
+      const label = this.state.bug.project.labels.find(
+        (label) => label.name.toString() === e.target.value.toString()
+      );
+      const newLabels = [...this.state.bug.labels, label];
+      bug.labels = newLabels;
+      this.setState({
+        bug,
+      });
+    } else {
+      const bug = this.state.bug;
+      const newLabels = this.state.bug.labels.filter(
+        (label) => label.name.toString() !== e.target.value.toString()
+      );
+
+      bug.labels = newLabels;
+      this.setState({
+        bug,
+      });
+    }
   };
 
   handleSubmit = (e) => {
@@ -83,6 +112,8 @@ class EditBug extends Component {
       <div>
         {Object.keys(this.state.bug).length > 0 && (
           <div className="form-container no-top-nav">
+            <ProjectsGroupsHamburger />
+            <SideNav />
             <div className="container">
               <div className="auth-form">
                 <h2>Edit Bug</h2>
@@ -113,20 +144,28 @@ class EditBug extends Component {
                   <div className="form-group">
                     <label htmlFor="label">Label</label>
                     <br />
-                    <select
-                      type="text"
-                      name="label"
-                      value={this.state.bug.label.name}
-                      onChange={this.handleLabelChange}
-                      required
-                    >
-                      {this.state.bug.project.labels &&
-                        this.state.bug.project.labels.map((label, index) => (
-                          <option value={label.name} key={index}>
+                    {this.state.bug.project.labels &&
+                      this.state.bug.project.labels.map((label, index) => (
+                        <div className="form-check" key={index}>
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            value={label.name}
+                            id={`check${label._id}`}
+                            onChange={this.handleCheckBoxChange}
+                          />
+                          <label
+                            htmlFor={`check${label._id}`}
+                            className="form-check-label check-label"
+                            style={{
+                              background: `${label.color}`,
+                              color: 'white',
+                            }}
+                          >
                             {label.name}
-                          </option>
-                        ))}
-                    </select>
+                          </label>
+                        </div>
+                      ))}
                   </div>
                   <button className="submit-btn">Edit Bug</button>
                 </form>
@@ -143,4 +182,4 @@ const mapDispatchToProps = {
   setErrors,
 };
 
-export default connect(mapDispatchToProps)(EditBug);
+export default connect(null, mapDispatchToProps)(EditBug);

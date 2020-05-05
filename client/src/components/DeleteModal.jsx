@@ -15,9 +15,16 @@ import { SET_ERRORS } from '../redux/actions/types';
 function DeleteModal(props) {
   const { item, type, teamId, reRoute } = props;
 
-  const closeModal = () => {
+  const closeModal = (cb) => {
     const element = document.querySelector('.modal-element');
     document.querySelector('#modal-root').removeChild(element);
+
+    if (cb !== null && typeof cb === 'function') {
+      cb();
+    }
+  };
+
+  const reRouter = () => {
     if (reRoute !== null && typeof reRoute === 'function') reRoute();
   };
 
@@ -34,17 +41,17 @@ function DeleteModal(props) {
             store.dispatch(getUserTeams(localStorage.getItem('token')));
             store.dispatch(setTeamUpdated(true));
           }
-          cb();
+          cb(reRouter);
         }
         if (type === 'bug') {
           store.dispatch(setProjectUpdated(true));
           props.history.replace(`/project/${item.project._id}`);
-          cb();
+          cb(reRouter);
         }
 
         if (type === 'team') {
           store.dispatch(getUserTeams(localStorage.getItem('token')));
-          cb();
+          cb(reRouter);
         }
       })
       .catch((error) => {

@@ -24,13 +24,14 @@ class NewBug extends Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
       project: {},
       name: '',
       description: '',
-      label: '',
+      labels: [],
     };
   }
 
@@ -66,17 +67,32 @@ class NewBug extends Component {
     });
   };
 
+  handleCheckBoxChange = (e) => {
+    if (e.target.checked) {
+      const label = this.state.project.labels.find(
+        (label) => label.name.toString() === e.target.value.toString()
+      );
+      const newLabels = [...this.state.labels, label];
+      this.setState({
+        labels: newLabels,
+      });
+    } else {
+      const newLabels = this.state.labels.filter(
+        (label) => label.name.toString() !== e.target.value.toString()
+      );
+      this.setState({
+        labels: newLabels,
+      });
+    }
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
-
-    const label = this.state.project.labels.find(
-      (label) => label.name.toString() === this.state.label.toString()
-    );
 
     const bug = {
       name: this.state.name,
       description: this.state.description,
-      label: label,
+      labels: this.state.labels,
       projectId: this.state.project._id,
     };
 
@@ -127,24 +143,25 @@ class NewBug extends Component {
                   required
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="label">Label</label>
-                <br />
-                <select
-                  type="text"
-                  name="label"
-                  value={this.state.label}
-                  onChange={this.handleChange}
-                  required
-                >
-                  {this.state.project.labels &&
-                    this.state.project.labels.map((label, index) => (
-                      <option value={label.name} key={index}>
-                        {label.name}
-                      </option>
-                    ))}
-                </select>
-              </div>
+              {this.state.project.labels &&
+                this.state.project.labels.map((label, index) => (
+                  <div className="form-check" key={index}>
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      value={label.name}
+                      id={`check${index}`}
+                      onChange={this.handleCheckBoxChange}
+                    />
+                    <label
+                      htmlFor={`check${index}`}
+                      className="form-check-label check-label"
+                      style={{ background: `${label.color}`, color: 'white' }}
+                    >
+                      {label.name}
+                    </label>
+                  </div>
+                ))}
               <button className="submit-btn">Add Bug</button>
             </form>
           </div>

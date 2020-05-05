@@ -11,14 +11,14 @@ module.exports = {
       let messages = {};
 
       //Get variables user entered
-      const { name, description, label, projectId } = req.body.bug;
+      const { name, description, labels, projectId } = req.body.bug;
 
       //Create an instance of the user model ( a document ) with the values
       //entered by the user and pre-defined values
       const newBug = new BugModel({
         name,
         description,
-        label,
+        labels,
         comments: [],
         status: NEW_BUG,
         project: projectId,
@@ -83,7 +83,7 @@ module.exports = {
           $set: {
             name: bugInfo.name,
             description: bugInfo.description,
-            label: bugInfo.label,
+            labels: bugInfo.labels,
           },
         }).exec(function (err, bug) {
           //If error occured, notify user
