@@ -1184,8 +1184,8 @@ header {
           align-items: center;
   padding: 5px 20px;
   background: #fdfcff;
-  -webkit-box-shadow: 1px 1px 2px #2e00b1;
-          box-shadow: 1px 1px 2px #2e00b1;
+  -webkit-box-shadow: 1px 1px 2px grey;
+          box-shadow: 1px 1px 2px grey;
   overflow: hidden;
   margin: 0px 20px 0px 0px;
 }

@@ -164,6 +164,18 @@ function IndividualBug(props) {
             </div>
             <p className="individual-bug-description">{bug.description}</p>
 
+            {bug['assignees'] && bug.assignees.length > 0 && (
+              <div className="bug-creation-date">
+                <span className="mb-2">Assigned to:</span>
+                <br />
+                <ul className="list-group">
+                  {bug.assignees.map((assignee) => (
+                    <li className="list-group-item">{assignee.username}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <div
               className="individual-bug-status-container"
               id="individual-bug-status-container"

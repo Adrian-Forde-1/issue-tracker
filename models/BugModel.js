@@ -26,6 +26,12 @@ const bugSchema = new mongoose.Schema({
       ref: 'comment',
     },
   ],
+  assignees: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user',
+    },
+  ],
   project: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'project',

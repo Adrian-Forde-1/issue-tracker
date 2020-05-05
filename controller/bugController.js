@@ -11,7 +11,7 @@ module.exports = {
       let messages = {};
 
       //Get variables user entered
-      const { name, description, labels, projectId } = req.body.bug;
+      const { name, description, labels, projectId, assignees } = req.body.bug;
 
       //Create an instance of the user model ( a document ) with the values
       //entered by the user and pre-defined values
@@ -20,6 +20,7 @@ module.exports = {
         description,
         labels,
         comments: [],
+        assignees,
         status: NEW_BUG,
         project: projectId,
         createdBy: req.user._id,
@@ -172,7 +173,7 @@ module.exports = {
       let errors = {};
       const bugId = req.params.bugId;
       BugModel.findById(bugId)
-        .populate('createdBy comments project')
+        .populate('createdBy comments project assignees')
         .exec(function (err, bug) {
           //If something went wrong when fetching bug, notify user
           if (err) {

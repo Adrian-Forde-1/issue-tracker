@@ -8,13 +8,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 //Actions
-import { SET_MESSAGES, SET_ERRORS } from '../../redux/actions/types';
 import { getUserProjects } from '../../redux/actions/projectActions';
-import {
-  setCurrentId,
-  setCurrentSection,
-  setErrors,
-} from '../../redux/actions/userActions';
+import { setErrors } from '../../redux/actions/userActions';
 
 //Components
 import SideNav from '../Navigation/SideNav';
@@ -25,13 +20,16 @@ class NewBug extends Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
+    this.handleLabelChange = this.handleLabelChange.bind(this);
+    this.handleMemberChange = this.handleMemberChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
       project: {},
       name: '',
       description: '',
+      members: [],
+      assignedMembers: [],
       labels: [],
     };
   }
@@ -54,11 +52,27 @@ class NewBug extends Component {
           project: responseProject,
           label: initialLabel,
         });
+
+        //If project is in a team, get all the members from that team
+        if (response.data.team !== null) {
+          axios
+            .get(`/api/team/${response.data.team}`, {
+              headers: { Authorization: localStorage.getItem('token') },
+            })
+            .then((response) => {
+              this.setState({
+                members: response.data.users,
+              });
+            })
+            .catch((error) => {
+              this.props.setErrors(error);
+              this.props.history.goBack();
+            });
+        }
       })
       .catch((error) => {
         this.props.setErrors(error);
-        this.props.setCurrentId(this.props.currentId);
-        this.props.setCurrentSection('project');
+        this.props.history.goBack();
       });
   }
 
@@ -68,7 +82,41 @@ class NewBug extends Component {
     });
   };
 
-  handleCheckBoxChange = (e) => {
+  handleLabelChange = (e) => {
+    if (e.target.checked) {
+      const label = this.state.project.labels.find(
+        (label) => label.name.toString() === e.target.value.toString()
+      );
+      const newLabels = [...this.state.labels, label];
+      this.setState({
+        labels: newLabels,
+      });
+    } else {
+      const newLabels = this.state.labels.filter(
+        (label) => label.name.toString() !== e.target.value.toString()
+      );
+      this.setState({
+        labels: newLabels,
+      });
+    }
+  };
+  handleMemberChange = (e) => {
+    if (e.target.checked) {
+      const newMembers = [...this.state.assignedMembers, e.target.value];
+      this.setState({
+        assignedMembers: newMembers,
+      });
+    } else {
+      const newMembers = this.state.assignedMembers.filter(
+        (member) => member.toString() !== e.target.value.toString()
+      );
+      this.setState({
+        assignedMembers: newMembers,
+      });
+    }
+  };
+
+  handleLabelChange = (e) => {
     if (e.target.checked) {
       const label = this.state.project.labels.find(
         (label) => label.name.toString() === e.target.value.toString()
@@ -95,6 +143,7 @@ class NewBug extends Component {
       description: this.state.description,
       labels: this.state.labels,
       projectId: this.state.project._id,
+      assignees: this.state.assignedMembers,
     };
 
     axios
@@ -109,8 +158,7 @@ class NewBug extends Component {
       })
       .catch((error) => {
         this.props.setErrors(error);
-        this.props.setCurrentId(this.props.currentId);
-        this.props.setCurrentSection('project');
+        this.props.history.goBack();
       });
   };
   render() {
@@ -144,6 +192,10 @@ class NewBug extends Component {
                   required
                 />
               </div>
+              {console.log(this.state.project)}
+              <div className="form-group mb-0">
+                <label htmlFor="">Labels</label>
+              </div>
               {this.state.project.labels &&
                 this.state.project.labels.map((label, index) => (
                   <div className="form-check" key={index}>
@@ -152,7 +204,7 @@ class NewBug extends Component {
                       className="form-check-input"
                       value={label.name}
                       id={`check${index}`}
-                      onChange={this.handleCheckBoxChange}
+                      onChange={this.handleLabelChange}
                     />
                     <label
                       htmlFor={`check${index}`}
@@ -160,6 +212,29 @@ class NewBug extends Component {
                       style={{ background: `${label.color}`, color: 'white' }}
                     >
                       {label.name}
+                    </label>
+                  </div>
+                ))}
+
+              <div className="form-group mb-0">
+                <label htmlFor="">Assign Members</label>
+              </div>
+              {this.state.members &&
+                this.state.members.map((member, index) => (
+                  <div className="form-check" key={member._id}>
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      value={member._id}
+                      id={`check${member._id}`}
+                      onChange={this.handleMemberChange}
+                    />
+                    <label
+                      htmlFor={`check${member._id}`}
+                      className="form-check-label check-label"
+                      style={{ background: `#2e00b1`, color: 'white' }}
+                    >
+                      {member.username}
                     </label>
                   </div>
                 ))}
@@ -174,15 +249,8 @@ class NewBug extends Component {
 }
 
 const mapDispatchToProps = {
-  setCurrentId,
-  setCurrentSection,
   setErrors,
   getUserProjects,
 };
 
-const mapStateToProps = (state) => ({
-  currentSection: state.user.currentSection,
-  currentId: state.user.currentId,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewBug));
+export default connect(null, mapDispatchToProps)(withRouter(NewBug));
