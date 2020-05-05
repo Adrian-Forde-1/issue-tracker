@@ -49,11 +49,11 @@ class CreateTeamProject extends Component {
         }
       )
       .then(() => {
-        this.props.history.push(`/team/${teamId}`);
+        this.props.history.goBack();
       })
       .catch((error) => {
         this.props.setErrors(error);
-        this.props.history.push(`/team/${teamId}`);
+        this.props.history.goBack();
       });
   };
   render() {

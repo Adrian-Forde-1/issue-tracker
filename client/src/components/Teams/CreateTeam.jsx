@@ -9,6 +9,7 @@ import { setErrors } from '../../redux/actions/userActions';
 
 //Components
 import SideNav from '../Navigation/SideNav';
+import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
 
 class CreateTeam extends Component {
   constructor(props) {
@@ -49,15 +50,16 @@ class CreateTeam extends Component {
         }
       )
       .then(() => {
-        this.props.history.push('/teams');
+        this.props.history.goBack();
       })
       .catch((error) => {
-        this.props.history.push('/teams');
+        this.props.history.goBack();
       });
   };
   render() {
     return (
       <div className="form-container p-t-0">
+        <ProjectsGroupsHamburger />
         <SideNav />
         <div className="container p-l-175">
           <div className="auth-form">

@@ -16,6 +16,7 @@ import { getUserProjects } from '../../redux/actions/projectActions';
 import ProjectPreview from '../Preview/ProjectPreview';
 import SearchBar from '../SearchBar';
 import SideNav from '../Navigation/SideNav';
+import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
 
 function AllProjects(props) {
   const [projects, changeProjects] = useState([]);
@@ -36,16 +37,17 @@ function AllProjects(props) {
 
   return (
     <div
-      className="d-flex flex-column"
-      style={{ paddingLeft: '175px', position: 'relative' }}
+      className="d-flex flex-column p-l-175"
+      style={{ position: 'relative' }}
     >
       <Link to="/create/project" className="action-btn">
         <i className="fas fa-plus-square "></i>
       </Link>
-      <Link to={`/groups/archived`} className="action-btn extra-right">
+      <Link to={`/projects/archived`} className="action-btn extra-right">
         <i className="fas fa-archive "></i>
       </Link>
       <SearchBar search={search} onChange={onChange} />
+      <ProjectsGroupsHamburger />
       <SideNav />
       {/* {props.errors !== null &&
         props.errors['project'] &&

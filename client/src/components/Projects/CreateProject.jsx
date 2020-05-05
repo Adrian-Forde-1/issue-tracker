@@ -46,11 +46,11 @@ class CreateProject extends Component {
         }
       )
       .then(() => {
-        this.props.history.push('/projects');
+        this.props.history.goBack();
       })
       .catch((error) => {
         this.props.setErrors(error);
-        this.props.history.push('/projects');
+        this.props.history.goBack();
       });
   };
   render() {

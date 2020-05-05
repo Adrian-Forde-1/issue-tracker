@@ -13,16 +13,18 @@ import { SET_ERRORS } from '../../redux/actions/types';
 //Components
 import ProjectPreview from '../Preview/ProjectPreview';
 import SearchBar from '../SearchBar';
+import SideNav from '../Navigation/SideNav';
+import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
 
 function ArchivedGroupProjects(props) {
   const [projects, changeProjects] = useState([]);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    const groupId = props.currentId;
+    const teamId = props.match.params.teamId;
 
     axios
-      .get(`/api/group/${groupId}/projects/archived`, {
+      .get(`/api/team/${teamId}/projects/archived`, {
         headers: { Authorization: localStorage.getItem('token') },
       })
       .then((response) => {
@@ -35,9 +37,9 @@ function ArchivedGroupProjects(props) {
   }, []);
 
   const resetProjects = () => {
-    const groupId = props.currentId;
+    const teamId = props.match.params.teamId;
     axios
-      .get(`/api/group/${groupId}/projects/archived`, {
+      .get(`/api/team/${teamId}/projects/archived`, {
         headers: { Authorization: localStorage.getItem('token') },
       })
       .then((response) => {
@@ -54,38 +56,34 @@ function ArchivedGroupProjects(props) {
   };
 
   return (
-    <div className="individual-container">
-      <div className="containers">
-        <div className="search-and-filter">
-          <SearchBar
-            search={search}
-            onChange={onChange}
-            extraClass="search-extra-info"
-          />
-        </div>
-        <h2 className="archived-project-name p-t-85">
-          Archived Group Projects
-        </h2>
-        {projects && projects.length > 0 && search === ''
-          ? projects.map((project) => {
-              if (project.archived === true)
-                return (
-                  <ProjectPreview
-                    project={project}
-                    key={project._id}
-                    extraIconClass="remove-archive-sign"
-                    resetProjects={resetProjects}
-                  />
-                );
-            })
-          : projects.map((project) => {
-              if (
-                project.name.toLowerCase().indexOf(search.toLowerCase()) > -1 &&
-                project.archived === true
-              )
-                return <ProjectPreview project={project} key={project._id} />;
-            })}
-      </div>
+    <div
+      className="d-flex flex-column p-l-175"
+      style={{ position: 'relative' }}
+    >
+      <ProjectsGroupsHamburger />
+      <SideNav />
+      <SearchBar search={search} onChange={onChange} />
+      <h3 className="section-title">Archived Team Projects</h3>
+
+      {projects && projects.length > 0 && search === ''
+        ? projects.map((project) => {
+            if (project.archived === true)
+              return (
+                <ProjectPreview
+                  project={project}
+                  key={project._id}
+                  extraIconClass="remove-archive-sign"
+                  resetProjects={resetProjects}
+                />
+              );
+          })
+        : projects.map((project) => {
+            if (
+              project.name.toLowerCase().indexOf(search.toLowerCase()) > -1 &&
+              project.archived === true
+            )
+              return <ProjectPreview project={project} key={project._id} />;
+          })}
     </div>
   );
 }

@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import TeamPreview from '../Preview/TeamPreview';
 import SearchBar from '../SearchBar';
 import SideNav from '../Navigation/SideNav';
+import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
 
 function AllTeams(props) {
   const [teams, changeTeams] = useState([]);
@@ -35,13 +36,14 @@ function AllTeams(props) {
 
   return (
     <div
-      className="d-flex flex-column"
-      style={{ paddingLeft: '175px', position: 'relative' }}
+      className="d-flex flex-column p-l-175"
+      style={{ position: 'relative' }}
     >
       <Link to="/create/team" className="action-btn">
         <i className="fas fa-plus-square "></i>
       </Link>
       <SearchBar search={search} onChange={onChange} />
+      <ProjectsGroupsHamburger />
       <SideNav />
       {props.errors !== null &&
         props.errors['team'] &&
@@ -57,7 +59,7 @@ function AllTeams(props) {
         })}
       <h3 className="section-title">Teams</h3>
       <div className="action-bar m-l-16">
-        <Link to="/team/join">Join Team</Link>
+        <Link to="/join/team">Join Team</Link>
       </div>
 
       {teams && teams.length > 0 && search === ''

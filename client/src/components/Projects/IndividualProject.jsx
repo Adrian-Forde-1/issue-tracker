@@ -92,7 +92,6 @@ function IndividualProject(props) {
 
   return (
     <div className="individual-container">
-      <ProjectsGroupsHamburger />
       <SideNav />
       <div className="containers">
         <div className="search-and-filter">
@@ -103,12 +102,12 @@ function IndividualProject(props) {
           />
           {/* <div className="select-container">
             <select name="" id="" value={filter} onChange={handleFilterChange}>
-              <option value="All">All</option>
-              <option value="New Bug">New Bug</option>
+            <option value="All">All</option>
+            <option value="New Bug">New Bug</option>
               <option value="Work In Progress">Work In Progress</option>
               <option value="Fixed">Fixed</option>
-            </select>
-          </div> */}
+              </select>
+            </div> */}
         </div>
         {props.errors !== null &&
           props.errors['project'] &&
@@ -290,6 +289,7 @@ function IndividualProject(props) {
           </div>
         )}
       </div>
+      <ProjectsGroupsHamburger />
     </div>
   );
 }

@@ -12,6 +12,7 @@ import { setErrors } from '../../redux/actions/userActions';
 
 //Components
 import SideNav from '../Navigation/SideNav';
+import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
 
 class JoinGroup extends Component {
   constructor(props) {
@@ -42,12 +43,12 @@ class JoinGroup extends Component {
 
     axios
       .post(
-        '/api/join/group',
+        '/api/join/team',
         { group: group },
         { headers: { Authorization: localStorage.getItem('token') } }
       )
       .then(() => {
-        this.props.history.push('/groups');
+        this.props.history.goBack();
       })
       .catch((error) => {
         this.props.setErrors(error);
@@ -68,6 +69,7 @@ class JoinGroup extends Component {
               this.props.clearErrors();
             },
           })}
+        <ProjectsGroupsHamburger />
         <SideNav />
         <div className="container p-l-175">
           <div className="auth-form">

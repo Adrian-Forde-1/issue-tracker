@@ -13,8 +13,6 @@ import SearchBar from '../SearchBar';
 
 //Redux
 import { connect } from 'react-redux';
-import AllTeamProjects from './AllTeamProjects';
-import DeleteModal from '../DeleteModal';
 
 //Actions
 import {
@@ -24,6 +22,11 @@ import {
   setCurrentId,
 } from '../../redux/actions/userActions';
 import { setProjects } from '../../redux/actions/projectActions';
+
+//Components
+import AllTeamProjects from './AllTeamProjects';
+import DeleteModal from '../DeleteModal';
+import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
 
 function IndividualTeam(props) {
   const [team, setTeam] = useState({});
@@ -133,6 +136,7 @@ function IndividualTeam(props) {
           </div>
         )}
       </div>
+      <ProjectsGroupsHamburger />
     </div>
   );
 }
