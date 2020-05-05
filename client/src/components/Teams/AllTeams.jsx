@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import TeamPreview from '../Preview/TeamPreview';
 import SearchBar from '../SearchBar';
 import SideNav from '../Navigation/SideNav';
-import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 function AllTeams(props) {
   const [teams, changeTeams] = useState([]);
@@ -43,7 +43,7 @@ function AllTeams(props) {
         <i className="fas fa-plus-square "></i>
       </Link>
       <SearchBar search={search} onChange={onChange} />
-      <ProjectsGroupsHamburger />
+      <ProjectsTeamsHamburger />
       <SideNav />
       {props.errors !== null &&
         props.errors['team'] &&

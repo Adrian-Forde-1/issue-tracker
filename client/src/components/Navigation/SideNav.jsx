@@ -8,8 +8,12 @@ function SideNav(props) {
   useEffect(() => {
     if (props.location.pathname.indexOf('project') > -1)
       document.querySelector('#project-link').classList.add('selected-section');
-    if (props.location.pathname.indexOf('team') > -1)
+    if (props.location.pathname.indexOf('team') > -1) {
+      document
+        .querySelector('#project-link')
+        .classList.remove('selected-section');
       document.querySelector('#team-link').classList.add('selected-section');
+    }
   }, []);
   return (
     <div className="side-nav">

@@ -9,7 +9,7 @@ import { setErrors } from '../../redux/actions/userActions';
 
 //Components
 import SideNav from '../Navigation/SideNav';
-import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 class EditBug extends Component {
   constructor(props) {
@@ -112,9 +112,8 @@ class EditBug extends Component {
       <div>
         {Object.keys(this.state.bug).length > 0 && (
           <div className="form-container no-top-nav">
-            <ProjectsGroupsHamburger />
             <SideNav />
-            <div className="container">
+            <div className="container p-l-175-0">
               <div className="auth-form">
                 <h2>Edit Bug</h2>
                 <form onSubmit={this.handleSubmit}>
@@ -171,6 +170,7 @@ class EditBug extends Component {
                 </form>
               </div>
             </div>
+            <ProjectsTeamsHamburger />
           </div>
         )}
       </div>

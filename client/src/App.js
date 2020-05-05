@@ -35,6 +35,7 @@ import ArchivedProjects from './components/Projects/ArchivedProjects';
 import ArchivedTeamProjects from './components/Projects/ArchivedTeamProjects';
 import CreateTeamProject from './components/Teams/CreateTeamProject';
 import JoinTeam from './components/Teams/JoinTeam';
+import EditProject from './components/Projects/EditProject';
 
 function App() {
   toast.configure({
@@ -73,6 +74,7 @@ function App() {
         {/* Project */}
         <Route exact path="/projects" component={AllProjects} />
         <Route exact path="/project/:projectId" component={IndividualProject} />
+        <Route exact path="/project/:projectId/edit" component={EditProject} />
         <Route exact path="/create/project" component={CreateProject} />
         <Route exact path="/projects/archived" component={ArchivedProjects} />
 

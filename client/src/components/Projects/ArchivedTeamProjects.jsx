@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 //Redux
-import store from '../../redux/store';
 import { connect } from 'react-redux';
 
 //Actions
 import { getUserGroups } from '../../redux/actions/teamActions';
-import { clearCurrentSectionAndId } from '../../redux/actions/userActions';
+import { setErrors } from '../../redux/actions/userActions';
 import { SET_ERRORS } from '../../redux/actions/types';
 
 //Components
 import ProjectPreview from '../Preview/ProjectPreview';
 import SearchBar from '../SearchBar';
 import SideNav from '../Navigation/SideNav';
-import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 function ArchivedGroupProjects(props) {
   const [projects, changeProjects] = useState([]);
@@ -31,8 +30,8 @@ function ArchivedGroupProjects(props) {
         changeProjects(response.data);
       })
       .catch((error) => {
-        store.dispatch({ type: SET_ERRORS, payload: error });
-        props.clearCurrentSectionAndId();
+        props.setErrors(error);
+        props.history.goBack();
       });
   }, []);
 
@@ -46,8 +45,8 @@ function ArchivedGroupProjects(props) {
         changeProjects(response.data);
       })
       .catch((error) => {
-        store.dispatch({ type: SET_ERRORS, payload: error });
-        props.clearCurrentSectionAndId();
+        props.setErrors(error);
+        props.history.goBack();
       });
   };
 
@@ -60,7 +59,7 @@ function ArchivedGroupProjects(props) {
       className="d-flex flex-column p-l-175"
       style={{ position: 'relative' }}
     >
-      <ProjectsGroupsHamburger />
+      <ProjectsTeamsHamburger />
       <SideNav />
       <SearchBar search={search} onChange={onChange} />
       <h3 className="section-title">Archived Team Projects</h3>
@@ -89,11 +88,10 @@ function ArchivedGroupProjects(props) {
 }
 
 const mapDispatchToProps = {
-  clearCurrentSectionAndId,
+  setErrors,
 };
 
 const mapStateToProps = (state) => ({
-  currentId: state.user.currentId,
   projects: state.projects.projects,
 });
 

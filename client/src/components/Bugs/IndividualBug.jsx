@@ -18,7 +18,7 @@ import { setErrors, clearErrors } from '../../redux/actions/userActions';
 //Components
 import DeleteModal from '../DeleteModal';
 import SideNav from '../Navigation/SideNav';
-import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 function IndividualBug(props) {
   const [bug, setBug] = useState({});
@@ -88,7 +88,6 @@ function IndividualBug(props) {
 
   return (
     <div className="individual-container">
-      <ProjectsGroupsHamburger />
       <SideNav />
       <div className="container-fluid">
         {Object.keys(bug).length > 0 && (
@@ -294,6 +293,7 @@ function IndividualBug(props) {
           </div>
         )}
       </div>
+      <ProjectsTeamsHamburger />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ProjectsGroupsHamburger() {
+function ProjectsTeamsHamburger() {
   return (
     <i
       className="fas fa-caret-square-right projects-groups-hamburger"
@@ -14,4 +14,4 @@ function ProjectsGroupsHamburger() {
   );
 }
 
-export default ProjectsGroupsHamburger;
+export default ProjectsTeamsHamburger;

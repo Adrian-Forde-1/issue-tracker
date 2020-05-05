@@ -14,7 +14,7 @@ import { setErrors } from '../../redux/actions/userActions';
 
 //Components
 import SideNav from '../Navigation/SideNav';
-import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 class EditLabel extends Component {
   constructor(props) {
@@ -111,7 +111,7 @@ class EditLabel extends Component {
     };
     return (
       <div className="form-container p-t-0 ">
-        <ProjectsGroupsHamburger />
+        <ProjectsTeamsHamburger />
         <SideNav />
         <div className="container p-l-175-0">
           <div className="auth-form">

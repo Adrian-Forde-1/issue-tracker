@@ -18,6 +18,7 @@ import {
 
 //Components
 import SideNav from '../Navigation/SideNav';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 class NewBug extends Component {
   constructor(props) {
@@ -166,6 +167,7 @@ class NewBug extends Component {
             </form>
           </div>
         </div>
+        <ProjectsTeamsHamburger />
       </div>
     );
   }

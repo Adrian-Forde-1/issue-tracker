@@ -12,7 +12,7 @@ import { setErrors } from '../../redux/actions/userActions';
 
 //Components
 import SideNav from '../Navigation/SideNav';
-import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 class JoinGroup extends Component {
   constructor(props) {
@@ -69,7 +69,7 @@ class JoinGroup extends Component {
               this.props.clearErrors();
             },
           })}
-        <ProjectsGroupsHamburger />
+
         <SideNav />
         <div className="container p-l-175">
           <div className="auth-form">
@@ -104,6 +104,7 @@ class JoinGroup extends Component {
             </form>
           </div>
         </div>
+        <ProjectsTeamsHamburger />
       </div>
     );
   }

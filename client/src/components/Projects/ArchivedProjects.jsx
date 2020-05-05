@@ -11,7 +11,7 @@ import SearchBar from '../SearchBar';
 //Components
 import ProjectPreview from '../Preview/ProjectPreview';
 import SideNav from '../Navigation/SideNav';
-import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 function ArchivedProjects(props) {
   const [projects, setProjects] = useState([]);
@@ -54,7 +54,7 @@ function ArchivedProjects(props) {
       className="d-flex flex-column p-l-175"
       style={{ position: 'relative' }}
     >
-      <ProjectsGroupsHamburger />
+      <ProjectsTeamsHamburger />
       <SideNav />
       <SearchBar search={search} onChange={onChange} />
       <h3 className="section-title">Archived Projects</h3>

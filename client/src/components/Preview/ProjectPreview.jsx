@@ -42,7 +42,7 @@ function ProjectPreview(props) {
                 },
               })
               .then(() => {
-                if (project.group) {
+                if (project.team) {
                   props.setTeamUpdated(true);
                 } else {
                   axios
@@ -92,7 +92,7 @@ function ProjectPreview(props) {
             <DeleteModal
               item={project}
               type={'project'}
-              groupId={project.group}
+              teamId={project.team}
             />,
             element
           );

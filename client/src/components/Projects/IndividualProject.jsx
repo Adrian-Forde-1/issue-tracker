@@ -23,7 +23,7 @@ import SearchBar from '../SearchBar';
 import BugPreview from '../Preview/BugPreview';
 import DeleteModal from '../DeleteModal';
 import SideNav from '../Navigation/SideNav';
-import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 function IndividualProject(props) {
   const [project, changeProject] = useState({});
@@ -208,6 +208,9 @@ function IndividualProject(props) {
                       }
                     }}
                   ></i>
+                  <Link to={`/project/${project._id}/edit`}>
+                    <i className="far fa-edit"></i>
+                  </Link>
                   <i
                     className="far fa-trash-alt"
                     onClick={() => {
@@ -220,7 +223,7 @@ function IndividualProject(props) {
                         <DeleteModal
                           item={project}
                           type={'project'}
-                          groupId={project.group}
+                          teamId={project.team}
                           reRoute={reRoute}
                         />,
                         element
@@ -289,7 +292,7 @@ function IndividualProject(props) {
           </div>
         )}
       </div>
-      <ProjectsGroupsHamburger />
+      <ProjectsTeamsHamburger />
     </div>
   );
 }

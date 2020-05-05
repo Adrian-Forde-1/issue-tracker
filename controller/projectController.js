@@ -117,9 +117,10 @@ module.exports = {
 
         //Update project information with the information passed in by the user
         ProjectModel.findByIdAndUpdate(projectId, {
-          name: req.body.project.name,
-          description: req.body.project.description,
-          bugTags: req.body.project.bugTags,
+          $set: {
+            name: req.body.project.name,
+            description: req.body.project.description,
+          },
         }).exec(function (err, project) {
           //If an error occured while updating project, notify user
           if (err) {

@@ -26,7 +26,7 @@ import { setProjects } from '../../redux/actions/projectActions';
 //Components
 import AllTeamProjects from './AllTeamProjects';
 import DeleteModal from '../DeleteModal';
-import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 function IndividualTeam(props) {
   const [team, setTeam] = useState({});
@@ -136,7 +136,7 @@ function IndividualTeam(props) {
           </div>
         )}
       </div>
-      <ProjectsGroupsHamburger />
+      <ProjectsTeamsHamburger />
     </div>
   );
 }

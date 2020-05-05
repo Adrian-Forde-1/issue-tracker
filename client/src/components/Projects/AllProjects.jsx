@@ -16,7 +16,7 @@ import { getUserProjects } from '../../redux/actions/projectActions';
 import ProjectPreview from '../Preview/ProjectPreview';
 import SearchBar from '../SearchBar';
 import SideNav from '../Navigation/SideNav';
-import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 function AllProjects(props) {
   const [projects, changeProjects] = useState([]);
@@ -47,7 +47,7 @@ function AllProjects(props) {
         <i className="fas fa-archive "></i>
       </Link>
       <SearchBar search={search} onChange={onChange} />
-      <ProjectsGroupsHamburger />
+      <ProjectsTeamsHamburger />
       <SideNav />
       {/* {props.errors !== null &&
         props.errors['project'] &&

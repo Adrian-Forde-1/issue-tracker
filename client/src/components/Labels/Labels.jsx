@@ -16,7 +16,7 @@ import { clearErrors } from '../../redux/actions/userActions';
 //Components
 import LabelPreview from '../Preview/LabelPreview';
 import SideNav from '../Navigation/SideNav';
-import ProjectsGroupsHamburger from '../Navigation/ProjectsGroupsHamburger';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 function Labels(props) {
   const [project, setProject] = useState({});
@@ -33,7 +33,7 @@ function Labels(props) {
   }, [props.projects]);
   return (
     <div className="labels p-l-175-0">
-      <ProjectsGroupsHamburger />
+      <ProjectsTeamsHamburger />
       <SideNav />
       <h2>Labels</h2>
       {props.errors !== null &&
