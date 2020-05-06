@@ -17,10 +17,13 @@ class EditBug extends Component {
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
+    this.handleLabelChange = this.handleLabelChange.bind(this);
+    this.handleMemberChange = this.handleMemberChange.bind(this);
 
     this.state = {
       bug: {},
+      members: [],
+      assignedMembers: [],
     };
   }
 
@@ -34,6 +37,22 @@ class EditBug extends Component {
         this.setState({
           bug: response.data,
         });
+
+        console.log(response.data);
+
+        axios
+          .get(`/api/team/${response.data.project.team}`, {
+            headers: { Authorization: localStorage.getItem('token') },
+          })
+          .then((response) => {
+            this.setState({
+              members: response.data.users,
+            });
+          })
+          .catch((error) => {
+            this.props.setErrors(error);
+            this.props.history.goBack();
+          });
       })
       .catch((error) => {
         this.props.setErrors(error);
@@ -46,8 +65,26 @@ class EditBug extends Component {
       if (this.state.bug['labels']) {
         this.state.bug.labels.forEach((label, index) => {
           document.querySelector(`#check${label._id}`).checked = true;
-          // console.log(`#check${index}`);
         });
+      }
+    }
+
+    if (prevState.members !== this.state.members) {
+      if (this.state.bug['assignees']) {
+        if (this.state.bug.assignees.length > 0) {
+          this.state.bug.assignees.forEach((assignee) => {
+            if (document.querySelector(`#check${assignee._id}`)) {
+              const newAssignedMembers = [
+                ...this.state.assignedMembers,
+                assignee._id,
+              ];
+              this.setState({
+                assignedMembers: newAssignedMembers,
+              });
+              document.querySelector(`#check${assignee._id}`).checked = true;
+            }
+          });
+        }
       }
     }
   }
@@ -67,7 +104,7 @@ class EditBug extends Component {
     });
   };
 
-  handleCheckBoxChange = (e) => {
+  handleLabelChange = (e) => {
     if (e.target.checked) {
       const bug = this.state.bug;
       const label = this.state.bug.project.labels.find(
@@ -91,12 +128,38 @@ class EditBug extends Component {
     }
   };
 
+  handleMemberChange = (e) => {
+    if (e.target.checked) {
+      e.target.checked = true;
+      const newMembers = [...this.state.assignedMembers, e.target.value];
+      this.setState({
+        assignedMembers: newMembers,
+      });
+    } else {
+      e.target.checked = false;
+      const newMembers = this.state.assignedMembers.filter(
+        (member) => member.toString() !== e.target.value.toString()
+      );
+      this.setState({
+        assignedMembers: newMembers,
+      });
+    }
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
+
+    const bug = {
+      name: this.state.bug.name,
+      description: this.state.bug.description,
+      labels: this.state.bug.labels,
+      projectId: this.state.bug.project._id,
+      assignees: this.state.assignedMembers,
+    };
     axios
       .put(
         `/api/bug/${this.state.bug._id}`,
-        { bug: this.state.bug },
+        { bug: bug },
         { headers: { Authorization: localStorage.getItem('token') } }
       )
       .then(() => {
@@ -125,6 +188,7 @@ class EditBug extends Component {
                       name="name"
                       value={this.state.bug.name}
                       onChange={this.handleNameChange}
+                      maxLength="30"
                       required
                     />
                   </div>
@@ -151,7 +215,7 @@ class EditBug extends Component {
                             className="form-check-input"
                             value={label.name}
                             id={`check${label._id}`}
-                            onChange={this.handleCheckBoxChange}
+                            onChange={this.handleLabelChange}
                           />
                           <label
                             htmlFor={`check${label._id}`}
@@ -162,6 +226,35 @@ class EditBug extends Component {
                             }}
                           >
                             {label.name}
+                          </label>
+                        </div>
+                      ))}
+
+                    {this.state.members && this.state.members.length > 0 && (
+                      <div className="form-group mb-0">
+                        <label htmlFor="">Assign Members</label>
+                      </div>
+                    )}
+
+                    {this.state.members &&
+                      this.state.members.map((member, index) => (
+                        <div className="form-check" key={member._id}>
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            value={member._id}
+                            id={`check${member._id}`}
+                            onChange={this.handleMemberChange}
+                          />
+                          <label
+                            htmlFor={`check${member._id}`}
+                            className="form-check-label check-label"
+                            style={{
+                              background: `#2e00b1`,
+                              color: 'white',
+                            }}
+                          >
+                            {member.username}
                           </label>
                         </div>
                       ))}

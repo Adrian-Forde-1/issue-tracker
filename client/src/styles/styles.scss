@@ -1253,6 +1253,10 @@ span[id*='bug-status-'] {
   }
 }
 
+.bug-assignees {
+  max-width: 400px;
+}
+
 .bug-comments-title {
   margin-top: 50px;
   text-align: center;

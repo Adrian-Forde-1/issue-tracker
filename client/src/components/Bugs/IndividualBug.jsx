@@ -165,12 +165,14 @@ function IndividualBug(props) {
             <p className="individual-bug-description">{bug.description}</p>
 
             {bug['assignees'] && bug.assignees.length > 0 && (
-              <div className="bug-creation-date">
+              <div className="bug-creation-date bug-assignees">
                 <span className="mb-2">Assigned to:</span>
                 <br />
                 <ul className="list-group">
                   {bug.assignees.map((assignee) => (
-                    <li className="list-group-item">{assignee.username}</li>
+                    <li className="list-group-item" key={assignee._id}>
+                      {assignee.username}
+                    </li>
                   ))}
                 </ul>
               </div>

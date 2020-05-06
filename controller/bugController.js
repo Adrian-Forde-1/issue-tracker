@@ -85,6 +85,7 @@ module.exports = {
             name: bugInfo.name,
             description: bugInfo.description,
             labels: bugInfo.labels,
+            assignees: bugInfo.assignees,
           },
         }).exec(function (err, bug) {
           //If error occured, notify user
