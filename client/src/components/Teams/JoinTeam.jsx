@@ -14,7 +14,7 @@ import { setErrors } from '../../redux/actions/userActions';
 import SideNav from '../Navigation/SideNav';
 import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
-class JoinGroup extends Component {
+class JoinTeam extends Component {
   constructor(props) {
     super(props);
 
@@ -36,15 +36,15 @@ class JoinGroup extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const group = {
-      groupId: this.state.id,
+    const team = {
+      teamId: this.state.id,
       password: this.state.password,
     };
 
     axios
       .post(
         '/api/join/team',
-        { group: group },
+        { team: team },
         { headers: { Authorization: localStorage.getItem('token') } }
       )
       .then(() => {
@@ -58,10 +58,10 @@ class JoinGroup extends Component {
     return (
       <div className="form-container p-t-0">
         {this.props.errors !== null &&
-          this.props.errors['group'] &&
-          !toast.isActive('grouptoast') &&
+          this.props.errors['team'] &&
+          !toast.isActive('teamtoast') &&
           toast(this.props.errors.bug, {
-            toastId: 'grouptoast',
+            toastId: 'teamtoast',
             type: 'error',
             position: toast.POSITION.TOP_CENTER,
             autoClose: 2000,
@@ -73,7 +73,7 @@ class JoinGroup extends Component {
         <SideNav />
         <div className="container p-l-175">
           <div className="auth-form">
-            <h2>Join Group</h2>
+            <h2>Join Team</h2>
             <form onSubmit={this.handleSubmit}>
               <div className="form-group">
                 <label htmlFor="id">Id</label>
@@ -100,7 +100,7 @@ class JoinGroup extends Component {
                   </div>
                 )}
               </div>
-              <button className="submit-btn">Join Group</button>
+              <button className="submit-btn">Join Team</button>
             </form>
           </div>
         </div>
@@ -118,4 +118,4 @@ const mapStateToProps = (state) => ({
   errors: state.user.errors,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(JoinGroup);
+export default connect(mapStateToProps, mapDispatchToProps)(JoinTeam);

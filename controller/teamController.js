@@ -144,7 +144,7 @@ module.exports = {
         (team) => team.toString() === teamId.toString()
       );
 
-      if (inTroup) {
+      if (inTeam) {
         errors.team = 'You are already part of this team';
         return res.status(401).json(errors);
       }

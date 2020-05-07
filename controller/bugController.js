@@ -79,6 +79,7 @@ module.exports = {
         const bugId = req.params.bugId;
 
         const bugInfo = req.body.bug;
+        console.log(bugInfo.assignees);
 
         BugModel.findByIdAndUpdate(bugId, {
           $set: {

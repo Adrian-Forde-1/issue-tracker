@@ -40,19 +40,21 @@ class EditBug extends Component {
 
         console.log(response.data);
 
-        axios
-          .get(`/api/team/${response.data.project.team}`, {
-            headers: { Authorization: localStorage.getItem('token') },
-          })
-          .then((response) => {
-            this.setState({
-              members: response.data.users,
+        if (response.data.project.team !== null) {
+          axios
+            .get(`/api/team/${response.data.project.team}`, {
+              headers: { Authorization: localStorage.getItem('token') },
+            })
+            .then((response) => {
+              this.setState({
+                members: response.data.users,
+              });
+            })
+            .catch((error) => {
+              this.props.setErrors(error);
+              this.props.history.goBack();
             });
-          })
-          .catch((error) => {
-            this.props.setErrors(error);
-            this.props.history.goBack();
-          });
+        }
       })
       .catch((error) => {
         this.props.setErrors(error);
@@ -73,16 +75,10 @@ class EditBug extends Component {
       if (this.state.bug['assignees']) {
         if (this.state.bug.assignees.length > 0) {
           this.state.bug.assignees.forEach((assignee) => {
-            if (document.querySelector(`#check${assignee._id}`)) {
-              const newAssignedMembers = [
-                ...this.state.assignedMembers,
-                assignee._id,
-              ];
-              this.setState({
-                assignedMembers: newAssignedMembers,
-              });
-              document.querySelector(`#check${assignee._id}`).checked = true;
-            }
+            this.setState((prevState) => ({
+              assignedMembers: [...prevState.assignedMembers, assignee._id],
+            }));
+            document.querySelector(`#check${assignee._id}`).checked = true;
           });
         }
       }

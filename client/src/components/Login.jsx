@@ -30,8 +30,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    if (this.props.authenticated === true)
-      this.props.history.replace('/manager');
+    if (this.props.authenticated === true) this.props.history.goBack();
   }
 
   handleChange = (e) => {
@@ -93,8 +92,7 @@ class Login extends Component {
                 },
               })}
             <div className="auth-form">
-              <h2>Login
-              </h2>
+              <h2>Login</h2>
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="email">Email</label>

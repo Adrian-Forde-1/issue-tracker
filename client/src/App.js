@@ -15,7 +15,6 @@ import { Route, withRouter, Switch } from 'react-router-dom';
 import Homepage from './components/Homepage';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import Manager from './components/Manager';
 import IsAuthenticated from './components/IsAuthenticated';
 import Navbar from './components/Navbar';
 import { connect } from 'react-redux';
@@ -52,59 +51,64 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signUp" component={Signup} />
 
-        {/* <IsAuthenticated> */}
-        <Route exact path="/manager" component={Manager} />
+        <IsAuthenticated>
+          {/* Team */}
+          <Route exact path="/teams" component={AllTeams} />
+          <Route exact path="/team/:teamId" component={IndividualTeam} />
+          <Route exact path="/create/team" component={CreateTeam} />
+          <Route
+            exact
+            path="/team/:teamId/archived"
+            component={ArchivedTeamProjects}
+          />
+          <Route
+            exact
+            path="/team/:teamId/project/create"
+            component={CreateTeamProject}
+          />
+          <Route exact path="/join/team" component={JoinTeam} />
 
-        {/* Team */}
-        <Route exact path="/teams" component={AllTeams} />
-        <Route exact path="/team/:teamId" component={IndividualTeam} />
-        <Route exact path="/create/team" component={CreateTeam} />
-        <Route
-          exact
-          path="/team/:teamId/archived"
-          component={ArchivedTeamProjects}
-        />
-        <Route
-          exact
-          path="/team/:teamId/project/create"
-          component={CreateTeamProject}
-        />
-        <Route exact path="/join/team" component={JoinTeam} />
+          {/* Project */}
+          <Route exact path="/projects" component={AllProjects} />
+          <Route
+            exact
+            path="/project/:projectId"
+            component={IndividualProject}
+          />
+          <Route
+            exact
+            path="/project/:projectId/edit"
+            component={EditProject}
+          />
+          <Route exact path="/create/project" component={CreateProject} />
+          <Route exact path="/projects/archived" component={ArchivedProjects} />
 
-        {/* Project */}
-        <Route exact path="/projects" component={AllProjects} />
-        <Route exact path="/project/:projectId" component={IndividualProject} />
-        <Route exact path="/project/:projectId/edit" component={EditProject} />
-        <Route exact path="/create/project" component={CreateProject} />
-        <Route exact path="/projects/archived" component={ArchivedProjects} />
+          {/* Labels */}
+          <Route exact path="/project/:projectId/labels" component={Labels} />
+          <Route
+            exact
+            path="/project/:projectId/label/:labelId/edit"
+            component={EditLabel}
+          />
+          <Route
+            exact
+            path="/project/:projectId/label/add"
+            component={AddLabel}
+          />
 
-        {/* Labels */}
-        <Route exact path="/project/:projectId/labels" component={Labels} />
-        <Route
-          exact
-          path="/project/:projectId/label/:labelId/edit"
-          component={EditLabel}
-        />
-        <Route
-          exact
-          path="/project/:projectId/label/add"
-          component={AddLabel}
-        />
-
-        {/* Bug */}
-        <Route
-          exact
-          path="/project/:projectId/bug/:bugId"
-          component={IndividualBug}
-        />
-        <Route exact path="/project/:projectId/new/bug" component={NewBug} />
-        <Route
-          exact
-          path="/project/:projectId/bug/:bugId/edit"
-          component={EditBug}
-        />
-
-        {/* </IsAuthenticated> */}
+          {/* Bug */}
+          <Route
+            exact
+            path="/project/:projectId/bug/:bugId"
+            component={IndividualBug}
+          />
+          <Route exact path="/project/:projectId/new/bug" component={NewBug} />
+          <Route
+            exact
+            path="/project/:projectId/bug/:bugId/edit"
+            component={EditBug}
+          />
+        </IsAuthenticated>
       </Switch>
     </div>
   );

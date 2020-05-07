@@ -8,14 +8,14 @@ import { connect } from 'react-redux';
 
 function IsAuthenticated(props) {
   useEffect(() => {
-    props.user === null && props.history.replace('/login');
+    props.authenticated === false && props.history.replace('/login');
   }, [props.user]);
 
   return <div>{props.children}</div>;
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user.user,
+  authenticated: state.user.authenticated,
 });
 
 export default connect(mapStateToProps)(withRouter(IsAuthenticated));

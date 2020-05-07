@@ -25,8 +25,7 @@ class Signup extends Component {
   }
 
   componentDidMount() {
-    if (this.props.authenticated === true)
-      this.props.history.replace('/manager');
+    if (this.props.authenticated === true) this.props.history.goBack();
   }
 
   handleChange = (e) => {
@@ -61,6 +60,7 @@ class Signup extends Component {
                   <input
                     type="text"
                     name="username"
+                    maxLength="25"
                     required
                     value={this.state.username}
                     onChange={this.handleChange}
