@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
+const path = require('path');
 
 const { session_secret, mongoURI } = require('./configuration/config');
 
@@ -34,6 +35,7 @@ mongoose
   })
   .then(() => console.log('Successfully connected to the database'))
   .catch(() => console.log('Error occured when connecting to the database'));
+// console.log(path.resolve(__dirname, 'client', 'build', 'index.html'));
 
 //Serve static assests if in production
 if (process.env.NODE_ENV === 'production') {
