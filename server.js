@@ -35,7 +35,6 @@ mongoose
   })
   .then(() => console.log('Successfully connected to the database'))
   .catch(() => console.log('Error occured when connecting to the database'));
-y;
 
 // console.log(path.resolve(__dirname, 'client', 'build', 'index.html'));
 
