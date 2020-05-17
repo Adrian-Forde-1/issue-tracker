@@ -47,16 +47,6 @@ if (process.env.NODE_ENV === 'production') {
   //   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   // });
 
-  app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client/build/index.html'), function (
-      err
-    ) {
-      if (err) {
-        res.status(500).send(err);
-      }
-    });
-  });
-
   // app.get('/*', (req, res) => {
   //   res.sendFile(path.join(__dirname, 'client/build/index.html'), function (
   //     err
@@ -70,5 +60,13 @@ if (process.env.NODE_ENV === 'production') {
 
 //Routes
 app.use('/api', require('./routes/UserRoutes'));
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'path/to/your/index.html'), function (err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
 
 app.listen(PORT, console.log(`Server is up and running on port ${PORT}`));
