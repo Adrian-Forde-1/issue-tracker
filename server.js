@@ -10,6 +10,7 @@ const dotenv = require('dotenv');
 
 const PORT = process.env.PORT || 5000;
 
+//Using .env variables for dev
 dotenv.config();
 
 app.use(cors());
