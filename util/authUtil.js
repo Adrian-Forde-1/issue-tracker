@@ -1,5 +1,4 @@
 const JWT = require('jsonwebtoken');
-const { jwt_secret } = require('../configuration/config');
 const UserModel = require('../models/UserModel');
 
 const isEmpty = (string) => {
@@ -47,7 +46,7 @@ exports.signToken = (user) => {
       iat: new Date().getTime(),
       exp: new Date().setDate(new Date().getDate() + 1),
     },
-    jwt_secret
+    process.env.jwt_secret
   );
 };
 

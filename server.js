@@ -6,10 +6,11 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 const path = require('path');
-
-const { session_secret, mongoURI } = require('./configuration/config');
+const dotenv = require('dotenv');
 
 const PORT = process.env.PORT || 5000;
+
+dotenv.config();
 
 app.use(cors());
 app.use(morgan('dev'));
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(express.static());
 app.use(
   session({
-    secret: session_secret,
+    secret: process.env.session_secret,
     resave: true,
     saveUninitialized: true,
   })
@@ -28,7 +29,7 @@ app.use(passport.session());
 
 //Setting up mongoDB
 mongoose
-  .connect(mongoURI, {
+  .connect(process.env.mongoURI, {
     useFindAndModify: false,
     useUnifiedTopology: true,
     useNewUrlParser: true,

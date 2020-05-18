@@ -37,10 +37,11 @@ import JoinTeam from './components/Teams/JoinTeam';
 import EditProject from './components/Projects/EditProject';
 
 function App() {
-  toast.configure({
-    position: toast.POSITION.TOP_CENTER,
-    autoClose: 4000,
-  });
+  // toast.configure({
+  //   position: toast.POSITION.TOP_CENTER,
+  //   autoClose: 4000,
+
+  // });
   return (
     <div className="App">
       <ToastContainer />
