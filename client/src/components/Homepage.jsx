@@ -14,11 +14,11 @@ function Homepage(props) {
     <header>
       <div className="container">
         <div className="header-content">
-          <div className="header-bottom-graphic">
+          {/* <div className="header-bottom-graphic">
             <div>
               <img src={Wave_Bottom} alt="" />
             </div>
-          </div>
+          </div> */}
           <div className="row">
             <div className="col-lg-6">
               {props.authenticated === false && (
@@ -72,6 +72,29 @@ function Homepage(props) {
                 className="img-fluid header-img"
               />
             </div>
+            {props.authenticated === false && (
+              <div className="col-12 premade-accounts">
+                <h4>Premade Accounts</h4>
+                <table className="table table-borderless">
+                  <thead>
+                    <tr>
+                      <th>Email</th>
+                      <th>Password</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>user1@email.com</td>
+                      <td>user1password</td>
+                    </tr>
+                    <tr>
+                      <td>user2@email.com</td>
+                      <td>user2password</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       </div>
