@@ -416,47 +416,67 @@ a {
 header {
   background: $page-background;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   padding-top: 120px;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 
-  // &::after {
-  //   content: '';
-  //   position: absolute;
-  //   bottom: 0;
-  //   left: 0;
-  //   width: 100vw;
-  //   background: url('../resources/Images/Wave_Bottom.svg') no-repeat;
-  //   height: 225px;
-  //   background-size: 110%;
-  //   background-position-y: 20px;
-  //   background-position-x: center;
-  // }
-}
-
-.header-bottom-graphic {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 30%;
-
-  div {
-    position: relative;
-    width: 100%;
-    height: 100%;
-
-    img {
-      position: absolute;
-      left: 0;
-      bottom: 0%;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    background: url('../resources/Images/Wave_Bottom.svg') no-repeat;
+    height: 225px;
+    background-size: 110%;
+    background-position-y: bottom;
+    background-position-x: center;
+    z-index: 1;
   }
 }
+
+.premade-accounts {
+  margin-top: 100px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  table {
+    background: $text-color;
+    color: white;
+    width: 60%;
+  }
+  h4 {
+    text-align: center;
+    color: $primary-color;
+  }
+}
+
+// .header-bottom-graphic {
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 30%;
+
+//   div {
+//     position: relative;
+//     width: 100%;
+//     height: 100%;
+
+//     img {
+//       position: absolute;
+//       left: 0;
+//       bottom: 0%;
+//       width: 100%;
+//       height: 100%;
+//       object-fit: cover;
+//     }
+//   }
+// }
 
 .header-content {
   width: 100%;
@@ -503,6 +523,7 @@ header {
   position: absolute;
   top: 0px;
   left: 20%;
+  z-index: 3;
 }
 
 .main-header-link {
@@ -592,11 +613,11 @@ header {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     background: url('../resources/Images/Wave_Bottom.svg') no-repeat;
     height: 225px;
     background-size: cover;
-    background-position-y: 20px;
+    background-position-y: bottom;
     background-position-x: center;
   }
 
@@ -987,7 +1008,7 @@ header {
     background: url('../resources/Images/Wave_Bottom.svg') no-repeat;
     height: 225px;
     background-size: 110%;
-    background-position-y: 20px;
+    background-position-y: bottom;
     background-position-x: center;
   }
 
@@ -1480,6 +1501,12 @@ span[id*='bug-status-'] {
   .bug-label {
     max-width: 150px;
   }
+
+  .premade-accounts {
+    h4 {
+      font-size: 22px;
+    }
+  }
 }
 @media screen and (max-width: 768px) {
   // .manager-action-btn {
@@ -1582,6 +1609,15 @@ span[id*='bug-status-'] {
 
   .search {
     font-size: 14px;
+  }
+
+  .premade-accounts {
+    h4 {
+      font-size: 20px;
+    }
+    table {
+      font-size: 14px;
+    }
   }
 }
 @media screen and (max-width: 576px) {
@@ -1746,6 +1782,14 @@ span[id*='bug-status-'] {
   .search {
     font-size: 12px;
   }
+  .premade-accounts {
+    h4 {
+      font-size: 18px;
+    }
+    table {
+      font-size: 12px;
+    }
+  }
 }
 
 @media screen and (max-width: 500px) {
@@ -1849,5 +1893,14 @@ span[id*='bug-status-'] {
   .individual-bug-label-container {
     max-width: 250px;
     grid-template-columns: repeat(2, 6fr);
+  }
+  .premade-accounts {
+    h4 {
+      font-size: 16px;
+    }
+    table {
+      width: 80%;
+      font-size: 10px;
+    }
   }
 }

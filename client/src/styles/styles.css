@@ -455,34 +455,54 @@ a p {
 header {
   background: #fdfcff;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   padding-top: 120px;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
-.header-bottom-graphic {
+header::after {
+  content: '';
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
-  height: 30%;
+  width: 100vw;
+  background: url("../resources/Images/Wave_Bottom.svg") no-repeat;
+  height: 225px;
+  background-size: 110%;
+  background-position-y: bottom;
+  background-position-x: center;
+  z-index: 1;
 }
 
-.header-bottom-graphic div {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.premade-accounts {
+  margin-top: 100px;
+  z-index: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.header-bottom-graphic div img {
-  position: absolute;
-  left: 0;
-  bottom: 0%;
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+.premade-accounts table {
+  background: #0f003a;
+  color: white;
+  width: 60%;
+}
+
+.premade-accounts h4 {
+  text-align: center;
+  color: #2e00b1;
 }
 
 .header-content {
@@ -528,6 +548,7 @@ header {
   position: absolute;
   top: 0px;
   left: 20%;
+  z-index: 3;
 }
 
 .main-header-link {
@@ -633,11 +654,11 @@ header {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   background: url("../resources/Images/Wave_Bottom.svg") no-repeat;
   height: 225px;
   background-size: cover;
-  background-position-y: 20px;
+  background-position-y: bottom;
   background-position-x: center;
 }
 
@@ -1069,7 +1090,7 @@ header {
   background: url("../resources/Images/Wave_Bottom.svg") no-repeat;
   height: 225px;
   background-size: 110%;
-  background-position-y: 20px;
+  background-position-y: bottom;
   background-position-x: center;
 }
 
@@ -1595,6 +1616,9 @@ span[id*='bug-status-'] {
   .bug-label {
     max-width: 150px;
   }
+  .premade-accounts h4 {
+    font-size: 22px;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -1661,6 +1685,12 @@ span[id*='bug-status-'] {
     max-width: 120px;
   }
   .search {
+    font-size: 14px;
+  }
+  .premade-accounts h4 {
+    font-size: 20px;
+  }
+  .premade-accounts table {
     font-size: 14px;
   }
 }
@@ -1787,6 +1817,12 @@ span[id*='bug-status-'] {
   .search {
     font-size: 12px;
   }
+  .premade-accounts h4 {
+    font-size: 18px;
+  }
+  .premade-accounts table {
+    font-size: 12px;
+  }
 }
 
 @media screen and (max-width: 500px) {
@@ -1874,6 +1910,13 @@ span[id*='bug-status-'] {
     max-width: 250px;
     -ms-grid-columns: (6fr)[2];
         grid-template-columns: repeat(2, 6fr);
+  }
+  .premade-accounts h4 {
+    font-size: 16px;
+  }
+  .premade-accounts table {
+    width: 80%;
+    font-size: 10px;
   }
 }
 /*# sourceMappingURL=styles.css.map */
