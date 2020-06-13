@@ -9,6 +9,14 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #2e00b1;
+}
+
 a {
   text-decoration: none;
 }
@@ -952,10 +960,7 @@ header::after {
   height: 100%;
   margin-top: 0px;
   position: relative;
-  padding-top: 0px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 0px !important;
+  padding: 0px 20px;
 }
 
 .individual-container .containers > div {
@@ -1459,6 +1464,7 @@ span[id*='bug-status-'] {
 }
 
 .add-comment-container {
+  width: 100%;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1559,13 +1565,14 @@ span[id*='bug-status-'] {
     cursor: pointer;
   }
   .p-l-175 {
-    padding-left: 30px !important;
+    padding-left: 0px !important;
   }
   .p-l-175-0 {
     padding-left: 0px !important;
   }
   .search {
     left: 50px;
+    margin-left: 35px;
   }
   .side-nav {
     -webkit-transform: translateX(-175px);
@@ -1597,15 +1604,17 @@ span[id*='bug-status-'] {
   }
   .individual-container {
     font-size: 14px;
-    padding-left: 30px;
+    padding-left: 0px;
   }
   .individual-container .containers {
     margin-left: 0px;
-    padding-right: 10px;
   }
   .form-container {
     padding-left: 15%;
     padding-right: 15%;
+  }
+  .bug-title {
+    margin-left: 35px;
   }
   .bug-preview {
     width: 90%;
@@ -1651,6 +1660,7 @@ span[id*='bug-status-'] {
   }
   .new-comment {
     font-size: 12px;
+    height: 150px;
   }
   .color-picker {
     font-size: 14px;
@@ -1740,13 +1750,6 @@ span[id*='bug-status-'] {
   }
   .comment-container i {
     right: 100px;
-  }
-  .new-comment {
-    font-size: 12px;
-    width: 250px;
-  }
-  .submit-comment {
-    right: 155px;
   }
   .color-picker {
     font-size: 12px;
@@ -1838,10 +1841,6 @@ span[id*='bug-status-'] {
   }
   .extra-right {
     right: 40px !important;
-  }
-  .containers {
-    padding-right: 0px !important;
-    margin-left: 0px !important;
   }
   .individual-bug-status-container div {
     font-size: 10px;
