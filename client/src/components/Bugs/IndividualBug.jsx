@@ -89,7 +89,7 @@ function IndividualBug(props) {
   return (
     <div className="individual-container">
       <SideNav />
-      <div className="container-fluid">
+      <div>
         {Object.keys(bug).length > 0 && (
           <div className="containers p-t-20">
             {props.errors !== null && props.errors['bug']
