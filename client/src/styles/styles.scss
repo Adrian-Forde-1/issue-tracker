@@ -1450,7 +1450,12 @@ span[id*='bug-status-'] {
 
   .search {
     left: 50px;
-    margin-left: 35px;
+  }
+
+  .containers {
+    .search {
+      margin-left: 30px;
+    }
   }
 
   .side-nav {
