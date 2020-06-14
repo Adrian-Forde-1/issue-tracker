@@ -1,14 +1,28 @@
 import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
 
-//Components
-import DeleteModal from '../DeleteModal';
+//Redux
+import { connect } from 'react-redux';
+
+//Actions
+import {
+  showModal,
+  setDeleteItem,
+  setItemType,
+  setCurrentLocation,
+} from '../../redux/actions/modalActions';
 
 //React Router DOM
 import { Link, withRouter } from 'react-router-dom';
 
 function BugPreview(props) {
   const { bug, index, projectId } = props;
+
+  const deleteModal = () => {
+    props.setDeleteItem(bug);
+    props.setItemType('bug');
+    props.setCurrentLocation(props.history.location.pathname.split('/'));
+    props.showModal();
+  };
 
   return (
     <div className="bug-preview-container">
@@ -67,18 +81,7 @@ function BugPreview(props) {
           </div>
           <div className="bug-preview-second-div">
             <p className="bug-description">{bug.description}</p>
-            <i
-              className="far fa-trash-alt"
-              onClick={() => {
-                const element = document.createElement('div');
-                element.classList.add('modal-element');
-                document.querySelector('#modal-root').appendChild(element);
-                ReactDOM.render(
-                  <DeleteModal item={bug} type={'bug'} />,
-                  element
-                );
-              }}
-            ></i>
+            <i className="far fa-trash-alt" onClick={deleteModal}></i>
           </div>
         </div>
       </div>
@@ -86,4 +89,11 @@ function BugPreview(props) {
   );
 }
 
-export default withRouter(BugPreview);
+const mapDispatchToProps = {
+  showModal,
+  setDeleteItem,
+  setItemType,
+  setCurrentLocation,
+};
+
+export default connect(null, mapDispatchToProps)(withRouter(BugPreview));

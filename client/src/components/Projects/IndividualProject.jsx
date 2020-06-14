@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 //Tostify
 import { toast } from 'react-toastify';
 
 //React Router DOM
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 //Redux
 import { connect } from 'react-redux';
@@ -18,10 +17,16 @@ import {
 } from '../../redux/actions/projectActions';
 import { setErrors, clearErrors } from '../../redux/actions/userActions';
 
+import {
+  showModal,
+  setDeleteItem,
+  setItemType,
+  setCurrentLocation,
+} from '../../redux/actions/modalActions';
+
 //Components
 import SearchBar from '../SearchBar';
 import BugPreview from '../Preview/BugPreview';
-import DeleteModal from '../DeleteModal';
 import SideNav from '../Navigation/SideNav';
 import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
@@ -89,6 +94,13 @@ function IndividualProject(props) {
       props.setProjectUpdated(false);
     }
   }, [props.projectUpdated]);
+
+  const deleteModal = () => {
+    props.setDeleteItem(project);
+    props.setItemType('project');
+    props.setCurrentLocation(props.history.location.pathname.split('/'));
+    props.showModal();
+  };
 
   return (
     <div className="individual-container">
@@ -211,25 +223,7 @@ function IndividualProject(props) {
                   <Link to={`/project/${project._id}/edit`}>
                     <i className="far fa-edit"></i>
                   </Link>
-                  <i
-                    className="far fa-trash-alt"
-                    onClick={() => {
-                      const element = document.createElement('div');
-                      element.classList.add('modal-element');
-                      document
-                        .querySelector('#modal-root')
-                        .appendChild(element);
-                      ReactDOM.render(
-                        <DeleteModal
-                          item={project}
-                          type={'project'}
-                          teamId={project.team}
-                          reRoute={reRoute}
-                        />,
-                        element
-                      );
-                    }}
-                  ></i>
+                  <i className="far fa-trash-alt" onClick={deleteModal}></i>
                 </span>
               )}
             </h2>
@@ -302,6 +296,10 @@ const mapDispatchToProps = {
   setErrors,
   clearErrors,
   setProjectUpdated,
+  showModal,
+  setDeleteItem,
+  setItemType,
+  setCurrentLocation,
 };
 
 const mapStateToProps = (state) => ({
@@ -311,7 +309,4 @@ const mapStateToProps = (state) => ({
   errors: state.user.errors,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(IndividualProject));
+export default connect(mapStateToProps, mapDispatchToProps)(IndividualProject);

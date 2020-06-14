@@ -1,9 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
-
-//Components
-import DeleteModal from '../DeleteModal';
 
 //React Router DOM
 import { withRouter, Link } from 'react-router-dom';
@@ -15,6 +11,13 @@ import { connect } from 'react-redux';
 import { setErrors } from '../../redux/actions/userActions';
 
 import {
+  showModal,
+  setDeleteItem,
+  setItemType,
+  setCurrentLocation,
+} from '../../redux/actions/modalActions';
+
+import {
   getUserProjects,
   setProjects,
 } from '../../redux/actions/projectActions';
@@ -23,6 +26,13 @@ import { getUserTeams, setTeamUpdated } from '../../redux/actions/teamActions';
 
 function ProjectPreview(props) {
   const { project } = props;
+
+  const deleteModal = () => {
+    props.setDeleteItem(project);
+    props.setItemType('project');
+    props.setCurrentLocation(props.history.location.pathname.split('/'));
+    props.showModal();
+  };
   return (
     <div className="preview">
       {/* <Link to={`/project/${project._id}`}>
@@ -82,22 +92,7 @@ function ProjectPreview(props) {
         }}
       ></i>
 
-      <i
-        className="far fa-trash-alt delete-btn"
-        onClick={() => {
-          const element = document.createElement('div');
-          element.classList.add('modal-element');
-          document.querySelector('#modal-root').appendChild(element);
-          ReactDOM.render(
-            <DeleteModal
-              item={project}
-              type={'project'}
-              teamId={project.team}
-            />,
-            element
-          );
-        }}
-      ></i>
+      <i className="far fa-trash-alt delete-btn" onClick={deleteModal}></i>
     </div>
   );
 }
@@ -108,6 +103,10 @@ const mapDispatchToProps = {
   setProjects,
   getUserTeams,
   setTeamUpdated,
+  showModal,
+  setDeleteItem,
+  setItemType,
+  setCurrentLocation,
 };
 
 export default connect(null, mapDispatchToProps)(withRouter(ProjectPreview));

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 //Tostify
@@ -21,11 +20,18 @@ import {
   setCurrentSection,
   setCurrentId,
 } from '../../redux/actions/userActions';
+
 import { setProjects } from '../../redux/actions/projectActions';
+
+import {
+  showModal,
+  setDeleteItem,
+  setItemType,
+  setCurrentLocation,
+} from '../../redux/actions/modalActions';
 
 //Components
 import AllTeamProjects from './AllTeamProjects';
-import DeleteModal from '../DeleteModal';
 import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 function IndividualTeam(props) {
@@ -50,6 +56,13 @@ function IndividualTeam(props) {
   const handleSearchChange = (e) => {
     sessionStorage.setItem('project-search', e.target.value);
     setSearch(e.target.value);
+  };
+
+  const deleteModal = () => {
+    props.setDeleteItem(team);
+    props.setItemType('team');
+    props.setCurrentLocation(props.history.location.pathname.split('/'));
+    props.showModal();
   };
 
   return (
@@ -89,20 +102,7 @@ function IndividualTeam(props) {
               {team.name}{' '}
               {team.createdBy.toString() === props.user._id.toString() ? (
                 <span>
-                  <i
-                    className="far fa-trash-alt"
-                    onClick={() => {
-                      const element = document.createElement('div');
-                      element.classList.add('modal-element');
-                      document
-                        .querySelector('#modal-root')
-                        .appendChild(element);
-                      ReactDOM.render(
-                        <DeleteModal item={team} type={'team'} />,
-                        element
-                      );
-                    }}
-                  ></i>
+                  <i className="far fa-trash-alt" onClick={deleteModal}></i>
                 </span>
               ) : (
                 <span>
@@ -147,6 +147,10 @@ const mapDispatchToProps = {
   clearErrors,
   setCurrentSection,
   setCurrentId,
+  showModal,
+  setDeleteItem,
+  setItemType,
+  setCurrentLocation,
 };
 
 const mapStateToProps = (state) => ({

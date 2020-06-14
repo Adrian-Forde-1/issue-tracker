@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -14,9 +13,14 @@ import { connect } from 'react-redux';
 
 //Actions
 import { setErrors, clearErrors } from '../../redux/actions/userActions';
+import {
+  showModal,
+  setDeleteItem,
+  setItemType,
+  setCurrentLocation,
+} from '../../redux/actions/modalActions';
 
 //Components
-import DeleteModal from '../DeleteModal';
 import SideNav from '../Navigation/SideNav';
 import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
@@ -38,6 +42,13 @@ function IndividualBug(props) {
         props.history.goBack();
       });
   }, []);
+
+  const deleteModal = () => {
+    props.setDeleteItem(bug);
+    props.setItemType('bug');
+    props.setCurrentLocation(props.history.location.pathname.split('/'));
+    props.showModal();
+  };
 
   useEffect(() => {
     if (Object.keys(bug).length > 0) {
@@ -82,10 +93,6 @@ function IndividualBug(props) {
       });
   };
 
-  const reRoute = () => {
-    props.history.replace(`/project/${bug.project._id}`);
-  };
-
   return (
     <div className="individual-container">
       <SideNav />
@@ -121,24 +128,7 @@ function IndividualBug(props) {
                   <Link to={`/project/${bug.project._id}/bug/${bug._id}/edit`}>
                     <i className="far fa-edit"></i>
                   </Link>
-                  <i
-                    className="far fa-trash-alt"
-                    onClick={() => {
-                      const element = document.createElement('div');
-                      element.classList.add('modal-element');
-                      document
-                        .querySelector('#modal-root')
-                        .appendChild(element);
-                      ReactDOM.render(
-                        <DeleteModal
-                          item={bug}
-                          type={'bug'}
-                          reRoute={reRoute}
-                        />,
-                        element
-                      );
-                    }}
-                  ></i>
+                  <i className="far fa-trash-alt" onClick={deleteModal}></i>
                 </div>
               )}
             </h3>
@@ -315,6 +305,10 @@ function IndividualBug(props) {
 const mapDispatchToProps = {
   setErrors,
   clearErrors,
+  showModal,
+  setDeleteItem,
+  setItemType,
+  setCurrentLocation,
 };
 
 const mapStateToProps = (state) => ({

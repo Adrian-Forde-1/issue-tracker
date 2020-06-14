@@ -1,85 +1,125 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 //Redux
-import store from '../redux/store';
+import { connect } from 'react-redux';
 
 //Actions
+import {
+  closeModal,
+  removeDeleteItem,
+  removeItemType,
+  removeCurrentLocation,
+} from '../redux/actions/modalActions';
+
 import {
   getUserProjects,
   setProjectUpdated,
 } from '../redux/actions/projectActions';
+
 import { getUserTeams, setTeamUpdated } from '../redux/actions/teamActions';
+
+//React Router DOM
+import { withRouter } from 'react-router-dom';
+
+//Actions
+// import {
+//   getUserProjects,
+//   setProjectUpdated,
+// } from '../redux/actions/projectActions';
 import { SET_ERRORS } from '../redux/actions/types';
 
 function DeleteModal(props) {
-  const { item, type, teamId, reRoute } = props;
+  // const { item, type, teamId, reRoute } = props;
+  const modalRoot = document.getElementById('modal-root');
 
   const closeModal = (cb) => {
-    const element = document.querySelector('.modal-element');
-    document.querySelector('#modal-root').removeChild(element);
-
-    if (cb !== null && typeof cb === 'function') {
-      cb();
-    }
+    props.closeModal();
+    props.removeDeleteItem();
+    props.removeItemType();
+    props.removeCurrentLocation();
   };
 
-  const reRouter = () => {
-    if (reRoute !== null && typeof reRoute === 'function') reRoute();
-  };
+  // const reRouter = () => {
+  //   if (reRoute !== null && typeof reRoute === 'function') reRoute();
+  // };
 
-  const deleteItem = (type, id, teamId, cb) => {
+  const deleteItem = () => {
+    const { item, itemType } = props;
     axios
-      .delete(`/api/${type}/${id}`, {
+      .delete(`/api/${itemType}/${item._id}`, {
         headers: { Authorization: localStorage.getItem('token') },
       })
       .then(() => {
-        if (type === 'project') {
-          store.dispatch(getUserProjects(localStorage.getItem('token')));
+        if (itemType === 'project') {
+          props.getUserProjects(localStorage.getItem('token'));
+          closeModal();
 
-          if (teamId !== null) {
-            store.dispatch(getUserTeams(localStorage.getItem('token')));
-            store.dispatch(setTeamUpdated(true));
+          if (item.team !== null && props.currentLocation.includes('project')) {
+            props.setTeamUpdated(true);
+            props.history.goBack();
+          } else if (item.team !== null) {
+            props.setTeamUpdated(true);
           }
-          cb(reRouter);
-        }
-        if (type === 'bug') {
-          store.dispatch(setProjectUpdated(true));
-          props.history.replace(`/project/${item.project._id}`);
-          cb(reRouter);
         }
 
-        if (type === 'team') {
-          store.dispatch(getUserTeams(localStorage.getItem('token')));
-          cb(reRouter);
+        if (itemType === 'bug') {
+          props.setProjectUpdated(true);
+          closeModal();
+          if (props.currentLocation.includes('bug')) {
+            props.history.goBack();
+          }
+        }
+
+        if (itemType === 'team') {
+          props.getUserTeams(localStorage.getItem('token'));
+          closeModal();
+
+          if (props.currentLocation.includes('team')) {
+            props.history.goBack();
+          }
         }
       })
       .catch((error) => {
-        store.dispatch({ type: SET_ERRORS, payload: error });
+        // store.dispatch({ type: SET_ERRORS, payload: error });
       });
   };
-  return (
+
+  return ReactDOM.createPortal(
     <div className="modal-bg">
       <div className="modal-body">
         <h5>
-          Are you sure you want to delete <span>{item.name}</span>?
+          Are you sure you want to delete <span>{props.item.name}</span>?
         </h5>
         <div className="modal-btn-container">
-          <button
-            onClick={() => {
-              deleteItem(type, item._id, teamId, closeModal);
-            }}
-          >
-            Yes
-          </button>
+          <button onClick={deleteItem}>Yes</button>
           <button onClick={closeModal}>No</button>
         </div>
-        {/* <button className="modal-close" onClick={closeModal}>
-          <i className="fas fa-times"></i>
-        </button> */}
       </div>
-    </div>
+    </div>,
+    modalRoot
   );
 }
 
-export default DeleteModal;
+const mapStateToProps = (state) => ({
+  item: state.modal.deleteItem,
+  itemType: state.modal.itemType,
+  currentLocation: state.modal.currentLocation,
+});
+
+const mapDispatchToProps = {
+  closeModal,
+  removeDeleteItem,
+  removeItemType,
+  getUserProjects,
+  setProjectUpdated,
+  getUserTeams,
+  setTeamUpdated,
+  removeCurrentLocation,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(DeleteModal));
