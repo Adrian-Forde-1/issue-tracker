@@ -14,6 +14,18 @@ function SideNav(props) {
         .classList.remove('selected-section');
       document.querySelector('#team-link').classList.add('selected-section');
     }
+    if (
+      props.location.pathname.indexOf('team') > -1 &&
+      props.location.pathname.indexOf('chat') > -1
+    ) {
+      document
+        .querySelector('#project-link')
+        .classList.remove('selected-section');
+      document.querySelector('#team-link').classList.remove('selected-section');
+      document
+        .querySelector('#chatroom-link')
+        .classList.add('selected-section');
+    }
   }, []);
   return (
     <div className="side-nav">
@@ -30,6 +42,12 @@ function SideNav(props) {
       </ul>
     </div>
   );
+}
+
+{
+  /* <li id="chatroom-link">
+          <Link to="/teams/chat">Chatroom</Link>
+        </li> */
 }
 
 export default withRouter(SideNav);
