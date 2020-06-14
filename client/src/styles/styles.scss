@@ -94,6 +94,7 @@ a {
   display: block;
   position: relative;
   margin: 30px auto;
+  border: none;
   padding: 0.5rem 1.5rem !important;
   color: $text-color;
   background: white;
@@ -1147,8 +1148,10 @@ span[id*='bug-status-'] {
 }
 
 .bug-label {
-  max-width: 180px;
-  min-width: auto;
+  min-width: 180px;
+  max-width: auto;
+  text-align: center;
+  border: 5px solid red;
   display: block;
   color: white;
   white-space: nowrap;
@@ -1374,6 +1377,26 @@ span[id*='bug-status-'] {
 }
 //Bug End
 
+//Team Chat Start
+.team-chat-content {
+  padding-left: 175px;
+  min-height: 100vh;
+  position: relative;
+}
+
+.team-my-message {
+  width: calc(95% - 175px);
+  position: absolute;
+  right: 2.5%;
+  bottom: 10px;
+  max-height: 40px;
+  padding: 5px;
+  border: 1px solid $text-color;
+  border-radius: 5px;
+  resize: none;
+}
+//Team Chat End
+
 @media screen and (max-width: 992px) {
   .header-content {
     h1 {
@@ -1458,6 +1481,10 @@ span[id*='bug-status-'] {
     }
   }
 
+  .team-chat-content {
+    padding-left: 0px;
+  }
+
   .side-nav {
     transform: translateX(-175px);
     transition: all 300ms ease-in-out;
@@ -1512,7 +1539,8 @@ span[id*='bug-status-'] {
   }
 
   .bug-label {
-    max-width: 150px;
+    min-width: 150px;
+    max-width: auto;
   }
 
   .premade-accounts {
@@ -1618,7 +1646,8 @@ span[id*='bug-status-'] {
   }
 
   .bug-label {
-    max-width: 120px;
+    min-width: 120px;
+    max-width: auto;
   }
 
   .search {
@@ -1775,7 +1804,8 @@ span[id*='bug-status-'] {
   }
 
   .bug-label {
-    max-width: 100px;
+    min-width: 100px;
+    max-width: auto;
     font-size: 10px;
   }
 
