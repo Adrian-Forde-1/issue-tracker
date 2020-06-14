@@ -99,7 +99,6 @@ a p {
   display: block;
   position: relative;
   margin: 30px auto;
-  border: 1px solid #0f003a;
   padding: 0.5rem 1.5rem !important;
   color: #0f003a;
   background: white;
@@ -1400,6 +1399,7 @@ span[id*='bug-status-'] {
   top: 10px;
   right: -25px;
   cursor: pointer;
+  border: 1px solid red;
   color: #0f003a;
 }
 
@@ -1752,7 +1752,7 @@ span[id*='bug-status-'] {
     width: 100%;
   }
   .comment-container i {
-    right: 100px;
+    right: 10px;
   }
   .color-picker {
     font-size: 12px;
