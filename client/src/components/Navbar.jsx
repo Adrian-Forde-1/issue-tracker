@@ -17,7 +17,7 @@ function Navbar(props) {
   if (
     props.location.pathname === '/' ||
     props.location.pathname === '/login' ||
-    props.location.pathname === 'signup'
+    props.location.pathname === '/signUp'
   ) {
     return (
       <div className="navbar">
