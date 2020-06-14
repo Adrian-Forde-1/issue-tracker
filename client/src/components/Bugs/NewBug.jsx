@@ -193,7 +193,6 @@ class NewBug extends Component {
                   required
                 />
               </div>
-              {console.log(this.state.project)}
               <div className="form-group mb-0">
                 <label htmlFor="">Labels</label>
               </div>
@@ -222,23 +221,7 @@ class NewBug extends Component {
                   <label htmlFor="">Assign Members</label>
                 </div>
               )}
-              {/* {this.state.project['team'] && this.state.members.length > 0 && (
-                <div className="form-group">
-                  <select
-                    name="assignedMembers"
-                    id="assignedMembers"
-                    className=" form-control selectpicker show-tick"
-                    multiple
-                    data-live-search="true"
-                  >
-                    {this.state.members.map((member) => (
-                      <option value={member._id} key={member._id}>
-                        {member.username}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )} */}
+
               {this.state.members &&
                 this.state.members.map((member, index) => (
                   <div className="form-check" key={member._id}>
