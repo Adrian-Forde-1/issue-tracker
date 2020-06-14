@@ -44,16 +44,6 @@ mongoose
 if (process.env.NODE_ENV === 'production') {
   //Set static folder
   app.use(express.static('client/build'));
-
-  // app.get('/*', (req, res) => {
-  //   res.sendFile(path.join(__dirname, 'client/build/index.html'), function (
-  //     err
-  //   ) {
-  //     if (err) {
-  //       res.status(500).send(err);
-  //     }
-  //   });
-  // });
 }
 
 //Routes
@@ -69,13 +59,5 @@ app.get('/*', (req, res) => {
     }
   );
 });
-
-// app.get('/*', function (req, res) {
-//   res.sendFile(path.join(__dirname, 'path/to/your/index.html'), function (err) {
-//     if (err) {
-//       res.status(500).send(err);
-//     }
-//   });
-// });
 
 app.listen(PORT, console.log(`Server is up and running on port ${PORT}`));
