@@ -23,6 +23,8 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
+    this.emailRef = React.createRef();
+
     this.state = {
       email: '',
       password: '',
@@ -31,6 +33,7 @@ class Login extends Component {
 
   componentDidMount() {
     if (this.props.authenticated === true) this.props.history.goBack();
+    this.emailRef.current.focus();
   }
 
   handleChange = (e) => {
@@ -104,6 +107,7 @@ class Login extends Component {
                     type="email"
                     name="email"
                     value={this.state.email}
+                    ref={this.emailRef}
                     onChange={this.handleChange}
                   />
                 </div>
@@ -120,7 +124,7 @@ class Login extends Component {
                 <button className="submit-btn">Login</button>
               </form>
               <p>
-                Dont have an account? <Link to="/signUp">Sign up</Link>
+                Dont have an account? <Link to="/signup">Sign up</Link>
               </p>
             </div>
           </div>
