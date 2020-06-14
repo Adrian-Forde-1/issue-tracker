@@ -16,6 +16,8 @@ class Signup extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
+    this.usernameRef = React.createRef();
+
     this.state = {
       username: '',
       email: '',
@@ -26,6 +28,7 @@ class Signup extends Component {
 
   componentDidMount() {
     if (this.props.authenticated === true) this.props.history.goBack();
+    this.usernameRef.current.focus();
   }
 
   handleChange = (e) => {
@@ -63,6 +66,7 @@ class Signup extends Component {
                     maxLength="25"
                     required
                     value={this.state.username}
+                    ref={this.usernameRef}
                     onChange={this.handleChange}
                   />
                   {this.props.errors.username && (
