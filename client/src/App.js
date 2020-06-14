@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 
 //Tostify
@@ -35,88 +35,103 @@ import ArchivedTeamProjects from './components/Projects/ArchivedTeamProjects';
 import CreateTeamProject from './components/Teams/CreateTeamProject';
 import JoinTeam from './components/Teams/JoinTeam';
 import EditProject from './components/Projects/EditProject';
+import TeamChat from './components/Chat/TeamChat';
+import DeleteModal from './components/DeleteModal';
 
-function App() {
+class App extends Component {
   // toast.configure({
   //   position: toast.POSITION.TOP_CENTER,
   //   autoClose: 4000,
 
   // });
-  return (
-    <div className="App">
-      <ToastContainer />
-      <Navbar />
-      {/* <Breadcrumbs /> */}
-      <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signUp" component={Signup} />
+  render() {
+    return (
+      <div className="App">
+        <ToastContainer />
+        <Navbar />
+        {/* <Breadcrumbs /> */}
+        <Switch>
+          <Route exact path="/" component={Homepage} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
 
-        <IsAuthenticated>
-          {/* Team */}
-          <Route exact path="/teams" component={AllTeams} />
-          <Route exact path="/team/:teamId" component={IndividualTeam} />
-          <Route exact path="/create/team" component={CreateTeam} />
-          <Route
-            exact
-            path="/team/:teamId/archived"
-            component={ArchivedTeamProjects}
-          />
-          <Route
-            exact
-            path="/team/:teamId/project/create"
-            component={CreateTeamProject}
-          />
-          <Route exact path="/join/team" component={JoinTeam} />
+          <IsAuthenticated>
+            {/* Team */}
+            {/* <Route exact path="/teams/chat" component={TeamChat} /> */}
+            <Route exact path="/team/:teamId" component={IndividualTeam} />
+            <Route exact path="/create/team" component={CreateTeam} />
+            <Route exact path="/teams" component={AllTeams} />
+            <Route
+              exact
+              path="/team/:teamId/archived"
+              component={ArchivedTeamProjects}
+            />
+            <Route
+              exact
+              path="/team/:teamId/project/create"
+              component={CreateTeamProject}
+            />
+            <Route exact path="/join/team" component={JoinTeam} />
 
-          {/* Project */}
-          <Route exact path="/projects" component={AllProjects} />
-          <Route
-            exact
-            path="/project/:projectId"
-            component={IndividualProject}
-          />
-          <Route
-            exact
-            path="/project/:projectId/edit"
-            component={EditProject}
-          />
-          <Route exact path="/create/project" component={CreateProject} />
-          <Route exact path="/projects/archived" component={ArchivedProjects} />
+            {/* Project */}
+            <Route exact path="/projects" component={AllProjects} />
+            <Route
+              exact
+              path="/project/:projectId"
+              component={IndividualProject}
+            />
+            <Route
+              exact
+              path="/project/:projectId/edit"
+              component={EditProject}
+            />
+            <Route exact path="/create/project" component={CreateProject} />
+            <Route
+              exact
+              path="/projects/archived"
+              component={ArchivedProjects}
+            />
 
-          {/* Labels */}
-          <Route exact path="/project/:projectId/labels" component={Labels} />
-          <Route
-            exact
-            path="/project/:projectId/label/:labelId/edit"
-            component={EditLabel}
-          />
-          <Route
-            exact
-            path="/project/:projectId/label/add"
-            component={AddLabel}
-          />
+            {/* Labels */}
+            <Route exact path="/project/:projectId/labels" component={Labels} />
+            <Route
+              exact
+              path="/project/:projectId/label/:labelId/edit"
+              component={EditLabel}
+            />
+            <Route
+              exact
+              path="/project/:projectId/label/add"
+              component={AddLabel}
+            />
 
-          {/* Bug */}
-          <Route
-            exact
-            path="/project/:projectId/bug/:bugId"
-            component={IndividualBug}
-          />
-          <Route exact path="/project/:projectId/new/bug" component={NewBug} />
-          <Route
-            exact
-            path="/project/:projectId/bug/:bugId/edit"
-            component={EditBug}
-          />
-        </IsAuthenticated>
-      </Switch>
-    </div>
-  );
+            {/* Bug */}
+            <Route
+              exact
+              path="/project/:projectId/bug/:bugId"
+              component={IndividualBug}
+            />
+            <Route
+              exact
+              path="/project/:projectId/new/bug"
+              component={NewBug}
+            />
+            <Route
+              exact
+              path="/project/:projectId/bug/:bugId/edit"
+              component={EditBug}
+            />
+          </IsAuthenticated>
+        </Switch>
+        {this.props.showModal && <DeleteModal />}
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({
   user: state.user.user,
+  showModal: state.modal.showModal,
 });
 
 export default connect(mapStateToProps)(withRouter(App));
