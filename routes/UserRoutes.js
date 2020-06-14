@@ -99,4 +99,7 @@ router.delete('/bug/:bugId', passportJWT, deleteBug);
 router.post('/comment', passportJWT, createComment);
 router.put('/comment/:commentId', passportJWT, editComment);
 router.delete('/comment/:commentId', passportJWT, deleteComment);
+
+//Chat
+// router.post('/teams/chat', passportJWT, pusherChat);
 module.exports = router;
