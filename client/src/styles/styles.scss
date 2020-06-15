@@ -630,7 +630,7 @@ header {
   max-height: auto;
   position: relative;
   overflow: hidden;
-  padding: 100px 25% 50px 25%;
+  padding: 100px 0% 50px 0%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -656,6 +656,7 @@ header {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+    padding-right: 0px !important;
   }
 }
 

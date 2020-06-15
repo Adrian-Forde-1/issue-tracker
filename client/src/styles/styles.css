@@ -670,7 +670,7 @@ header::after {
   max-height: auto;
   position: relative;
   overflow: hidden;
-  padding: 100px 25% 50px 25%;
+  padding: 100px 0% 50px 0%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -712,6 +712,7 @@ header::after {
   -webkit-box-align: center !important;
       -ms-flex-align: center !important;
           align-items: center !important;
+  padding-right: 0px !important;
 }
 
 .auth-form {
