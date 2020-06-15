@@ -36,10 +36,6 @@ function DeleteModal(props) {
     props.removeCurrentLocation();
   };
 
-  // const reRouter = () => {
-  //   if (reRoute !== null && typeof reRoute === 'function') reRoute();
-  // };
-
   const deleteItem = () => {
     const { item, itemType } = props;
     axios
