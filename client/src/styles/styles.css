@@ -1395,12 +1395,13 @@ span[id*='bug-status-'] {
 
 .comment-container {
   position: relative;
+  cursor: default;
 }
 
 .comment-container i {
   position: absolute;
-  top: 10px;
-  right: -25px;
+  top: 15px;
+  right: 15px;
   cursor: pointer;
   color: #0f003a;
 }
