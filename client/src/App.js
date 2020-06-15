@@ -37,6 +37,7 @@ import JoinTeam from './components/Teams/JoinTeam';
 import EditProject from './components/Projects/EditProject';
 import TeamChat from './components/Chat/TeamChat';
 import DeleteModal from './components/DeleteModal';
+import ErrorBoundary from './components/ErrorBoundary';
 
 class App extends Component {
   // toast.configure({
@@ -74,7 +75,9 @@ class App extends Component {
             <Route exact path="/join/team" component={JoinTeam} />
 
             {/* Project */}
-            <Route exact path="/projects" component={AllProjects} />
+            <ErrorBoundary>
+              <Route exact path="/projects" component={AllProjects} />
+            </ErrorBoundary>
             <Route
               exact
               path="/project/:projectId"
