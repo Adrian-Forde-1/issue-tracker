@@ -22,11 +22,15 @@ function BugPreview(props) {
   useEffect(() => {
     // console.log(bug.labels);
     var newLabels = [];
-    labels.forEach((label) => {
-      if (bug.labels.includes(label._id)) {
-        newLabels.push(label);
+    if (labels) {
+      if (labels.length > 0) {
+        labels.forEach((label) => {
+          if (bug.labels.includes(label._id)) {
+            newLabels.push(label);
+          }
+        });
       }
-    });
+    }
     setBugLabels(newLabels);
   }, []);
 
