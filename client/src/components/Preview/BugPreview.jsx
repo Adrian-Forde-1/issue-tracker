@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 //Redux
 import { connect } from 'react-redux';
@@ -15,7 +15,20 @@ import {
 import { Link, withRouter } from 'react-router-dom';
 
 function BugPreview(props) {
-  const { bug, index, projectId } = props;
+  const { bug, index, labels, projectId } = props;
+
+  const [bugLabels, setBugLabels] = useState([]);
+
+  useEffect(() => {
+    // console.log(bug.labels);
+    var newLabels = [];
+    labels.forEach((label) => {
+      if (bug.labels.includes(label._id)) {
+        newLabels.push(label);
+      }
+    });
+    setBugLabels(newLabels);
+  }, []);
 
   const deleteModal = () => {
     props.setDeleteItem(bug);
@@ -36,8 +49,8 @@ function BugPreview(props) {
               {bug.name}
             </Link>
             {bug['labels'] &&
-              bug.labels.length > 0 &&
-              bug.labels.map((label, index) => {
+              bugLabels.length > 0 &&
+              bugLabels.map((label, index) => {
                 if (index > 2) {
                   return null;
                 } else {

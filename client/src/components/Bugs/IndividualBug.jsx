@@ -27,6 +27,7 @@ import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 function IndividualBug(props) {
   const [bug, setBug] = useState({});
   const [comment, setComment] = useState('');
+  const [bugLabels, setBugLabels] = useState([]);
 
   useEffect(() => {
     const bugId = props.match.params.bugId;
@@ -36,6 +37,14 @@ function IndividualBug(props) {
       })
       .then((response) => {
         setBug(response.data);
+
+        var newLabels = [];
+        response.data.project.labels.forEach((label) => {
+          if (response.data.labels.includes(label._id)) {
+            newLabels.push(label);
+          }
+        });
+        setBugLabels(newLabels);
       })
       .catch((error) => {
         props.setErrors(error);
@@ -133,9 +142,8 @@ function IndividualBug(props) {
               )}
             </h3>
             <div className="individual-bug-label-container">
-              {bug['labels'] &&
-                bug.labels.length > 0 &&
-                bug.labels.map((label, index) => (
+              {bugLabels.length > 0 &&
+                bugLabels.map((label, index) => (
                   <span
                     className="individual-bug-label"
                     style={{ background: `${label.color}` }}

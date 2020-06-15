@@ -16,8 +16,7 @@ const bugSchema = new mongoose.Schema({
   },
   labels: [
     {
-      name: String,
-      color: String,
+      type: String,
     },
   ],
   comments: [

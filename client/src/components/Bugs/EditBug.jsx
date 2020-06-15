@@ -38,8 +38,6 @@ class EditBug extends Component {
           bug: response.data,
         });
 
-        console.log(response.data);
-
         if (response.data.project.team !== null) {
           axios
             .get(`/api/team/${response.data.project.team}`, {
@@ -63,12 +61,22 @@ class EditBug extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.bug.labels !== this.state.bug.labels) {
-      if (this.state.bug['labels']) {
-        this.state.bug.labels.forEach((label, index) => {
-          document.querySelector(`#check${label._id}`).checked = true;
+    //   if (prevState.bug.labels !== this.state.bug.labels) {
+    //     if (this.state.bug['labels']) {
+    //       this.state.bug.labels.forEach((label, index) => {
+    //         document.querySelector(`#check${label._id}`).checked = true;
+    //       });
+    //     }
+    //   }
+
+    if (this.state.bug.labels.length > 0) {
+      this.state.bug.labels.forEach((label) => {
+        this.state.bug.project.labels.forEach((projectLabel) => {
+          if (projectLabel._id.toString() === label.toString()) {
+            document.querySelector(`#check${label}`).checked = true;
+          }
         });
-      }
+      });
     }
 
     if (prevState.members !== this.state.members) {
@@ -103,10 +111,8 @@ class EditBug extends Component {
   handleLabelChange = (e) => {
     if (e.target.checked) {
       const bug = this.state.bug;
-      const label = this.state.bug.project.labels.find(
-        (label) => label.name.toString() === e.target.value.toString()
-      );
-      const newLabels = [...this.state.bug.labels, label];
+      const newLabels = [...this.state.bug.labels, e.target.value];
+
       bug.labels = newLabels;
       this.setState({
         bug,
@@ -114,9 +120,8 @@ class EditBug extends Component {
     } else {
       const bug = this.state.bug;
       const newLabels = this.state.bug.labels.filter(
-        (label) => label.name.toString() !== e.target.value.toString()
+        (label) => label.toString() !== e.target.value.toString()
       );
-
       bug.labels = newLabels;
       this.setState({
         bug,
@@ -209,7 +214,7 @@ class EditBug extends Component {
                           <input
                             type="checkbox"
                             className="form-check-input"
-                            value={label.name}
+                            value={label._id}
                             id={`check${label._id}`}
                             onChange={this.handleLabelChange}
                           />

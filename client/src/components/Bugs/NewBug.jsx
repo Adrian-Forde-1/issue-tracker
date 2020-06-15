@@ -43,14 +43,9 @@ class NewBug extends Component {
       })
       .then((response) => {
         const responseProject = response.data;
-        var initialLabel = null;
-        if (responseProject.labels.length > 0) {
-          initialLabel = responseProject.labels[0].name;
-        }
 
         this.setState({
           project: responseProject,
-          label: initialLabel,
         });
 
         //If project is in a team, get all the members from that team
@@ -82,24 +77,27 @@ class NewBug extends Component {
     });
   };
 
-  handleLabelChange = (e) => {
-    if (e.target.checked) {
-      const label = this.state.project.labels.find(
-        (label) => label.name.toString() === e.target.value.toString()
-      );
-      const newLabels = [...this.state.labels, label];
-      this.setState({
-        labels: newLabels,
-      });
-    } else {
-      const newLabels = this.state.labels.filter(
-        (label) => label.name.toString() !== e.target.value.toString()
-      );
-      this.setState({
-        labels: newLabels,
-      });
-    }
-  };
+  // handleLabelChange = (e) => {
+  //   console.log('Label changed');
+  //   if (e.target.checked) {
+  //     const label = this.state.project.labels.find(
+  //       (label) => label.name.toString() === e.target.value.toString()
+  //     );
+
+  //     console.log(label);
+  //     const newLabels = [...this.state.labels, label._id];
+  //     this.setState({
+  //       labels: newLabels,
+  //     });
+  //   } else {
+  //     const newLabels = this.state.labels.filter(
+  //       (label) => label.name.toString() !== e.target.value.toString()
+  //     );
+  //     this.setState({
+  //       labels: newLabels,
+  //     });
+  //   }
+  // };
   handleMemberChange = (e) => {
     if (e.target.checked) {
       const newMembers = [...this.state.assignedMembers, e.target.value];
@@ -117,17 +115,18 @@ class NewBug extends Component {
   };
 
   handleLabelChange = (e) => {
+    console.log('Label changed');
     if (e.target.checked) {
       const label = this.state.project.labels.find(
-        (label) => label.name.toString() === e.target.value.toString()
+        (label) => label._id.toString() === e.target.value.toString()
       );
-      const newLabels = [...this.state.labels, label];
+      const newLabels = [...this.state.labels, label._id];
       this.setState({
         labels: newLabels,
       });
     } else {
       const newLabels = this.state.labels.filter(
-        (label) => label.name.toString() !== e.target.value.toString()
+        (label) => label.toString() !== e.target.value.toString()
       );
       this.setState({
         labels: newLabels,
@@ -202,7 +201,7 @@ class NewBug extends Component {
                     <input
                       type="checkbox"
                       className="form-check-input"
-                      value={label.name}
+                      value={label._id}
                       id={`check${index}`}
                       onChange={this.handleLabelChange}
                     />
