@@ -20,15 +20,10 @@ import {
 
 import { getUserTeams, setTeamUpdated } from '../redux/actions/teamActions';
 
+import { setErrors } from '../redux/actions/userActions';
+
 //React Router DOM
 import { withRouter } from 'react-router-dom';
-
-//Actions
-// import {
-//   getUserProjects,
-//   setProjectUpdated,
-// } from '../redux/actions/projectActions';
-import { SET_ERRORS } from '../redux/actions/types';
 
 function DeleteModal(props) {
   // const { item, type, teamId, reRoute } = props;
@@ -82,7 +77,7 @@ function DeleteModal(props) {
         }
       })
       .catch((error) => {
-        // store.dispatch({ type: SET_ERRORS, payload: error });
+        props.setErrors(error);
       });
   };
 
@@ -117,6 +112,7 @@ const mapDispatchToProps = {
   getUserTeams,
   setTeamUpdated,
   removeCurrentLocation,
+  setErrors,
 };
 
 export default connect(
