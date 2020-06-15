@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-//Components
-import SideNav from '../Navigation/SideNav';
-
 //Redux
 import { connect } from 'react-redux';
 
 //Actions
 import { setErrors } from '../../redux/actions/userActions';
+
+//Components
+import SideNav from '../Navigation/SideNav';
+import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
 class CreateProject extends Component {
   constructor(props) {
@@ -56,6 +57,7 @@ class CreateProject extends Component {
   render() {
     return (
       <div className="form-container p-t-0">
+        <ProjectsTeamsHamburger />
         <SideNav />
         <div className="container p-l-175">
           <div className="auth-form">
