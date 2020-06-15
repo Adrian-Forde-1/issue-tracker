@@ -1044,14 +1044,20 @@ header::after {
   width: 200px;
   height: 34px;
   padding: 5px;
-  background: #202020;
+  background: #2e00b1;
   border: none;
   border-left: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
+  color: #fff;
   -webkit-appearance: button;
   outline: none;
-  z-index: 1;
+  z-index: 20;
   cursor: pointer;
+}
+
+.search-and-filter .select-container {
+  position: absolute;
+  top: 20px;
+  left: 260px;
 }
 
 .search-and-filter .select-container::before {
@@ -1066,7 +1072,7 @@ header::after {
   right: 0;
   width: 30px;
   height: 34px;
-  background: #181818;
+  background: #2e00b1;
   z-index: 2;
 }
 
