@@ -46,10 +46,6 @@ function IndividualProject(props) {
     setFilter(e.target.value);
   };
 
-  const reRoute = () => {
-    props.history.replace('/projects');
-  };
-
   useEffect(() => {
     props.getUserProjects(localStorage.getItem('token'));
 
@@ -245,6 +241,7 @@ function IndividualProject(props) {
                     search === '' ? (
                       <BugPreview
                         bug={bug}
+                        labels={project.labels}
                         index={index}
                         projectId={project._id}
                         key={index}
@@ -254,6 +251,7 @@ function IndividualProject(props) {
                         -1 && (
                         <BugPreview
                           bug={bug}
+                          labels={project.labels}
                           index={index}
                           projectId={project._id}
                           key={index}
