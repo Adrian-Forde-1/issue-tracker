@@ -47,7 +47,7 @@ function MessageList(props) {
                       {message.message}
                     </p>
                     <p className="team-message-posted-at">
-                      {moment.utc(message.postedAt).fromNow()}
+                      {moment.utc(message.createdAt).fromNow()}
                     </p>
                   </div>
                 </div>
@@ -61,7 +61,7 @@ function MessageList(props) {
                       {message.message}
                     </p>
                     <p className="team-message-posted-at">
-                      {moment.utc(message.postedAt).fromNow()}
+                      {moment.utc(message.createdAt).fromNow()}
                     </p>
                   </div>
                 </div>

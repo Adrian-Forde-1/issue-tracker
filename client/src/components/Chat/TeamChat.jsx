@@ -107,6 +107,7 @@ class TeamChat extends Component {
               name="message"
               id="message"
               placeholder="Say something cool"
+              autoComplete="off"
               value={this.state.message}
               ref={this.inputMessageRef}
               onChange={this.onChange}
