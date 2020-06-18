@@ -7,23 +7,6 @@ import { connect } from 'react-redux';
 function MessageList(props) {
   const { messages } = props;
 
-  useEffect(() => {
-    if (document.querySelector('.team-messages')) {
-      const messages = document.querySelectorAll('.team-messages div');
-      const lastChildHeight = messages[messages.length - 1];
-      const pos = lastChildHeight.getBoundingClientRect().bottom;
-      document.querySelector('.team-messages').scrollTo(0, pos);
-    }
-  }, [messages]);
-
-  useEffect(() => {
-    if (document.querySelector('.team-messages')) {
-      const messages = document.querySelectorAll('.team-messages div');
-      const lastChildHeight = messages[messages.length - 1];
-      const pos = lastChildHeight.getBoundingClientRect().bottom;
-      document.querySelector('.team-messages').scrollTo(0, pos);
-    }
-  }, []);
   if (typeof messages === 'object' && messages.length > 0) {
     return (
       <div className="team-messages">

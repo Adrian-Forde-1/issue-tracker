@@ -37,6 +37,9 @@ class TeamChat extends Component {
       this.setState((prevState) => ({
         messages: [...prevState.messages, message],
       }));
+      if (document.querySelector('.team-messages')) {
+        document.querySelector('.team-messages').scrollTo(0, 999999999999999);
+      }
     });
 
     // this.props.getChats(this.props.currentChatTeamID);
