@@ -46,19 +46,6 @@ function SideNav(props) {
         <li id="chatroom-link">
           <Link to="/teams/chat">Team Chat</Link>
         </li>
-        {props.location.pathname.toString() === '/teams/chat' && (
-          <select
-            className="team-chat-select"
-            name="team-chat-select"
-            id="team-chat-select"
-          >
-            {props.user.teams.map((team, index) => (
-              <option value={team._id} key={index}>
-                <Link to={`/teams/chat/${team._id}`}> {team.name}</Link>
-              </option>
-            ))}
-          </select>
-        )}
       </ul>
     </div>
   );
