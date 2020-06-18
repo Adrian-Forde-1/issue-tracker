@@ -77,7 +77,6 @@ io.on('connection', (socket) => {
           if (err) {
             return res.status(500).json({ success: false });
           }
-          console.log(doc);
 
           // io.emit('Output Chat Message', doc);
           // socket.broadcast.emit('Output Chat Message', doc);
