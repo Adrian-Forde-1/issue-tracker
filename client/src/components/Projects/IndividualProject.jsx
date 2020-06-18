@@ -100,15 +100,14 @@ function IndividualProject(props) {
 
   return (
     <div className="individual-container">
-      <SideNav />
-      <div className="containers">
-        <div className="search-and-filter">
-          <SearchBar
-            onChange={handleSearchChange}
-            search={search}
-            extraClass="search-extra-info"
-          />
-          {/* <div className="select-container">
+      <ProjectsTeamsHamburger />
+      <div className="under-nav-section">
+        <SearchBar
+          onChange={handleSearchChange}
+          search={search}
+          extraClass="search-extra-info"
+        />
+        {/* <div className="select-container">
             <select name="" id="" value={filter} onChange={handleFilterChange}>
               <option value="All">All</option>
               <option value="New Bug">New Bug</option>
@@ -116,7 +115,9 @@ function IndividualProject(props) {
               <option value="Fixed">Fixed</option>
             </select>
           </div> */}
-        </div>
+      </div>
+      <SideNav />
+      <div className="containers">
         {props.errors !== null &&
           props.errors['project'] &&
           !toast.isActive('projecttoast') &&
@@ -284,7 +285,6 @@ function IndividualProject(props) {
           </div>
         )}
       </div>
-      <ProjectsTeamsHamburger />
     </div>
   );
 }

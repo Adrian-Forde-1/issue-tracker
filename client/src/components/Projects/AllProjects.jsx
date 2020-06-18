@@ -40,14 +40,19 @@ function AllProjects(props) {
       className="d-flex flex-column p-l-175"
       style={{ position: 'relative' }}
     >
-      <Link to="/create/project" className="action-btn">
-        <i className="fas fa-plus-square "></i>
-      </Link>
-      <Link to={`/projects/archived`} className="action-btn extra-right">
-        <i className="fas fa-archive "></i>
-      </Link>
-      <SearchBar search={search} onChange={onChange} />
       <ProjectsTeamsHamburger />
+      <div className="under-nav-section">
+        <SearchBar search={search} onChange={onChange} />
+        <div className="under-nav-section-links">
+          <Link to="/create/project" className="action-btn">
+            <i className="fas fa-plus-square "></i>
+          </Link>
+          <Link to={`/projects/archived`} className="action-btn extra-right">
+            <i className="fas fa-archive "></i>
+          </Link>
+        </div>
+      </div>
+
       <SideNav />
       {/* {props.errors !== null &&
         props.errors['project'] &&

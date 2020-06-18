@@ -174,6 +174,7 @@ class EditBug extends Component {
   render() {
     return (
       <div>
+        <ProjectsTeamsHamburger />
         {Object.keys(this.state.bug).length > 0 && (
           <div className="form-container no-top-nav">
             <SideNav />
@@ -205,12 +206,22 @@ class EditBug extends Component {
                       required
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="label">Label</label>
-                    <br />
-                    {this.state.bug.project.labels &&
-                      this.state.bug.project.labels.map((label, index) => (
-                        <div className="form-check" key={index}>
+                  <div className="form-group mb-0">
+                    <label htmlFor="">Labels</label>
+                  </div>
+                  <br />
+                  {this.state.bug.project.labels &&
+                    this.state.bug.project.labels.map((label, index) => (
+                      <div className="form-check" key={index}>
+                        <label
+                          htmlFor={`check${label._id}`}
+                          className="form-check-label check-label"
+                          style={{
+                            background: `${label.color}`,
+                            color: 'white',
+                          }}
+                        >
+                          {label.name}
                           <input
                             type="checkbox"
                             className="form-check-input"
@@ -218,28 +229,28 @@ class EditBug extends Component {
                             id={`check${label._id}`}
                             onChange={this.handleLabelChange}
                           />
-                          <label
-                            htmlFor={`check${label._id}`}
-                            className="form-check-label check-label"
-                            style={{
-                              background: `${label.color}`,
-                              color: 'white',
-                            }}
-                          >
-                            {label.name}
-                          </label>
-                        </div>
-                      ))}
-
-                    {this.state.members && this.state.members.length > 0 && (
-                      <div className="form-group mb-0">
-                        <label htmlFor="">Assign Members</label>
+                        </label>
                       </div>
-                    )}
+                    ))}
 
-                    {this.state.members &&
-                      this.state.members.map((member, index) => (
-                        <div className="form-check" key={member._id}>
+                  {this.state.members && this.state.members.length > 0 && (
+                    <div className="form-group mb-0">
+                      <label htmlFor="">Assign Members</label>
+                    </div>
+                  )}
+
+                  {this.state.members &&
+                    this.state.members.map((member, index) => (
+                      <div className="form-check" key={member._id}>
+                        <label
+                          htmlFor={`check${member._id}`}
+                          className="form-check-label check-label"
+                          style={{
+                            background: `#2e00b1`,
+                            color: 'white',
+                          }}
+                        >
+                          {member.username}
                           <input
                             type="checkbox"
                             className="form-check-input"
@@ -247,24 +258,14 @@ class EditBug extends Component {
                             id={`check${member._id}`}
                             onChange={this.handleMemberChange}
                           />
-                          <label
-                            htmlFor={`check${member._id}`}
-                            className="form-check-label check-label"
-                            style={{
-                              background: `#2e00b1`,
-                              color: 'white',
-                            }}
-                          >
-                            {member.username}
-                          </label>
-                        </div>
-                      ))}
-                  </div>
+                        </label>
+                      </div>
+                    ))}
+
                   <button className="submit-btn">Edit Bug</button>
                 </form>
               </div>
             </div>
-            <ProjectsTeamsHamburger />
           </div>
         )}
       </div>

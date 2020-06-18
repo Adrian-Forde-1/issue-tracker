@@ -79,32 +79,34 @@ class AddLabel extends Component {
       );
     };
     return (
-      <div className="form-container p-t-0">
+      <div>
         <ProjectsTeamsHamburger />
         <SideNav />
-        <div className="container p-l-175">
-          <div className="auth-form">
-            <h2>Add Label</h2>
-            <div className="form-group">
-              <label htmlFor="name">Label Name</label>
-              <input
-                type="text"
-                name="name"
-                maxLength="15"
-                value={this.state.name}
-                onChange={this.handleChange}
-                required
-              />
-            </div>
-            <div className="w-100 d-flex justify-content-center mx-auto">
-              <button className="color-picker mr-2" onClick={showColor}>
-                Generate Color <i className="fas fa-sync-alt"></i>
+        <div className="form-container p-t-0">
+          <div className="container p-l-175">
+            <div className="auth-form">
+              <h2>Add Label</h2>
+              <div className="form-group">
+                <label htmlFor="name">Label Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  maxLength="15"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                  required
+                />
+              </div>
+              <div className="w-100 d-flex justify-content-center mx-auto">
+                <button className="color-picker mr-2" onClick={showColor}>
+                  Generate Color <i className="fas fa-sync-alt"></i>
+                </button>
+                <div className="show-color"></div>
+              </div>
+              <button className="submit-btn" onClick={this.sendRequest}>
+                Add Label
               </button>
-              <div className="show-color"></div>
             </div>
-            <button className="submit-btn" onClick={this.sendRequest}>
-              Add Label
-            </button>
           </div>
         </div>
       </div>

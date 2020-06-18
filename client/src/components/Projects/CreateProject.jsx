@@ -56,37 +56,39 @@ class CreateProject extends Component {
   };
   render() {
     return (
-      <div className="form-container p-t-0">
+      <div>
         <ProjectsTeamsHamburger />
         <SideNav />
-        <div className="container p-l-175">
-          <div className="auth-form">
-            <h2>Create Project</h2>
-            <form onSubmit={this.handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <br />
-                <input
-                  type="text"
-                  name="name"
-                  maxLength="30"
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="description">Description</label>
-                <br />
-                <textarea
-                  type="text"
-                  name="description"
-                  maxLength="500"
-                  value={this.state.description}
-                  onChange={this.handleChange}
-                />
-              </div>
-              <button className="submit-btn">Create Project</button>
-            </form>
+        <div className="form-container p-t-0">
+          <div className="container p-l-175">
+            <div className="auth-form">
+              <h2>Create Project</h2>
+              <form onSubmit={this.handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="name">Name</label>
+                  <br />
+                  <input
+                    type="text"
+                    name="name"
+                    maxLength="30"
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="description">Description</label>
+                  <br />
+                  <textarea
+                    type="text"
+                    name="description"
+                    maxLength="500"
+                    value={this.state.description}
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <button className="submit-btn">Create Project</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

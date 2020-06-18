@@ -35,7 +35,7 @@ function Labels(props) {
     <div className="labels p-l-175-0">
       <ProjectsTeamsHamburger />
       <SideNav />
-      <h2>Labels</h2>
+      <h2 className="mt-md-4 mt-lg-0">Labels</h2>
       {props.errors !== null &&
         props.errors['label'] &&
         !toast.isActive('labeltoast') &&

@@ -39,11 +39,13 @@ function AllTeams(props) {
       className="d-flex flex-column p-l-175"
       style={{ position: 'relative' }}
     >
-      <Link to="/create/team" className="action-btn">
-        <i className="fas fa-plus-square "></i>
-      </Link>
-      <SearchBar search={search} onChange={onChange} />
       <ProjectsTeamsHamburger />
+      <div className="under-nav-section">
+        <SearchBar search={search} onChange={onChange} />
+        <Link to="/create/team" className="action-btn">
+          <i className="fas fa-plus-square "></i>
+        </Link>
+      </div>
       <SideNav />
       {props.errors !== null &&
         props.errors['team'] &&

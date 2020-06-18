@@ -105,6 +105,7 @@ function IndividualBug(props) {
   return (
     <div className="individual-container">
       <SideNav />
+      <ProjectsTeamsHamburger />
       <div>
         {Object.keys(bug).length > 0 && (
           <div className="containers p-t-20">
@@ -305,7 +306,6 @@ function IndividualBug(props) {
           </div>
         )}
       </div>
-      <ProjectsTeamsHamburger />
     </div>
   );
 }

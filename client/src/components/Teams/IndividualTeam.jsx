@@ -7,9 +7,6 @@ import { toast } from 'react-toastify';
 //React Router DOM
 import { Link } from 'react-router-dom';
 
-//Components
-import SearchBar from '../SearchBar';
-
 //Redux
 import { connect } from 'react-redux';
 
@@ -33,6 +30,7 @@ import {
 //Components
 import AllTeamProjects from './AllTeamProjects';
 import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
+import SearchBar from '../SearchBar';
 
 function IndividualTeam(props) {
   const [team, setTeam] = useState({});
@@ -60,23 +58,15 @@ function IndividualTeam(props) {
 
   const deleteModal = () => {
     props.setDeleteItem(team);
-    props.setItemType('team');
+    props.setItemType('project');
     props.setCurrentLocation(props.history.location.pathname.split('/'));
     props.showModal();
   };
 
   return (
     <div className="individual-container">
-      <Link to={`/team/${team._id}/project/create`} className="action-btn">
-        <i className="fas fa-plus-square "></i>
-      </Link>
-      <Link
-        to={`/team/${team._id}/archived`}
-        className="action-btn extra-right"
-      >
-        <i className="fas fa-archive "></i>
-      </Link>
-      <div className="containers">
+      <ProjectsTeamsHamburger />
+      <div className="under-nav-section">
         <div className="search-and-filter">
           <SearchBar
             onChange={handleSearchChange}
@@ -84,6 +74,19 @@ function IndividualTeam(props) {
             extraClass="search-extra-info"
           />
         </div>
+        <div className="under-nav-section-links">
+          <Link to={`/team/${team._id}/project/create`} className="action-btn">
+            <i className="fas fa-plus-square "></i>
+          </Link>
+          <Link
+            to={`/team/${team._id}/archived`}
+            className="action-btn extra-right"
+          >
+            <i className="fas fa-archive "></i>
+          </Link>
+        </div>
+      </div>
+      <div className="containers">
         {props.errors !== null &&
           props.errors['project'] &&
           !toast.isActive('projecttoast') &&
@@ -136,7 +139,6 @@ function IndividualTeam(props) {
           </div>
         )}
       </div>
-      <ProjectsTeamsHamburger />
     </div>
   );
 }
