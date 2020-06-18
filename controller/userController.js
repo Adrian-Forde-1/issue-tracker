@@ -133,17 +133,19 @@ module.exports = {
     //Get user id from token sub
     const userId = decodedToken.sub;
     //Find user in databse
-    UserModel.findById(userId).exec(function (err, user) {
-      //If error occured, notify user
-      let errors = {};
-      if (err) {
-        console.error(err);
-        errors.user = 'Error occured when fetching user data';
-        return res.status(500).json(errors);
-      }
+    UserModel.findById(userId)
+      .populate('teams')
+      .exec(function (err, user) {
+        //If error occured, notify user
+        let errors = {};
+        if (err) {
+          console.error(err);
+          errors.user = 'Error occured when fetching user data';
+          return res.status(500).json(errors);
+        }
 
-      //If everything went well, return user
-      return res.json(user);
-    });
+        //If everything went well, return user
+        return res.json(user);
+      });
   },
 };
