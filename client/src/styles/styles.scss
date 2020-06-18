@@ -851,6 +851,10 @@ header {
 }
 
 .under-nav-section-links {
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   a {
     margin-left: 30px;
   }
@@ -858,11 +862,8 @@ header {
 
 .action-btn {
   width: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  float: right;
+  height: fit-content;
+  // float: right;
   font-size: 24px;
   background: rgba(255, 255, 255, 0.1);
   color: $text-color;
@@ -1938,8 +1939,6 @@ span[id*='bug-status-'] {
   }
 
   .action-btn {
-    width: 3.5rem;
-    height: 3.5rem;
     font-size: 20px;
     bottom: 50px;
     right: 10px;
@@ -1976,6 +1975,9 @@ span[id*='bug-status-'] {
   .search {
     font-size: 12px;
     max-height: 32px;
+  }
+  .under-nav-section {
+    height: fit-content;
   }
   .premade-accounts {
     h4 {
