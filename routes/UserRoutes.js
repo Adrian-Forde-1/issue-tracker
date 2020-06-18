@@ -50,6 +50,9 @@ const {
   deleteComment,
 } = require('../controller/commentController');
 
+//Chat Controller Imports
+const { getChats } = require('../controller/chatController');
+
 const passportLocal = passport.authenticate('local', { session: true });
 const passportJWT = passport.authenticate('jwt', { session: true });
 
@@ -101,5 +104,6 @@ router.put('/comment/:commentId', passportJWT, editComment);
 router.delete('/comment/:commentId', passportJWT, deleteComment);
 
 //Chat
-// router.post('/teams/chat', passportJWT, pusherChat);
+router.get('/chats/:teamID', passportJWT, getChats);
+// router.get('/chats', passportJWT, getChats);
 module.exports = router;
