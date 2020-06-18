@@ -120,14 +120,14 @@ a p {
 }
 
 .search {
+  min-width: 30%;
   background: transparent;
   border: none;
   cursor: pointer;
-  display: inline-block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   font-size: 16px;
-  position: absolute;
-  top: 20px;
-  left: 195px;
   padding: 5px 10px;
   z-index: 2;
   -webkit-box-shadow: 0.5px 0.5px 2px grey;
@@ -360,17 +360,26 @@ a p {
   margin-left: auto;
 }
 
-.projects-groups-hamburger {
-  color: #2e00b1;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  font-size: 24px;
-  margin-left: auto;
-  z-index: -1;
-  background: #fdfcff;
+.projects-teams-hamburger {
+  width: 100%;
+  position: fixed;
+  height: 6vh;
   display: none;
-  visibility: hidden;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0px 5%;
+  z-index: 1000;
+  background: #0f003a;
+}
+
+.projects-teams-hamburger i {
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #fff;
 }
 
 .logo {
@@ -670,7 +679,7 @@ header::after {
   max-height: auto;
   position: relative;
   overflow: hidden;
-  padding: 100px 0% 50px 0%;
+  padding: 30px 0% 30px 0%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -783,10 +792,15 @@ header::after {
   border-radius: 5px;
   text-align: center;
   margin-left: auto;
+  margin-right: auto;
   margin-top: 5px;
   margin-bottom: 5px;
+  width: 20%;
   min-width: 100px;
   cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .manager {
@@ -822,50 +836,7 @@ header::after {
   text-align: left;
   padding-left: 20px;
   margin-bottom: 50px;
-  margin-top: 75px;
-}
-
-.manager-section {
-  min-height: 100vh;
-  margin-left: 175px;
-  position: relative;
-  top: 0;
-}
-
-.manager-section div h3 {
-  color: #0f003a;
-  font-size: 34px;
-  font-weight: 300;
-  text-align: left;
-  padding-left: 1rem;
-  margin-bottom: 50px;
-}
-
-.manager-section-container {
-  margin-top: 85px;
-}
-
-.manager-action-btn {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  border: 1px solid transparent;
-  color: white;
-}
-
-.manager-action-btn:hover {
-  border: 1px solid white;
-}
-
-.manager-action-btn a {
-  padding: 5px 10px;
-  color: white;
+  margin-top: 20px;
 }
 
 .preview {
@@ -945,7 +916,24 @@ header::after {
   cursor: pointer;
 }
 
+.under-nav-section {
+  padding: 20px 16px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.under-nav-section-links a {
+  margin-left: 30px;
+}
+
 .action-btn {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -955,9 +943,8 @@ header::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  position: fixed;
-  top: 20px;
-  right: 75px;
+  margin-left: auto;
+  float: right;
   font-size: 24px;
   background: rgba(255, 255, 255, 0.1);
   color: #0f003a;
@@ -984,7 +971,6 @@ header::after {
   width: 100%;
   background: #fdfcff;
   padding-left: 175px;
-  padding-top: 0px !important;
   position: relative;
 }
 
@@ -1013,7 +999,9 @@ header::after {
           align-items: center;
   color: #2e00b1;
   text-align: left;
-  padding-top: 85px;
+  padding-top: 20px;
+  font-size: 34px;
+  font-weight: 300;
 }
 
 .team-name i {
@@ -1085,8 +1073,10 @@ header::after {
           align-items: center;
   color: #2e00b1;
   text-align: left;
-  margin-top: 85px;
+  margin-top: 20px;
   margin-bottom: 30px;
+  font-size: 34px;
+  font-weight: 300;
 }
 
 .project-name i {
@@ -1121,8 +1111,11 @@ header::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 50px 0px;
   background: #fdfcff;
+}
+
+.labels h2 {
+  padding-top: 30px;
 }
 
 .labels::after {
@@ -1542,22 +1535,156 @@ span[id*='bug-status-'] {
   border: none;
 }
 
-.team-chat-content {
-  padding-left: 175px;
+.team-chat {
+  width: 100%;
   min-height: 100vh;
+  height: auto;
   position: relative;
 }
 
-.team-my-message {
-  width: calc(95% - 175px);
-  position: absolute;
-  right: 2.5%;
-  bottom: 10px;
-  max-height: 40px;
-  padding: 5px;
-  border: 1px solid #0f003a;
+.team-chat-select {
+  margin: 10px auto 0px auto;
+  background: transparent;
+  border: #0f003a;
+  color: #fff;
+  cursor: pointer;
+}
+
+.team-chat-select:active {
+  background: #0f003a;
+}
+
+.team-chat-select:hover {
+  cursor: pointer;
+}
+
+.team-chat-content {
+  padding-left: 175px;
+  font-size: 14px;
+  overflow-x: hidden;
+}
+
+.team-chat-message {
+  margin: 10px;
+  margin-right: 0px;
+  min-width: 30%;
+  max-width: 80%;
   border-radius: 5px;
+  background: #eee;
+  color: black;
+}
+
+.team-chat-message p {
+  margin: 0px;
+}
+
+.team-chat-message-username {
+  font-size: 10px;
+  text-align: left;
+  padding: 2px 0px 0px 10px;
+  color: #2e00b1;
+}
+
+.team-chat-message-content {
+  text-align: left;
+  padding: 0px 10px;
+}
+
+.team-chat-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: calc(95% - 175px);
+  position: fixed;
+  bottom: 20px;
+  right: 2.5%;
+}
+
+.team-chat-form button {
+  width: 8%;
+  background: #2e00b1;
+  border: none;
+}
+
+.team-chat-form button i {
+  color: white;
+  display: inline-block;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.team-messages {
+  height: 90vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+.team-messages::-webkit-scrollbar {
+  width: 10px;
+}
+
+.team-messages::-webkit-scrollbar-thumb {
+  background: #2e00b1;
+}
+
+.team-chat-landing-page {
+  padding-left: 175px;
+  width: 100%;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.team-chat-landing-page .img-container {
+  width: 60%;
+}
+
+.team-chat-landing-page .img-container img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.team-chat-landing-page h5 {
+  margin-top: 20px;
+  color: #2e00b1;
+  text-align: center;
+}
+
+.team-chat-user-groups {
+  width: 100%;
+  height: 5vh;
+  background: #2e00b1;
+  color: #fff;
+  font-weight: 300;
+}
+
+.team-my-message {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  max-height: 40px;
+  padding: 5px 10px;
+  border: 1px solid #2e00b1;
   resize: none;
+}
+
+.team-message-posted-at {
+  float: right;
+  padding: 5px 10px;
+  font-size: 10px;
+  color: #000000;
 }
 
 @media screen and (max-width: 992px) {
@@ -1631,6 +1758,9 @@ span[id*='bug-status-'] {
   .p-l-175-0 {
     padding-left: 0px !important;
   }
+  .under-nav-section {
+    padding: 8vh 16px 20px 16px;
+  }
   .search {
     left: 50px;
   }
@@ -1640,7 +1770,20 @@ span[id*='bug-status-'] {
   .team-chat-content {
     padding-left: 0px;
   }
+  .team-messages {
+    padding-top: 8vh;
+  }
+  .team-chat-landing-page {
+    padding-left: 0px;
+  }
+  .team-chat-form {
+    width: 100%;
+    right: 0;
+    padding: 0px 15px;
+  }
   .side-nav {
+    height: 95vh;
+    margin-top: 6vh;
     -webkit-transform: translateX(-175px);
             transform: translateX(-175px);
     -webkit-transition: all 300ms ease-in-out;
@@ -1653,20 +1796,10 @@ span[id*='bug-status-'] {
   .manager-section {
     margin-left: 0px;
   }
-  .projects-groups-hamburger {
-    display: inline;
-    visibility: visible;
-    z-index: 5000;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    cursor: pointer;
-    -webkit-transition: all 300ms ease-in-out;
-    transition: all 300ms ease-in-out;
-  }
-  .projects-groups-hamburger.nav-open {
-    -webkit-transform: translate(175px) rotate(180deg);
-            transform: translate(175px) rotate(180deg);
+  .projects-teams-hamburger {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
   }
   .individual-container {
     font-size: 14px;
@@ -1676,11 +1809,9 @@ span[id*='bug-status-'] {
     margin-left: 0px;
   }
   .form-container {
+    padding-top: 10vh;
     padding-left: 15%;
     padding-right: 15%;
-  }
-  .bug-title {
-    margin-left: 35px;
   }
   .bug-preview {
     width: 90%;
@@ -1691,6 +1822,9 @@ span[id*='bug-status-'] {
   .bug-label {
     min-width: 150px;
     max-width: auto;
+  }
+  .bug-title {
+    margin-top: 24px;
   }
   .premade-accounts h4 {
     font-size: 22px;
@@ -1834,6 +1968,9 @@ span[id*='bug-status-'] {
   }
   .form-container p {
     font-size: 14px;
+  }
+  .team-chat-message {
+    min-width: 40%;
   }
   .submit-btn {
     font-size: 16px;

@@ -117,14 +117,12 @@ a {
 }
 
 .search {
+  min-width: 30%;
   background: transparent;
   border: none;
   cursor: pointer;
-  display: inline-block;
+  display: flex;
   font-size: 16px;
-  position: absolute;
-  top: 20px;
-  left: 195px;
   padding: 5px 10px;
   z-index: 2;
   box-shadow: 0.5px 0.5px 2px grey;
@@ -326,15 +324,24 @@ a {
   visibility: hidden;
   margin-left: auto;
 }
-.projects-groups-hamburger {
-  color: $primary-color;
-  height: fit-content;
-  font-size: 24px;
-  margin-left: auto;
-  z-index: -1;
-  background: $page-background;
+.projects-teams-hamburger {
+  width: 100%;
+  position: fixed;
+  height: 6vh;
   display: none;
-  visibility: hidden;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0px 5%;
+  z-index: 1000;
+  // border-bottom: 1px solid $primary-color;
+  // box-shadow: 1px 1px 2px $primary-color;
+  background: $text-color;
+
+  i {
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #fff;
+  }
 }
 
 .logo {
@@ -630,7 +637,7 @@ header {
   max-height: auto;
   position: relative;
   overflow: hidden;
-  padding: 100px 0% 50px 0%;
+  padding: 30px 0% 30px 0%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -726,10 +733,13 @@ header {
   border-radius: 5px;
   text-align: center;
   margin-left: auto;
+  margin-right: auto;
   margin-top: 5px;
   margin-bottom: 5px;
+  width: 20%;
   min-width: 100px;
   cursor: pointer;
+  display: flex;
 }
 //Form Container End
 
@@ -764,44 +774,7 @@ header {
   text-align: left;
   padding-left: 20px;
   margin-bottom: 50px;
-  margin-top: 75px;
-}
-
-.manager-section {
-  min-height: 100vh;
-  margin-left: 175px;
-  position: relative;
-  top: 0;
-  div {
-    h3 {
-      color: $text-color;
-      font-size: 34px;
-      font-weight: 300;
-      text-align: left;
-      padding-left: 1rem;
-      margin-bottom: 50px;
-    }
-  }
-}
-
-.manager-section-container {
-  margin-top: 85px;
-}
-
-.manager-action-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid transparent;
-  color: white;
-  &:hover {
-    border: 1px solid white;
-  }
-
-  a {
-    padding: 5px 10px;
-    color: white;
-  }
+  margin-top: 20px;
 }
 
 .preview {
@@ -871,13 +844,25 @@ header {
   }
 }
 
+.under-nav-section {
+  padding: 20px 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.under-nav-section-links {
+  a {
+    margin-left: 30px;
+  }
+}
+
 .action-btn {
+  width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  top: 20px;
-  right: 75px;
+  margin-left: auto;
+  float: right;
   font-size: 24px;
   background: rgba(255, 255, 255, 0.1);
   color: $text-color;
@@ -906,7 +891,6 @@ header {
   width: 100%;
   background: $page-background;
   padding-left: 175px;
-  padding-top: 0px !important;
   position: relative;
 
   .containers {
@@ -931,7 +915,9 @@ header {
   align-items: center;
   color: $primary-color;
   text-align: left;
-  padding-top: 85px;
+  padding-top: 20px;
+  font-size: 34px;
+  font-weight: 300;
 
   i {
     color: $text-color;
@@ -998,8 +984,10 @@ header {
   align-items: center;
   color: $primary-color;
   text-align: left;
-  margin-top: 85px;
+  margin-top: 20px;
   margin-bottom: 30px;
+  font-size: 34px;
+  font-weight: 300;
 
   i {
     color: $text-color;
@@ -1028,8 +1016,11 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 50px 0px;
   background: $page-background;
+
+  h2 {
+    padding-top: 30px;
+  }
 
   &::after {
     content: '';
@@ -1407,22 +1398,144 @@ span[id*='bug-status-'] {
 //Bug End
 
 //Team Chat Start
-.team-chat-content {
-  padding-left: 175px;
+.team-chat {
+  width: 100%;
   min-height: 100vh;
+  height: auto;
   position: relative;
 }
 
-.team-my-message {
-  width: calc(95% - 175px);
-  position: absolute;
-  right: 2.5%;
-  bottom: 10px;
-  max-height: 40px;
-  padding: 5px;
-  border: 1px solid $text-color;
+.team-chat-select {
+  margin: 10px auto 0px auto;
+  background: transparent;
+  border: $text-color;
+  color: #fff;
+  cursor: pointer;
+
+  &:active {
+    background: $text-color;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.team-chat-content {
+  padding-left: 175px;
+  font-size: 14px;
+  overflow-x: hidden;
+}
+
+.team-chat-message {
+  margin: 10px;
+  margin-right: 0px;
+  min-width: 30%;
+  max-width: 80%;
   border-radius: 5px;
+  background: #eee;
+  color: black;
+
+  p {
+    margin: 0px;
+  }
+}
+
+.team-chat-message-username {
+  font-size: 10px;
+  text-align: left;
+  padding: 2px 0px 0px 10px;
+  color: $primary-color;
+}
+
+.team-chat-message-content {
+  text-align: left;
+  padding: 0px 10px;
+}
+
+.team-chat-form {
+  display: flex;
+  width: calc(95% - 175px);
+  position: fixed;
+  bottom: 20px;
+  right: 2.5%;
+
+  button {
+    width: 8%;
+    background: $primary-color;
+    border: none;
+    i {
+      color: white;
+      display: inline-block;
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.team-messages {
+  height: 90vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $primary-color;
+  }
+}
+
+.team-chat-landing-page {
+  padding-left: 175px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+
+  .img-container {
+    width: 60%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  h5 {
+    margin-top: 20px;
+    color: $primary-color;
+    text-align: center;
+  }
+}
+
+.team-chat-user-groups {
+  width: 100%;
+  height: 5vh;
+  background: $primary-color;
+  color: #fff;
+  font-weight: 300;
+}
+
+// .team-chat-user-groups-dropdown {
+// }
+
+.team-my-message {
+  flex-grow: 1;
+  max-height: 40px;
+  padding: 5px 10px;
+  border: 1px solid $primary-color;
   resize: none;
+}
+
+.team-message-posted-at {
+  float: right;
+  padding: 5px 10px;
+  font-size: 10px;
+  color: #000000;
 }
 //Team Chat End
 
@@ -1500,6 +1613,10 @@ span[id*='bug-status-'] {
     padding-left: 0px !important;
   }
 
+  .under-nav-section {
+    padding: 8vh 16px 20px 16px;
+  }
+
   .search {
     left: 50px;
   }
@@ -1514,7 +1631,23 @@ span[id*='bug-status-'] {
     padding-left: 0px;
   }
 
+  .team-messages {
+    padding-top: 8vh;
+  }
+
+  .team-chat-landing-page {
+    padding-left: 0px;
+  }
+
+  .team-chat-form {
+    width: 100%;
+    right: 0;
+    padding: 0px 15px;
+  }
+
   .side-nav {
+    height: 95vh;
+    margin-top: 6vh;
     transform: translateX(-175px);
     transition: all 300ms ease-in-out;
 
@@ -1527,19 +1660,8 @@ span[id*='bug-status-'] {
     margin-left: 0px;
   }
 
-  .projects-groups-hamburger {
-    display: inline;
-    visibility: visible;
-    z-index: 5000;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    cursor: pointer;
-    transition: all 300ms ease-in-out;
-
-    &.nav-open {
-      transform: translate(175px) rotate(180deg);
-    }
+  .projects-teams-hamburger {
+    display: flex;
   }
 
   .individual-container {
@@ -1551,12 +1673,9 @@ span[id*='bug-status-'] {
   }
 
   .form-container {
+    padding-top: 10vh;
     padding-left: 15%;
     padding-right: 15%;
-  }
-
-  .bug-title {
-    margin-left: 35px;
   }
 
   .bug-preview {
@@ -1570,6 +1689,10 @@ span[id*='bug-status-'] {
   .bug-label {
     min-width: 150px;
     max-width: auto;
+  }
+
+  .bug-title {
+    margin-top: 24px;
   }
 
   .premade-accounts {
@@ -1775,6 +1898,10 @@ span[id*='bug-status-'] {
     }
     padding-left: 0px;
     padding-right: 0px;
+  }
+
+  .team-chat-message {
+    min-width: 40%;
   }
 
   .submit-btn {
