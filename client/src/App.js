@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 //Tostify
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // import Breadcrumbs from './components/Breadcrumbs';
@@ -16,7 +16,7 @@ import Homepage from './components/Homepage';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import IsAuthenticated from './components/IsAuthenticated';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navigation/Navbar';
 import { connect } from 'react-redux';
 import AllTeams from './components/Teams/AllTeams';
 import IndividualTeam from './components/Teams/IndividualTeam';
@@ -38,6 +38,7 @@ import EditProject from './components/Projects/EditProject';
 import TeamChat from './components/Chat/TeamChat';
 import DeleteModal from './components/DeleteModal';
 import ErrorBoundary from './components/ErrorBoundary';
+import TeamChatLandingPage from './components/Chat/TeamChatLandingPage';
 
 class App extends Component {
   // toast.configure({
@@ -58,7 +59,10 @@ class App extends Component {
 
           <IsAuthenticated>
             {/* Team */}
-            {/* <Route exact path="/teams/chat" component={TeamChat} /> */}
+            <Route exact path="/teams/chat" component={TeamChatLandingPage} />
+            <ErrorBoundary>
+              <Route exact path="/teams/chat/:teamID" component={TeamChat} />
+            </ErrorBoundary>
             <Route exact path="/team/:teamId" component={IndividualTeam} />
             <Route exact path="/create/team" component={CreateTeam} />
             <Route exact path="/teams" component={AllTeams} />
