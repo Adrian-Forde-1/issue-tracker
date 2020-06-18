@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 //Actions
 import { setErrors } from '../../redux/actions/userActions';
 
+import { getUserTeams } from '../../redux/actions/teamActions';
+
 //Components
 import SideNav from '../Navigation/SideNav';
 import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
@@ -50,6 +52,7 @@ class CreateTeam extends Component {
         }
       )
       .then(() => {
+        this.props.getUserTeams(localStorage.getItem('token'));
         this.props.history.goBack();
       })
       .catch((error) => {
@@ -98,6 +101,7 @@ class CreateTeam extends Component {
 
 const mapDispatchToProps = {
   setErrors,
+  getUserTeams,
 };
 
 export default connect(null, mapDispatchToProps)(CreateTeam);

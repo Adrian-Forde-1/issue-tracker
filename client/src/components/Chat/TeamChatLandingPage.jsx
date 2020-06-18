@@ -24,10 +24,10 @@ function TeamChatLandingPage(props) {
           ) : (
             <h5>Join a team to start chating</h5>
           )}
-          {props.user.teams.length > 0 && (
+          {props.teams.length > 0 && (
             <div className="team-chat-landing-page-user-teams">
               <ul className="list-group">
-                {props.user.teams.map((team, i) => (
+                {props.teams.map((team, i) => (
                   <li className="list-group-item" key={i}>
                     <Link to={`/teams/chat/${team._id}`}>{team.name}</Link>
                   </li>
@@ -43,6 +43,7 @@ function TeamChatLandingPage(props) {
 
 const mapStateToProps = (state) => ({
   user: state.user.user,
+  teams: state.teams.teams,
 });
 
 export default connect(mapStateToProps)(TeamChatLandingPage);

@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 //Resources
 import Bug_Tracker_Homepage_Image from '../resources/Images/Bug_Tracker_Homepage_Image.svg';
-import Wave_Bottom from '../resources/Images/Wave_Bottom.svg';
 
 import { connect } from 'react-redux';
 
