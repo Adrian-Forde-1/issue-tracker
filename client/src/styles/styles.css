@@ -2026,6 +2026,7 @@ span[id*='bug-status-'] {
   }
   .search {
     font-size: 12px;
+    max-height: 32px;
   }
   .premade-accounts h4 {
     font-size: 18px;
