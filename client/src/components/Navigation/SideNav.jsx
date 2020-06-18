@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
+//Redux
+import { connect } from 'react-redux';
+
 //Resources
 import bugLogoWhite from '../../resources/Images/Bug_Logo_White.svg';
 
@@ -27,6 +30,7 @@ function SideNav(props) {
         .classList.add('selected-section');
     }
   }, []);
+
   return (
     <div className="side-nav">
       <Link to="/">
@@ -39,15 +43,29 @@ function SideNav(props) {
         <li id="team-link">
           <Link to="/teams">Teams</Link>
         </li>
+        <li id="chatroom-link">
+          <Link to="/teams/chat">Team Chat</Link>
+        </li>
+        {props.location.pathname.toString() === '/teams/chat' && (
+          <select
+            className="team-chat-select"
+            name="team-chat-select"
+            id="team-chat-select"
+          >
+            {props.user.teams.map((team, index) => (
+              <option value={team._id} key={index}>
+                <Link to={`/teams/chat/${team._id}`}> {team.name}</Link>
+              </option>
+            ))}
+          </select>
+        )}
       </ul>
     </div>
   );
 }
 
-{
-  /* <li id="chatroom-link">
-          <Link to="/teams/chat">Chatroom</Link>
-        </li> */
-}
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+});
 
-export default withRouter(SideNav);
+export default connect(mapStateToProps)(withRouter(SideNav));
