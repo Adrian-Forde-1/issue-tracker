@@ -1657,9 +1657,13 @@ span[id*='bug-status-'] {
 }
 
 .team-chat-landing-page h5 {
-  margin-top: 20px;
+  margin-bottom: 20px;
   color: #2e00b1;
   text-align: center;
+}
+
+.team-chat-landing-page a {
+  color: #2e00b1;
 }
 
 .team-chat-user-groups {

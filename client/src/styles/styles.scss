@@ -1506,9 +1506,13 @@ span[id*='bug-status-'] {
   }
 
   h5 {
-    margin-top: 20px;
+    margin-bottom: 20px;
     color: $primary-color;
     text-align: center;
+  }
+
+  a {
+    color: $primary-color;
   }
 }
 
