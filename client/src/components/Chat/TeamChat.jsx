@@ -31,7 +31,8 @@ class TeamChat extends Component {
   componentDidMount() {
     const server = 'http://127.0.0.1:5000';
 
-    this.socket = io(server);
+    // this.socket = io(server);
+    this.socket = io();
 
     this.socket.on('Output Chat Message', (message) => {
       this.setState((prevState) => ({
