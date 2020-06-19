@@ -926,6 +926,21 @@ header::after {
           justify-content: space-between;
 }
 
+.under-nav-section-links {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .under-nav-section-links a {
   margin-left: 30px;
 }
@@ -934,17 +949,9 @@ header::after {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-left: auto;
-  float: right;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   font-size: 24px;
   background: rgba(255, 255, 255, 0.1);
   color: #0f003a;
@@ -957,10 +964,6 @@ header::after {
 
 .action-btn:hover {
   text-decoration: none;
-}
-
-.extra-right {
-  right: 150px !important;
 }
 
 .margin-left-auto {
@@ -1996,14 +1999,7 @@ span[id*='bug-status-'] {
     font-size: 12px;
   }
   .action-btn {
-    width: 3.5rem;
-    height: 3.5rem;
     font-size: 20px;
-    bottom: 50px;
-    right: 10px;
-  }
-  .extra-right {
-    right: 80px !important;
   }
   .individual-container {
     font-size: 12px;
@@ -2028,6 +2024,11 @@ span[id*='bug-status-'] {
     font-size: 12px;
     max-height: 32px;
   }
+  .under-nav-section {
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
   .premade-accounts h4 {
     font-size: 18px;
   }
@@ -2037,18 +2038,11 @@ span[id*='bug-status-'] {
 }
 
 @media screen and (max-width: 500px) {
-  .manager-action-btn {
-    font-size: 10px;
-  }
   .search {
     font-size: 10px;
   }
   .action-btn {
     font-size: 16px;
-    right: 0px;
-  }
-  .extra-right {
-    right: 40px !important;
   }
   .individual-bug-status-container div {
     font-size: 10px;

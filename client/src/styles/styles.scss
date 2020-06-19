@@ -863,7 +863,6 @@ header {
 .action-btn {
   width: fit-content;
   height: fit-content;
-  // float: right;
   font-size: 24px;
   background: rgba(255, 255, 255, 0.1);
   color: $text-color;
@@ -876,10 +875,6 @@ header {
   &:hover {
     text-decoration: none;
   }
-}
-
-.extra-right {
-  right: 150px !important;
 }
 
 .margin-left-auto {
@@ -1707,10 +1702,6 @@ span[id*='bug-status-'] {
   }
 }
 @media screen and (max-width: 768px) {
-  // .manager-action-btn {
-  //   font-size: 14px;
-  // }
-
   .modal-body {
     width: 50%;
     h5 {
@@ -1821,10 +1812,6 @@ span[id*='bug-status-'] {
   }
 }
 @media screen and (max-width: 576px) {
-  // .manager-action-btn {
-  //   font-size: 12px;
-  // }
-
   .modal-body {
     width: 60%;
     h5 {
@@ -1940,12 +1927,6 @@ span[id*='bug-status-'] {
 
   .action-btn {
     font-size: 20px;
-    bottom: 50px;
-    right: 10px;
-  }
-
-  .extra-right {
-    right: 80px !important;
   }
 
   .individual-container {
@@ -1990,22 +1971,14 @@ span[id*='bug-status-'] {
 }
 
 @media screen and (max-width: 500px) {
-  .manager-action-btn {
-    font-size: 10px;
-  }
-
   .search {
     font-size: 10px;
   }
 
   .action-btn {
     font-size: 16px;
-    right: 0px;
   }
 
-  .extra-right {
-    right: 40px !important;
-  }
   // .project-description {
   //   width: 100% !important;
   //   text-align: center;
