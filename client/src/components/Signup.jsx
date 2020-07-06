@@ -52,8 +52,8 @@ class Signup extends Component {
   render() {
     if (this.props.authenticated === false) {
       return (
-        <div className="form-container">
-          <div className="container">
+        <div className="form-container p-t-85">
+          <div className="container" id="auth">
             <div className="auth-form">
               <h2>Sign Up</h2>
               <form onSubmit={this.handleSubmit}>

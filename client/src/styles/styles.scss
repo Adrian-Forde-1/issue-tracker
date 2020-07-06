@@ -664,6 +664,10 @@ header {
     justify-content: center !important;
     align-items: center !important;
     padding-right: 0px !important;
+
+    &#auth {
+      padding-right: 15px !important;
+    }
   }
 }
 

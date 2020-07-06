@@ -724,6 +724,10 @@ header::after {
   padding-right: 0px !important;
 }
 
+.form-container .container#auth {
+  padding-right: 15px !important;
+}
+
 .auth-form {
   height: auto;
   width: 700px;

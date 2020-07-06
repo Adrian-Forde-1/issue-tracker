@@ -96,7 +96,7 @@ class Login extends Component {
               },
             })}
 
-          <div className="container">
+          <div className="container" id="auth">
             <div className="auth-form">
               <h2>Login</h2>
               <form onSubmit={this.handleSubmit}>
