@@ -35,5 +35,5 @@ appeared and view the ones that are already fixed. They can even use it like an 
 * MongoDB
 
 ### Useful things that helped during development:
-* Git - For version controll
+* Git - For version control
 * Figma - For design
