@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 
 //Actions
-import { setErrors } from '../../redux/actions/userActions';
+import { setErrors, clearErrors } from '../../redux/actions/userActions';
 
 import { getUserTeams } from '../../redux/actions/teamActions';
 
@@ -65,7 +65,7 @@ class JoinTeam extends Component {
           {this.props.errors !== null &&
             this.props.errors['team'] &&
             !toast.isActive('teamtoast') &&
-            toast(this.props.errors.bug, {
+            toast(this.props.errors.team, {
               toastId: 'teamtoast',
               type: 'error',
               position: toast.POSITION.TOP_CENTER,
@@ -118,6 +118,7 @@ class JoinTeam extends Component {
 const mapDispatchToProps = {
   setErrors,
   getUserTeams,
+  clearErrors,
 };
 
 const mapStateToProps = (state) => ({
