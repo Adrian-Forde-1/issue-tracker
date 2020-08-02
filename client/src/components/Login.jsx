@@ -22,6 +22,7 @@ class Login extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleToast = this.handleToast.bind(this);
 
     this.emailRef = React.createRef();
 
@@ -53,49 +54,45 @@ class Login extends Component {
     this.props.loginUser(user, this.props.history);
   };
 
+  handleToast = () => {
+    if (this.props.messages !== null && this.props.messages['user']) {
+      return toast('User message', {
+        toastId: 'usertoast',
+        type: 'error',
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+        onClose: () => {
+          this.props.clearErrors();
+        },
+      });
+    } else if (this.props.errors !== null && this.props.errors['user']) {
+      return toast('User errors', {
+        toastId: 'usertoast',
+        type: 'error',
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+        onClose: () => {
+          this.props.clearErrors();
+        },
+      });
+    } else if (this.props.errors !== null && this.props.errors['general']) {
+      return toast('Error Occured', {
+        toastId: 'toast',
+        type: 'error',
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 2000,
+        onClose: () => {
+          this.props.clearErrors();
+        },
+      });
+    }
+  };
+
   render() {
     if (this.props.authenticated === false) {
       return (
         <div className="form-container">
-          {this.props.messages !== null &&
-            this.props.messages['user'] &&
-            !toast.isActive('usertoast') &&
-            toast(this.props.messages.user, {
-              toastId: 'usertoast',
-              type: 'success',
-              position: toast.POSITION.TOP_CENTER,
-              autoClose: 2000,
-              onClose: () => {
-                this.props.clearMessages();
-              },
-            })}
-
-          {this.props.errors !== null &&
-            this.props.errors['user'] &&
-            !toast.isActive('usertoast') &&
-            toast(this.props.errors.user, {
-              toastId: 'usertoast',
-              type: 'error',
-              position: toast.POSITION.TOP_CENTER,
-              autoClose: 2000,
-              onClose: () => {
-                this.props.clearErrors();
-              },
-            })}
-
-          {this.props.errors !== null &&
-            this.props.errors['general'] &&
-            !toast.isActive('toast') &&
-            toast(this.props.errors.general, {
-              toastId: 'toast',
-              type: 'error',
-              position: toast.POSITION.TOP_CENTER,
-              autoClose: 2000,
-              onClose: () => {
-                this.props.clearErrors();
-              },
-            })}
-
+          {this.handleToast()}
           <div className="container" id="auth">
             <div className="auth-form">
               <h2>Login</h2>
