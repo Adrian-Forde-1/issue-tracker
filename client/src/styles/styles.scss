@@ -133,6 +133,7 @@ a {
 
   input {
     border: none;
+    flex: 1;
 
     &:focus {
       outline: $text-color;
@@ -422,6 +423,9 @@ a {
   background: $text-color;
 
   a {
+    width: 100%;
+    display: flex;
+    justify-content: center;
     img {
       margin-top: 20px;
     }
@@ -472,6 +476,7 @@ header {
     background-position-y: top;
     background-position-x: center;
     z-index: 1;
+    pointer-events: none;
   }
 }
 
@@ -635,6 +640,7 @@ header {
   width: 100%;
   min-height: 100vh;
   max-height: auto;
+  text-align: center;
   position: relative;
   overflow: hidden;
   padding: 30px 0% 30px 0%;
@@ -657,6 +663,8 @@ header {
     background-size: cover;
     background-position-y: bottom;
     background-position-x: center;
+    z-index: 1;
+    pointer-events: none;
   }
 
   .container {
@@ -870,7 +878,7 @@ header {
   font-size: 24px;
   background: rgba(255, 255, 255, 0.1);
   color: $text-color;
-  z-index: 100;
+  z-index: 1000;
 
   i {
     cursor: pointer;
@@ -1033,6 +1041,8 @@ header {
     background-size: 110%;
     background-position-y: bottom;
     background-position-x: center;
+    z-index: 1;
+    pointer-events: none;
   }
 
   h2 {
@@ -1055,6 +1065,7 @@ header {
     min-width: 100px;
     max-width: auto;
     padding: 10px 10px;
+    text-align: center;
   }
 
   p {
@@ -1235,6 +1246,7 @@ span[id*='bug-status-'] {
   color: $page-background;
   margin-right: auto;
   border-radius: 75px;
+  text-align: center;
 }
 
 .individual-bug-status-container {
@@ -1246,6 +1258,7 @@ span[id*='bug-status-'] {
     padding: 5px 10px;
     white-space: nowrap;
     cursor: pointer;
+    text-align: center;
   }
 
   .selected {
