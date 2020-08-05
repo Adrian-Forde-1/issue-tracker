@@ -178,7 +178,7 @@ class NewBug extends Component {
                     name="name"
                     value={this.state.name}
                     onChange={this.handleChange}
-                    maxLength="30"
+                    maxLength="60"
                     required
                   />
                 </div>

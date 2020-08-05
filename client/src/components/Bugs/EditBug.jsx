@@ -190,7 +190,7 @@ class EditBug extends Component {
                       name="name"
                       value={this.state.bug.name}
                       onChange={this.handleNameChange}
-                      maxLength="30"
+                      maxLength="60"
                       required
                     />
                   </div>
