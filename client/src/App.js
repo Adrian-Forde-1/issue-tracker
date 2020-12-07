@@ -39,6 +39,7 @@ import DeleteModal from "./components/DeleteModal";
 import ErrorBoundary from "./components/ErrorBoundary";
 import TeamChatLandingPage from "./components/Chat/TeamChatLandingPage";
 import ToastComponent from "./components/Toast/ToastComponent";
+import Profile from "./components/Profile/Profile";
 
 class App extends Component {
   // toast.configure({
@@ -57,6 +58,7 @@ class App extends Component {
           <Route exact path="/" component={Homepage} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
+          <Route exact path="/profile" component={Profile} />
 
           <IsAuthenticated>
             {/* Team */}

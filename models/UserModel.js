@@ -1,11 +1,14 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
     maxlength: 25,
+  },
+  image: {
+    type: String,
   },
   email: {
     type: String,
@@ -22,18 +25,18 @@ const userSchema = new mongoose.Schema({
   projects: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'project',
+      ref: "project",
     },
   ],
   teams: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'team',
+      ref: "team",
     },
   ],
 });
 
-userSchema.pre('save', async function (next) {
+userSchema.pre("save", async function (next) {
   try {
     //Generate a bcrypt salt
     const salt = await bcrypt.genSalt(10);
@@ -58,6 +61,6 @@ userSchema.methods.isValidPassword = async function (newPassword) {
   }
 };
 
-const UserModel = mongoose.model('user', userSchema);
+const UserModel = mongoose.model("user", userSchema);
 
 module.exports = UserModel;

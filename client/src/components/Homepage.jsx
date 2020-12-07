@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 //React Router Dom
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 //Resources
-import Bug_Tracker_Homepage_Image from '../resources/Images/Bug_Tracker_Homepage_Image.svg';
+import Bug_Tracker_Homepage_Image from "../resources/Images/Bug_Tracker_Homepage_Image.svg";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 function Homepage(props) {
   return (
@@ -37,7 +37,7 @@ function Homepage(props) {
                         height="1em"
                         preserveAspectRatio="xMidYMid meet"
                         viewBox="0 0 16 16"
-                        style={{ marginLeft: '10px', fontSize: '20px' }}
+                        style={{ marginLeft: "10px", fontSize: "20px" }}
                       >
                         <g fill="currentColor">
                           <path

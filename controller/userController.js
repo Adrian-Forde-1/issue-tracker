@@ -1,7 +1,12 @@
-const UserModel = require("../models/UserModel");
+const { json } = require("express");
+const multer = require("multer");
+const User = require("../models/UserModel");
+const path = require("path");
 
 const { validateLoginData, validateSignUpData } = require("../util/authUtil");
 const { signToken, decodeToken } = require("../util/authUtil");
+
+const UserModel = require("../models/UserModel");
 
 module.exports = {
   //Login User
@@ -17,7 +22,7 @@ module.exports = {
     //   console.log(user);
 
     //   //Pass user object for validation and get the returned values
-    //   const { valid, errors } = validateLoginData(user);
+    // const { valid, errors } = validateLoginData(user);
 
     //   //Check to see if the data passed in was valid
     //   if (!valid) return res.status(400).json(errors);
@@ -147,5 +152,28 @@ module.exports = {
         //If everything went well, return user
         return res.json(user);
       });
+  },
+  editProfile: (req, res) => {
+    var errors = [];
+    var messages = [];
+    var file = req.file;
+
+    const userID = req.user._id;
+
+    User.findByIdAndUpdate(userID, {
+      $set: {
+        image: req.file.path,
+      },
+    }).exec(function (err, user) {
+      if (err) {
+        console.error(err);
+        errors.push("Error occured when updating profile");
+        return res.status(500).json(errors);
+      }
+
+      //If everything went right, notify user
+      messages.push("Profile successfully updated");
+      return res.json(messages);
+    });
   },
 };

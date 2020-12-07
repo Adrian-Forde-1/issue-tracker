@@ -27,7 +27,8 @@ function Navbar(props) {
   if (
     props.location.pathname === "/" ||
     props.location.pathname === "/login" ||
-    props.location.pathname === "/signup"
+    props.location.pathname === "/signup" ||
+    props.location.pathname === "/profile"
   ) {
     return (
       <div className="navbar">
@@ -95,15 +96,45 @@ function Navbar(props) {
           )}
 
           {authenticated === true && (
-            <li className="nav-item">
-              <button
+            <div className="navbar__right-container">
+              <div
+                className="navbar__profile-pic"
                 onClick={() => {
-                  props.logoutUser(props.history);
+                  if (document.querySelector("#navbar-dropdown")) {
+                    document
+                      .querySelector("#navbar-dropdown")
+                      .classList.toggle("open");
+                  }
                 }}
               >
-                Logout<i className="fas fa-door-open"></i>
-              </button>
-            </li>
+                <span>AF</span>
+              </div>
+              <div className="navbar__right-dropdown" id="navbar-dropdown">
+                <div className="navbar__right-dropdown__account-info">
+                  <div className="navbar__right-dropdown__account-info-left">
+                    <div className="navbar__right-dropdown__account-info-left__profile-pic">
+                      <span>AF</span>
+                    </div>
+                  </div>
+                  <div className="navbar__right-dropdown__account-info-right">
+                    <span>{props.user.username}</span>
+                    <span>{props.user.email}</span>
+                  </div>
+                </div>
+                <ul>
+                  <li>
+                    <Link to="/profile">Profile</Link>
+                  </li>
+                  <li
+                    onClick={() => {
+                      props.logoutUser(props.history);
+                    }}
+                  >
+                    Logout
+                  </li>
+                </ul>
+              </div>
+            </div>
           )}
         </ul>
       </div>
@@ -119,6 +150,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   authenticated: state.user.authenticated,
+  user: state.user.user,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

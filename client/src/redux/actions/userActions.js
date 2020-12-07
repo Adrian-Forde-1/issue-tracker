@@ -71,15 +71,15 @@ export const logoutUser = (history) => (dispatch) => {
   history.push("/");
 };
 
-export const setMessages = (message) => (dispatch) => {
-  dispatch({ type: SET_MESSAGES, payload: message.response.data });
+export const setMessages = (messages) => (dispatch) => {
+  console.log("Set messages called");
+  dispatch({ type: SET_MESSAGES, payload: messages });
 };
 export const setErrors = (error) => (dispatch) => {
   dispatch({ type: SET_ERRORS, payload: error.response.data });
 };
 
-const getUser = (history) => (dispatch) => {
-  dispatch({ type: CLEAR_MESSAGES });
+export const getUser = (history) => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
   dispatch({ type: SET_LOADING_UI });
   axios
@@ -87,14 +87,15 @@ const getUser = (history) => (dispatch) => {
       headers: { Authorization: localStorage.getItem("token") },
     })
     .then((response) => {
-      dispatch({ type: CLEAR_ERRORS });
       dispatch({ type: SET_USER, payload: response.data });
       dispatch({ type: STOP_LOADING_UI });
       history.push("/");
     })
     .catch((error) => {
-      dispatch({ type: STOP_LOADING_UI });
-      dispatch({ type: SET_ERRORS, payload: error.response.data });
+      if (error && error.response && error.response.data) {
+        dispatch({ type: STOP_LOADING_UI });
+        dispatch({ type: SET_ERRORS, payload: error.response.data });
+      }
     });
 };
 

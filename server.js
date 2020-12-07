@@ -10,6 +10,7 @@ const path = require("path");
 const dotenv = require("dotenv");
 const io = require("socket.io")(http);
 const Chat = require("./models/ChatModel");
+const bcrypt = require("bcryptjs");
 
 const PORT = process.env.PORT || 5000;
 
@@ -42,6 +43,7 @@ const connect = mongoose
   .catch((err) => console.log("Error occured when connecting to the database"));
 
 //Serve static assests if in production
+app.use("/uploads", express.static("uploads"));
 if (process.env.NODE_ENV === "production") {
   //Set static folder
   app.use(express.static("client/build"));
