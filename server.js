@@ -43,7 +43,7 @@ const connect = mongoose
   .catch((err) => console.log("Error occured when connecting to the database"));
 
 //Serve static assests if in production
-app.use("/uploads", express.static("uploads"));
+app.use("/images", express.static("images"));
 if (process.env.NODE_ENV === "production") {
   //Set static folder
   app.use(express.static("client/build"));

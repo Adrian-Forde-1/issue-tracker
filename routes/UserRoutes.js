@@ -10,14 +10,14 @@ const fileFilter = (req, file, cb) => {
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./uploads");
+    cb(null, "./images");
   },
 
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
   },
 });
-const upload = multer({
+const imageUpload = multer({
   storage: storage,
   limits: {
     fileSize: 1024 * 1024 * 5,
@@ -93,7 +93,7 @@ router.get("/user", passportJWT, getUser);
 router.put(
   "/edit-profile",
   passportJWT,
-  upload.single("profilePicture"),
+  imageUpload.single("profilePicture"),
   editProfile
 );
 
