@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
 //Tostify
 import { toast } from "react-toastify";
@@ -16,121 +16,86 @@ import {
   clearMessages,
 } from "../redux/actions/userActions";
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
+//Components
+import LogoSVG from "./SVG/LogoSVG";
+import { use } from "passport";
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleToast = this.handleToast.bind(this);
+const Login = (props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    this.emailRef = React.createRef();
+  useEffect(() => {
+    if (props.authenticated === true) props.history.goBack();
+    // this.emailRef.current.focus();
+  }, []);
 
-    this.state = {
-      email: "",
-      password: "",
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.authenticated === true) this.props.history.goBack();
-    this.emailRef.current.focus();
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const user = {
-      email: this.state.email,
-      password: this.state.password,
+      email: email,
+      password: password,
     };
 
-    this.props.loginUser(user, this.props.history);
+    props.loginUser(user, props.history);
   };
 
-  // handleToast = () => {
-  //   if (this.props.messages !== null && this.props.messages['user']) {
-  //     return toast('User message', {
-  //       toastId: 'usertoast',
-  //       type: 'error',
-  //       position: toast.POSITION.TOP_CENTER,
-  //       autoClose: 2000,
-  //       onClose: () => {
-  //         this.props.clearErrors();
-  //       },
-  //     });
-  //   } else if (this.props.errors !== null && this.props.errors['user']) {
-  //     return toast('User errors', {
-  //       toastId: 'usertoast',
-  //       type: 'error',
-  //       position: toast.POSITION.TOP_CENTER,
-  //       autoClose: 2000,
-  //       onClose: () => {
-  //         this.props.clearErrors();
-  //       },
-  //     });
-  //   } else if (this.props.errors !== null && this.props.errors['general']) {
-  //     return toast('Error Occured', {
-  //       toastId: 'toast',
-  //       type: 'error',
-  //       position: toast.POSITION.TOP_CENTER,
-  //       autoClose: 2000,
-  //       onClose: () => {
-  //         this.props.clearErrors();
-  //       },
-  //     });
-  //   }
-  // };
-
-  render() {
-    if (this.props.authenticated === false) {
-      return (
-        <div className="form-container">
-          <div className="container" id="auth">
-            <div className="auth-form">
-              <h2>Login</h2>
-              <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <br />
-                  <input
-                    type="email"
-                    name="email"
-                    value={this.state.email}
-                    ref={this.emailRef}
-                    onChange={this.handleChange}
-                  />
+  if (props.authenticated === false) {
+    return (
+      <div className="auth-form__wrapper">
+        <div className="auth-form__left-section">
+          <div className="auth-form__left-section__logo-container">
+            <LogoSVG />
+          </div>
+          <div className="auth-form__left-section__form-container">
+            <form onSubmit={handleSubmit}>
+              <div className="auth-form__input-container">
+                <div className="auth-form__input-container__input-name">
+                  Email
                 </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <br />
-                  <input
-                    type="password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                  />
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="auth-form__input-container">
+                <div className="auth-form__input-container__input-name">
+                  Password
                 </div>
-                <button className="submit-btn">Login</button>
-              </form>
-              <p>
-                Dont have an account? <Link to="/signup">Sign up</Link>
-              </p>
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <button className="auth-form__submit-btn">Login</button>
+            </form>
+            <div className="auth-form__no-account">
+              Dont have an account? Try <Link to="/signup">Signing up!</Link>
             </div>
           </div>
         </div>
-      );
-    } else {
-      return null;
-    }
+        <div className="auth-form__right-section">
+          <div className="auth-form__right-section-content">
+            <h1>Track What Matters</h1>
+            <h1>Enhance Communication</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et <br />
+              lacus tellus massa pretium phasellus nunc suspendisse <br />
+              enim. Sed consequat nec sed proin sed convallis tortor <br />
+              mattis.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return null;
   }
-}
+};
 
 const mapDispatchToProps = {
   loginUser,

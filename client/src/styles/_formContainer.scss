@@ -1,0 +1,124 @@
+@import "variables";
+
+.form-container {
+  width: 100%;
+  min-height: 100vh;
+  max-height: auto;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 30px 0% 30px 0%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: $page-background;
+  background-position: center;
+  background-size: auto;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: url("../resources/Images/Wave_Bottom.svg") no-repeat;
+    height: 225px;
+    background-size: cover;
+    background-position-y: bottom;
+    background-position-x: center;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding-right: 0px !important;
+
+    &#auth {
+      padding-right: 15px !important;
+    }
+  }
+}
+
+.form-container.auth {
+  height: 93vh !important;
+  padding-top: 0px !important;
+}
+
+.auth-form {
+  height: auto;
+  width: 700px;
+  padding: 50px 50px;
+  position: relative;
+  border-radius: 20px;
+  margin: auto;
+  z-index: 10;
+
+  background: $text-color;
+  h2 {
+    text-align: center;
+    color: $page-background;
+  }
+
+  .form-group {
+    margin: 30px;
+    label {
+      font-weight: 300;
+      color: $page-background;
+    }
+    input {
+      width: 100%;
+      padding: 5px;
+      border: none;
+      border-radius: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 5px;
+      font-size: 14px;
+      border: none;
+      border-radius: 10px;
+      resize: none;
+    }
+
+    select {
+      width: 100%;
+      padding: 5px;
+      border-radius: 10px;
+      border: none;
+    }
+  }
+
+  p {
+    color: white;
+    font-weight: 300;
+
+    a {
+      text-decoration: none;
+      color: $primary-color;
+    }
+  }
+}
+
+.form-check-input {
+  cursor: pointer;
+}
+
+.check-label {
+  padding: 2px 5px;
+  border-radius: 5px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 20%;
+  min-width: 100px;
+  cursor: pointer;
+  display: flex;
+}

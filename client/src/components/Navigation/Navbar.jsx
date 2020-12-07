@@ -1,35 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 //Resources
-import bugLogo from '../../resources/Images/Bug_Logo.svg';
+import bugLogo from "../../resources/Images/Bug_Logo.svg";
 
 //React Router DOM
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter } from "react-router-dom";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
-import { logoutUser } from '../../redux/actions/userActions';
+import { logoutUser } from "../../redux/actions/userActions";
+
+//Components
+import NavbarLogoSVG from "../SVG/NavbarLogoSVG";
 
 function Navbar(props) {
   const { authenticated } = props;
   const [navOpen, setNavOpen] = useState(false);
 
   const toggleNavbar = () => {
-    document.querySelector('.hamburger').classList.toggle('nav-open');
-    document.querySelector('.nav-list').classList.toggle('nav-open');
+    document.querySelector(".hamburger").classList.toggle("nav-open");
+    document.querySelector(".nav-list").classList.toggle("nav-open");
     setNavOpen(!navOpen);
   };
   if (
-    props.location.pathname === '/' ||
-    props.location.pathname === '/login' ||
-    props.location.pathname === '/signup'
+    props.location.pathname === "/" ||
+    props.location.pathname === "/login" ||
+    props.location.pathname === "/signup"
   ) {
     return (
       <div className="navbar">
         <Link to="/" className="logo">
-          <img src={bugLogo} alt="" /> <span>BUG </span> TRACKER
+          <NavbarLogoSVG classes={"navbar__logo"} />
         </Link>
         {navOpen ? (
           <svg

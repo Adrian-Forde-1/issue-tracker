@@ -1,0 +1,116 @@
+$red-color: #ff0000;
+$primary-color: #2e00b1;
+$text-color: #0f003a;
+$vector-background: #e4e3ff;
+$page-background: #fdfcff;
+
+.navbar {
+  width: 100%;
+  height: 7vh;
+  padding: 0px 9%;
+  position: relative;
+  top: 0;
+  left: 0;
+  display: flex;
+  background: none;
+  z-index: 1000;
+  justify-content: space-between;
+  align-items: center;
+  background: $text-color;
+
+  &__logo {
+    font-size: 26px;
+  }
+}
+
+.hamburger {
+  color: #fff;
+  font-size: 24px;
+  display: none;
+  visibility: hidden;
+  margin-left: auto;
+}
+.projects-teams-hamburger {
+  width: 100%;
+  position: fixed;
+  height: 6vh;
+  display: none;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0px 5%;
+  z-index: 1000;
+  // border-bottom: 1px solid $primary-color;
+  // box-shadow: 1px 1px 2px $primary-color;
+  background: $text-color;
+
+  i {
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #fff;
+  }
+}
+
+.logo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  background: transparent;
+  font-weight: 500;
+  font-size: 18px;
+  color: $primary-color;
+
+  span {
+    color: $text-color;
+  }
+
+  img {
+    margin-right: 10px;
+  }
+}
+
+.nav-list {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+  margin: auto 0px;
+  transition: all 300ms ease-in-out;
+}
+
+.nav-item {
+  list-style: none;
+  margin: 0px 15px;
+  text-transform: capitalize;
+  font-weight: 300;
+  transition: all 100ms ease-in-out;
+
+  a {
+    font-size: 14px;
+    color: #fff;
+
+    &:hover {
+      //   color: $primary-color;
+    }
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 300;
+    transition: all 100ms linear;
+
+    &:hover {
+      // font-weight: 500;
+      transform: scale(1.01);
+      // color: $primary-color;
+    }
+  }
+
+  &:hover {
+    // font-weight: 500;
+    transform: scale(1.1);
+  }
+}

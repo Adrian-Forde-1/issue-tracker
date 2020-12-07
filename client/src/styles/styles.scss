@@ -1,3 +1,8 @@
+@import "navbar";
+@import "formContainer";
+@import "homepage";
+@import "authForm";
+
 $red-color: #ff0000;
 $primary-color: #2e00b1;
 $text-color: #0f003a;
@@ -11,7 +16,7 @@ $page-background: #fdfcff;
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -19,6 +24,12 @@ body {
   &::-webkit-scrollbar-thumb {
     background: $primary-color;
   }
+}
+
+.App {
+  width: 100%;
+  max-height: 100vh;
+  overflow: hidden;
 }
 
 a {
@@ -306,111 +317,6 @@ a {
 }
 //Global End
 
-//Navbar Start
-.navbar {
-  width: 100%;
-  padding: 30px 9% 10px 9%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  background: none;
-  z-index: 1000;
-}
-
-.hamburger {
-  color: $primary-color;
-  font-size: 24px;
-  display: none;
-  visibility: hidden;
-  margin-left: auto;
-}
-.projects-teams-hamburger {
-  width: 100%;
-  position: fixed;
-  height: 6vh;
-  display: none;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0px 5%;
-  z-index: 1000;
-  // border-bottom: 1px solid $primary-color;
-  // box-shadow: 1px 1px 2px $primary-color;
-  background: $text-color;
-
-  i {
-    font-size: 1.4rem;
-    cursor: pointer;
-    color: #fff;
-  }
-}
-
-.logo {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  text-transform: uppercase;
-  background: transparent;
-  font-weight: 500;
-  font-size: 18px;
-  color: $primary-color;
-
-  span {
-    color: $text-color;
-  }
-
-  img {
-    margin-right: 10px;
-  }
-}
-
-.nav-list {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  flex: 1;
-  margin: auto 0px;
-  transition: all 300ms ease-in-out;
-}
-
-.nav-item {
-  list-style: none;
-  margin: 0px 15px;
-  text-transform: capitalize;
-  font-weight: 300;
-  transition: all 100ms ease-in-out;
-
-  a {
-    font-size: 18px;
-    color: $text-color;
-
-    &:hover {
-      color: $primary-color;
-    }
-  }
-
-  button {
-    background: none;
-    border: none;
-    color: $text-color;
-    font-size: 18px;
-    font-weight: 300;
-    transition: all 100ms linear;
-
-    &:hover {
-      // font-weight: 500;
-      transform: scale(1.1);
-      color: $primary-color;
-    }
-  }
-
-  &:hover {
-    // font-weight: 500;
-    transform: scale(1.1);
-  }
-}
-//Navbar End
-
 //Side Nav Start
 
 .side-nav {
@@ -452,308 +358,6 @@ a {
 }
 
 //Side Nav End
-
-//Homepage Start
-
-header {
-  background: $page-background;
-  width: 100%;
-  min-height: 100vh;
-  height: auto;
-  padding-top: 120px;
-  position: relative;
-  overflow-x: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0%;
-    left: 0;
-    width: 100%;
-    background: url('../resources/Images/Wave_Bottom.svg') no-repeat;
-    height: 20%;
-    background-size: cover;
-    background-position-y: top;
-    background-position-x: center;
-    z-index: 1;
-    pointer-events: none;
-  }
-}
-
-.premade-accounts {
-  margin-top: 100px;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  table {
-    background: $text-color;
-    color: white;
-    width: 60%;
-  }
-  h4 {
-    text-align: center;
-    color: $primary-color;
-  }
-}
-
-// .header-bottom-graphic {
-//   position: absolute;
-//   bottom: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 30%;
-
-//   div {
-//     position: relative;
-//     width: 100%;
-//     height: 100%;
-
-//     img {
-//       position: absolute;
-//       left: 0;
-//       bottom: 0%;
-//       width: 100%;
-//       height: 100%;
-//       object-fit: cover;
-//     }
-//   }
-// }
-
-.header-content {
-  width: 100%;
-  height: 100%;
-
-  h1 {
-    margin: 80px 0px 20px 0px;
-    font-weight: bolder;
-    font-size: 36px;
-    letter-spacing: 2px;
-    text-align: left;
-    text-transform: capitalize;
-    color: $text-color;
-
-    span {
-      color: $primary-color;
-    }
-  }
-
-  p {
-    color: $text-color;
-    margin-bottom: 20px;
-    text-align: left;
-  }
-
-  a {
-    color: $text-color;
-    font-weight: 300;
-    margin: 0px 10px;
-
-    span {
-      margin: 0px 10px 0px 0px;
-    }
-  }
-
-  .row {
-    .col-lg-6 {
-      position: relative !important;
-    }
-  }
-}
-
-.header-img {
-  position: absolute;
-  top: 0px;
-  left: 20%;
-  z-index: 3;
-}
-
-.main-header-link {
-  border-radius: 75px;
-  margin-left: 0px !important;
-  padding: 5px 20px;
-  font-weight: 300;
-  background: $primary-color;
-  color: $page-background !important;
-}
-
-.header-links {
-  padding: 0;
-  margin: 0;
-  width: fit-content;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-
-  a {
-    cursor: pointer;
-  }
-}
-
-.call-to-action {
-  display: block;
-  width: fit-content;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 30px 0px;
-  border: none;
-  padding: 0.5rem 1.5rem !important;
-  color: white !important;
-  font-weight: bold;
-  background: none;
-  outline: none;
-  z-index: 1;
-
-  &:after {
-    content: '';
-    width: 100%;
-    height: 2px;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    border-bottom: 2px solid $red-color;
-    transition: height 300ms ease-in-out;
-
-    z-index: -1;
-  }
-
-  a {
-    color: white;
-    text-decoration: none;
-  }
-
-  &:hover {
-    &::after {
-      border: 2px solid $red-color;
-      background: none;
-      height: 100%;
-    }
-  }
-}
-
-//Homepage End
-
-//Form Container Start
-.form-container {
-  width: 100%;
-  min-height: 100vh;
-  max-height: auto;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  padding: 30px 0% 30px 0%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: $page-background;
-  background-position: center;
-  background-size: auto;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: url('../resources/Images/Wave_Bottom.svg') no-repeat;
-    height: 225px;
-    background-size: cover;
-    background-position-y: bottom;
-    background-position-x: center;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .container {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    padding-right: 0px !important;
-
-    &#auth {
-      padding-right: 15px !important;
-    }
-  }
-}
-
-.auth-form {
-  height: auto;
-  width: 700px;
-  padding: 50px 50px;
-  position: relative;
-  border-radius: 20px;
-  margin: auto;
-  z-index: 10;
-
-  background: $text-color;
-  h2 {
-    text-align: center;
-    color: $page-background;
-  }
-
-  .form-group {
-    margin: 30px;
-    label {
-      font-weight: 300;
-      color: $page-background;
-    }
-    input {
-      width: 100%;
-      padding: 5px;
-      border: none;
-      border-radius: 10px;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 100px;
-      padding: 5px;
-      font-size: 14px;
-      border: none;
-      border-radius: 10px;
-      resize: none;
-    }
-
-    select {
-      width: 100%;
-      padding: 5px;
-      border-radius: 10px;
-      border: none;
-    }
-  }
-
-  p {
-    color: white;
-    font-weight: 300;
-
-    a {
-      text-decoration: none;
-      color: $primary-color;
-    }
-  }
-}
-
-.form-check-input {
-  cursor: pointer;
-}
-
-.check-label {
-  padding: 2px 5px;
-  border-radius: 5px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  width: 20%;
-  min-width: 100px;
-  cursor: pointer;
-  display: flex;
-}
-//Form Container End
 
 //Manager Start
 .manager {
@@ -829,7 +433,7 @@ header {
   z-index: 1;
   position: relative;
   &::after {
-    content: '';
+    content: "";
     height: 2px;
     width: 30px;
     position: absolute;
@@ -970,8 +574,8 @@ header {
     top: 20px;
     left: 260px;
     &::before {
-      content: '\f0d7';
-      font-family: 'Font Awesome 5 Free';
+      content: "\f0d7";
+      font-family: "Font Awesome 5 Free";
       font-weight: 900;
       text-align: center;
       line-height: 34px;
@@ -1031,12 +635,12 @@ header {
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100vw;
-    background: url('../resources/Images/Wave_Bottom.svg') no-repeat;
+    background: url("../resources/Images/Wave_Bottom.svg") no-repeat;
     height: 225px;
     background-size: 110%;
     background-position-y: bottom;
@@ -1147,7 +751,7 @@ header {
   }
 }
 
-span[id*='bug-status-'] {
+span[id*="bug-status-"] {
   line-height: 45px;
 }
 
@@ -1618,7 +1222,8 @@ span[id*='bug-status-'] {
     visibility: visible;
     z-index: 2000;
     position: absolute;
-    top: 30px;
+    top: 50%;
+    transform: translateY(-50%);
     right: 50px;
     cursor: pointer;
   }
