@@ -12,6 +12,11 @@ import { connect } from "react-redux";
 //Actions
 import { loginUser } from "../redux/actions/userActions";
 
+//Images
+import programmingImg from "../resources/Images/programmingImg.jpg";
+import programmingImg2X from "../resources/Images/programmingImg2X.jpg";
+import programmingImg3X from "../resources/Images/programmingImg3X.jpg";
+
 //Components
 import LogoSVG from "./SVG/LogoSVG";
 
@@ -74,6 +79,11 @@ const Login = (props) => {
           </div>
         </div>
         <div className="auth-form__right-section">
+          <div className="auth-form__right-section__img-filter"></div>
+          <img
+            srcSet={`${programmingImg} 1x, ${programmingImg2X} 2x, ${programmingImg3X} 3x`}
+            alt="Code on laptop with books to left of the laptop"
+          />
           <div className="auth-form__right-section-content">
             <h1>Track What Matters</h1>
             <h1>Enhance Communication</h1>

@@ -3,6 +3,7 @@
 .profile {
   &__wrapper {
     width: 100%;
+    height: auto;
     min-height: 100vh;
   }
 
@@ -17,6 +18,7 @@
   }
 
   &__header {
+    height: 40vh;
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -24,10 +26,12 @@
     margin-top: 30px;
 
     &__img-container {
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
+      width: 20%;
 
       form {
         input {
@@ -44,6 +48,26 @@
         }
       }
     }
+
+    &__basic-info {
+      padding-left: 50px;
+      height: 100%;
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h4 {
+        font-size: 14px;
+        color: #d3d3d3;
+        font-family: "Montserrat", sans-serif;
+      }
+    }
   }
 
   &__image {
@@ -51,5 +75,39 @@
     height: 200px;
     object-fit: fill;
     margin-bottom: 20px;
+  }
+
+  &__default-img {
+    width: 200px;
+    height: 200px;
+    background: #dedede;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      color: $text-color;
+      font-size: 80px;
+      font-weight: bold;
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .profile__header {
+    height: auto;
+    justify-content: center;
+    flex-direction: column;
+
+    &__img-container {
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    &__basic-info {
+      width: 100%;
+      margin-top: 30px;
+      padding-left: 0px;
+    }
   }
 }

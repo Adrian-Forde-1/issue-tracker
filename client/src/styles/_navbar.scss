@@ -93,6 +93,13 @@ $page-background: #fdfcff;
           align-items: center;
           background: #dedede;
           cursor: pointer;
+
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: fill;
+          }
         }
       }
 
@@ -133,6 +140,13 @@ $page-background: #fdfcff;
       font-weight: bold;
       font-size: 14px;
       color: $text-color;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: fill;
     }
   }
 }

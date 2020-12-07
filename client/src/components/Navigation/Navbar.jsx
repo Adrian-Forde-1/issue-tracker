@@ -15,9 +15,26 @@ import { logoutUser } from "../../redux/actions/userActions";
 //Components
 import NavbarLogoSVG from "../SVG/NavbarLogoSVG";
 
+// window.onclick = function (e) {
+//   e.stopPropagation();
+//   if (
+//     document.querySelector("#navbar-dropdown") &&
+//     document.querySelector("#navbar-dropdown").classList.contains("open")
+//   ) {
+//     document.querySelector("#navbar-dropdown").classList.remove("open");
+//   }
+// };
+
 function Navbar(props) {
   const { authenticated } = props;
   const [navOpen, setNavOpen] = useState(false);
+
+  const renderImage = () => {
+    if (props.user.image && props.user.image !== null) {
+      return <img src={props.user.image}></img>;
+    }
+    return <span>{props.user.username.toString().toUpperCase()[0]}</span>;
+  };
 
   const toggleNavbar = () => {
     document.querySelector(".hamburger").classList.toggle("nav-open");
@@ -107,13 +124,13 @@ function Navbar(props) {
                   }
                 }}
               >
-                <span>AF</span>
+                {renderImage()}
               </div>
               <div className="navbar__right-dropdown" id="navbar-dropdown">
                 <div className="navbar__right-dropdown__account-info">
                   <div className="navbar__right-dropdown__account-info-left">
                     <div className="navbar__right-dropdown__account-info-left__profile-pic">
-                      <span>AF</span>
+                      {renderImage()}
                     </div>
                   </div>
                   <div className="navbar__right-dropdown__account-info-right">
@@ -122,8 +139,12 @@ function Navbar(props) {
                   </div>
                 </div>
                 <ul>
-                  <li>
-                    <Link to="/profile">Profile</Link>
+                  <li
+                    onClick={() => {
+                      props.history.push("/profile");
+                    }}
+                  >
+                    Profile
                   </li>
                   <li
                     onClick={() => {

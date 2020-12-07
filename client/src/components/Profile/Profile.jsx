@@ -9,6 +9,18 @@ import { getUser, setMessages } from "../../redux/actions/userActions";
 
 const Profile = ({ user, getUser, setMessages }) => {
   const [profilePicture, setProfilePicture] = useState({});
+
+  const renderImage = () => {
+    if (user.image && user.image !== null) {
+      return <img src={user.image} alt="" className="profile__image" />;
+    }
+    return (
+      <div className="profile__default-img">
+        <span>{user.username.toString().toUpperCase()[0]}</span>
+      </div>
+    );
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -31,7 +43,7 @@ const Profile = ({ user, getUser, setMessages }) => {
       <div className="profile__body">
         <div className="profile__header">
           <div className="profile__header__img-container">
-            <img src={user.image} alt="" className="profile__image" />
+            {renderImage()}
             <form onSubmit={handleSubmit} encType="multipart/form-data">
               <input
                 type="file"
@@ -45,6 +57,10 @@ const Profile = ({ user, getUser, setMessages }) => {
               <br />
               <button>Edit Photo</button>
             </form>
+          </div>
+          <div className="profile__header__basic-info">
+            <h1>{user.username}</h1>
+            <h4>{user.email}</h4>
           </div>
         </div>
       </div>

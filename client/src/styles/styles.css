@@ -130,6 +130,14 @@
   cursor: pointer;
 }
 
+.navbar__right-dropdown__account-info-left__profile-pic img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -o-object-fit: fill;
+     object-fit: fill;
+}
+
 .navbar__right-dropdown__account-info-right {
   width: 80%;
 }
@@ -172,6 +180,14 @@
   font-weight: bold;
   font-size: 14px;
   color: #0f003a;
+}
+
+.navbar__profile-pic img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -o-object-fit: fill;
+     object-fit: fill;
 }
 
 .hamburger {
@@ -738,10 +754,9 @@ header::after {
 }
 
 .auth-form__right-section {
+  position: relative;
   width: 60%;
   height: 100%;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(46, 0, 177, 0.7)), to(rgba(15, 0, 58, 0.7))), url("../resources/Images/programmingImg3X.jpg") no-repeat;
-  background: linear-gradient(rgba(46, 0, 177, 0.7), rgba(15, 0, 58, 0.7)), url("../resources/Images/programmingImg3X.jpg") no-repeat;
   background-size: cover;
   background-position: 50%;
   display: -webkit-box;
@@ -757,6 +772,7 @@ header::after {
 
 .auth-form__right-section-content {
   margin-left: 100px;
+  z-index: 2;
 }
 
 .auth-form__right-section-content h1 {
@@ -774,6 +790,24 @@ header::after {
   font-size: 14px;
   color: #fff;
   font-weight: lighter;
+}
+
+.auth-form__right-section__img-filter {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(46, 0, 177, 0.7)), to(rgba(15, 0, 58, 0.7)));
+  background: linear-gradient(rgba(46, 0, 177, 0.7), rgba(15, 0, 58, 0.7));
+  pointer-events: none;
+}
+
+.auth-form__right-section img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .auth-form__input-container {
@@ -847,9 +881,6 @@ header::after {
 }
 
 @media screen and (max-width: 500px) {
-  .auth-form__left-section {
-    width: 100%;
-  }
   .auth-form__left-section__logo-container svg {
     font-size: 80px;
   }
@@ -867,13 +898,11 @@ header::after {
   .auth-form__no-account {
     font-size: 10px;
   }
-  .auth-form__right-section {
-    display: none;
-  }
 }
 
 .profile__wrapper {
   width: 100%;
+  height: auto;
   min-height: 100vh;
 }
 
@@ -897,6 +926,7 @@ header::after {
 }
 
 .profile__header {
+  height: 40vh;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -911,6 +941,7 @@ header::after {
 }
 
 .profile__header__img-container {
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -924,6 +955,7 @@ header::after {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
+  width: 20%;
 }
 
 .profile__header__img-container form input {
@@ -939,12 +971,89 @@ header::after {
   margin-top: 5px;
 }
 
+.profile__header__basic-info {
+  padding-left: 50px;
+  height: 100%;
+  width: 80%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.profile__header__basic-info h1 {
+  font-size: 24px;
+}
+
+.profile__header__basic-info h4 {
+  font-size: 14px;
+  color: #d3d3d3;
+  font-family: "Montserrat", sans-serif;
+}
+
 .profile__image {
   width: 200px;
   height: 200px;
   -o-object-fit: fill;
      object-fit: fill;
   margin-bottom: 20px;
+}
+
+.profile__default-img {
+  width: 200px;
+  height: 200px;
+  background: #dedede;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.profile__default-img span {
+  color: #0f003a;
+  font-size: 80px;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 992px) {
+  .profile__header {
+    height: auto;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .profile__header__img-container {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    width: 100%;
+  }
+  .profile__header__basic-info {
+    width: 100%;
+    margin-top: 30px;
+    padding-left: 0px;
+  }
 }
 
 * {
