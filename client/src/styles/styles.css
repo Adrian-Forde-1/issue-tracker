@@ -486,7 +486,7 @@ header::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 80px;
+  margin-bottom: 20px;
 }
 
 .auth-form__left-section__logo-container svg {
@@ -569,26 +569,27 @@ header::after {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .auth-form__input-container__input-name {
   color: #0f003a;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .auth-form__input-container input {
   width: 100%;
   border: none;
   background: #dedede;
-  padding: 5px;
+  padding: 3px;
+  font-size: 14px;
 }
 
 .auth-form__submit-btn {
   padding: 8px 24px;
   font-size: 16px;
   background: #2e00b1;
-  margin-top: 0px;
+  margin-top: 20px;
   color: #fff;
   border: none;
 }
@@ -607,6 +608,11 @@ header::after {
 .auth-form__no-account a {
   color: #2e00b1;
   text-decoration: none;
+}
+
+.auth-form__error {
+  font-size: 10px;
+  color: red;
 }
 
 * {

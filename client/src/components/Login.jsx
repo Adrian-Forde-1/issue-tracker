@@ -10,15 +10,10 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import {
-  loginUser,
-  clearErrors,
-  clearMessages,
-} from "../redux/actions/userActions";
+import { loginUser } from "../redux/actions/userActions";
 
 //Components
 import LogoSVG from "./SVG/LogoSVG";
-import { use } from "passport";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -33,7 +28,7 @@ const Login = (props) => {
     e.preventDefault();
 
     const user = {
-      email: email,
+      email: email.toString().toLowerCase(),
       password: password,
     };
 
@@ -99,8 +94,6 @@ const Login = (props) => {
 
 const mapDispatchToProps = {
   loginUser,
-  clearErrors,
-  clearMessages,
 };
 
 const mapStateToProps = (state) => ({

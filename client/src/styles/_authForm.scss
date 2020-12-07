@@ -23,7 +23,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 80px;
+      margin-bottom: 20px;
 
       svg {
         font-size: 100px;
@@ -83,18 +83,19 @@
     // border: 1px solid red;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 
     &__input-name {
       color: $text-color;
-      font-size: 16px;
+      font-size: 14px;
     }
 
     input {
       width: 100%;
       border: none;
       background: #dedede;
-      padding: 5px;
+      padding: 3px;
+      font-size: 14px;
     }
   }
 
@@ -102,7 +103,7 @@
     padding: 8px 24px;
     font-size: 16px;
     background: $primary-color;
-    margin-top: 0px;
+    margin-top: 20px;
     color: #fff;
     border: none;
 
@@ -120,5 +121,10 @@
       color: $primary-color;
       text-decoration: none;
     }
+  }
+
+  &__error {
+    font-size: 10px;
+    color: red;
   }
 }

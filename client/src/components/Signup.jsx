@@ -1,144 +1,136 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from "react";
 
 //React Router Dom
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
-import { signUpUser } from '../redux/actions/userActions';
+import { signUpUser } from "../redux/actions/userActions";
 
-class Signup extends Component {
-  constructor(props) {
-    super(props);
+//Components
+import LogoSVG from "./SVG/LogoSVG";
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+const Signup = (props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-    this.usernameRef = React.createRef();
+  useEffect(() => {
+    if (props.authenticated === true) props.history.goBack();
+    // this.usernameRef.current.focus();
+  }, []);
 
-    this.state = {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.authenticated === true) this.props.history.goBack();
-    this.usernameRef.current.focus();
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const user = {
-      username: this.state.username,
-      email: this.state.email,
-      password: this.state.password,
-      confirmPassword: this.state.confirmPassword,
+      username: username.toString().toLowerCase(),
+      email: email.toString().toLowerCase(),
+      password: password,
+      confirmPassword: confirmPassword,
     };
 
-    this.props.signUpUser(user, this.props.history);
+    props.signUpUser(user, props.history);
   };
-  render() {
-    if (this.props.authenticated === false) {
-      return (
-        <div className="form-container p-t-85">
-          <div className="container" id="auth">
-            <div className="auth-form">
-              <h2>Sign Up</h2>
-              <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <br />
-                  <input
-                    type="text"
-                    name="username"
-                    maxLength="25"
-                    required
-                    value={this.state.username}
-                    ref={this.usernameRef}
-                    onChange={this.handleChange}
-                  />
-                  {this.props.errors.username && (
-                    <div className="form-input-error">
-                      {this.props.errors.username}
-                    </div>
-                  )}
+  if (props.authenticated === false) {
+    return (
+      <div className="auth-form__wrapper">
+        <div className="auth-form__left-section">
+          <div className="auth-form__left-section__logo-container">
+            <LogoSVG />
+          </div>
+          <div className="auth-form__left-section__form-container">
+            <form onSubmit={handleSubmit}>
+              <div className="auth-form__input-container">
+                <div className="auth-form__input-container__input-name">
+                  Username
                 </div>
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <br />
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                  />
-                  {this.props.errors.email && (
-                    <div className="form-input-error">
-                      {this.props.errors.email}
-                    </div>
-                  )}
+                <input
+                  type="text"
+                  name="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                {props.errors.username && (
+                  <div className="auth-form__error">
+                    {props.errors.username}
+                  </div>
+                )}
+              </div>
+              <div className="auth-form__input-container">
+                <div className="auth-form__input-container__input-name">
+                  Email
                 </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <br />
-                  <input
-                    type="password"
-                    name="password"
-                    minLength="6"
-                    required
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                  />
-                  {this.props.errors.password && (
-                    <div className="form-input-error">
-                      {this.props.errors.password}
-                    </div>
-                  )}
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {props.errors.email && (
+                  <div className="auth-form__error">{props.errors.email}</div>
+                )}
+              </div>
+              <div className="auth-form__input-container">
+                <div className="auth-form__input-container__input-name">
+                  Password
                 </div>
-                <div className="form-group">
-                  <label htmlFor="confirmPassword">Confirm Password</label>
-                  <br />
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    minLength="6"
-                    required
-                    value={this.state.confirmPassword}
-                    onChange={this.handleChange}
-                  />
-                  {this.props.errors.confirmPassword && (
-                    <div className="form-input-error">
-                      {this.props.errors.confirmPassword}
-                    </div>
-                  )}
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {props.errors.password && (
+                  <div className="auth-form__error">
+                    {props.errors.password}
+                  </div>
+                )}
+              </div>
+              <div className="auth-form__input-container">
+                <div className="auth-form__input-container__input-name">
+                  Confirm Password
                 </div>
-                <button className="submit-btn">Sign Up</button>
-              </form>
-              <p>
-                Already have an account? <Link to="/login">Login</Link>
-              </p>
+                <input
+                  type="password"
+                  name="confirm-password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                {props.errors.confirmPassword && (
+                  <div className="auth-form__error">
+                    {props.errors.confirmPassword}
+                  </div>
+                )}
+              </div>
+              <button className="auth-form__submit-btn">Sign Up</button>
+            </form>
+            <div className="auth-form__no-account">
+              Already have an account? Try <Link to="/login">Loggin in!</Link>
             </div>
           </div>
         </div>
-      );
-    } else {
-      return null;
-    }
+        <div className="auth-form__right-section">
+          <div className="auth-form__right-section-content">
+            <h1>Track What Matters</h1>
+            <h1>Enhance Communication</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et <br />
+              lacus tellus massa pretium phasellus nunc suspendisse <br />
+              enim. Sed consequat nec sed proin sed convallis tortor <br />
+              mattis.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return null;
   }
-}
+};
 
 const mapDispatchToProps = {
   signUpUser,

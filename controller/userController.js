@@ -1,7 +1,7 @@
-const UserModel = require('../models/UserModel');
+const UserModel = require("../models/UserModel");
 
-const { validateLoginData, validateSignUpData } = require('../util/authUtil');
-const { signToken, decodeToken } = require('../util/authUtil');
+const { validateLoginData, validateSignUpData } = require("../util/authUtil");
+const { signToken, decodeToken } = require("../util/authUtil");
 
 module.exports = {
   //Login User
@@ -34,7 +34,7 @@ module.exports = {
   signUp: async (req, res) => {
     //Check to see if the request has a body
     if (req.body.user) {
-      let messages = {};
+      let messages = [];
       //Destructor the variables from req.body
       const { username, email, password, confirmPassword } = req.body.user;
 
@@ -57,8 +57,8 @@ module.exports = {
 
       //If the user already exists, return an error
       if (foundUserByEmail) {
-        let errors = {};
-        errors.email = 'Email is already registered';
+        let errors = [];
+        errors.push("Email is already registered");
         return res.status(403).json(errors);
       }
 
@@ -67,8 +67,8 @@ module.exports = {
 
       //If the user already exists, return an error
       if (foundUserByUsername) {
-        let errors = {};
-        errors.user = 'Username already exists';
+        let errors = [];
+        errors.push("Username already exists");
         return res.status(403).json(errors);
       }
 
@@ -84,13 +84,13 @@ module.exports = {
         .save()
         .then(() => {
           //If user was saved successfully, notify user
-          messages.user = 'Successfully signed up, try logging in.';
+          messages.push("Successfully signed up, try logging in.");
           return res.json(messages);
         })
         .catch(() => {
           //If something went wrong when saving user, notify user
-          let errors = {};
-          errors.user = 'Error occured when signing user up. Please try again';
+          let errors = [];
+          errors.push("Error occured when signing user up. Please try again");
           return res.status(500).json(errors);
         });
 
@@ -115,32 +115,32 @@ module.exports = {
         //If error occured, notify user
         if (err) {
           console.error(err);
-          errors.user = 'Error occured when attempting to delete user';
+          errors.user = "Error occured when attempting to delete user";
           return res.status(500).json(errors);
         }
 
         //If everything went well, notify user
-        messages.user = 'User successfully deleted';
+        messages.user = "User successfully deleted";
         return res.json(messages);
       });
     }
   },
   getUser: (req, res) => {
     const token = req.headers.authorization;
-    const splitToken = token.split('Bearer ')[1];
+    const splitToken = token.split("Bearer ")[1];
     //Decode token the was sent by user
     const decodedToken = decodeToken(splitToken);
     //Get user id from token sub
     const userId = decodedToken.sub;
     //Find user in databse
     UserModel.findById(userId)
-      .populate('teams')
+      .populate("teams")
       .exec(function (err, user) {
         //If error occured, notify user
         let errors = {};
         if (err) {
           console.error(err);
-          errors.user = 'Error occured when fetching user data';
+          errors.user = "Error occured when fetching user data";
           return res.status(500).json(errors);
         }
 

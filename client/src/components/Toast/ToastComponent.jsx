@@ -7,21 +7,28 @@ import { clearErrors, clearMessages } from "../../redux/actions/userActions";
 
 const ToastComponent = ({ errors, messages, clearErrors, clearMessages }) => {
   useEffect(() => {
-    if ((errors && errors.length > 0) || (messages && messages.length > 0))
+    if (
+      (errors && Array.isArray(errors) && errors.length > 0) ||
+      (messages && Array.isArray(messages) && messages.length > 0)
+    )
       showToast();
   }, [errors, messages]);
 
   const showToast = () => {
     if (errors.length > 0) {
       errors.forEach((error) => {
-        toast.error(error);
+        toast.error(error, {
+          position: "top-center",
+        });
       });
       clearErrors();
     }
 
     if (messages.length > 0) {
       messages.forEach((message) => {
-        toast.success(message);
+        toast.success(message, {
+          position: "top-center",
+        });
       });
       clearMessages();
     }
