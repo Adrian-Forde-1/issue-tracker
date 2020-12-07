@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 //Tostify
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 //React Router Dom
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
 import {
   loginUser,
   clearErrors,
   clearMessages,
-} from '../redux/actions/userActions';
+} from "../redux/actions/userActions";
 
 class Login extends Component {
   constructor(props) {
@@ -22,13 +22,13 @@ class Login extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleToast = this.handleToast.bind(this);
+    // this.handleToast = this.handleToast.bind(this);
 
     this.emailRef = React.createRef();
 
     this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     };
   }
 
@@ -54,45 +54,44 @@ class Login extends Component {
     this.props.loginUser(user, this.props.history);
   };
 
-  handleToast = () => {
-    if (this.props.messages !== null && this.props.messages['user']) {
-      return toast('User message', {
-        toastId: 'usertoast',
-        type: 'error',
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000,
-        onClose: () => {
-          this.props.clearErrors();
-        },
-      });
-    } else if (this.props.errors !== null && this.props.errors['user']) {
-      return toast('User errors', {
-        toastId: 'usertoast',
-        type: 'error',
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000,
-        onClose: () => {
-          this.props.clearErrors();
-        },
-      });
-    } else if (this.props.errors !== null && this.props.errors['general']) {
-      return toast('Error Occured', {
-        toastId: 'toast',
-        type: 'error',
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 2000,
-        onClose: () => {
-          this.props.clearErrors();
-        },
-      });
-    }
-  };
+  // handleToast = () => {
+  //   if (this.props.messages !== null && this.props.messages['user']) {
+  //     return toast('User message', {
+  //       toastId: 'usertoast',
+  //       type: 'error',
+  //       position: toast.POSITION.TOP_CENTER,
+  //       autoClose: 2000,
+  //       onClose: () => {
+  //         this.props.clearErrors();
+  //       },
+  //     });
+  //   } else if (this.props.errors !== null && this.props.errors['user']) {
+  //     return toast('User errors', {
+  //       toastId: 'usertoast',
+  //       type: 'error',
+  //       position: toast.POSITION.TOP_CENTER,
+  //       autoClose: 2000,
+  //       onClose: () => {
+  //         this.props.clearErrors();
+  //       },
+  //     });
+  //   } else if (this.props.errors !== null && this.props.errors['general']) {
+  //     return toast('Error Occured', {
+  //       toastId: 'toast',
+  //       type: 'error',
+  //       position: toast.POSITION.TOP_CENTER,
+  //       autoClose: 2000,
+  //       onClose: () => {
+  //         this.props.clearErrors();
+  //       },
+  //     });
+  //   }
+  // };
 
   render() {
     if (this.props.authenticated === false) {
       return (
         <div className="form-container">
-          {this.handleToast()}
           <div className="container" id="auth">
             <div className="auth-form">
               <h2>Login</h2>

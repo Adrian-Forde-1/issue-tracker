@@ -1,15 +1,15 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const http = require('http').createServer(app);
-const mongoose = require('mongoose');
-const morgan = require('morgan');
-const cors = require('cors');
-const session = require('express-session');
-const passport = require('passport');
-const path = require('path');
-const dotenv = require('dotenv');
-const io = require('socket.io')(http);
-const Chat = require('./models/ChatModel');
+const http = require("http").createServer(app);
+const mongoose = require("mongoose");
+const morgan = require("morgan");
+const cors = require("cors");
+const session = require("express-session");
+const passport = require("passport");
+const path = require("path");
+const dotenv = require("dotenv");
+const io = require("socket.io")(http);
+const Chat = require("./models/ChatModel");
 
 const PORT = process.env.PORT || 5000;
 
@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5000;
 dotenv.config();
 
 app.use(cors());
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(express.static());
@@ -38,21 +38,21 @@ const connect = mongoose
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })
-  .then(() => console.log('Successfully connected to the database'))
-  .catch(() => console.log('Error occured when connecting to the database'));
+  .then(() => console.log("Successfully connected to the database"))
+  .catch((err) => console.log("Error occured when connecting to the database"));
 
 //Serve static assests if in production
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   //Set static folder
-  app.use(express.static('client/build'));
+  app.use(express.static("client/build"));
 }
 
 //Routes
-app.use('/api', require('./routes/UserRoutes'));
+app.use("/api", require("./routes/UserRoutes"));
 
-app.get('/*', (req, res) => {
+app.get("/*", (req, res) => {
   res.sendFile(
-    path.resolve(__dirname, 'client', 'build', 'index.html'),
+    path.resolve(__dirname, "client", "build", "index.html"),
     function (err) {
       if (err) {
         res.status(500).send(err);
@@ -63,8 +63,8 @@ app.get('/*', (req, res) => {
 
 //Socket IO
 
-io.on('connection', (socket) => {
-  socket.on('Team Chat Message', (data) => {
+io.on("connection", (socket) => {
+  socket.on("Team Chat Message", (data) => {
     connect.then((db) => {
       try {
         let chat = new Chat({
@@ -82,9 +82,9 @@ io.on('connection', (socket) => {
           // socket.broadcast.emit('Output Chat Message', doc);
 
           Chat.findById(doc._id)
-            .populate('sender')
+            .populate("sender")
             .exec(function (err, chat) {
-              return io.emit('Output Chat Message', chat);
+              return io.emit("Output Chat Message", chat);
             });
         });
       } catch (err) {

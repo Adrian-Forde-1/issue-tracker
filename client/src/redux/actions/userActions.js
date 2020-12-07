@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   SET_USER,
   LOGOUT_USER,
@@ -12,16 +12,16 @@ import {
   SET_CURRENT_ID,
   SET_EXTRA_ID_INFO,
   CLEAR_CURRENT_SECTION_AND_ID,
-} from './types';
+} from "./types";
 
 export const loginUser = (user, history) => (dispatch) => {
   dispatch({ type: CLEAR_MESSAGES });
   dispatch({ type: CLEAR_ERRORS });
   dispatch({ type: SET_LOADING_UI });
   axios
-    .post('/api/login', user)
+    .post("/api/login", user)
     .then((response) => {
-      localStorage.setItem('token', `Bearer ${response.data.token}`);
+      localStorage.setItem("token", `Bearer ${response.data.token}`);
     })
     .then(() => {
       dispatch({ type: CLEAR_ERRORS });
@@ -29,10 +29,10 @@ export const loginUser = (user, history) => (dispatch) => {
       dispatch({ type: STOP_LOADING_UI });
     })
     .catch((error) => {
-      if (error.response.data === 'Unauthorized') {
+      if (error.response.data === "Unauthorized") {
         dispatch({
           type: SET_ERRORS,
-          payload: { general: 'Wrong Credentials' },
+          payload: ["Wrong Credentials"],
         });
         dispatch({ type: STOP_LOADING_UI });
       } else {
@@ -51,9 +51,9 @@ export const signUpUser = (userData, history) => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
   dispatch({ type: SET_LOADING_UI });
   axios
-    .post('/api/signup', { user: userData })
+    .post("/api/signup", { user: userData })
     .then((response) => {
-      history.push('/login');
+      history.push("/login");
       dispatch({ type: STOP_LOADING_UI });
       dispatch({ type: SET_MESSAGES, payload: response.data });
     })
@@ -67,8 +67,8 @@ export const logoutUser = (history) => (dispatch) => {
   dispatch({ type: CLEAR_MESSAGES });
   dispatch({ type: CLEAR_ERRORS });
   dispatch({ type: LOGOUT_USER });
-  localStorage.removeItem('token');
-  history.push('/');
+  localStorage.removeItem("token");
+  history.push("/");
 };
 
 export const setMessages = (message) => (dispatch) => {
@@ -83,14 +83,14 @@ const getUser = (history) => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
   dispatch({ type: SET_LOADING_UI });
   axios
-    .get('/api/user', {
-      headers: { Authorization: localStorage.getItem('token') },
+    .get("/api/user", {
+      headers: { Authorization: localStorage.getItem("token") },
     })
     .then((response) => {
       dispatch({ type: CLEAR_ERRORS });
       dispatch({ type: SET_USER, payload: response.data });
       dispatch({ type: STOP_LOADING_UI });
-      history.push('/');
+      history.push("/");
     })
     .catch((error) => {
       dispatch({ type: STOP_LOADING_UI });

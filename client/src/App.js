@@ -1,43 +1,44 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 //Tostify
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // import Breadcrumbs from './components/Breadcrumbs';
 // import IsNotAuthenticated from './components/IsNotAuthenticated.jsx';
 
 //React Router Dom
-import { Route, withRouter, Switch } from 'react-router-dom';
+import { Route, withRouter, Switch } from "react-router-dom";
 
 //Components
-import Homepage from './components/Homepage';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import IsAuthenticated from './components/IsAuthenticated';
-import Navbar from './components/Navigation/Navbar';
-import { connect } from 'react-redux';
-import AllTeams from './components/Teams/AllTeams';
-import IndividualTeam from './components/Teams/IndividualTeam';
-import CreateTeam from './components/Teams/CreateTeam';
-import IndividualProject from './components/Projects/IndividualProject';
-import CreateProject from './components/Projects/CreateProject';
-import Labels from './components/Labels/Labels';
-import EditLabel from './components/Labels/EditLabel';
-import AddLabel from './components/Labels/AddLabel';
-import IndividualBug from './components/Bugs/IndividualBug';
-import NewBug from './components/Bugs/NewBug';
-import EditBug from './components/Bugs/EditBug';
-import AllProjects from './components/Projects/AllProjects';
-import ArchivedProjects from './components/Projects/ArchivedProjects';
-import ArchivedTeamProjects from './components/Projects/ArchivedTeamProjects';
-import CreateTeamProject from './components/Teams/CreateTeamProject';
-import JoinTeam from './components/Teams/JoinTeam';
-import EditProject from './components/Projects/EditProject';
-import TeamChat from './components/Chat/TeamChat';
-import DeleteModal from './components/DeleteModal';
-import ErrorBoundary from './components/ErrorBoundary';
-import TeamChatLandingPage from './components/Chat/TeamChatLandingPage';
+import Homepage from "./components/Homepage";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import IsAuthenticated from "./components/IsAuthenticated";
+import Navbar from "./components/Navigation/Navbar";
+import { connect } from "react-redux";
+import AllTeams from "./components/Teams/AllTeams";
+import IndividualTeam from "./components/Teams/IndividualTeam";
+import CreateTeam from "./components/Teams/CreateTeam";
+import IndividualProject from "./components/Projects/IndividualProject";
+import CreateProject from "./components/Projects/CreateProject";
+import Labels from "./components/Labels/Labels";
+import EditLabel from "./components/Labels/EditLabel";
+import AddLabel from "./components/Labels/AddLabel";
+import IndividualBug from "./components/Bugs/IndividualBug";
+import NewBug from "./components/Bugs/NewBug";
+import EditBug from "./components/Bugs/EditBug";
+import AllProjects from "./components/Projects/AllProjects";
+import ArchivedProjects from "./components/Projects/ArchivedProjects";
+import ArchivedTeamProjects from "./components/Projects/ArchivedTeamProjects";
+import CreateTeamProject from "./components/Teams/CreateTeamProject";
+import JoinTeam from "./components/Teams/JoinTeam";
+import EditProject from "./components/Projects/EditProject";
+import TeamChat from "./components/Chat/TeamChat";
+import DeleteModal from "./components/DeleteModal";
+import ErrorBoundary from "./components/ErrorBoundary";
+import TeamChatLandingPage from "./components/Chat/TeamChatLandingPage";
+import ToastComponent from "./components/Toast/ToastComponent";
 
 class App extends Component {
   // toast.configure({
@@ -50,6 +51,7 @@ class App extends Component {
       <div className="App">
         <ToastContainer />
         <Navbar />
+        <ToastComponent />
         {/* <Breadcrumbs /> */}
         <Switch>
           <Route exact path="/" component={Homepage} />
