@@ -128,3 +128,53 @@
     color: red;
   }
 }
+
+@media screen and (max-width: 992px) {
+  .auth-form {
+    &__left-section {
+      width: 100%;
+    }
+
+    &__right-section {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .auth-form {
+    &__left-section {
+      width: 100%;
+
+      &__logo-container {
+        svg {
+          font-size: 80px;
+        }
+      }
+    }
+
+    &__input-container {
+      &__input-name {
+        font-size: 12px;
+      }
+
+      input {
+        font-size: 12px;
+      }
+    }
+
+    &__submit-btn {
+      padding: 6px 18px;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    &__no-account {
+      font-size: 10px;
+    }
+
+    &__right-section {
+      display: none;
+    }
+  }
+}

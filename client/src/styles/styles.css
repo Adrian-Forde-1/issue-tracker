@@ -126,6 +126,77 @@
           transform: scale(1.1);
 }
 
+@media screen and (max-width: 992px) {
+  .navbar__logo {
+    font-size: 24px;
+  }
+  .nav-list {
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    right: 0px;
+    top: 0;
+    -webkit-transform: translateX(240px);
+            transform: translateX(240px);
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    background: #0f003a;
+  }
+  .nav-list.nav-open {
+    -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+  }
+  .nav-open.hamburger {
+    color: white;
+  }
+  .nav-item {
+    margin-top: 50px;
+  }
+  .nav-item:nth-of-type(1) {
+    margin-top: 100px;
+  }
+  .nav-item a,
+  .nav-item button {
+    color: white;
+    text-align: center;
+  }
+  .nav-item a:hover,
+  .nav-item button:hover {
+    color: white;
+  }
+  .hamburger {
+    display: inline;
+    visibility: visible;
+    z-index: 2000;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    right: 50px;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .navbar__logo {
+    font-size: 22px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .navbar__logo {
+    font-size: 20px;
+  }
+}
+
 .form-container {
   width: 100%;
   min-height: 100vh;
@@ -613,6 +684,41 @@ header::after {
 .auth-form__error {
   font-size: 10px;
   color: red;
+}
+
+@media screen and (max-width: 992px) {
+  .auth-form__left-section {
+    width: 100%;
+  }
+  .auth-form__right-section {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .auth-form__left-section {
+    width: 100%;
+  }
+  .auth-form__left-section__logo-container svg {
+    font-size: 80px;
+  }
+  .auth-form__input-container__input-name {
+    font-size: 12px;
+  }
+  .auth-form__input-container input {
+    font-size: 12px;
+  }
+  .auth-form__submit-btn {
+    padding: 6px 18px;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  .auth-form__no-account {
+    font-size: 10px;
+  }
+  .auth-form__right-section {
+    display: none;
+  }
 }
 
 * {
@@ -1925,59 +2031,6 @@ span[id*="bug-status-"] {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-  }
-  .nav-list {
-    width: 240px;
-    height: 100vh;
-    position: fixed;
-    right: 0px;
-    top: 0;
-    -webkit-transform: translateX(240px);
-            transform: translateX(240px);
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
-    background: #2e00b1;
-  }
-  .nav-list.nav-open {
-    -webkit-transform: translateX(0px);
-            transform: translateX(0px);
-  }
-  .nav-open.hamburger {
-    color: white;
-  }
-  .nav-item {
-    margin-top: 50px;
-  }
-  .nav-item:nth-of-type(1) {
-    margin-top: 100px;
-  }
-  .nav-item a,
-  .nav-item button {
-    color: white;
-    text-align: center;
-  }
-  .nav-item a:hover,
-  .nav-item button:hover {
-    color: white;
-  }
-  .hamburger {
-    display: inline;
-    visibility: visible;
-    z-index: 2000;
-    position: absolute;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-            transform: translateY(-50%);
-    right: 50px;
-    cursor: pointer;
   }
   .p-l-175 {
     padding-left: 0px !important;
