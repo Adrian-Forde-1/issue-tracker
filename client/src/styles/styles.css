@@ -1056,6 +1056,92 @@ header::after {
   }
 }
 
+.side-nav {
+  width: 175px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  background: #0f003a;
+}
+
+.side-nav a {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.side-nav a img {
+  margin-top: 20px;
+}
+
+.side-nav ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.side-nav ul li {
+  list-style: none;
+  color: #fdfcff;
+  cursor: pointer;
+  font-weight: 300;
+}
+
+.side-nav ul li.selected-section {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.side-nav ul li a {
+  color: #fdfcff;
+  padding: 8px 0px 8px 20px;
+  font-size: 14px;
+  text-align: left;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.side-nav ul li a svg {
+  margin-right: 10px;
+}
+
+.side-nav ul li a span {
+  line-height: 14px;
+}
+
+.side-nav__top {
+  height: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.side-nav__top a svg {
+  font-size: 20px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -1404,57 +1490,6 @@ a p {
   height: 100%;
   -o-object-fit: contain;
      object-fit: contain;
-}
-
-.side-nav {
-  width: 175px;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 1000;
-  background: #0f003a;
-}
-
-.side-nav a {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-.side-nav a img {
-  margin-top: 20px;
-}
-
-.side-nav ul {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  margin-top: 30px;
-}
-
-.side-nav ul li {
-  margin: 20px 0px;
-  list-style: none;
-  color: #fdfcff;
-  cursor: pointer;
-  font-weight: 300;
-}
-
-.side-nav ul li.selected-section {
-  border-left: 4px solid #fdfcff;
-}
-
-.side-nav ul li a {
-  color: #fdfcff;
 }
 
 .manager {

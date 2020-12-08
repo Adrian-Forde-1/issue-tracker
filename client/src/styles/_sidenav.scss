@@ -1,0 +1,64 @@
+@import "variables";
+
+.side-nav {
+  width: 175px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  background: $text-color;
+
+  a {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    img {
+      margin-top: 20px;
+    }
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    li {
+      list-style: none;
+      color: $page-background;
+      cursor: pointer;
+      font-weight: 300;
+      &.selected-section {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      a {
+        color: $page-background;
+        padding: 8px 0px 8px 20px;
+        font-size: 14px;
+        text-align: left;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        svg {
+          margin-right: 10px;
+        }
+
+        span {
+          line-height: 14px;
+        }
+      }
+    }
+  }
+
+  &__top {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      svg {
+        font-size: 20px;
+      }
+    }
+  }
+}

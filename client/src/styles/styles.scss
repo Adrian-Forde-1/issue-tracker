@@ -3,6 +3,7 @@
 @import "homepage";
 @import "authForm";
 @import "profile";
+@import "sidenav";
 
 $red-color: #ff0000;
 $primary-color: #2e00b1;
@@ -317,48 +318,6 @@ a {
   }
 }
 //Global End
-
-//Side Nav Start
-
-.side-nav {
-  width: 175px;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 1000;
-  background: $text-color;
-
-  a {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    img {
-      margin-top: 20px;
-    }
-  }
-  ul {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-    li {
-      margin: 20px 0px;
-      list-style: none;
-      color: $page-background;
-      cursor: pointer;
-      font-weight: 300;
-      &.selected-section {
-        border-left: 4px solid $page-background;
-      }
-
-      a {
-        color: $page-background;
-      }
-    }
-  }
-}
-
-//Side Nav End
 
 //Manager Start
 .manager {
