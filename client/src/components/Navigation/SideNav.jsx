@@ -5,7 +5,7 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //SVG
-import NavbarLogoSVG from "../SVG/NavbarLogoSVG";
+import LogoIconSVG from "../SVG/LogoIconSVG";
 import TaskSVG from "../SVG/TaskSVG";
 import PeopleSVG from "../SVG/PeopleSVG";
 
@@ -37,7 +37,7 @@ function SideNav(props) {
     <div className="side-nav">
       <div className="side-nav__top">
         <Link to="/">
-          <NavbarLogoSVG />
+          <LogoIconSVG />
         </Link>
       </div>
       <ul>
@@ -48,12 +48,14 @@ function SideNav(props) {
           </Link>
         </li>
         <li id="team-link">
-          <Link to="/teams">
-            <PeopleSVG /> Teams
+          <Link to="/team">
+            <PeopleSVG /> <span>Teams</span>
           </Link>
         </li>
         <li id="chatroom-link">
-          <Link to="/teams/chat">Team Chat</Link>
+          <Link to="/teams/chat">
+            <span>Team Chat</span>
+          </Link>
         </li>
       </ul>
     </div>

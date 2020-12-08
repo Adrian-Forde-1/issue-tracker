@@ -41,6 +41,7 @@ function Navbar(props) {
     document.querySelector(".nav-list").classList.toggle("nav-open");
     setNavOpen(!navOpen);
   };
+
   if (
     props.location.pathname === "/" ||
     props.location.pathname === "/login" ||

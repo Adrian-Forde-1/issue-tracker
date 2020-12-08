@@ -17,7 +17,6 @@ import Signup from "./components/Signup";
 import IsAuthenticated from "./components/IsAuthenticated";
 import Navbar from "./components/Navigation/Navbar";
 import { connect } from "react-redux";
-import AllTeams from "./components/Teams/AllTeams";
 import IndividualTeam from "./components/Teams/IndividualTeam";
 import CreateTeam from "./components/Teams/CreateTeam";
 import IndividualProject from "./components/Projects/IndividualProject";
@@ -40,6 +39,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import TeamChatLandingPage from "./components/Chat/TeamChatLandingPage";
 import ToastComponent from "./components/Toast/ToastComponent";
 import Profile from "./components/Profile/Profile";
+import TeamDashboard from "./components/Teams/TeamDashboard";
 
 class App extends Component {
   // toast.configure({
@@ -62,13 +62,13 @@ class App extends Component {
 
           <IsAuthenticated>
             {/* Team */}
+            <Route exact path="/create/team" component={CreateTeam} />
+            <Route path="/team" component={TeamDashboard} />
             <Route exact path="/teams/chat" component={TeamChatLandingPage} />
             <ErrorBoundary>
               <Route exact path="/teams/chat/:teamID" component={TeamChat} />
             </ErrorBoundary>
-            <Route exact path="/team/:teamId" component={IndividualTeam} />
-            <Route exact path="/create/team" component={CreateTeam} />
-            <Route exact path="/teams" component={AllTeams} />
+
             <Route
               exact
               path="/team/:teamId/archived"
