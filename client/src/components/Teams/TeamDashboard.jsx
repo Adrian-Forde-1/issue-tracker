@@ -14,8 +14,14 @@ import { getUserTeams } from "../../redux/actions/teamActions";
 //React Router DOM
 import { Link } from "react-router-dom";
 
+//SVG
+import ArchiveSVG from "../SVG/ArchiveSVG";
+import PlusSVG from "../SVG/PlusSVG";
+import PeopleWavingSVG from "../SVG/PeopleWavingSVG";
+
 //Compoenents
 import TeamPreview from "../Preview/TeamPreview";
+import CreateTeamProject from "./CreateTeamProject";
 import SearchBar from "../SearchBar";
 import SideNav from "../Navigation/SideNav";
 import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
@@ -43,10 +49,9 @@ function TeamDashboard(props) {
     }
   }, []);
 
-  useEffect(() => {
-    console.log(props.match.params);
-    if (props.match.params.teamId) setCurrentTeam(props.match.params.teamId);
-  }, [props.match.params]);
+  // useEffect(() => {
+  //   if (props.match.params.teamId) setCurrentTeam(props.match.params.teamId);
+  // }, [props.match.params]);
 
   useEffect(() => {
     setTeams(props.teams);
@@ -61,7 +66,18 @@ function TeamDashboard(props) {
       <Route exact path="/team">
         <h1>Teams stuff</h1>
       </Route>
-      <Route exact path="/team/:teamId" component={IndividualTeam} />
+      <Route
+        exact
+        path="/team/:teamId"
+        render={(props) => {
+          return <IndividualTeam {...props} setCurrentTeam={setCurrentTeam} />;
+        }}
+      />
+      <Route
+        exact
+        path="/team/:teamId/project/create"
+        component={CreateTeamProject}
+      />
       <Redirect to="/team" />
     </Switch>
   );
@@ -93,6 +109,19 @@ function TeamDashboard(props) {
                 <span>Chat</span>
               </div>
             </div>
+            {currentCategory === categories.Teams && (
+              <div className="teams__dashboard__quick-links-container">
+                <Link to={`/team/create`}>
+                  <PlusSVG />
+                </Link>
+                <Link to={`/team/join`}>
+                  <PeopleWavingSVG />
+                </Link>
+                <Link to={`/team/join`}>
+                  <ArchiveSVG />
+                </Link>
+              </div>
+            )}
             <div className="teams__dashboard-main-content-sidebar__team-list">
               {teams && teams.length > 0 && search === ""
                 ? teams.map((team) => (
@@ -122,13 +151,6 @@ function TeamDashboard(props) {
           </div>
           <div className="teams__dashboard-main-content-body">
             <Suspense fallback="Loading">{routes}</Suspense>
-            {/* <Route
-              exact
-              path="/team/:teamId"
-              render={(props) => {
-                return <IndividualTeam {...props} />;
-              }}
-            /> */}
           </div>
         </div>
       </div>

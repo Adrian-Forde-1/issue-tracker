@@ -74,11 +74,6 @@ class App extends Component {
               path="/team/:teamId/archived"
               component={ArchivedTeamProjects}
             />
-            <Route
-              exact
-              path="/team/:teamId/project/create"
-              component={CreateTeamProject}
-            />
             <Route exact path="/join/team" component={JoinTeam} />
 
             {/* Project */}

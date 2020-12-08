@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
-import { setErrors } from '../../redux/actions/userActions';
+import { setErrors } from "../../redux/actions/userActions";
 
 //Components
-import SideNav from '../Navigation/SideNav';
+import SideNav from "../Navigation/SideNav";
 
 class CreateTeamProject extends Component {
   constructor(props) {
@@ -18,8 +18,8 @@ class CreateTeamProject extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-      name: '',
-      description: '',
+      name: "",
+      description: "",
     };
   }
 
@@ -42,10 +42,10 @@ class CreateTeamProject extends Component {
 
     axios
       .post(
-        '/api/project',
+        "/api/project",
         { project: project },
         {
-          headers: { Authorization: localStorage.getItem('token') },
+          headers: { Authorization: localStorage.getItem("token") },
         }
       )
       .then(() => {
@@ -59,7 +59,7 @@ class CreateTeamProject extends Component {
   render() {
     return (
       <div className="form-container p-t-0">
-        <SideNav />
+        {/* <SideNav /> */}
         <div className="container p-l-175">
           <div className="auth-form">
             <h2>Create Project</h2>

@@ -290,6 +290,26 @@ module.exports = {
         return res.json(projects);
       });
   },
+  getProjectsForTeam: (req, res) => {
+    let errors = [];
+    const teamId = req.params.teamId;
+    //Find all projects created by a certain user
+    ProjectModel.find({
+      $and: [{ team: teamId }, { archived: false }],
+    })
+      .select(" _id name archived")
+      .exec(function (err, projects) {
+        //If something went wrong when fetching projects, notify user
+        if (err) {
+          errors.push("Error occured when retrieving projects");
+          console.error(err);
+          return res.status(500).json(errors);
+        }
+
+        //If everything went well, return projects
+        return res.json(projects);
+      });
+  },
   addLabel: (req, res) => {
     if (req.params.projectId) {
       if (req.body.label) {

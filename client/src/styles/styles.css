@@ -1183,7 +1183,7 @@ header::after {
   height: 100%;
   max-height: 100%;
   width: 20%;
-  border-right: 1px solid #0f003a;
+  border-right: 1px solid #d3d3d3;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1254,12 +1254,150 @@ header::after {
   height: 100%;
 }
 
+.teams__dashboard__quick-links-container {
+  width: 100%;
+  padding: 15px 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.teams__dashboard__quick-links-container a svg {
+  color: #0f003a;
+  font-size: 24px;
+}
+
+.teams__dashboard__quick-links-container a:hover svg {
+  color: #2e00b1;
+}
+
+.team__profile-wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 20px 0px 20px 20px;
+}
+
+.team__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 12%;
+}
+
+.team__header-content {
+  margin-left: 20px;
+}
+
+.team__img-container {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.team__img-container div {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #d3d3d3;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.team__img-container div span {
+  color: #0f003a;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.team__name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #2e00b1;
+  text-align: left;
+  font-size: 26px;
+  font-weight: 300;
+  margin-bottom: 0px;
+}
+
+.team__name i {
+  color: #0f003a;
+  font-size: 16px;
+  margin-left: 30px;
+  cursor: pointer;
+}
+
+.team__id {
+  color: #2e00b1;
+  font-weight: 300;
+  text-align: left;
+  font-size: 12px;
+  margin-bottom: 0px;
+}
+
+.team__id span {
+  color: #0f003a;
+}
+
+.team__projects {
+  width: 100%;
+  height: calc(88% - 70px);
+  margin-top: 30px;
+  padding-right: 20px;
+}
+
 .individual-container {
   width: 100%;
   background: #fdfcff;
   padding-left: 175px;
   position: relative;
-  border: 2px solid red;
 }
 
 .individual-container .containers {
@@ -1276,37 +1414,6 @@ header::after {
 
 .individual-container .preview {
   margin-left: 0px !important;
-}
-
-.team-name {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  color: #2e00b1;
-  text-align: left;
-  padding-top: 20px;
-  font-size: 34px;
-  font-weight: 300;
-}
-
-.team-name i {
-  color: #0f003a;
-  font-size: 16px;
-  margin-left: 30px;
-  cursor: pointer;
-}
-
-.team-id {
-  color: #2e00b1;
-  font-weight: 300;
-  text-align: left;
-}
-
-.team-id span {
-  color: #0f003a;
 }
 
 .dashboard-navbar {
@@ -1328,7 +1435,7 @@ header::after {
       -ms-flex-align: center;
           align-items: center;
   background: #fff;
-  border-bottom: 1px solid #0f003a;
+  border-bottom: 1px solid #d3d3d3;
 }
 
 .dashboard-navbar__logo {
@@ -1398,7 +1505,7 @@ header::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid #d3d3d3;
   padding-bottom: 10px;
 }
 
@@ -1685,6 +1792,8 @@ header::after {
 }
 
 .team-preview a {
+  width: 100%;
+  height: 100%;
   font-size: 14px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1709,6 +1818,72 @@ header::after {
 .team-preview:hover a span,
 .team-preview:hover span i, .team-preview.selected a span,
 .team-preview.selected span i {
+  color: #fff;
+}
+
+.project-preview {
+  width: 100%;
+  border: 1px solid #0f003a;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 5px 20px;
+  border-radius: 50px;
+  margin-top: 10px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.project-preview::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: #0f003a;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+
+.project-preview a {
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.project-preview a span {
+  color: #0f003a;
+}
+
+.project-preview:hover::after, .project-preview.selected::after {
+  -webkit-transform: translateY(0%);
+          transform: translateY(0%);
+}
+
+.project-preview:hover a span,
+.project-preview:hover i, .project-preview.selected a span,
+.project-preview.selected i {
   color: #fff;
 }
 

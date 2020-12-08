@@ -1,45 +1,47 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 
 //React Router DOM
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link } from "react-router-dom";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
-import { setErrors } from '../../redux/actions/userActions';
+import { setErrors } from "../../redux/actions/userActions";
 
 import {
   showModal,
   setDeleteItem,
   setItemType,
   setCurrentLocation,
-} from '../../redux/actions/modalActions';
+} from "../../redux/actions/modalActions";
 
 import {
   getUserProjects,
   setProjects,
-} from '../../redux/actions/projectActions';
+} from "../../redux/actions/projectActions";
 
-import { getUserTeams, setTeamUpdated } from '../../redux/actions/teamActions';
+import { getUserTeams, setTeamUpdated } from "../../redux/actions/teamActions";
 
 function ProjectPreview(props) {
   const { project } = props;
 
   const deleteModal = () => {
     props.setDeleteItem(project);
-    props.setItemType('project');
-    props.setCurrentLocation(props.history.location.pathname.split('/'));
+    props.setItemType("project");
+    props.setCurrentLocation(props.history.location.pathname.split("/"));
     props.showModal();
   };
   return (
-    <div className="preview">
+    <div className="project-preview">
       {/* <Link to={`/project/${project._id}`}>
         <h6>{project.name}</h6>
       </Link> */}
 
-      <Link to={`/project/${project._id}`}>{project.name}</Link>
+      <Link to={`/project/${project._id}`}>
+        <span>{project.name}</span>
+      </Link>
 
       <i
         className={`fas fa-archive archive-btn ${props.extraIconClass}`}
@@ -48,7 +50,7 @@ function ProjectPreview(props) {
             axios
               .put(`/api/project/${project._id}/archive/add`, null, {
                 headers: {
-                  Authorization: localStorage.getItem('token'),
+                  Authorization: localStorage.getItem("token"),
                 },
               })
               .then(() => {
@@ -58,11 +60,11 @@ function ProjectPreview(props) {
                   axios
                     .get(`/api/project/${project._id}`, {
                       headers: {
-                        Authorization: localStorage.getItem('token'),
+                        Authorization: localStorage.getItem("token"),
                       },
                     })
                     .then(() => {
-                      props.getUserProjects(localStorage.getItem('token'));
+                      props.getUserProjects(localStorage.getItem("token"));
                     })
                     .catch((error) => {
                       props.setErrors(error.response.data);
@@ -72,13 +74,13 @@ function ProjectPreview(props) {
               })
               .catch((error) => {
                 props.setErrors(error.response.data);
-                props.history.location('/projects');
+                props.history.location("/projects");
               });
           } else {
             axios
               .put(`/api/project/${project._id}/archive/remove`, null, {
                 headers: {
-                  Authorization: localStorage.getItem('token'),
+                  Authorization: localStorage.getItem("token"),
                 },
               })
               .then(() => {
@@ -86,7 +88,7 @@ function ProjectPreview(props) {
               })
               .catch((error) => {
                 props.setErrors(error);
-                props.history.location('/projects/archived');
+                props.history.location("/projects/archived");
               });
           }
         }}

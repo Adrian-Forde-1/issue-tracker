@@ -62,6 +62,7 @@ const {
   addToArchive,
   removeFromArchive,
   getArchivedProjects,
+  getProjectsForTeam,
 } = require("../controller/projectController");
 
 //Bug Controller Imports
@@ -99,17 +100,18 @@ router.put(
 
 //Team Routes
 // router.get('/projectsFromTeam/:teamId', passportJWT, getProjectsFromTeam);
-router.get("/team/:teamId", passportJWT, getTeam);
+router.post("/team", passportJWT, createTeam);
 router.get("/teams", passportJWT, getTeams);
+router.get("/team/:teamId", passportJWT, getTeam);
+router.get("/team/projects/:teamId", passportJWT, getProjectsForTeam);
+router.put("/leave/team/:teamId", passportJWT, leaveTeam);
+router.delete("/team/:teamId", passportJWT, deleteTeam);
+router.post("/join/team", passportJWT, joinTeam);
 router.get(
   "/team/:teamId/projects/archived",
   passportJWT,
   getArchivedTeamProjects
 );
-router.post("/team", passportJWT, createTeam);
-router.put("/leave/team/:teamId", passportJWT, leaveTeam);
-router.delete("/team/:teamId", passportJWT, deleteTeam);
-router.post("/join/team", passportJWT, joinTeam);
 
 //Project Routes
 router.get("/project/:projectId", passportJWT, getProject);

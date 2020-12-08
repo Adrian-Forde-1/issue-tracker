@@ -8,6 +8,8 @@
   margin-top: 10px;
 
   a {
+    width: 100%;
+    height: 100%;
     font-size: 14px;
     display: flex;
     justify-content: space-between;
@@ -25,6 +27,60 @@
 
     a span,
     span i {
+      color: #fff;
+    }
+  }
+}
+
+.project-preview {
+  width: 100%;
+  border: 1px solid $text-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+  border-radius: 50px;
+  margin-top: 10px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+
+  &::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: $text-color;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transform: translateY(100%);
+    transition: all 200ms ease-in-out;
+  }
+
+  a {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    span {
+      color: $text-color;
+    }
+  }
+
+  &:hover,
+  &.selected {
+    // background: $text-color;
+    &::after {
+      transform: translateY(0%);
+    }
+
+    a span,
+    i {
       color: #fff;
     }
   }

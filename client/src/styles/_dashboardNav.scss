@@ -19,7 +19,7 @@ $page-background: #fdfcff;
   justify-content: space-between;
   align-items: center;
   background: #fff;
-  border-bottom: 1px solid $text-color;
+  border-bottom: 1px solid #d3d3d3;
 
   &__logo {
     font-size: 26px;
@@ -73,7 +73,7 @@ $page-background: #fdfcff;
       display: flex;
       justify-content: center;
       align-items: center;
-      border-bottom: 1px solid #dedede;
+      border-bottom: 1px solid #d3d3d3;
       padding-bottom: 10px;
       &-left,
       &-right {
@@ -170,8 +170,6 @@ $page-background: #fdfcff;
   align-items: center;
   padding: 0px 5%;
   z-index: 1000;
-  // border-bottom: 1px solid $primary-color;
-  // box-shadow: 1px 1px 2px $primary-color;
   background: $text-color;
 
   i {
