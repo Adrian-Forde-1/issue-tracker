@@ -7,6 +7,7 @@
 @import "team";
 @import "dashboardNav";
 @import "preview";
+@import "standardForm";
 
 $red-color: #ff0000;
 $primary-color: #2e00b1;
@@ -1125,17 +1126,6 @@ span[id*="bug-status-"] {
     width: 100%;
     right: 0;
     padding: 0px 15px;
-  }
-
-  .side-nav {
-    height: 95vh;
-    margin-top: 6vh;
-    transform: translateX(-175px);
-    transition: all 300ms ease-in-out;
-
-    &.nav-open {
-      transform: translateX(0px);
-    }
   }
 
   .manager-section {

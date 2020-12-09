@@ -17,10 +17,10 @@ const DashboardNavbar = (props) => {
 
   return (
     <div className="dashboard-navbar">
-      <ul className="nav-list">
-        <div className="navbar__right-container">
+      <ul className="dashboard-navbar__nav-list">
+        <div className="dashboard-navbar__right-container">
           <div
-            className="navbar__profile-pic"
+            className="dashboard-navbar__profile-pic"
             onClick={() => {
               if (document.querySelector("#navbar-dropdown")) {
                 document
@@ -31,14 +31,17 @@ const DashboardNavbar = (props) => {
           >
             {renderImage()}
           </div>
-          <div className="navbar__right-dropdown" id="navbar-dropdown">
-            <div className="navbar__right-dropdown__account-info">
-              <div className="navbar__right-dropdown__account-info-left">
-                <div className="navbar__right-dropdown__account-info-left__profile-pic">
+          <div
+            className="dashboard-navbar__right-dropdown"
+            id="navbar-dropdown"
+          >
+            <div className="dashboard-navbar__right-dropdown__account-info">
+              <div className="dashboard-navbar__right-dropdown__account-info-left">
+                <div className="dashboard-navbar__right-dropdown__account-info-left__profile-pic">
                   {renderImage()}
                 </div>
               </div>
-              <div className="navbar__right-dropdown__account-info-right">
+              <div className="dashboard-navbar__right-dropdown__account-info-right">
                 <span>{props.user.username}</span>
                 <span>{props.user.email}</span>
               </div>

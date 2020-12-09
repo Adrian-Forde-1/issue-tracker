@@ -27,6 +27,10 @@ import {
   setCurrentLocation,
 } from "../../redux/actions/modalActions";
 
+//SVG
+import ArchiveSVG from "../SVG/ArchiveSVG";
+import PlusSVG from "../SVG/PlusSVG";
+
 //Components
 import AllTeamProjects from "./AllTeamProjects";
 import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
@@ -35,9 +39,17 @@ import SearchBar from "../SearchBar";
 function IndividualTeam(props) {
   const [team, setTeam] = useState({});
   const [search, setSearch] = useState("");
-  const teamId = props.match.params.teamId;
+  const [teamId, setTeamId] = useState(props.match.params.teamId);
 
   useEffect(() => {
+    if (props.match.params.teamId) setTeamId(props.match.params.teamId);
+  }, [props.match.params]);
+
+  useEffect(() => {
+    getTeam();
+  }, [teamId]);
+
+  const getTeam = () => {
     axios
       .get(`/api/team/${teamId}`, {
         headers: { Authorization: localStorage.getItem("token") },
@@ -52,7 +64,7 @@ function IndividualTeam(props) {
         props.setErrors(error);
         props.history.goBack();
       });
-  }, []);
+  };
 
   const handleSearchChange = (e) => {
     sessionStorage.setItem("project-search", e.target.value);
@@ -137,10 +149,20 @@ function IndividualTeam(props) {
                 {team._id}
               </p>
             </div>
+            <div className="team__header-actions-container">
+              <div>
+                <Link to={`/team/${teamId}/project/create`}>
+                  <PlusSVG />
+                </Link>
+              </div>
+              <div>
+                <ArchiveSVG />
+              </div>
+            </div>
           </div>
 
           <div className="team__projects">
-            <AllTeamProjects search={search} />
+            <AllTeamProjects search={search} teamId={teamId} />
           </div>
         </React.Fragment>
       )}

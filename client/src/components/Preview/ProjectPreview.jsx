@@ -39,7 +39,11 @@ function ProjectPreview(props) {
         <h6>{project.name}</h6>
       </Link> */}
 
-      <Link to={`/project/${project._id}`}>
+      <Link
+        to={`${props.teamProject ? "/team/project/" : "/project/"}${
+          project._id
+        }`}
+      >
         <span>{project.name}</span>
       </Link>
 

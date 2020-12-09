@@ -26,6 +26,7 @@ import SearchBar from "../SearchBar";
 import SideNav from "../Navigation/SideNav";
 import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 import DashboardNavbar from "../Navigation/DashboardNavbar";
+import IndividualProject from "../Projects/IndividualProject";
 
 const IndividualTeam = lazy(() => {
   return import("./IndividualTeam");
@@ -45,7 +46,6 @@ function TeamDashboard(props) {
     props.getUserTeams(localStorage.getItem("token"));
     if (props.teams && props.teams.length > 0) {
       setTeams(props.teams);
-      setCurrentTeam(props.teams[0]._id);
     }
   }, []);
 
@@ -72,6 +72,11 @@ function TeamDashboard(props) {
         render={(props) => {
           return <IndividualTeam {...props} setCurrentTeam={setCurrentTeam} />;
         }}
+      />
+      <Route
+        exact
+        path="/team/project/:projectId"
+        component={IndividualProject}
       />
       <Route
         exact

@@ -1,0 +1,115 @@
+@import "variables";
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+.standard-form {
+  &__wrapper {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    background: #fff;
+  }
+
+  &__header {
+    height: calc(15% - 8px);
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    border-bottom: 1px solid $light-grey;
+
+    &-img-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+
+      &-gradient {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          rgba(46, 0, 177, 0.7),
+          rgba(15, 0, 58, 0.7)
+        );
+      }
+    }
+
+    h2 {
+      z-index: 10px;
+      color: $text-color;
+      margin-left: 20px;
+      margin-bottom: 0px;
+    }
+  }
+
+  &__body {
+    width: 100%;
+    height: 85%;
+    max-height: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      input,
+      textarea {
+        width: 100%;
+        border: none;
+        background: $light-grey3;
+        padding: 5px;
+      }
+
+      textarea {
+        resize: none;
+        height: 200px;
+      }
+
+      button {
+        border: none;
+        padding: 6px 20px;
+        background: $primary-color;
+        color: #fff;
+
+        &:hover {
+          filter: brightness(70%);
+        }
+      }
+    }
+  }
+
+  &__input-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 30px;
+
+    label {
+      font-size: 14px;
+      color: $text-color;
+    }
+  }
+}

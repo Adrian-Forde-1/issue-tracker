@@ -4,6 +4,7 @@
   &__dashboard {
     &-wrapper {
       width: 100%;
+      min-height: 100vh;
       height: 100%;
       display: flex;
       justify-content: flex-start;
@@ -21,7 +22,7 @@
       max-height: 100vh;
 
       &-container {
-        height: 100%;
+        height: calc(100% - 7vh);
         width: 100%;
         display: flex;
         justify-content: flex-start;
@@ -80,7 +81,8 @@
 
     &__quick-links-container {
       width: 100%;
-      padding: 15px 50px;
+      height: 10%;
+      padding: 0px 50px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -123,6 +125,29 @@
 
     &-content {
       margin-left: 20px;
+    }
+
+    &-actions-container {
+      margin-left: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-right: 35px;
+
+      div {
+        cursor: pointer;
+        margin-left: 42px;
+        svg {
+          font-size: 24px;
+          color: $text-color;
+        }
+
+        &:hover {
+          svg {
+            color: $primary-color;
+          }
+        }
+      }
     }
   }
 
@@ -206,5 +231,26 @@
 
   .preview {
     margin-left: 0px !important;
+  }
+}
+
+@media screen and(max-width: 992px) {
+  .teams {
+    &__dashboard {
+      &-wrapper {
+        flex-direction: column;
+      }
+      &-main-content {
+        width: 100%;
+        height: calc(100vh - 50px);
+        order: 1;
+      }
+
+      &-side-nav {
+        width: 100%;
+        height: 50px;
+        order: 2;
+      }
+    }
   }
 }

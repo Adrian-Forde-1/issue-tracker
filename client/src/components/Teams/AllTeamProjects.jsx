@@ -24,10 +24,9 @@ function AllTeamProjects(props) {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    const teamId = props.match.params.teamId;
     console.log("Calling api");
     axios
-      .get(`/api/team/projects/${teamId}`, {
+      .get(`/api/team/projects/${props.teamId}`, {
         headers: { Authorization: localStorage.getItem("token") },
       })
       .then((response) => {
@@ -73,7 +72,13 @@ function AllTeamProjects(props) {
       {projects && projects.length > 0 && props.search === ""
         ? projects.map((project) => {
             if (project.archived === false) {
-              return <ProjectPreview project={project} key={project._id} />;
+              return (
+                <ProjectPreview
+                  project={project}
+                  key={project._id}
+                  teamProject={true}
+                />
+              );
             }
           })
         : projects.map((project) => {
@@ -82,7 +87,13 @@ function AllTeamProjects(props) {
                 -1 &&
               project.archived === false
             )
-              return <ProjectPreview project={project} key={project._id} />;
+              return (
+                <ProjectPreview
+                  project={project}
+                  key={project._id}
+                  teamProject={true}
+                />
+              );
           })}
     </div>
   );

@@ -52,11 +52,11 @@ function SideNav(props) {
             <PeopleSVG /> <span>Teams</span>
           </Link>
         </li>
-        <li id="chatroom-link">
+        {/* <li id="chatroom-link">
           <Link to="/teams/chat">
             <span>Team Chat</span>
           </Link>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
