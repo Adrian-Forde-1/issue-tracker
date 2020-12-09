@@ -69,7 +69,7 @@ function Homepage(props) {
                     <Link to="/projects" className="main-header-link">
                       Projects
                     </Link>
-                    <Link to="/teams" className="main-header-link">
+                    <Link to="/team" className="main-header-link">
                       Teams
                     </Link>
                   </div>

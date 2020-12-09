@@ -64,14 +64,6 @@ class CreateTeamProject extends Component {
       <div className="standard-form__wrapper">
         {/* <SideNav /> */}
         <div className="standard-form__header">
-          {/* <div className="standard-form__header-img-container">
-            <img
-              src={codeImgBlur}
-              alt="code with a section in the shape of a donut blurred out"
-            />
-            <div className="standard-form__header-img-container-gradient"></div>
-          </div> */}
-
           <h2>Create Project</h2>
         </div>
         <div className="standard-form__body">

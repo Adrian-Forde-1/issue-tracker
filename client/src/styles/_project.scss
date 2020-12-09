@@ -1,0 +1,68 @@
+@import "variables";
+
+.project {
+  &__wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  &__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__name {
+    font-size: 24px;
+    color: $text-color;
+  }
+
+  &__description {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Montserrat", sans-serif;
+  }
+
+  &__action-buttons-container {
+    margin-left: auto;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    div {
+      margin-right: 45px;
+
+      &:last-of-type {
+        margin-right: 0px;
+      }
+    }
+
+    div {
+      cursor: pointer;
+      svg,
+      a svg {
+        font-size: 24px;
+        color: $text-color;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  &__issues-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+}

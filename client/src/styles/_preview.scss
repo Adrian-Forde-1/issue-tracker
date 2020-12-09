@@ -6,6 +6,21 @@
   padding: 5px 20px;
   border-radius: 50px;
   margin-top: 10px;
+  overflow: hidden;
+  position: relative;
+
+  &::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: $text-color;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transform: translateY(100%);
+    transition: all 200ms ease-in-out;
+  }
 
   a {
     width: 100%;
@@ -23,7 +38,9 @@
 
   &:hover,
   &.selected {
-    background: $text-color;
+    &::after {
+      transform: translateY(0%);
+    }
 
     a span,
     span i {
@@ -74,7 +91,6 @@
 
   &:hover,
   &.selected {
-    // background: $text-color;
     &::after {
       transform: translateY(0%);
     }
@@ -82,6 +98,111 @@
     a span,
     i {
       color: #fff;
+    }
+  }
+}
+
+.issue-preview {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  padding: 5px 20px;
+  background: $page-background;
+  overflow: hidden;
+
+  span[id*="bug-status-"] {
+    line-height: 45px;
+  }
+
+  i {
+    &:nth-last-child(1) {
+      cursor: pointer;
+    }
+    margin-left: auto;
+  }
+
+  &__wrapper {
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid $text-color;
+    width: 100%;
+    transition: all 200ms ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: -2px 2px 2px 2px $light-grey;
+      border-color: transparent;
+    }
+  }
+
+  &__first-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    align-items: center;
+  }
+
+  &__second-div {
+    display: grid;
+    grid-template-columns: 11fr 1fr;
+    align-items: center;
+  }
+
+  &__name {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: $primary-color;
+    line-height: 45px;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  &__description {
+    color: $text-color;
+    width: auto;
+    text-align: left;
+    position: relative;
+    margin: auto 0px;
+    font-weight: 300;
+    font-size: 14px;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &__label {
+    min-width: 180px;
+    max-width: auto;
+    text-align: center;
+    display: block;
+    color: white;
+    white-space: nowrap;
+    padding: 1px 15px;
+    border-radius: 75px;
+
+    &:last-of-type {
+      margin-right: 20px;
+    }
+  }
+
+  &__status {
+    display: inline-block;
+    width: fit-content;
+    margin-left: auto;
+    text-align: center;
+    i {
+      text-align: center;
+      margin: auto;
     }
   }
 }

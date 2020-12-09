@@ -27,6 +27,7 @@ import SideNav from "../Navigation/SideNav";
 import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 import DashboardNavbar from "../Navigation/DashboardNavbar";
 import IndividualProject from "../Projects/IndividualProject";
+import NewIssue from "../Issues/NewIssue";
 
 const IndividualTeam = lazy(() => {
   return import("./IndividualTeam");
@@ -76,7 +77,18 @@ function TeamDashboard(props) {
       <Route
         exact
         path="/team/project/:projectId"
-        component={IndividualProject}
+        render={(props) => {
+          return (
+            <IndividualProject {...props} setCurrentTeam={setCurrentTeam} />
+          );
+        }}
+      />
+      <Route
+        exact
+        path="/team/project/:projectId/new/bug"
+        render={(props) => {
+          return <NewIssue {...props} setCurrentTeam={setCurrentTeam} />;
+        }}
       />
       <Route
         exact

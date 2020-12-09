@@ -24,9 +24,9 @@ import CreateProject from "./components/Projects/CreateProject";
 import Labels from "./components/Labels/Labels";
 import EditLabel from "./components/Labels/EditLabel";
 import AddLabel from "./components/Labels/AddLabel";
-import IndividualBug from "./components/Bugs/IndividualBug";
-import NewBug from "./components/Bugs/NewBug";
-import EditBug from "./components/Bugs/EditBug";
+import IndividualBug from "./components/Issues/IndividualBug";
+import NewIssue from "./components/Issues/NewIssue";
+import EditBug from "./components/Issues/EditBug";
 import AllProjects from "./components/Projects/AllProjects";
 import ArchivedProjects from "./components/Projects/ArchivedProjects";
 import ArchivedTeamProjects from "./components/Projects/ArchivedTeamProjects";
@@ -119,7 +119,7 @@ class App extends Component {
             <Route
               exact
               path="/project/:projectId/new/bug"
-              component={NewBug}
+              component={NewIssue}
             />
             <Route
               exact

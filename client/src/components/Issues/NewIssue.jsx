@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //React Router DOM
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 //Actions
-import { getUserProjects } from '../../redux/actions/projectActions';
-import { setErrors } from '../../redux/actions/userActions';
+import { getUserProjects } from "../../redux/actions/projectActions";
+import { setErrors } from "../../redux/actions/userActions";
 
 //Components
-import SideNav from '../Navigation/SideNav';
-import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
+import SideNav from "../Navigation/SideNav";
+import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 
-class NewBug extends Component {
+class NewIssue extends Component {
   constructor(props) {
     super(props);
 
@@ -26,8 +26,8 @@ class NewBug extends Component {
 
     this.state = {
       project: {},
-      name: '',
-      description: '',
+      name: "",
+      description: "",
       members: [],
       assignedMembers: [],
       labels: [],
@@ -39,30 +39,39 @@ class NewBug extends Component {
 
     axios
       .get(`/api/project/${projectId}`, {
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: localStorage.getItem("token") },
       })
       .then((response) => {
-        const responseProject = response.data;
+        if (response && response.data) {
+          const responseProject = response.data;
 
-        this.setState({
-          project: responseProject,
-        });
+          this.setState({
+            project: responseProject,
+          });
 
-        //If project is in a team, get all the members from that team
-        if (response.data.team !== null) {
-          axios
-            .get(`/api/team/${response.data.team}`, {
-              headers: { Authorization: localStorage.getItem('token') },
-            })
-            .then((response) => {
-              this.setState({
-                members: response.data.users,
+          //If project is in a team, get all the members from that team
+          if (response.data.team !== null) {
+            axios
+              .get(`/api/team/${response.data.team}`, {
+                headers: { Authorization: localStorage.getItem("token") },
+              })
+              .then((response) => {
+                this.setState({
+                  members: response.data.users,
+                });
+              })
+              .catch((error) => {
+                this.props.setErrors(error);
+                this.props.history.goBack();
               });
-            })
-            .catch((error) => {
-              this.props.setErrors(error);
-              this.props.history.goBack();
-            });
+          }
+
+          if (
+            this.props.match.params &&
+            this.props.match.params.toString().indexOf("team" > -1)
+          ) {
+            this.props.setCurrentTeam(response.data.team);
+          }
         }
       })
       .catch((error) => {
@@ -115,7 +124,7 @@ class NewBug extends Component {
   };
 
   handleLabelChange = (e) => {
-    console.log('Label changed');
+    console.log("Label changed");
     if (e.target.checked) {
       const label = this.state.project.labels.find(
         (label) => label._id.toString() === e.target.value.toString()
@@ -137,7 +146,7 @@ class NewBug extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const bug = {
+    const issue = {
       name: this.state.name,
       description: this.state.description,
       labels: this.state.labels,
@@ -147,12 +156,12 @@ class NewBug extends Component {
 
     axios
       .post(
-        '/api/bug',
-        { bug: bug },
-        { headers: { Authorization: localStorage.getItem('token') } }
+        "/api/issue",
+        { issue: issue },
+        { headers: { Authorization: localStorage.getItem("token") } }
       )
       .then(() => {
-        this.props.getUserProjects(localStorage.getItem('token'));
+        this.props.getUserProjects(localStorage.getItem("token"));
         this.props.history.goBack();
       })
       .catch((error) => {
@@ -162,48 +171,52 @@ class NewBug extends Component {
   };
   render() {
     return (
-      <div>
-        <SideNav />
-        <ProjectsTeamsHamburger />
-        <div className="form-container">
-          <div className="container p-l-175">
-            <div className="auth-form">
-              <h2>New Bug</h2>
-              <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
+      <div className="standard-form__wrapper">
+        <div className="standard-form__header">
+          <h2>New Issue</h2>
+        </div>
+        <div className="standard-form__body  standard-form__body--no-padding">
+          <form onSubmit={this.handleSubmit}>
+            <div className="standard-form__split-double">
+              <section>
+                <div className="standard-form__input-container">
                   <label htmlFor="name">Name</label>
-                  <br />
                   <input
                     type="text"
                     name="name"
                     value={this.state.name}
                     onChange={this.handleChange}
                     maxLength="60"
+                    autoComplete="off"
                     required
                   />
                 </div>
-                <div className="form-group">
+                <div className="standard-form__input-container standard-form__input-container--fill">
                   <label htmlFor="description">Description</label>
-                  <br />
                   <textarea
                     type="text"
+                    className="standard-form__input-container-textarea standard-form__input-container-textarea--fill"
                     name="description"
                     maxLength="500"
+                    autoComplete="off"
                     value={this.state.description}
                     onChange={this.handleChange}
                     required
                   />
                 </div>
-                <div className="form-group mb-0">
+                <button className="standard-form__btn">Add Issue</button>
+              </section>
+              <section>
+                <div className="standard-form__input-container">
                   <label htmlFor="">Labels</label>
                 </div>
                 {this.state.project.labels &&
                   this.state.project.labels.map((label, index) => (
-                    <div className="form-check" key={index}>
+                    <div className="standard-form__input-container" key={index}>
                       <label
                         htmlFor={`check${index}`}
                         className="form-check-label check-label"
-                        style={{ background: `${label.color}`, color: 'white' }}
+                        style={{ background: `${label.color}`, color: "white" }}
                       >
                         {label.name}
                         <input
@@ -217,19 +230,22 @@ class NewBug extends Component {
                     </div>
                   ))}
 
-                {this.state.project['team'] && this.state.members.length > 0 && (
-                  <div className="form-group mb-0">
+                {this.state.project["team"] && this.state.members.length > 0 && (
+                  <div className="standard-form__input-container">
                     <label htmlFor="">Assign Members</label>
                   </div>
                 )}
 
                 {this.state.members &&
                   this.state.members.map((member, index) => (
-                    <div className="form-check" key={member._id}>
+                    <div
+                      className="standard-form__input-container"
+                      key={member._id}
+                    >
                       <label
                         htmlFor={`check${member._id}`}
                         className="form-check-label check-label"
-                        style={{ background: `#2e00b1`, color: 'white' }}
+                        style={{ background: `#2e00b1`, color: "white" }}
                       >
                         {member.username}
                         <input
@@ -242,10 +258,9 @@ class NewBug extends Component {
                       </label>
                     </div>
                   ))}
-                <button className="submit-btn">Add Bug</button>
-              </form>
+              </section>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     );
@@ -257,4 +272,4 @@ const mapDispatchToProps = {
   getUserProjects,
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(NewBug));
+export default connect(null, mapDispatchToProps)(withRouter(NewIssue));

@@ -24,7 +24,10 @@ function AllTeamProjects(props) {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    console.log("Calling api");
+    getProjects();
+  }, [props.teamId]);
+
+  const getProjects = () => {
     axios
       .get(`/api/team/projects/${props.teamId}`, {
         headers: { Authorization: localStorage.getItem("token") },
@@ -41,7 +44,7 @@ function AllTeamProjects(props) {
       });
 
     props.getUserTeams(props.userId);
-  }, []);
+  };
 
   // useEffect(() => {
   //   if (props.teamUpdated === true) {

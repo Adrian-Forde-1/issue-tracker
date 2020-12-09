@@ -8,6 +8,8 @@
 @import "dashboardNav";
 @import "preview";
 @import "standardForm";
+@import "project";
+@import "bug";
 
 $red-color: #ff0000;
 $primary-color: #2e00b1;
@@ -616,105 +618,6 @@ a {
 //Label End
 
 //Bug Start
-
-.bug-preview-container {
-  // border: 1px solid $primary-color;
-  display: flex;
-  position: relative;
-  height: fit-content;
-  margin-bottom: 20px;
-  width: 100%;
-  div {
-    height: fit-content;
-    width: 100%;
-    border: none;
-    background: none;
-  }
-}
-.bug-preview {
-  height: 45px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: center;
-  padding: 5px 20px;
-  background: $page-background;
-  box-shadow: 1px 1px 2px grey;
-  overflow: hidden;
-  margin: 0px 20px 0px 0px;
-
-  .bug-preview-first-div {
-    display: grid;
-    gap: 5px;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    align-items: center;
-  }
-  .bug-preview-second-div {
-    display: grid;
-    grid-template-columns: 11fr 1fr;
-    align-items: center;
-  }
-
-  i {
-    &:nth-last-child(1) {
-      cursor: pointer;
-    }
-    margin-left: auto;
-  }
-}
-
-span[id*="bug-status-"] {
-  line-height: 45px;
-}
-
-.bug-name {
-  width: auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: $primary-color;
-  line-height: 45px;
-  text-align: left;
-  margin-bottom: 0px;
-  margin-right: 20px;
-  cursor: pointer;
-}
-
-.bug-description {
-  color: $text-color;
-  width: auto;
-  text-align: left;
-  position: relative;
-  margin: auto 0px;
-  font-weight: 300;
-  position: relative;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.bug-label {
-  min-width: 180px;
-  max-width: auto;
-  text-align: center;
-  border: 5px solid red;
-  display: block;
-  color: white;
-  white-space: nowrap;
-  padding: 1px 15px;
-  border-radius: 75px;
-}
-
-.bug-status {
-  display: inline-block;
-  width: fit-content;
-  padding: 0px 20px;
-  text-align: center;
-  i {
-    text-align: center;
-    margin: auto;
-  }
-}
 
 .bug-title {
   display: flex;
