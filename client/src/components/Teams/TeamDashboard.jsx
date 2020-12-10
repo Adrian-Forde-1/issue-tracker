@@ -93,7 +93,11 @@ function TeamDashboard(props) {
       <Route
         exact
         path="/team/:teamId/project/create"
-        component={CreateTeamProject}
+        render={(props) => {
+          return (
+            <CreateTeamProject {...props} setCurrentTeam={setCurrentTeam} />
+          );
+        }}
       />
       <Redirect to="/team" />
     </Switch>

@@ -10,9 +10,6 @@ module.exports = {
       let errors = {};
 
       const team = req.body.project.teamId || null;
-      console.log("||||||||||||||||||| Team Id |||||||||||||||||||");
-      console.log(team);
-
       const defaultLabels = [
         {
           name: "Need Help",

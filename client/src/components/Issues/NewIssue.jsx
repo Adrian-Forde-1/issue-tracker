@@ -139,7 +139,7 @@ const NewIssue = (props) => {
       <div className="standard-form__header">
         <h2>New Issue</h2>
       </div>
-      <div className="standard-form__body  standard-form__body--no-padding">
+      <div className="standard-form__body standard-form__body--no-padding">
         <form
           onSubmit={(e) => {
             handleSubmit(e);
@@ -189,10 +189,7 @@ const NewIssue = (props) => {
                   </Tooltip>
                 </div>
                 <div
-                  className={`standard-form__input-container__description-info ${
-                    showPreview && "active"
-                  }`}
-                  onClick={() => setShowPreview(!showPreview)}
+                  className={`standard-form__input-container__description-info`}
                 >
                   <Tooltip
                     title="You can use markdown in your description"
