@@ -19,12 +19,12 @@ import Navbar from "./components/Navigation/Navbar";
 import { connect } from "react-redux";
 import IndividualTeam from "./components/Teams/IndividualTeam";
 import CreateTeam from "./components/Teams/CreateTeam";
-import IndividualProject from "./components/Projects/IndividualProject";
+import Project from "./components/Projects/Project";
 import CreateProject from "./components/Projects/CreateProject";
 import Labels from "./components/Labels/Labels";
 import EditLabel from "./components/Labels/EditLabel";
 import AddLabel from "./components/Labels/AddLabel";
-import IndividualBug from "./components/Issues/IndividualBug";
+import Issue from "./components/Issues/Issue";
 import NewIssue from "./components/Issues/NewIssue";
 import EditBug from "./components/Issues/EditBug";
 import AllProjects from "./components/Projects/AllProjects";
@@ -80,11 +80,7 @@ class App extends Component {
             <ErrorBoundary>
               <Route exact path="/projects" component={AllProjects} />
             </ErrorBoundary>
-            <Route
-              exact
-              path="/project/:projectId"
-              component={IndividualProject}
-            />
+            <Route exact path="/project/:projectId" component={Project} />
             <Route
               exact
               path="/project/:projectId/edit"
@@ -110,20 +106,20 @@ class App extends Component {
               component={AddLabel}
             />
 
-            {/* Bug */}
+            {/* Issue */}
             <Route
               exact
-              path="/project/:projectId/bug/:bugId"
-              component={IndividualBug}
+              path="/project/:projectId/issue/:issueId"
+              component={Issue}
             />
             <Route
               exact
-              path="/project/:projectId/new/bug"
+              path="/project/:projectId/new/issue"
               component={NewIssue}
             />
             <Route
               exact
-              path="/project/:projectId/bug/:bugId/edit"
+              path="/project/:projectId/issue/:issueId/edit"
               component={EditBug}
             />
           </IsAuthenticated>

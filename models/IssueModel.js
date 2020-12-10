@@ -8,7 +8,6 @@ const issueSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
-    maxlength: 500,
   },
   status: {
     type: Object,

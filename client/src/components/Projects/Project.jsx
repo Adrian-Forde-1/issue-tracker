@@ -14,9 +14,6 @@ import { Link } from "react-router-dom";
 //Redux
 import { connect } from "react-redux";
 
-//SVG
-import CaretDownNoFillSVG from "../SVG/CaretDownNoFillSVG";
-
 //Actions
 import {
   getUserProjects,
@@ -36,6 +33,7 @@ import ArchiveSVG from "../SVG/ArchiveSVG";
 import UnarchiveSVG from "../SVG/UnarchiveSVG";
 import TrashSVG from "../SVG/TrashSVG";
 import EditSVG from "../SVG/EditSVG";
+import CaretDownNoFillSVG from "../SVG/CaretDownNoFillSVG";
 
 //Components
 import SearchBar from "../SearchBar";
@@ -43,7 +41,7 @@ import IssuePreview from "../Preview/IssuePreview";
 import SideNav from "../Navigation/SideNav";
 import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 
-const IndividualProject = (props) => {
+const Project = (props) => {
   const [project, changeProject] = useState({});
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
@@ -196,7 +194,7 @@ const IndividualProject = (props) => {
       </div> */}
       {Object.keys(project).length > 0 && (
         <React.Fragment>
-          <h2 className="project__header">
+          <div className="project__header">
             <div className="project__name">{project.name}</div>
             {project.createdBy.toString() === props.user._id.toString() && (
               <div className="project__action-buttons-container">
@@ -223,7 +221,7 @@ const IndividualProject = (props) => {
                 </div>
               </div>
             )}
-          </h2>
+          </div>
           <div className="project__description">
             <div
               className="project__description-name"
@@ -266,7 +264,7 @@ const IndividualProject = (props) => {
                       issue={issue}
                       labels={project.labels}
                       index={index}
-                      projectId={project._id}
+                      pathname={props.location.pathname}
                       key={index}
                     />
                   ) : (
@@ -276,7 +274,7 @@ const IndividualProject = (props) => {
                         issue={issue}
                         labels={project.labels}
                         index={index}
-                        projectId={project._id}
+                        pathname={props.location.pathname}
                         key={index}
                       />
                     )
@@ -287,7 +285,7 @@ const IndividualProject = (props) => {
                     <IssuePreview
                       issue={issue}
                       index={index}
-                      projectId={project._id}
+                      pathname={props.location.pathname}
                       key={index}
                     />
                   ) : (
@@ -296,7 +294,7 @@ const IndividualProject = (props) => {
                       <IssuePreview
                         issue={issue}
                         index={index}
-                        projectId={project._id}
+                        pathname={props.location.pathname}
                         key={index}
                       />
                     )
@@ -328,4 +326,4 @@ const mapStateToProps = (state) => ({
   errors: state.user.errors,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(IndividualProject);
+export default connect(mapStateToProps, mapDispatchToProps)(Project);

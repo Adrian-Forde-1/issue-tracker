@@ -9,7 +9,7 @@
 @import "preview";
 @import "standardForm";
 @import "project";
-@import "bug";
+@import "issue";
 
 $red-color: #ff0000;
 $primary-color: #2e00b1;
@@ -647,55 +647,6 @@ a {
   font-weight: 300;
 }
 
-.individual-bug-label-container {
-  display: grid;
-  gap: 5px;
-  // max-width: 50%;
-  max-width: 380px;
-  margin-right: auto;
-  grid-template-columns: repeat(3, 4fr);
-}
-
-.individual-bug-label {
-  min-width: 150px;
-  width: auto;
-  padding: 2px 15px;
-  display: block;
-  float: left;
-  color: $page-background;
-  margin-right: auto;
-  border-radius: 75px;
-  text-align: center;
-}
-
-.individual-bug-status-container {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 50px;
-  div {
-    width: 150px;
-    padding: 5px 10px;
-    white-space: nowrap;
-    cursor: pointer;
-    text-align: center;
-  }
-
-  .selected {
-    &#new-bug {
-      border-bottom: 2px solid;
-      border-color: red;
-    }
-    &#work-in-progress {
-      border-bottom: 2px solid;
-      border-color: orange;
-    }
-    &#fixed {
-      border-bottom: 2px solid;
-      border-color: #1e90ff;
-    }
-  }
-}
-
 .bug-creation-date {
   margin-top: 20px;
   text-align: left;
@@ -713,64 +664,6 @@ a {
   max-width: 400px;
 }
 
-.bug-comments-title {
-  margin-top: 50px;
-  text-align: center;
-  font-weight: 300;
-  color: $text-color;
-}
-
-.comment-container {
-  position: relative;
-  cursor: default;
-
-  i {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    cursor: pointer;
-
-    color: $text-color;
-  }
-}
-
-.bug-comment {
-  width: 100%;
-  position: relative;
-  display: block;
-  padding: 15px;
-  margin-bottom: 30px;
-  text-align: left;
-  box-shadow: 1px 1px 2px grey;
-  background: $page-background;
-  color: $text-color;
-  cursor: pointer;
-
-  // p {
-  //   word-wrap: break-word;
-  //   margin: auto;
-  //   white-space: nowrap;
-  //   overflow: hidden;
-  //   text-overflow: ellipsis;
-  //   line-height: inherit;
-  // }
-
-  // p {
-  //   &.opened {
-  //     white-space: initial;
-  //   }
-  // }
-
-  .comment-date {
-    span {
-      color: $primary-color;
-      &:nth-of-type(2) {
-        color: $text-color;
-      }
-    }
-  }
-}
-
 .add-comment {
   width: 3rem;
   height: 3rem;
@@ -785,35 +678,6 @@ a {
   i {
     color: $text-color;
   }
-}
-
-.new-comment-container {
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: row;
-
-  i {
-    color: $red-color;
-  }
-}
-
-.add-comment-container {
-  width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 80px;
-}
-
-.new-comment {
-  width: 100%;
-  height: 200px;
-  font-size: 14px;
-  padding: 20px;
-  box-shadow: 1px 1px 2px grey;
-  resize: none;
-  border: none;
 }
 
 .submit-comment {
@@ -1117,11 +981,6 @@ a {
     }
   }
 
-  .new-comment {
-    font-size: 12px;
-    height: 150px;
-  }
-
   .color-picker {
     font-size: 14px;
   }
@@ -1136,27 +995,6 @@ a {
   }
 
   .bug-creation-date {
-    font-size: 14px;
-  }
-
-  .bug-comment {
-    p {
-      font-size: 14px;
-    }
-  }
-
-  .individual-bug-status-container {
-    div {
-      font-size: 14px;
-
-      // &:nth-of-type(1) {
-      //   width: fit-content;
-      // }
-    }
-  }
-
-  .individual-bug-label {
-    min-width: 100px;
     font-size: 14px;
   }
 
@@ -1232,19 +1070,8 @@ a {
     }
   }
 
-  .bug-comments-title {
-    text-align: left;
-  }
-
   .individual-bug-description {
     margin-right: 0px;
-  }
-
-  .comment-container {
-    width: 100%;
-    i {
-      right: 10px;
-    }
   }
 
   .color-picker {
@@ -1276,27 +1103,6 @@ a {
   }
 
   .bug-creation-date {
-    font-size: 12px;
-  }
-
-  .comment-container {
-    width: 100%;
-  }
-
-  .bug-comment {
-    p {
-      font-size: 12px;
-    }
-  }
-
-  .individual-bug-status-container {
-    div {
-      font-size: 12px;
-    }
-  }
-
-  .individual-bug-label {
-    min-width: 100px;
     font-size: 12px;
   }
 
@@ -1354,18 +1160,6 @@ a {
     font-size: 16px;
   }
 
-  // .project-description {
-  //   width: 100% !important;
-  //   text-align: center;
-  // }
-  .individual-bug-status-container {
-    div {
-      font-size: 10px;
-      padding: 5px 10px;
-
-      width: fit-content;
-    }
-  }
   .show-color {
     height: 24px;
   }
@@ -1430,10 +1224,6 @@ a {
     width: 250px;
   }
 
-  .individual-bug-label-container {
-    max-width: 250px;
-    grid-template-columns: repeat(2, 6fr);
-  }
   .premade-accounts {
     h4 {
       font-size: 16px;

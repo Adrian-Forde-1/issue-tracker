@@ -18,12 +18,11 @@ import TrashSVG from "../SVG/TrashSVG";
 import { Link, withRouter } from "react-router-dom";
 
 const IssuePreview = (props) => {
-  const { issue, index, labels, projectId } = props;
+  const { issue, index, labels, pathname } = props;
 
   const [issueLabels, setIssueLabels] = useState([]);
 
   useEffect(() => {
-    // console.log(issue.labels);
     var newLabels = [];
     if (labels) {
       if (labels.length > 0) {
@@ -46,7 +45,13 @@ const IssuePreview = (props) => {
   };
 
   const gotoIssue = () => {
-    props.history.push(`/project/${issue.project}/issue/${issue._id}`);
+    props.history.push(
+      `${
+        pathname.toString().indexOf("team") > -1
+          ? "/team/project/"
+          : "/project/"
+      }${issue.project}/issue/${issue._id}`
+    );
   };
 
   return (

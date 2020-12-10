@@ -22,11 +22,12 @@ import PeopleWavingSVG from "../SVG/PeopleWavingSVG";
 //Compoenents
 import TeamPreview from "../Preview/TeamPreview";
 import CreateTeamProject from "./CreateTeamProject";
+import Issue from "../Issues/Issue";
 import SearchBar from "../SearchBar";
 import SideNav from "../Navigation/SideNav";
 import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 import DashboardNavbar from "../Navigation/DashboardNavbar";
-import IndividualProject from "../Projects/IndividualProject";
+import Project from "../Projects/Project";
 import NewIssue from "../Issues/NewIssue";
 
 const IndividualTeam = lazy(() => {
@@ -78,9 +79,7 @@ function TeamDashboard(props) {
         exact
         path="/team/project/:projectId"
         render={(props) => {
-          return (
-            <IndividualProject {...props} setCurrentTeam={setCurrentTeam} />
-          );
+          return <Project {...props} setCurrentTeam={setCurrentTeam} />;
         }}
       />
       <Route
@@ -97,6 +96,13 @@ function TeamDashboard(props) {
           return (
             <CreateTeamProject {...props} setCurrentTeam={setCurrentTeam} />
           );
+        }}
+      />
+      <Route
+        exact
+        path="/team/project/:projectId/issue/:issueId"
+        render={(props) => {
+          return <Issue {...props} setCurrentTeam={setCurrentTeam} />;
         }}
       />
       <Redirect to="/team" />
