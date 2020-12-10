@@ -2802,6 +2802,7 @@ header::after {
 
 .issue__creation-date {
   font-size: 11px;
+  margin-bottom: 10px;
 }
 
 .issue__description {
@@ -2921,6 +2922,7 @@ header::after {
   display: -ms-grid;
   display: grid;
   gap: 5px;
+  margin: 15px 0px;
   max-width: 380px;
   margin-right: auto;
   -ms-grid-columns: (4fr)[3];
@@ -2970,6 +2972,42 @@ header::after {
 .issue__status-container .selected#fixed {
   border-bottom: 2px solid;
   border-color: #1e90ff;
+}
+
+.issue__assignee-img-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.issue__assignee-img-container img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.issue__assignees {
+  margin-top: 20px;
+  width: 600px;
+  max-width: 600px;
+  font-size: 12px;
+}
+
+.issue__assignees ul li {
+  height: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: none;
+  padding: none !important;
 }
 
 .issue__comment {
@@ -3819,24 +3857,6 @@ a p {
   font-weight: 300;
 }
 
-.bug-creation-date {
-  margin-top: 20px;
-  text-align: left;
-  color: #0f003a;
-  font-size: 14px;
-  font-weight: 400;
-  margin-bottom: 1rem;
-}
-
-.bug-creation-date span {
-  color: #2e00b1;
-  font-weight: 500;
-}
-
-.bug-assignees {
-  max-width: 400px;
-}
-
 .add-comment {
   width: 3rem;
   height: 3rem;
@@ -4147,9 +4167,6 @@ a p {
   .submit-btn {
     font-size: 20px;
   }
-  .bug-creation-date {
-    font-size: 14px;
-  }
   .bug-preview {
     width: 80%;
   }
@@ -4229,9 +4246,6 @@ a p {
   }
   .submit-btn {
     font-size: 16px;
-  }
-  .bug-creation-date {
-    font-size: 12px;
   }
   .action-btn {
     font-size: 20px;

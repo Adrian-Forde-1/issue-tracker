@@ -39,6 +39,7 @@
 
   &__creation-date {
     font-size: 11px;
+    margin-bottom: 10px;
   }
 
   &__description {
@@ -131,7 +132,7 @@
   &__label-container {
     display: grid;
     gap: 5px;
-    // max-width: 50%;
+    margin: 15px 0px;
     max-width: 380px;
     margin-right: auto;
     grid-template-columns: repeat(3, 4fr);
@@ -173,6 +174,36 @@
       &#fixed {
         border-bottom: 2px solid;
         border-color: #1e90ff;
+      }
+    }
+  }
+
+  &__assignee-img-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__assignees {
+    margin-top: 20px;
+    width: 600px;
+    max-width: 600px;
+    font-size: 12px;
+    ul {
+      li {
+        height: 60px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        border: none;
+        padding: none !important;
       }
     }
   }

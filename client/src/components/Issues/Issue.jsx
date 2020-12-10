@@ -179,6 +179,13 @@ const Issue = (props) => {
               </div>
             </div>
           </div>
+          <div className="issue__creation-date">
+            Created By
+            <span> {issue.createdBy.username} </span>
+            <span> &middot; </span>
+            {/* moment(issue.createdAt).fromNow() */}
+            {new Date(issue.createdAt).toDateString()}
+          </div>
           <div className="issue__description">
             <div
               className="issue__description-name"
@@ -219,22 +226,19 @@ const Issue = (props) => {
                 </span>
               ))}
           </div>
-          <div className="issue__creation-date">
-            Created By
-            <span> {issue.createdBy.username} </span>
-            <span> &middot; </span>
-            {/* moment(issue.createdAt).fromNow() */}
-            {new Date(issue.createdAt).toDateString()}
-          </div>
-
           {issue["assignees"] && issue.assignees.length > 0 && (
-            <div className="issue-creation-date issue-assignees">
+            <div className="issue-creation-date issue__assignees">
               <span className="mb-2">Assigned to:</span>
-              <br />
               <ul className="list-group">
                 {issue.assignees.map((assignee) => (
                   <li className="list-group-item" key={assignee._id}>
-                    {assignee.username}
+                    <div className="issue__assignee-img-container">
+                      <img
+                        src={assignee.image}
+                        alt="Assignee profile picture"
+                      />
+                    </div>
+                    <span>{assignee.username}</span>
                   </li>
                 ))}
               </ul>

@@ -268,7 +268,9 @@ const NewIssue = (props) => {
                               className="standard-form__input-container__dropdown-item-input"
                               value={label._id}
                               id={`check${index}`}
-                              onChange={() => handleLabelChange}
+                              onChange={(e) => {
+                                handleLabelChange(e);
+                              }}
                             />
                           </div>
                         ))}
@@ -323,7 +325,9 @@ const NewIssue = (props) => {
                                 className="standard-form__input-container__dropdown-item-input"
                                 value={member._id}
                                 id={`check${member._id}`}
-                                onChange={() => handleMemberChange}
+                                onChange={(e) => {
+                                  handleMemberChange(e);
+                                }}
                               />
                             </div>
                           ))}
