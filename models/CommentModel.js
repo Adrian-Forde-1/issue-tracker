@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const commentSchema = new mongoose.Schema(
   {
@@ -6,9 +6,9 @@ const commentSchema = new mongoose.Schema(
       type: String,
       maxlength: 500,
     },
-    bug: {
+    issue: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'bug',
+      ref: "issue",
     },
     createdBy: {
       type: String,
@@ -21,6 +21,6 @@ const commentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const CommentModel = mongoose.model('comment', commentSchema);
+const CommentModel = mongoose.model("comment", commentSchema);
 
 module.exports = CommentModel;

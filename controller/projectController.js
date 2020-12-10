@@ -256,7 +256,7 @@ module.exports = {
 
       ProjectModel.findById(projectId)
         .populate("user")
-        .populate("bugs")
+        .populate("issues")
         .exec(function (err, project) {
           //If something went wrong when looking for project, notify user
           if (err) {
@@ -277,7 +277,7 @@ module.exports = {
     ProjectModel.find({
       $and: [{ createdBy: userId }, { team: null }, { archived: false }],
     })
-      .populate("bugs")
+      .populate("issues")
       .exec(function (err, projects) {
         //If something went wrong when fetching projects, notify user
         if (err) {
@@ -527,7 +527,7 @@ module.exports = {
     ProjectModel.find({
       $and: [{ createdBy: userId }, { team: null }, { archived: true }],
     })
-      .populate("bugs")
+      .populate("issues")
       .exec(function (err, projects) {
         //If something went wrong when fetching projects, notify user
         if (err) {

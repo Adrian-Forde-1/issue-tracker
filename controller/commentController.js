@@ -1,12 +1,12 @@
-const CommentModel = require('../models/CommentModel');
-const BugModel = require('../models/BugModel');
+const CommentModel = require("../models/CommentModel");
+const IssueModel = require("../models/IssueModel");
 
 module.exports = {
   createComment: (req, res) => {
-    if (req.body.bugId && req.body.comment) {
+    if (req.body.issueId && req.body.comment) {
       let messages = {};
       let errors = {};
-      const bugId = req.body.bugId;
+      const issueId = req.body.issueId;
 
       const { comment } = req.body.comment;
       const username = req.body.username;
@@ -14,49 +14,49 @@ module.exports = {
       const newComment = new CommentModel({
         comment,
         createdBy: username,
-        bug: bugId,
+        issue: issueId,
       });
 
       newComment
         .save()
         .then((comment) => {
-          //Add comment to bug document
-          BugModel.findById(bugId).exec(function (err, bug) {
-            //If something went wrong when fecthing bug, notify user,
+          //Add comment to issue document
+          IssueModel.findById(issueId).exec(function (err, issue) {
+            //If something went wrong when fecthing issue, notify user,
             if (err) {
               console.error(err);
-              errors.comment = 'Error occured';
+              errors.comment = "Error occured";
               return res.this.status(500).json(error);
             }
 
-            const newCommentArray = [...bug.comments, comment._id];
+            const newCommentArray = [...issue.comments, comment._id];
 
-            //Update bug with new comments
+            //Update issue with new comments
 
-            BugModel.findByIdAndUpdate(bugId, {
+            IssueModel.findByIdAndUpdate(issueId, {
               comments: newCommentArray,
-            }).exec(function (err, bug) {
-              //If something went wrong when updating bug, notify user,
+            }).exec(function (err, issue) {
+              //If something went wrong when updating issue, notify user,
               if (err) {
                 console.error(err);
-                errors.comment = 'Error occured';
+                errors.comment = "Error occured";
                 return res.this.status(500).json(error);
               }
 
               //If everything went well, notify user
-              messages.comment = 'COmment successfully added';
+              messages.comment = "COmment successfully added";
               return res.json(messages);
             });
           });
         })
         .catch((error) => {
           console.error(error);
-          errors.comment = 'Opps! Something went wrong';
+          errors.comment = "Opps! Something went wrong";
           return res.status(500).json(errors);
         });
     } else {
       let errors = {};
-      errors.general = 'Opps! Something went wrong';
+      errors.general = "Opps! Something went wrong";
       return res.status(400).json(errors);
     }
   },
@@ -69,45 +69,45 @@ module.exports = {
         //If something went wrong when deleting comment, notify user
         if (err) {
           console.error(err);
-          errors.comment = 'Error occured';
+          errors.comment = "Error occured";
           return res.status(500).json(errors);
         }
 
-        //If comment was deleted, remove it from bug
-        BugModel.findById(comment.bug).exec(function (err, bug) {
-          //If something went wrong when fetching bug, notify user
+        //If comment was deleted, remove it from issue
+        IssueModel.findById(comment.issue).exec(function (err, issue) {
+          //If something went wrong when fetching issue, notify user
           if (err) {
             console.error(err);
-            errors.comment = 'Error occured';
+            errors.comment = "Error occured";
             return res.status(500).json(errors);
           }
 
-          //If bug was fetched, remove comment
-          const newCommentArray = bug.comments.filter(
+          //If issue was fetched, remove comment
+          const newCommentArray = issue.comments.filter(
             (comment) => comment.toString() !== commentId.toString()
           );
 
-          //Update bug with new comments
+          //Update issue with new comments
 
-          BugModel.findByIdAndUpdate(bug._id, {
+          IssueModel.findByIdAndUpdate(issue._id, {
             comments: newCommentArray,
-          }).exec(function (err, bug) {
-            //If something went wrong when updating bug comments, notify user
+          }).exec(function (err, issue) {
+            //If something went wrong when updating issue comments, notify user
             if (err) {
               console.error(err);
-              errors.comment = 'Error occured';
+              errors.comment = "Error occured";
               return res.status(500).json(errors);
             }
 
             //If everything went well, notify user
-            messages.comment = 'Comment successfully removed';
+            messages.comment = "Comment successfully removed";
             return res.json(messages);
           });
         });
       });
     } else {
       let errors = {};
-      errors.general = 'Opps! Something went wrong';
+      errors.general = "Opps! Something went wrong";
       return res.status(400).json(errors);
     }
   },
@@ -125,17 +125,17 @@ module.exports = {
         //If error occured when updating comment with edit, notify user
         if (err) {
           console.error(err);
-          errors.comment = 'Error occured';
+          errors.comment = "Error occured";
           return res.status(500).json(errors);
         }
 
         //If everything went well, notify user
-        messages.comment = 'Comment successfully updated';
+        messages.comment = "Comment successfully updated";
         return res.json(messages);
       });
     } else {
       let errors = {};
-      errors.general = 'Opps! Something went wrong';
+      errors.general = "Opps! Something went wrong";
       return res.status(400).json(errors);
     }
   },

@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const bugSchema = new mongoose.Schema({
+const issueSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -22,22 +22,22 @@ const bugSchema = new mongoose.Schema({
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'comment',
+      ref: "comment",
     },
   ],
   assignees: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'user',
+      ref: "user",
     },
   ],
   project: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'project',
+    ref: "project",
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
+    ref: "user",
   },
   createdAt: {
     type: Date,
@@ -45,6 +45,6 @@ const bugSchema = new mongoose.Schema({
   },
 });
 
-const BugModel = mongoose.model('bug', bugSchema);
+const IssueModel = mongoose.model("issue", issueSchema);
 
-module.exports = BugModel;
+module.exports = IssueModel;

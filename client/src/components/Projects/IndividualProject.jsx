@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+
+import ReactMarkdown from "react-markdown";
+
+//Axios
 import axios from "axios";
 
 //Tostify
@@ -9,6 +13,9 @@ import { Link } from "react-router-dom";
 
 //Redux
 import { connect } from "react-redux";
+
+//SVG
+import CaretDownNoFillSVG from "../SVG/CaretDownNoFillSVG";
 
 //Actions
 import {
@@ -40,6 +47,7 @@ const IndividualProject = (props) => {
   const [project, changeProject] = useState({});
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
+  const [showDescription, setShowDescription] = useState(false);
   const projectId = props.match.params.projectId;
 
   const handleSearchChange = (e) => {
@@ -180,7 +188,7 @@ const IndividualProject = (props) => {
         <div className="select-container">
             <select name="" id="" value={filter} onChange={handleFilterChange}>
               <option value="All">All</option>
-              <option value="New Bug">New Bug</option>
+              <option value="New Issue">New Issue</option>
               <option value="Work In Progress">Work In Progress</option>
               <option value="Fixed">Fixed</option>
             </select>
@@ -216,7 +224,21 @@ const IndividualProject = (props) => {
               </div>
             )}
           </h2>
-          <p className="project__description">{project.description}</p>
+          <div className="project__description">
+            <div
+              className="project__description-name"
+              onClick={() => setShowDescription(!showDescription)}
+            >
+              <span>Description</span> <CaretDownNoFillSVG />
+            </div>
+            <div
+              className={`project__description-dropdown ${
+                showDescription && "visible"
+              }`}
+            >
+              <ReactMarkdown>{project.description}</ReactMarkdown>
+            </div>
+          </div>
 
           <div className="action-bar">
             <Link
@@ -229,29 +251,29 @@ const IndividualProject = (props) => {
             <Link
               to={`${project.team !== null ? "/team/project/" : "/project/"}${
                 project._id
-              }/new/bug`}
+              }/new/issue`}
             >
-              New Issue <i className="fas fa-bug"></i>
+              New Issue
             </Link>
           </div>
           <div className="project__issues-container">
-            {project.bugs &&
-              project.bugs.length > 0 &&
-              project.bugs.map((bug, index) =>
+            {project.issues &&
+              project.issues.length > 0 &&
+              project.issues.map((issue, index) =>
                 filter === "All" ? (
                   search === "" ? (
                     <IssuePreview
-                      bug={bug}
+                      issue={issue}
                       labels={project.labels}
                       index={index}
                       projectId={project._id}
                       key={index}
                     />
                   ) : (
-                    bug.name.toLowerCase().indexOf(search.toLowerCase()) >
+                    issue.name.toLowerCase().indexOf(search.toLowerCase()) >
                       -1 && (
                       <IssuePreview
-                        bug={bug}
+                        issue={issue}
                         labels={project.labels}
                         index={index}
                         projectId={project._id}
@@ -260,19 +282,19 @@ const IndividualProject = (props) => {
                     )
                   )
                 ) : (
-                  bug.status.name === filter &&
+                  issue.status.name === filter &&
                   (search === "" ? (
                     <IssuePreview
-                      bug={bug}
+                      issue={issue}
                       index={index}
                       projectId={project._id}
                       key={index}
                     />
                   ) : (
-                    bug.name.toLowerCase().indexOf(search.toLowerCase()) >
+                    issue.name.toLowerCase().indexOf(search.toLowerCase()) >
                       -1 && (
                       <IssuePreview
-                        bug={bug}
+                        issue={issue}
                         index={index}
                         projectId={project._id}
                         key={index}

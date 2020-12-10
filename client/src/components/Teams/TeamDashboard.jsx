@@ -85,7 +85,7 @@ function TeamDashboard(props) {
       />
       <Route
         exact
-        path="/team/project/:projectId/new/bug"
+        path="/team/project/:projectId/new/issue"
         render={(props) => {
           return <NewIssue {...props} setCurrentTeam={setCurrentTeam} />;
         }}

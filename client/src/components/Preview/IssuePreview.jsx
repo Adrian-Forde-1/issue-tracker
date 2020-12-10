@@ -11,50 +11,53 @@ import {
   setCurrentLocation,
 } from "../../redux/actions/modalActions";
 
+//SVG
+import TrashSVG from "../SVG/TrashSVG";
+
 //React Router DOM
 import { Link, withRouter } from "react-router-dom";
 
 const IssuePreview = (props) => {
-  const { bug, index, labels, projectId } = props;
+  const { issue, index, labels, projectId } = props;
 
-  const [bugLabels, setBugLabels] = useState([]);
+  const [issueLabels, setIssueLabels] = useState([]);
 
   useEffect(() => {
-    // console.log(bug.labels);
+    // console.log(issue.labels);
     var newLabels = [];
     if (labels) {
       if (labels.length > 0) {
         labels.forEach((label) => {
-          if (bug.labels.includes(label._id)) {
+          if (issue.labels.includes(label._id)) {
             newLabels.push(label);
           }
         });
       }
     }
-    setBugLabels(newLabels);
+    setIssueLabels(newLabels);
   }, []);
 
   const deleteModal = (e) => {
     e.stopPropagation();
-    props.setDeleteItem(bug);
-    props.setItemType("bug");
+    props.setDeleteItem(issue);
+    props.setItemType("issue");
     props.setCurrentLocation(props.history.location.pathname.split("/"));
     props.showModal();
   };
 
-  const gotoBug = () => {
-    props.history.push(`/project/${bug.project}/bug/${bug._id}`);
+  const gotoIssue = () => {
+    props.history.push(`/project/${issue.project}/issue/${issue._id}`);
   };
 
   return (
-    <div className="issue-preview__wrapper" onClick={() => gotoBug()}>
+    <div className="issue-preview__wrapper" onClick={() => gotoIssue()}>
       <div className="issue-preview">
         <div className="issue-preview__first-div">
-          <div className="issue-preview__name">{bug.name}</div>
+          <div className="issue-preview__name">{issue.name}</div>
 
-          {bug["labels"] &&
-            bugLabels.length > 0 &&
-            bugLabels.map((label, index) => {
+          {issue["labels"] &&
+            issueLabels.length > 0 &&
+            issueLabels.map((label, index) => {
               if (index > 2) {
                 return null;
               } else {
@@ -73,23 +76,23 @@ const IssuePreview = (props) => {
                 );
               }
             })}
-          {bug.status.name === "New Bug" ? (
+          {issue.status.name === "New Issue" ? (
             <span
               className="issue-preview__status"
               id={`issue-preview__status-${index}`}
             >
               <i
-                style={{ color: `${bug.status.color}` }}
+                style={{ color: `${issue.status.color}` }}
                 className="fas fa-exclamation"
               ></i>
             </span>
-          ) : bug.status.name === "Work In Progress" ? (
+          ) : issue.status.name === "Work In Progress" ? (
             <span
               className="issue-preview__status"
               id={`issue-preview__status-${index}`}
             >
               <i
-                style={{ color: `${bug.status.color}` }}
+                style={{ color: `${issue.status.color}` }}
                 className="fas fa-truck-loading"
               ></i>
             </span>
@@ -99,20 +102,19 @@ const IssuePreview = (props) => {
               id={`issue-preview__status-${index}`}
             >
               <i
-                style={{ color: `${bug.status.color}` }}
+                style={{ color: `${issue.status.color}` }}
                 className="fas fa-check"
               ></i>
             </span>
           )}
-        </div>
-        <div className="issue-preview__second-div">
-          <p className="issue-preview__description">{bug.description}</p>
-          <i
-            className="far fa-trash-alt"
+          <div
+            className="issue-preview__delete"
             onClick={(e) => {
               deleteModal(e);
             }}
-          ></i>
+          >
+            <TrashSVG />
+          </div>
         </div>
       </div>
     </div>

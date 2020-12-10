@@ -65,13 +65,13 @@ const {
   getProjectsForTeam,
 } = require("../controller/projectController");
 
-//Bug Controller Imports
+//Issue Controller Imports
 const {
   createIssue,
-  deleteBug,
-  editBug,
-  editBugStatus,
-  getBug,
+  editIssue,
+  editIssueStatus,
+  deleteIssue,
+  getIssue,
 } = require("../controller/issueController");
 
 //Comment Controller Imports
@@ -130,12 +130,12 @@ router.put(
 router.put("/project/:projectId", passportJWT, editProject);
 router.delete("/project/:projectId", passportJWT, deleteProject);
 
-//Bug Routes
-router.get("/bug/:bugId", passportJWT, getBug);
+//Issue Routes
+router.get("/issue/:issueId", passportJWT, getIssue);
 router.post("/issue", passportJWT, createIssue);
-router.put("/bug/:bugId", passportJWT, editBug);
-router.put("/bug/:bugId/status", passportJWT, editBugStatus);
-router.delete("/bug/:bugId", passportJWT, deleteBug);
+router.put("/issue/:issueId", passportJWT, editIssue);
+router.put("/issue/:issueId/status", passportJWT, editIssueStatus);
+router.delete("/issue/:issueId", passportJWT, deleteIssue);
 
 router.post("/comment", passportJWT, createComment);
 router.put("/comment/:commentId", passportJWT, editComment);

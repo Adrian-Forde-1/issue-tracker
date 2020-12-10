@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const projectSchema = new mongoose.Schema(
   {
@@ -16,15 +16,15 @@ const projectSchema = new mongoose.Schema(
         color: String,
       },
     ],
-    bugs: [
+    issues: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'bug',
+        ref: "issue",
       },
     ],
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'user',
+      ref: "user",
     },
     createdAt: {
       type: Date,
@@ -32,7 +32,7 @@ const projectSchema = new mongoose.Schema(
     },
     team: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'team',
+      ref: "team",
     },
     archived: {
       type: Boolean,
@@ -42,6 +42,6 @@ const projectSchema = new mongoose.Schema(
   { timestamps: { currentTime: () => Math.floor(Date.now() / 1000) } }
 );
 
-const ProjectModel = mongoose.model('project', projectSchema);
+const ProjectModel = mongoose.model("project", projectSchema);
 
 module.exports = ProjectModel;

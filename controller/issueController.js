@@ -1,4 +1,4 @@
-const BugModel = require("../models/BugModel");
+const IssueModel = require("../models/IssueModel");
 const ProjectModal = require("../models/ProjectModel");
 
 const { NEW_ISSUE } = require("../util/issueStatus");
@@ -9,6 +9,7 @@ module.exports = {
     if (req.body.issue) {
       let errors = [];
       let messages = [];
+      console.log("Create issue called");
 
       //Get variables user entered
       const {
@@ -21,7 +22,7 @@ module.exports = {
 
       //Create an instance of the user model ( a document ) with the values
       //entered by the user and pre-defined values
-      const newIssue = new BugModel({
+      const newIssue = new IssueModel({
         name,
         description,
         labels,
@@ -45,153 +46,151 @@ module.exports = {
               return res.status(500).json(errors);
             }
 
-            //If everything went well, update bugs in project
-            const newIssues = [...project.bugs, issue._id];
+            //If everything went well, update issues in project
+            const newIssues = [...project.issues, issue._id];
 
             //Update Project
-            ProjectModal.findByIdAndUpdate(projectId, { bugs: newIssues }).exec(
-              function (err, project) {
-                //If error occured when updating project, notify user
-                if (err) {
-                  console.error(err);
-                  errors.push("Error when updating issues in project");
-                  return res.status(500).json(errors);
-                }
-
-                //If everything went well, notify user
-                messages.push("Issue successfully added");
-                return res.json(messages);
+            ProjectModal.findByIdAndUpdate(projectId, {
+              issues: newIssues,
+            }).exec(function (err, project) {
+              //If error occured when updating project, notify user
+              if (err) {
+                console.error(err);
+                errors.push("Error when updating issues in project");
+                return res.status(500).json(errors);
               }
-            );
+
+              //If everything went well, notify user
+              messages.push("Issue successfully added");
+              return res.json(messages);
+            });
           });
         })
         .catch((err) => {
           //If error occured, notify user
-          errors.bug = "Error occured when adding bug";
+          errors.push("Error occured when adding issue");
           return res.status(500).json(errors);
         });
     } else {
-      let errors = {};
-      errors.bug = "Opps! Something went wrong";
+      let errors = [];
+      errors.push("Opps! Something went wrong");
       return res.status(400).json(errors);
     }
   },
-  //Edit Bug
-  editBug: (req, res) => {
-    if (req.body.bug) {
-      if (req.params.bugId) {
-        let messages = {};
-        let errors = {};
-        const bugId = req.params.bugId;
+  //Edit Issue
+  editIssue: (req, res) => {
+    if (req.body.issue) {
+      if (req.params.issueId) {
+        let messages = [];
+        let errors = [];
+        const issueId = req.params.issueId;
 
-        const bugInfo = req.body.bug;
-        console.log(bugInfo.assignees);
+        const issueInfo = req.body.issue;
 
-        BugModel.findByIdAndUpdate(bugId, {
+        IssueModel.findByIdAndUpdate(issueId, {
           $set: {
-            name: bugInfo.name,
-            description: bugInfo.description,
-            labels: bugInfo.labels,
-            assignees: bugInfo.assignees,
+            name: issueInfo.name,
+            description: issueInfo.description,
+            labels: issueInfo.labels,
+            assignees: issueInfo.assignees,
           },
-        }).exec(function (err, bug) {
+        }).exec(function (err, issue) {
           //If error occured, notify user
           if (err) {
             console.error(err);
-            error.bug = "Error occured when updating bug";
+            error.push("Error occured when updating issue");
             return res.status(500).json(errors);
           }
 
           //If everything went well, notify user
-          messages.bug = "Successfully updated bug";
+          messages.push("Successfully updated issue");
           return res.json(messages);
         });
       } else {
-        let errors = {};
-        errors.bug = "Bug Not Found";
+        let errors = [];
+        errors.push("Issue Not Found");
         return res.status(404).json(errors);
       }
     } else {
-      let errors = {};
-      errors.bug = "Opps! Something went wrong";
+      let errors = [];
+      errors.push("Opps! Something went wrong");
       return res.status(400).json(errors);
     }
   },
-  editBugStatus: (req, res) => {
-    if (req.body.bug) {
-      if (req.params.bugId) {
-        let messages = {};
-        let errors = {};
-        const bugId = req.params.bugId;
+  editIssueStatus: (req, res) => {
+    if (req.body.issue) {
+      if (req.params.issueId) {
+        let messages = [];
+        let errors = [];
+        const issueId = req.params.issueId;
 
-        const newStatus = req.body.bug;
+        const newStatus = req.body.issue;
 
-        BugModel.findByIdAndUpdate(bugId, { status: newStatus }).exec(function (
-          err,
-          bug
-        ) {
-          //If error occured, notify user
-          if (err) {
-            console.error(err);
-            error.bug = "Error occured when updating bug";
-            return res.status(500).json(errors);
+        IssueModel.findByIdAndUpdate(issueId, { status: newStatus }).exec(
+          function (err, issue) {
+            //If error occured, notify user
+            if (err) {
+              console.error(err);
+              error.push("Error occured when updating issue");
+              return res.status(500).json(errors);
+            }
+
+            //If everything went well, notify user
+            messages.push("Successfully updated issue");
+            return res.json(messages);
           }
-
-          //If everything went well, notify user
-          messages.bug = "Successfully updated bug";
-          return res.json(messages);
-        });
+        );
       } else {
-        let errors = {};
-        errors.bug = "Bug Not Found";
+        let errors = [];
+        errors.push("Issue Not Found");
         return res.status(404).json(errors);
       }
     } else {
-      let errors = {};
-      errors.bug = "Opps! Something went wrong";
+      let errors = [];
+      errors.push("Opps! Something went wrong");
       return res.status(400).json(errors);
     }
   },
-  //Delete Bug
-  deleteBug: (req, res) => {
-    if (req.params.bugId) {
-      let messages = {};
-      let errors = {};
-      const bugId = req.params.bugId;
-      BugModel.findByIdAndDelete(bugId).exec(function (err, bug) {
+  //Delete Issue
+  deleteIssue: (req, res) => {
+    if (req.params.issueId) {
+      let messages = [];
+      let errors = [];
+      const issueId = req.params.issueId;
+      IssueModel.findByIdAndDelete(issueId).exec(function (err, issue) {
         //If error occured, notify user
         if (err) {
           console.error(err);
-          errors.bug = "Error occured when deleting bug";
+          errors.push("Error occured when deleting issue");
           return res.status(500).json(errors);
         }
 
         //If everything went well, notify user
-        messages.bug = "Successfully deleted bug";
+        messages.push("Successfully deleted issue");
         return res.json(messages);
       });
     } else {
-      let errors = {};
-      errors.bug = "Bug not found";
+      let errors = [];
+      errors.push("Issue not found");
       return res.status(404).json(errors);
     }
   },
-  getBug: (req, res) => {
-    if (req.params.bugId) {
-      let errors = {};
-      const bugId = req.params.bugId;
-      BugModel.findById(bugId)
+  getIssue: (req, res) => {
+    if (req.params.issueId) {
+      let errors = [];
+      const issueId = req.params.issueId;
+      IssueModel.findById(issueId)
         .populate("createdBy comments project assignees")
-        .exec(function (err, bug) {
-          //If something went wrong when fetching bug, notify user
+        .exec(function (err, issue) {
+          //If something went wrong when fetching issue, notify user
           if (err) {
             console.error(err);
-            errors.bug = "Error occured when fetching bug";
+            errors.issue = "Error occured when fetching issue";
             return res.status(500).json(errors);
           }
 
-          //If everything went right, return bug
-          return res.json(bug);
+          //If everything went right, return issue
+          return res.json(issue);
         });
     }
   },

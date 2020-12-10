@@ -140,7 +140,11 @@ const NewIssue = (props) => {
         <h2>New Issue</h2>
       </div>
       <div className="standard-form__body  standard-form__body--no-padding">
-        <form onSubmit={() => handleSubmit}>
+        <form
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+        >
           <div className="standard-form__split-double">
             <section>
               <div
@@ -176,7 +180,11 @@ const NewIssue = (props) => {
                   }`}
                   onClick={() => setShowPreview(!showPreview)}
                 >
-                  <Tooltip title="Preview" position="bottom" size="small">
+                  <Tooltip
+                    title="Markdown Preview"
+                    position="bottom"
+                    size="small"
+                  >
                     <PreviewSVG />
                   </Tooltip>
                 </div>
