@@ -54,12 +54,12 @@ module.exports = {
                 //If error occured when updating project, notify user
                 if (err) {
                   console.error(err);
-                  errors.push("Error when updating bugs in project");
+                  errors.push("Error when updating issues in project");
                   return res.status(500).json(errors);
                 }
 
                 //If everything went well, notify user
-                messages.push("Bug successfully added");
+                messages.push("Issue successfully added");
                 return res.json(messages);
               }
             );

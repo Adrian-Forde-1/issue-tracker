@@ -1,5 +1,12 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+
+//Axios
 import axios from "axios";
+
+//Tippy
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
 
 //Redux
 import { connect } from "react-redux";
@@ -9,33 +16,24 @@ import { withRouter } from "react-router-dom";
 
 //Actions
 import { getUserProjects } from "../../redux/actions/projectActions";
-import { setErrors } from "../../redux/actions/userActions";
+import { setErrors, setMessages } from "../../redux/actions/userActions";
 
-//Components
-import SideNav from "../Navigation/SideNav";
-import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
+//SVG
+import CaretDownNoFillSVG from "../SVG/CaretDownNoFillSVG";
+import PreviewSVG from "../SVG/PreviewSVG";
+import InfoSVG from "../SVG/InfoSVG";
 
-class NewIssue extends Component {
-  constructor(props) {
-    super(props);
+const NewIssue = (props) => {
+  const [project, setProject] = useState({});
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [members, setMembers] = useState([]);
+  const [assignedMembers, setAssignedMembers] = useState([]);
+  const [labels, setLabels] = useState([]);
+  const [showPreview, setShowPreview] = useState(false);
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleLabelChange = this.handleLabelChange.bind(this);
-    this.handleMemberChange = this.handleMemberChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-
-    this.state = {
-      project: {},
-      name: "",
-      description: "",
-      members: [],
-      assignedMembers: [],
-      labels: [],
-    };
-  }
-
-  componentDidMount() {
-    const projectId = this.props.match.params.projectId;
+  useEffect(() => {
+    const projectId = props.match.params.projectId;
 
     axios
       .get(`/api/project/${projectId}`, {
@@ -43,11 +41,7 @@ class NewIssue extends Component {
       })
       .then((response) => {
         if (response && response.data) {
-          const responseProject = response.data;
-
-          this.setState({
-            project: responseProject,
-          });
+          setProject(response.data);
 
           //If project is in a team, get all the members from that team
           if (response.data.team !== null) {
@@ -56,102 +50,70 @@ class NewIssue extends Component {
                 headers: { Authorization: localStorage.getItem("token") },
               })
               .then((response) => {
-                this.setState({
-                  members: response.data.users,
-                });
+                if (response && response.data) {
+                  setMembers(response.data.users);
+                }
               })
               .catch((error) => {
-                this.props.setErrors(error);
-                this.props.history.goBack();
+                if (error && error.response) {
+                  props.setErrors(error);
+                  props.history.goBack();
+                }
               });
           }
 
           if (
-            this.props.match.params &&
-            this.props.match.params.toString().indexOf("team" > -1)
+            props.match.params &&
+            props.match.params.toString().indexOf("team" > -1)
           ) {
-            this.props.setCurrentTeam(response.data.team);
+            props.setCurrentTeam(response.data.team);
           }
         }
       })
       .catch((error) => {
-        this.props.setErrors(error);
-        this.props.history.goBack();
+        if (error && error.response) {
+          props.setErrors(error);
+          props.history.goBack();
+        }
       });
-  }
+  }, []);
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // handleLabelChange = (e) => {
-  //   console.log('Label changed');
-  //   if (e.target.checked) {
-  //     const label = this.state.project.labels.find(
-  //       (label) => label.name.toString() === e.target.value.toString()
-  //     );
-
-  //     console.log(label);
-  //     const newLabels = [...this.state.labels, label._id];
-  //     this.setState({
-  //       labels: newLabels,
-  //     });
-  //   } else {
-  //     const newLabels = this.state.labels.filter(
-  //       (label) => label.name.toString() !== e.target.value.toString()
-  //     );
-  //     this.setState({
-  //       labels: newLabels,
-  //     });
-  //   }
-  // };
-  handleMemberChange = (e) => {
+  const handleMemberChange = (e) => {
     if (e.target.checked) {
-      const newMembers = [...this.state.assignedMembers, e.target.value];
-      this.setState({
-        assignedMembers: newMembers,
-      });
+      const newMembers = [...assignedMembers, e.target.value];
+      setAssignedMembers(newMembers);
     } else {
-      const newMembers = this.state.assignedMembers.filter(
+      const newMembers = assignedMembers.filter(
         (member) => member.toString() !== e.target.value.toString()
       );
-      this.setState({
-        assignedMembers: newMembers,
-      });
+      setAssignedMembers(newMembers);
     }
   };
 
-  handleLabelChange = (e) => {
-    console.log("Label changed");
+  const handleLabelChange = (e) => {
     if (e.target.checked) {
-      const label = this.state.project.labels.find(
+      const label = project.labels.find(
         (label) => label._id.toString() === e.target.value.toString()
       );
-      const newLabels = [...this.state.labels, label._id];
-      this.setState({
-        labels: newLabels,
-      });
+      const newLabels = [...labels, label._id];
+      setLabels(newLabels);
     } else {
-      const newLabels = this.state.labels.filter(
+      const newLabels = labels.filter(
         (label) => label.toString() !== e.target.value.toString()
       );
-      this.setState({
-        labels: newLabels,
-      });
+      setLabels(newLabels);
     }
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const issue = {
-      name: this.state.name,
-      description: this.state.description,
-      labels: this.state.labels,
-      projectId: this.state.project._id,
-      assignees: this.state.assignedMembers,
+      name: name,
+      description: description,
+      labels: labels,
+      projectId: project._id,
+      assignees: assignedMembers,
     };
 
     axios
@@ -160,115 +122,222 @@ class NewIssue extends Component {
         { issue: issue },
         { headers: { Authorization: localStorage.getItem("token") } }
       )
-      .then(() => {
-        this.props.getUserProjects(localStorage.getItem("token"));
-        this.props.history.goBack();
+      .then((res) => {
+        props.getUserProjects(localStorage.getItem("token"));
+        props.setMessages(res.data);
+        props.history.goBack();
       })
       .catch((error) => {
-        this.props.setErrors(error);
-        this.props.history.goBack();
+        if (error && error.response) {
+          props.setErrors(error);
+          props.history.goBack();
+        }
       });
   };
-  render() {
-    return (
-      <div className="standard-form__wrapper">
-        <div className="standard-form__header">
-          <h2>New Issue</h2>
-        </div>
-        <div className="standard-form__body  standard-form__body--no-padding">
-          <form onSubmit={this.handleSubmit}>
-            <div className="standard-form__split-double">
-              <section>
-                <div className="standard-form__input-container">
-                  <label htmlFor="name">Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={this.state.name}
-                    onChange={this.handleChange}
-                    maxLength="60"
-                    autoComplete="off"
-                    required
-                  />
-                </div>
-                <div className="standard-form__input-container standard-form__input-container--fill">
-                  <label htmlFor="description">Description</label>
-                  <textarea
-                    type="text"
-                    className="standard-form__input-container-textarea standard-form__input-container-textarea--fill"
-                    name="description"
-                    maxLength="500"
-                    autoComplete="off"
-                    value={this.state.description}
-                    onChange={this.handleChange}
-                    required
-                  />
-                </div>
-                <button className="standard-form__btn">Add Issue</button>
-              </section>
-              <section>
-                <div className="standard-form__input-container">
-                  <label htmlFor="">Labels</label>
-                </div>
-                {this.state.project.labels &&
-                  this.state.project.labels.map((label, index) => (
-                    <div className="standard-form__input-container" key={index}>
-                      <label
-                        htmlFor={`check${index}`}
-                        className="form-check-label check-label"
-                        style={{ background: `${label.color}`, color: "white" }}
-                      >
-                        {label.name}
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          value={label._id}
-                          id={`check${index}`}
-                          onChange={this.handleLabelChange}
-                        />
-                      </label>
-                    </div>
-                  ))}
-
-                {this.state.project["team"] && this.state.members.length > 0 && (
-                  <div className="standard-form__input-container">
-                    <label htmlFor="">Assign Members</label>
-                  </div>
-                )}
-
-                {this.state.members &&
-                  this.state.members.map((member, index) => (
-                    <div
-                      className="standard-form__input-container"
-                      key={member._id}
-                    >
-                      <label
-                        htmlFor={`check${member._id}`}
-                        className="form-check-label check-label"
-                        style={{ background: `#2e00b1`, color: "white" }}
-                      >
-                        {member.username}
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          value={member._id}
-                          id={`check${member._id}`}
-                          onChange={this.handleMemberChange}
-                        />
-                      </label>
-                    </div>
-                  ))}
-              </section>
-            </div>
-          </form>
-        </div>
+  return (
+    <div className="standard-form__wrapper">
+      <div className="standard-form__header">
+        <h2>New Issue</h2>
       </div>
-    );
-  }
-}
+      <div className="standard-form__body  standard-form__body--no-padding">
+        <form onSubmit={() => handleSubmit}>
+          <div className="standard-form__split-double">
+            <section>
+              <div
+                className={`standard-form__input-container standard-form__input-container--fixed-h ${
+                  showPreview && "hidden"
+                }`}
+              >
+                <label htmlFor="name">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  maxLength="60"
+                  autoComplete="off"
+                  required
+                />
+              </div>
+              <div className="standard-form__input-container standard-form__input-container--fill">
+                <label htmlFor="description">Description</label>
+                <textarea
+                  type="text"
+                  className="standard-form__input-container-textarea standard-form__input-container-textarea--fill"
+                  name="description"
+                  autoComplete="off"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                />
+                <div
+                  className={`standard-form__description-preview-btn ${
+                    showPreview && "active"
+                  }`}
+                  onClick={() => setShowPreview(!showPreview)}
+                >
+                  <Tooltip title="Preview" position="bottom" size="small">
+                    <PreviewSVG />
+                  </Tooltip>
+                </div>
+                <div
+                  className={`standard-form__input-container__description-info ${
+                    showPreview && "active"
+                  }`}
+                  onClick={() => setShowPreview(!showPreview)}
+                >
+                  <Tooltip
+                    title="You can use markdown in your description"
+                    position="bottom"
+                    size="small"
+                  >
+                    <InfoSVG />
+                  </Tooltip>
+                </div>
+              </div>
+              <button className="standard-form__btn">Add Issue</button>
+            </section>
+            <section>
+              <div className="standard-form__split-double__section-content-wrapper">
+                <div
+                  className={`standard-form__split-double__section-content ${
+                    showPreview && "show-preview"
+                  }`}
+                >
+                  <div className="standard-form__preview-view">
+                    <ReactMarkdown>{description}</ReactMarkdown>
+                  </div>
+                </div>
+                <div
+                  className={`standard-form__split-double__section-content ${
+                    showPreview && "hide-content"
+                  }`}
+                >
+                  <div className="standard-form__input-container standard-form__input-container--bottom-border standard-form__input-container--mb-sm">
+                    <label
+                      htmlFor=""
+                      onClick={() => {
+                        const dropdowns = document.querySelectorAll(
+                          ".standard-form__input-container__dropdown"
+                        );
+
+                        if (dropdowns.length > 0) {
+                          dropdowns.forEach((dropdown) => {
+                            if (
+                              dropdown.getAttribute("id") !==
+                                "labels-dropdown" &&
+                              dropdown.classList.contains("open")
+                            )
+                              dropdown.classList.remove("open");
+                          });
+                        }
+
+                        if (document.querySelector("#labels-dropdown"))
+                          document
+                            .querySelector("#labels-dropdown")
+                            .classList.toggle("open");
+                      }}
+                    >
+                      Labels <CaretDownNoFillSVG />
+                    </label>
+                    <div
+                      className="standard-form__input-container__dropdown"
+                      id="labels-dropdown"
+                    >
+                      {project.labels &&
+                        project.labels.map((label, index) => (
+                          <div className="standard-form__input-container__dropdown-item">
+                            <label
+                              key={index}
+                              htmlFor={`check${index}`}
+                              className="standard-form__input-container__dropdown-item-label"
+                              style={{
+                                background: `${label.color}`,
+                                color: "white",
+                              }}
+                            >
+                              {label.name}
+                            </label>
+                            <input
+                              type="checkbox"
+                              className="standard-form__input-container__dropdown-item-input"
+                              value={label._id}
+                              id={`check${index}`}
+                              onChange={() => handleLabelChange}
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+
+                  {project["team"] && members.length > 0 && (
+                    <div className="standard-form__input-container standard-form__input-container--bottom-border standard-form__input-container--mb-sm">
+                      <label
+                        htmlFor=""
+                        onClick={() => {
+                          const dropdowns = document.querySelectorAll(
+                            ".standard-form__input-container__dropdown"
+                          );
+
+                          if (dropdowns.length > 0) {
+                            dropdowns.forEach((dropdown) => {
+                              if (
+                                dropdown.getAttribute("id") !==
+                                  "assign-members-dropdown" &&
+                                dropdown.classList.contains("open")
+                              )
+                                dropdown.classList.remove("open");
+                            });
+                          }
+
+                          if (
+                            document.querySelector("#assign-members-dropdown")
+                          )
+                            document
+                              .querySelector("#assign-members-dropdown")
+                              .classList.toggle("open");
+                        }}
+                      >
+                        Assign Members <CaretDownNoFillSVG />
+                      </label>
+                      <div
+                        className="standard-form__input-container__dropdown"
+                        id="assign-members-dropdown"
+                      >
+                        {members &&
+                          members.map((member, index) => (
+                            <div className="standard-form__input-container__dropdown-item">
+                              <label
+                                htmlFor={`check${member._id}`}
+                                className="standard-form__input-container__dropdown-item-label standard-form__input-container__dropdown-item-member-label"
+                              >
+                                {member.username}
+                              </label>
+                              <input
+                                type="checkbox"
+                                className="standard-form__input-container__dropdown-item-input"
+                                value={member._id}
+                                id={`check${member._id}`}
+                                onChange={() => handleMemberChange}
+                              />
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </section>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 const mapDispatchToProps = {
   setErrors,
+  setMessages,
   getUserProjects,
 };
 
