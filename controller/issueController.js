@@ -9,7 +9,6 @@ module.exports = {
     if (req.body.issue) {
       let errors = [];
       let messages = [];
-      console.log("Create issue called");
 
       //Get variables user entered
       const {
@@ -20,57 +19,67 @@ module.exports = {
         assignees,
       } = req.body.issue;
 
-      //Create an instance of the user model ( a document ) with the values
-      //entered by the user and pre-defined values
-      const newIssue = new IssueModel({
-        name,
-        description,
-        labels,
-        comments: [],
-        assignees,
-        status: NEW_ISSUE,
-        project: projectId,
-        createdBy: req.user._id,
-      });
-
-      newIssue
-        .save()
-        .then((issue) => {
-          //If everything went well, notify user
-
-          ProjectModal.findById(projectId).exec(function (err, project) {
-            //If error occured when fecthing project, notify user
-            if (err) {
-              console.error(err);
-              errors.push("Error when updating issues in project");
-              return res.status(500).json(errors);
-            }
-
-            //If everything went well, update issues in project
-            const newIssues = [...project.issues, issue._id];
-
-            //Update Project
-            ProjectModal.findByIdAndUpdate(projectId, {
-              issues: newIssues,
-            }).exec(function (err, project) {
-              //If error occured when updating project, notify user
-              if (err) {
-                console.error(err);
-                errors.push("Error when updating issues in project");
-                return res.status(500).json(errors);
-              }
-
-              //If everything went well, notify user
-              messages.push("Issue successfully added");
-              return res.json(messages);
-            });
+      const issues = IssueModel.find({ name: name }).exec(function (
+        err,
+        issues
+      ) {
+        if (issues.length === 0) {
+          //Create an instance of the user model ( a document ) with the values
+          //entered by the user and pre-defined values
+          const newIssue = new IssueModel({
+            name,
+            description,
+            labels,
+            comments: [],
+            assignees,
+            status: NEW_ISSUE,
+            project: projectId,
+            createdBy: req.user._id,
           });
-        })
-        .catch((err) => {
-          //If error occured, notify user
-          errors.push("Error occured when adding issue");
-          return res.status(500).json(errors);
-        });
+
+          newIssue
+            .save()
+            .then((issue) => {
+              //If everything went well, notify user
+
+              ProjectModal.findById(projectId).exec(function (err, project) {
+                //If error occured when fecthing project, notify user
+                if (err) {
+                  console.error(err);
+                  errors.push("Error when updating issues in project");
+                  return res.status(500).json(errors);
+                }
+
+                //If everything went well, update issues in project
+                const newIssues = [...project.issues, issue._id];
+
+                //Update Project
+                ProjectModal.findByIdAndUpdate(projectId, {
+                  issues: newIssues,
+                }).exec(function (err, project) {
+                  //If error occured when updating project, notify user
+                  if (err) {
+                    console.error(err);
+                    errors.push("Error when updating issues in project");
+                    return res.status(500).json(errors);
+                  }
+
+                  //If everything went well, notify user
+                  messages.push("Issue successfully added");
+                  return res.json(messages);
+                });
+              });
+            })
+            .catch((err) => {
+              //If error occured, notify user
+              errors.push("Error occured when adding issue");
+              return res.status(500).json(errors);
+            });
+        } else {
+          errors.push("Issue name already exists");
+          return res.status(400).json(errors);
+        }
+      });
     } else {
       let errors = [];
       errors.push("Opps! Something went wrong");

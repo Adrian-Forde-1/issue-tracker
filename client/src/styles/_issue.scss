@@ -139,9 +139,10 @@
   }
 
   &__label {
-    min-width: 150px;
+    min-width: 120px;
     width: auto;
     padding: 2px 15px;
+    font-size: 14px;
     display: block;
     float: left;
     color: $page-background;

@@ -69,28 +69,7 @@ const Project = (props) => {
       setFilter(sessionStorage.getItem("project-filter"));
     }
 
-    axios
-      .get(`/api/project/${projectId}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .then((response) => {
-        if (response && response.data) {
-          changeProject(response.data);
-          if (
-            props.match.params &&
-            props.match.params.toString().indexOf("team" > -1)
-          ) {
-            props.setCurrentTeam(response.data.team);
-          }
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error["reponse"]) {
-          props.setErrors(error);
-          props.history.push("/projects");
-        }
-      });
+    getProjectData();
   }, []);
 
   useEffect(() => {
@@ -110,6 +89,35 @@ const Project = (props) => {
       props.setProjectUpdated(false);
     }
   }, [props.projectUpdated]);
+
+  const getProjectData = () => {
+    console.log("Get Project data called");
+    axios
+      .get(`/api/project/${projectId}`, {
+        headers: { Authorization: localStorage.getItem("token") },
+      })
+      .then((response) => {
+        if (response && response.data) {
+          changeProject(response.data);
+          if (
+            props.match.params &&
+            props.match.params.toString().indexOf("team" > -1)
+          ) {
+            props.setCurrentTeam(response.data.team);
+          }
+        }
+      })
+      .catch((error) => {
+        if (error && error.response && error.response.data) {
+          props.setErrors(error);
+          props.history.push(
+            props.location.pathname.toString().indexOf("team") > -1
+              ? `/team/${props.match.params.teamId}`
+              : "/projects"
+          );
+        }
+      });
+  };
 
   const deleteModal = () => {
     props.setDeleteItem(project);
@@ -272,6 +280,7 @@ const Project = (props) => {
                       index={index}
                       pathname={props.location.pathname}
                       key={index}
+                      getProjectData={getProjectData}
                     />
                   ) : (
                     issue.name.toLowerCase().indexOf(search.toLowerCase()) >
@@ -282,6 +291,7 @@ const Project = (props) => {
                         index={index}
                         pathname={props.location.pathname}
                         key={index}
+                        getProjectData={getProjectData}
                       />
                     )
                   )
@@ -293,6 +303,7 @@ const Project = (props) => {
                       index={index}
                       pathname={props.location.pathname}
                       key={index}
+                      getProjectData={getProjectData}
                     />
                   ) : (
                     issue.name.toLowerCase().indexOf(search.toLowerCase()) >
@@ -302,6 +313,7 @@ const Project = (props) => {
                         index={index}
                         pathname={props.location.pathname}
                         key={index}
+                        getProjectData={getProjectData}
                       />
                     )
                   ))

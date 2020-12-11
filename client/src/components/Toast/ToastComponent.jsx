@@ -25,7 +25,6 @@ const ToastComponent = ({ errors, messages, clearErrors, clearMessages }) => {
     }
 
     if (messages.length > 0) {
-      console.log("Messages found");
       messages.forEach((message) => {
         toast.success(message, {
           position: "top-center",

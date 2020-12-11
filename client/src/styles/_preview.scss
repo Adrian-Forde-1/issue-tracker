@@ -157,8 +157,26 @@
     align-items: center;
   }
 
+  &__labels-container {
+    max-width: 52%;
+    width: 52%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: auto;
+    overflow: hidden;
+  }
+
+  &__actions-container {
+    width: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 5%;
+  }
+
   &__name {
-    width: 100%;
+    max-width: 30%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -182,7 +200,7 @@
   }
 
   &__label {
-    min-width: 180px;
+    min-width: 120px;
     max-width: auto;
     text-align: center;
     display: block;
@@ -190,16 +208,13 @@
     white-space: nowrap;
     padding: 1px 15px;
     border-radius: 75px;
-
-    &:last-of-type {
-      margin-right: 20px;
-    }
+    font-size: 12px;
+    margin: 0px 5px;
   }
 
   &__status {
     display: inline-block;
     width: fit-content;
-    margin-left: 20px;
     text-align: center;
     i {
       text-align: center;
@@ -208,7 +223,6 @@
   }
 
   &__delete {
-    margin-left: 20px;
     svg {
       font-size: 20px;
       color: $text-color;

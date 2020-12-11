@@ -128,11 +128,48 @@ const NewIssue = (props) => {
         props.history.goBack();
       })
       .catch((error) => {
+        console.log(error);
         if (error && error.response) {
           props.setErrors(error);
-          props.history.goBack();
         }
       });
+  };
+
+  const renderProjectLabels = () => {
+    const projectLabels = [];
+
+    if (project.labels) {
+      project.labels.map((label, index) => {
+        projectLabels.push(
+          <div
+            className="standard-form__input-container__dropdown-item"
+            key={index}
+          >
+            <label
+              htmlFor={`check${index}`}
+              className="standard-form__input-container__dropdown-item-label"
+              style={{
+                background: `${label.color}`,
+                color: "white",
+              }}
+            >
+              {label.name}
+            </label>
+            <input
+              type="checkbox"
+              className="standard-form__input-container__dropdown-item-input"
+              value={label._id}
+              id={`check${index}`}
+              onChange={(e) => {
+                handleLabelChange(e);
+              }}
+            />
+          </div>
+        );
+      });
+    }
+
+    return projectLabels;
   };
   return (
     <div className="standard-form__wrapper">
@@ -249,31 +286,7 @@ const NewIssue = (props) => {
                       className="standard-form__input-container__dropdown"
                       id="labels-dropdown"
                     >
-                      {project.labels &&
-                        project.labels.map((label, index) => (
-                          <div className="standard-form__input-container__dropdown-item">
-                            <label
-                              key={index}
-                              htmlFor={`check${index}`}
-                              className="standard-form__input-container__dropdown-item-label"
-                              style={{
-                                background: `${label.color}`,
-                                color: "white",
-                              }}
-                            >
-                              {label.name}
-                            </label>
-                            <input
-                              type="checkbox"
-                              className="standard-form__input-container__dropdown-item-input"
-                              value={label._id}
-                              id={`check${index}`}
-                              onChange={(e) => {
-                                handleLabelChange(e);
-                              }}
-                            />
-                          </div>
-                        ))}
+                      {renderProjectLabels()}
                     </div>
                   </div>
 
@@ -313,7 +326,10 @@ const NewIssue = (props) => {
                       >
                         {members &&
                           members.map((member, index) => (
-                            <div className="standard-form__input-container__dropdown-item">
+                            <div
+                              className="standard-form__input-container__dropdown-item"
+                              key={index}
+                            >
                               <label
                                 htmlFor={`check${member._id}`}
                                 className="standard-form__input-container__dropdown-item-label standard-form__input-container__dropdown-item-member-label"

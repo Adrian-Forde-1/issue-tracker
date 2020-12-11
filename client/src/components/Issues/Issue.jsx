@@ -77,6 +77,16 @@ const Issue = (props) => {
     }
   }, [issue]);
 
+  useEffect(() => {
+    if (showModal) {
+      window.addEventListener("keyup", (e) => {
+        if (e.key === "Escape") {
+          setShowModal(false);
+        }
+      });
+    }
+  }, [showModal]);
+
   const updateIssue = (e) => {
     const childNodes = e.target.parentNode.childNodes;
     childNodes.forEach((child) => child.classList.remove("selected"));
@@ -118,7 +128,6 @@ const Issue = (props) => {
       })
       .then((res) => {
         if (res && res.data) {
-          console.log(res.data);
           props.setMessages(res.data);
           props.history.goBack();
         }
@@ -184,30 +193,33 @@ const Issue = (props) => {
       switch (modalType) {
         case modalTypes["Delete Modal"]:
           return (
-            <Modal>
+            <Modal setShowModal={setShowModal}>
               <div className="modal__delete-modal-body">
                 <div className="modal__delete-modal-body__message">
                   Are you sure you want to delete <span>{issue.name}</span>?
                 </div>
                 <div className="modal__delete-modal-body__action-container">
-                  <button
-                    onClick={() => {
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
                       deleteIssue();
                     }}
                   >
-                    Yes
-                  </button>
-                  <button
-                    onClick={() => {
+                    <span>Yes</span>
+                  </div>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setShowModal(false);
                     }}
                   >
-                    No
-                  </button>
+                    <span>No</span>
+                  </div>
                 </div>
                 <div
                   className="modal__close"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setShowModal(false);
                   }}
                 >
@@ -267,9 +279,9 @@ const Issue = (props) => {
               <ReactMarkdown>{issue.description}</ReactMarkdown>
             </div>
           </div>
-          <div className="issue__label-container">
-            {issueLabels.length > 0 &&
-              issueLabels.map((label, index) => (
+          {issueLabels.length > 0 && (
+            <div className="issue__label-container">
+              {issueLabels.map((label, index) => (
                 <span
                   className="issue__label"
                   style={{ background: `${label.color}` }}
@@ -278,7 +290,8 @@ const Issue = (props) => {
                   {label.name}
                 </span>
               ))}
-          </div>
+            </div>
+          )}
           {issue["assignees"] && issue.assignees.length > 0 && (
             <div className="issue-creation-date issue__assignees">
               <span className="mb-2">Assigned to:</span>
