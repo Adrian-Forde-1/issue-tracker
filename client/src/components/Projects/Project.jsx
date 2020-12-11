@@ -222,6 +222,12 @@ const Project = (props) => {
               </div>
             )}
           </div>
+          <div className="project__creation-date">
+            Created By
+            <span> {project.createdBy.username} </span>
+            <span> &middot; </span>
+            {new Date(project.createdAt).toDateString()}
+          </div>
           <div className="project__description">
             <div
               className="project__description-name"

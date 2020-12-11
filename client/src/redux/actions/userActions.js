@@ -75,6 +75,7 @@ export const setMessages = (messages) => (dispatch) => {
   console.log("Set messages called");
   dispatch({ type: SET_MESSAGES, payload: messages });
 };
+
 export const setErrors = (error) => (dispatch) => {
   dispatch({ type: SET_ERRORS, payload: error.response.data });
 };

@@ -8,9 +8,6 @@ import moment from "moment";
 
 import ReactMarkdown from "react-markdown";
 
-//Tostify
-import { toast } from "react-toastify";
-
 //React Router DOM
 import { Link } from "react-router-dom";
 
@@ -23,19 +20,21 @@ import EditSVG from "../SVG/EditSVG";
 import CaretDownNoFillSVG from "../SVG/CaretDownNoFillSVG";
 
 //Actions
-import { setErrors, clearErrors } from "../../redux/actions/userActions";
-import {
-  showModal,
-  setDeleteItem,
-  setItemType,
-  setCurrentLocation,
-} from "../../redux/actions/modalActions";
+import { setErrors, setMessages } from "../../redux/actions/userActions";
+
+//Components
+import Modal from "../Modal/Modal";
 
 const Issue = (props) => {
+  const modalTypes = {
+    "Delete Modal": "Delete Modal",
+  };
   const [issue, setIssue] = useState({});
   const [comment, setComment] = useState("");
   const [issueLabels, setIssueLabels] = useState([]);
   const [showDescription, setShowDescription] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState("");
 
   useEffect(() => {
     const issueId = props.match.params.issueId;
@@ -60,17 +59,12 @@ const Issue = (props) => {
         setIssue(response.data);
       })
       .catch((error) => {
-        props.setErrors(error);
-        props.history.goBack();
+        if (error && error.response && error.response.data) {
+          props.setErrors(error);
+          props.history.goBack();
+        }
       });
   }, []);
-
-  const deleteModal = () => {
-    props.setDeleteItem(issue);
-    props.setItemType("issue");
-    props.setCurrentLocation(props.history.location.pathname.split("/"));
-    props.showModal();
-  };
 
   useEffect(() => {
     if (Object.keys(issue).length > 0) {
@@ -110,8 +104,30 @@ const Issue = (props) => {
         { headers: { Authorization: localStorage.getItem("token") } }
       )
       .catch((error) => {
-        props.setErrors(error);
-        props.history.goBack();
+        if (error && error.response && error.response.data) {
+          props.setErrors(error);
+          props.history.goBack();
+        }
+      });
+  };
+
+  const deleteIssue = () => {
+    axios
+      .delete(`/api/issue/${issue._id}`, {
+        headers: { Authorization: localStorage.getItem("token") },
+      })
+      .then((res) => {
+        if (res && res.data) {
+          console.log(res.data);
+          props.setMessages(res.data);
+          props.history.goBack();
+        }
+      })
+      .catch((error) => {
+        if (error && error.response && error.response.data) {
+          props.setErrors(error);
+          props.history.goBack();
+        }
       });
   };
 
@@ -149,18 +165,64 @@ const Issue = (props) => {
             setComment("");
           })
           .catch((error) => {
-            props.setErrors(error);
-            props.history.goBack();
+            if (error && error.response && error.response.data) {
+              props.setErrors(error);
+              props.history.goBack();
+            }
           });
       })
       .catch((error) => {
-        props.setErrors(error);
-        props.history.goBack();
+        if (error && error.response && error.response.data) {
+          props.setErrors(error);
+          props.history.goBack();
+        }
       });
+  };
+
+  const renderModal = () => {
+    if (showModal) {
+      switch (modalType) {
+        case modalTypes["Delete Modal"]:
+          return (
+            <Modal>
+              <div className="modal__delete-modal-body">
+                <div className="modal__delete-modal-body__message">
+                  Are you sure you want to delete <span>{issue.name}</span>?
+                </div>
+                <div className="modal__delete-modal-body__action-container">
+                  <button
+                    onClick={() => {
+                      deleteIssue();
+                    }}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowModal(false);
+                    }}
+                  >
+                    No
+                  </button>
+                </div>
+                <div
+                  className="modal__close"
+                  onClick={() => {
+                    setShowModal(false);
+                  }}
+                >
+                  &times;
+                </div>
+              </div>
+            </Modal>
+          );
+      }
+    }
   };
 
   return (
     <div className="issue__wrapper">
+      {renderModal()}
       {Object.keys(issue).length > 0 && (
         <React.Fragment>
           <div className="issue__header">
@@ -174,7 +236,12 @@ const Issue = (props) => {
                 </Link>
               </div>
 
-              <div onClick={deleteModal}>
+              <div
+                onClick={() => {
+                  setModalType(modalTypes["Delete Modal"]);
+                  setShowModal(true);
+                }}
+              >
                 <TrashSVG />
               </div>
             </div>
@@ -183,7 +250,6 @@ const Issue = (props) => {
             Created By
             <span> {issue.createdBy.username} </span>
             <span> &middot; </span>
-            {/* moment(issue.createdAt).fromNow() */}
             {new Date(issue.createdAt).toDateString()}
           </div>
           <div className="issue__description">
@@ -201,19 +267,6 @@ const Issue = (props) => {
               <ReactMarkdown>{issue.description}</ReactMarkdown>
             </div>
           </div>
-          {/* <h3 className="issue-title">
-            <span>{issue.name}</span>{" "}
-            {issue.createdBy._id.toString() === props.user._id.toString() && (
-              <div>
-                <Link
-                  to={`/project/${issue.project._id}/issue/${issue._id}/edit`}
-                >
-                  <i className="far fa-edit"></i>
-                </Link>
-                <i className="far fa-trash-alt" onClick={deleteModal}></i>
-              </div>
-            )}
-          </h3> */}
           <div className="issue__label-container">
             {issueLabels.length > 0 &&
               issueLabels.map((label, index) => (
@@ -316,13 +369,21 @@ const Issue = (props) => {
                             setIssue(response.data);
                           })
                           .catch((error) => {
-                            props.setErrors(error);
-                            props.history.goBack();
+                            if (
+                              error &&
+                              error.response &&
+                              error.response.data
+                            ) {
+                              props.setErrors(error);
+                              props.history.goBack();
+                            }
                           });
                       })
                       .catch((error) => {
-                        props.setErrors(error);
-                        props.history.goBack();
+                        if (error && error.response && error.response.data) {
+                          props.setErrors(error);
+                          props.history.goBack();
+                        }
                       });
                   }}
                 ></i>
@@ -336,11 +397,7 @@ const Issue = (props) => {
 
 const mapDispatchToProps = {
   setErrors,
-  clearErrors,
-  showModal,
-  setDeleteItem,
-  setItemType,
-  setCurrentLocation,
+  setMessages,
 };
 
 const mapStateToProps = (state) => ({

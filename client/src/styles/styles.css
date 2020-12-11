@@ -1308,9 +1308,8 @@ header::after {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -2619,6 +2618,11 @@ header::after {
   color: #0f003a;
 }
 
+.project__creation-date {
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+
 .project__description {
   width: 100%;
   height: auto;
@@ -3133,6 +3137,113 @@ header::after {
     width: -moz-fit-content;
     width: fit-content;
   }
+}
+
+.modal__overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  z-index: 20000;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+
+.modal__delete-modal-body {
+  width: 400px;
+  height: 200px;
+  border-radius: 20px;
+  background: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+}
+
+.modal__delete-modal-body__message {
+  font-size: 14px;
+  text-align: center;
+}
+
+.modal__delete-modal-body__message span {
+  color: #2e00b1;
+}
+
+.modal__delete-modal-body__action-container {
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.modal__delete-modal-body__action-container button {
+  width: 75px;
+  height: 40px;
+  border: 2px solid #0f003a;
+  background: transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.modal__delete-modal-body__action-container button::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: #0f003a;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+
+.modal__delete-modal-body__action-container button:hover::after {
+  -webkit-transform: translateY(0%);
+          transform: translateY(0%);
+}
+
+.modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #0f003a;
+  cursor: pointer;
+}
+
+.modal__close:hover {
+  color: #2e00b1;
 }
 
 * {

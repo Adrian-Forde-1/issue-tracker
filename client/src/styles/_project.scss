@@ -23,6 +23,11 @@
     color: $text-color;
   }
 
+  &__creation-date {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
   &__description {
     width: 100%;
     height: auto;

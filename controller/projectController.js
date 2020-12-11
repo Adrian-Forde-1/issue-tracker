@@ -252,7 +252,7 @@ module.exports = {
       const projectId = req.params.projectId;
 
       ProjectModel.findById(projectId)
-        .populate("user")
+        .populate("createdBy")
         .populate("issues")
         .exec(function (err, project) {
           //If something went wrong when looking for project, notify user

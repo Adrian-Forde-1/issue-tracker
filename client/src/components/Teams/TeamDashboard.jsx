@@ -2,6 +2,10 @@ import React, { useEffect, useState, lazy, Suspense, Children } from "react";
 
 import { Route, Switch, Redirect } from "react-router-dom";
 
+//Tippy
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
+
 //Tostify
 import { toast } from "react-toastify";
 
@@ -139,13 +143,14 @@ function TeamDashboard(props) {
             {currentCategory === categories.Teams && (
               <div className="teams__dashboard__quick-links-container">
                 <Link to={`/team/create`}>
-                  <PlusSVG />
+                  <Tooltip title="Create Team" position="bottom" size="small">
+                    <PlusSVG />
+                  </Tooltip>
                 </Link>
                 <Link to={`/team/join`}>
-                  <PeopleWavingSVG />
-                </Link>
-                <Link to={`/team/join`}>
-                  <ArchiveSVG />
+                  <Tooltip title="Join Team" position="bottom" size="small">
+                    <PeopleWavingSVG />
+                  </Tooltip>
                 </Link>
               </div>
             )}

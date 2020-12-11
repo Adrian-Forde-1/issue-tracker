@@ -9,49 +9,49 @@ import {
   SET_CURRENT_ID,
   CLEAR_CURRENT_SECTION_AND_ID,
   SET_EXTRA_ID_INFO,
-} from '../actions/types';
+} from "../actions/types";
 
 const initialState = {
   user: null,
-  errors: {},
-  messages: {},
+  errors: [],
+  messages: [],
   authenticated: false,
-  currentSection: '',
-  currentId: '',
-  extraIdInfo: '',
+  currentSection: "",
+  currentId: "",
+  extraIdInfo: "",
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER:
       return {
-        errors: {},
-        messages: {},
+        errors: [],
+        messages: [],
         authenticated: true,
         user: action.payload,
       };
     case SET_MESSAGES:
       return {
         ...state,
-        errors: {},
+        errors: [],
         messages: action.payload,
       };
 
     case CLEAR_MESSAGES:
       return {
         ...state,
-        messages: {},
+        messages: [],
       };
     case SET_ERRORS:
       return {
         ...state,
-        messages: {},
+        messages: [],
         errors: action.payload,
       };
     case CLEAR_ERRORS:
       return {
         ...state,
-        errors: {},
+        errors: [],
       };
     case SET_CURRENT_SECTION:
       return {
@@ -71,9 +71,9 @@ const userReducer = (state = initialState, action) => {
     case CLEAR_CURRENT_SECTION_AND_ID:
       return {
         ...state,
-        currentSection: '',
-        currentId: '',
-        extraIdInfo: '',
+        currentSection: "",
+        currentId: "",
+        extraIdInfo: "",
       };
 
     case LOGOUT_USER:
