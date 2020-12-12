@@ -6,26 +6,30 @@ module.exports = {
   //Create Project
   createProject: (req, res) => {
     if (req.body.project) {
-      let messages = {};
-      let errors = {};
+      let messages = [];
+      let errors = [];
 
       const team = req.body.project.teamId || null;
       const defaultLabels = [
         {
           name: "Need Help",
-          color: "#32936f",
+          fontColor: "#fff",
+          backgroundColor: "#32936f",
         },
         {
           name: "More Info",
-          color: "#2274a5",
+          fontColor: "#fff",
+          backgroundColor: "#2274a5",
         },
         {
           name: "Bug",
-          color: "#a71d31",
+          fontColor: "#fff",
+          backgroundColor: "#a71d31",
         },
         {
           name: "Question",
-          color: "#FFAA1D",
+          fontColor: "#fff",
+          backgroundColor: "#FFAA1D",
         },
       ];
 
@@ -56,7 +60,7 @@ module.exports = {
             //Error occured? Notify user
             if (err) {
               console.error(err);
-              errors.user = "Error occured when adding project to user";
+              errors.push("Error occured when adding project to user");
               return res.status(500).json(errors);
             }
 
@@ -66,7 +70,7 @@ module.exports = {
                 //Error occured? Notify user
                 if (err) {
                   console.error(err);
-                  errors.user = "Error occured when adding project to team";
+                  errors.push("Error occured when adding project to team");
                   return res.status(500).json(errors);
                 }
 
@@ -78,29 +82,29 @@ module.exports = {
                   //Error occured? Notify user
                   if (err) {
                     console.error(err);
-                    errors.user = "Error occured";
+                    errors.push("Error occured");
                     return res.status(500).json(errors);
                   }
 
                   //Return a message if the project was successfully saved
-                  messages.project = "Project successfully created";
+                  messages.push("Project successfully created");
                   return res.json(messages);
                 });
               });
             } else {
               //Return a message if the project was successfully saved
-              messages.project = "Project successfully created";
+              messages.push("Project successfully created");
               return res.json(messages);
             }
           });
         })
         .catch((error) => {
-          errors.project = "Error occured when creating project";
+          errors.push("Error occured when creating project");
           return res.status(500).json(error);
         });
     } else {
-      let errors = {};
-      errors.project = "Opps! Something went wrong";
+      let errors = [];
+      errors.push("Opps! Something went wrong");
       return res.status(400).json(errors);
     }
   },
@@ -131,12 +135,12 @@ module.exports = {
           return res.json(messages);
         });
       } else {
-        let errors = {};
+        let errors = [];
         errors.push("Opps! Something went wrong");
         return res.status(400).json(errors);
       }
     } else {
-      let errors = {};
+      let errors = [];
       errors.push("Opps! Something went wrong");
       return res.status(400).json(errors);
     }
@@ -144,14 +148,14 @@ module.exports = {
   //Delete Project
   deleteProject: (req, res) => {
     if (req.params.projectId) {
-      let errors = {};
-      let messages = {};
+      let errors = [];
+      let messages = [];
       const projectId = req.params.projectId;
 
       ProjectModel.findById(projectId).exec(function (err, project) {
         //Error occured? Notify User
         if (err) {
-          errors.project = "Error occured";
+          errors.push("Error occured");
           return res.status(500).json(errors);
         }
 
@@ -161,7 +165,7 @@ module.exports = {
             //Error occured? Notify user
             if (err) {
               console.error(err);
-              errors.project = "An Error occured";
+              errors.push("An Error occured");
               return res.status(500).json(errors);
             }
 
@@ -174,7 +178,7 @@ module.exports = {
                 //If something went wrong when deleting project, notify user
                 if (err) {
                   console.error(err);
-                  errors.project = "Error occured";
+                  errors.push("Error occured");
                   return res.status(500).json(errors);
                 }
 
@@ -182,7 +186,7 @@ module.exports = {
                   //Error occured? Notify user
                   if (err) {
                     console.error(err);
-                    errors.project = "Error occured";
+                    errors.push("Error occured");
                     return res.status(500).json(errors);
                   }
 
@@ -197,20 +201,19 @@ module.exports = {
                     //Error occured? Notify user
                     if (err) {
                       console.error(err);
-                      errors.project = "Error occured";
+                      errors.push("Error occured");
                       return res.status(500).json(errors);
                     }
 
                     //If everything went right, notify user
-                    messages.project = "Project was successfully deleted";
+                    messages.push("Project was successfully deleted");
                     return res.json(messages);
                   });
                 });
               });
             } else {
               //If the person trying to delete the project isn't the same person who created it, notify them
-              errors.project =
-                "You don't have permission to delete this project";
+              errors.push("You don't have permission to delete this project");
               return res.status(401).json(errors);
             }
           });
@@ -224,30 +227,30 @@ module.exports = {
               //If something went wrong when deleting project, notify user
               if (err) {
                 console.error(err);
-                errors.project = "Error occured";
+                errors.push("Error occured");
                 return res.status(500).json(errors);
               }
 
               //If everything went right, notify user
-              messages.project = "Project was successfully deleted";
+              messages.push("Project was successfully deleted");
               return res.json(messages);
             });
           } else {
             //If the person trying to delete the project isn't the same person who created it, notify them
-            errors.project = "You don't have permission to delete this project";
+            errors.push("You don't have permission to delete this project");
             return res.status(401).json(errors);
           }
         }
       });
     } else {
-      let errors = {};
-      errors.project = "Opps! Something went wrong";
+      let errors = [];
+      errors.push("Opps! Something went wrong");
       return res.status(400).json(errors);
     }
   },
   getProject: (req, res) => {
     if (req.params.projectId) {
-      let errors = {};
+      let errors = [];
 
       const projectId = req.params.projectId;
 
@@ -258,7 +261,7 @@ module.exports = {
           //If something went wrong when looking for project, notify user
           if (err) {
             console.error(err);
-            errors.project = "Error occured";
+            errors.push("Error occured");
             return res.status(500).json(errors);
           }
 
@@ -268,7 +271,7 @@ module.exports = {
     }
   },
   getProjects: (req, res) => {
-    let errors = {};
+    let errors = [];
     const userId = req.user._id;
     //Find all projects created by a certain user
     ProjectModel.find({
@@ -278,7 +281,7 @@ module.exports = {
       .exec(function (err, projects) {
         //If something went wrong when fetching projects, notify user
         if (err) {
-          errors.project = "Error occured";
+          errors.push("Error occured");
           console.error(err);
           return res.status(500).json(errors);
         }
@@ -310,14 +313,14 @@ module.exports = {
   addLabel: (req, res) => {
     if (req.params.projectId) {
       if (req.body.label) {
-        let messages = {};
-        let errors = {};
+        let messages = [];
+        let errors = [];
         const projectId = req.params.projectId;
         ProjectModel.findById(projectId).exec(function (err, project) {
           //If error occured when fetching project, notfiy user
           if (err) {
             console.error(err);
-            errors.project = "Error occured";
+            errors.push("Error occured");
             return res.status(500).json(errors);
           }
 
@@ -328,11 +331,9 @@ module.exports = {
 
           //If it does, notfiy user
           if (hasLabel) {
-            errors.label = "That label already exists";
+            errors.push("That label already exists");
             return res.status(400).json(errors);
           }
-
-          console.log(req.body.label);
 
           //If everything went well continue
           const newLabels = [...project.labels, req.body.label];
@@ -343,39 +344,39 @@ module.exports = {
               //If error occured when updating project labels, notfiy user
               if (err) {
                 console.error(err);
-                errors.project = "Error occured";
+                errors.push("Error occured");
                 return res.status(500).json(errors);
               }
 
               //If everything went well, notify user,
-              messages.project = "Label successfully added";
+              messages.push("Label successfully added");
               return res.json(messages);
             }
           );
         });
       } else {
-        let errors = {};
-        errors.project = "Opps! Something went wrong";
+        let errors = [];
+        errors.push("Opps! Something went wrong");
         return res.status(400).json(errors);
       }
     } else {
-      let errors = {};
-      errors.project = "Opps! Something went wrong";
+      let errors = [];
+      errors.push("Opps! Something went wrong");
       return res.status(400).json(errors);
     }
   },
   deleteLabel: (req, res) => {
     if (req.params.projectId) {
       if (req.params.labelId) {
-        let errors = {};
-        let messages = {};
+        let errors = [];
+        let messages = [];
         const projectId = req.params.projectId;
         const labelId = req.params.labelId;
         ProjectModel.findById(projectId).exec(function (err, project) {
           //If error occured when fetching project, notfiy user
           if (err) {
             console.error(err);
-            errors.project = "Error occured";
+            errors.push("Error occured");
             return res.status(500).json(errors);
           }
 
@@ -389,39 +390,39 @@ module.exports = {
               //If error occured when updating project labels, notfiy user
               if (err) {
                 console.error(err);
-                errors.project = "Error occured when updating project labels";
+                errors.push("Error occured when updating project labels");
                 return res.status(500).json(errors);
               }
 
               //If everything went well, notify user
-              messages.project = "Label successfully removed";
+              messages.push("Label successfully removed");
               return res.json(messages);
             }
           );
         });
       } else {
-        let errors = {};
-        errors.project = "Opps! Something went wrong";
+        let errors = [];
+        errors.push("Opps! Something went wrong");
         return res.status(400).json(errors);
       }
     } else {
-      let errors = {};
-      errors.project = "Opps! Something went wrong";
+      let errors = [];
+      errors.push("Opps! Something went wrong");
       return res.status(400).json(errors);
     }
   },
   editLabel: (req, res) => {
     if (req.params.projectId) {
       if (req.params.labelId) {
-        let errors = {};
-        let messages = {};
+        let errors = [];
+        let messages = [];
         const projectId = req.params.projectId;
         const labelId = req.params.labelId;
         ProjectModel.findById(projectId).exec(function (err, project) {
           //If error occured when fetching project, notfiy user
           if (err) {
             console.error(err);
-            errors.project = "Error occured when fetching project";
+            errors.push("Error occured when fetching project");
             return res.status(500).json(errors);
           }
 
@@ -445,30 +446,30 @@ module.exports = {
             //If error occured when updating project labels, notfiy user
             if (err) {
               console.error(err);
-              errors.project = "Error occured when updating project labels";
+              errors.push("Error occured when updating project labels");
               return res.status(500).json(errors);
             }
 
             //If everything went well, notify user
-            messages.project = "Label successfully updated";
+            messages.push("Label successfully updated");
             return res.json(messages);
           });
         });
       } else {
-        let errors = {};
-        errors.project = "Opps! Something went wrong";
+        let errors = [];
+        errors.push("Opps! Something went wrong");
         return res.status(400).json(errors);
       }
     } else {
-      let errors = {};
-      errors.project = "Opps! Something went wrong";
+      let errors = [];
+      errors.push("Opps! Something went wrong");
       return res.status(400).json(errors);
     }
   },
   addToArchive: (req, res) => {
     if (req.params.projectId) {
-      let errors = {};
-      let messages = {};
+      let errors = [];
+      let messages = [];
       const projectId = req.params.projectId;
 
       //Everything went well, add project to archive
@@ -476,25 +477,25 @@ module.exports = {
         function (err, project) {
           //Error occrued? Notify User
           if (err) {
-            errors.project = "Error occured";
+            errors.push("Error occured");
             return res.status(500).json(errors);
           }
 
           //Everything went well, notify user
-          messages.project = "Project successfully archived";
+          messages.push("Project successfully archived");
           return res.json(messages);
         }
       );
     } else {
-      let errors = {};
-      errors.project = "Error occured";
+      let errors = [];
+      errors.push("Error occured");
       return res.status(400).json(errors);
     }
   },
   removeFromArchive: (req, res) => {
     if (req.params.projectId) {
-      let errors = {};
-      let messages = {};
+      let errors = [];
+      let messages = [];
       const projectId = req.params.projectId;
 
       //Everything went well, remove project from archive
@@ -502,23 +503,23 @@ module.exports = {
         function (err, project) {
           //Error occrued? Notify User
           if (err) {
-            errors.project = "Error occured";
+            errors.push("Error occured");
             return res.status(500).json(errors);
           }
 
           //Everything went well, notify user
-          messages.project = "Project successfully removed from archived";
+          messages.push("Project successfully removed from archived");
           return res.json(messages);
         }
       );
     } else {
-      let errors = {};
-      errors.project = "Error occured";
+      let errors = [];
+      errors.push("Error occured");
       return res.status(400).json(errors);
     }
   },
   getArchivedProjects: (req, res) => {
-    let errors = {};
+    let errors = [];
     const userId = req.user._id;
     //Find all projects created by a certain user
     ProjectModel.find({
@@ -528,7 +529,7 @@ module.exports = {
       .exec(function (err, projects) {
         //If something went wrong when fetching projects, notify user
         if (err) {
-          errors.project = "Error occured";
+          errors.push("Error occured");
           console.error(err);
           return res.status(500).json(errors);
         }

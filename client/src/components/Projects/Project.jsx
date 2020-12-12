@@ -256,7 +256,7 @@ const Project = (props) => {
             <Link
               to={`${project.team !== null ? "/team/project/" : "/project/"}${
                 project._id
-              }/labels`}
+              }/project/labels`}
             >
               Labels <i className="fas fa-tags"></i>
             </Link>

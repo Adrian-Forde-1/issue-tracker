@@ -15,7 +15,6 @@ import { connect } from "react-redux";
 import { setErrors, setMessages } from "../../redux/actions/userActions";
 
 //SVG
-import PreviewSVG from "../SVG/PreviewSVG";
 import InfoSVG from "../SVG/InfoSVG";
 
 const CreateTeamProject = (props) => {
@@ -59,7 +58,6 @@ const CreateTeamProject = (props) => {
   };
   return (
     <div className="standard-form__wrapper">
-      {/* <SideNav /> */}
       <div className="standard-form__header">
         <h2>Create Project</h2>
       </div>

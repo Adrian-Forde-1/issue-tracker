@@ -1,65 +1,78 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-//Tostify
-import { toast } from 'react-toastify';
+//Tippy
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
 
 //React Router DOM
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
-import { clearErrors } from '../../redux/actions/userActions';
+import { clearErrors } from "../../redux/actions/userActions";
+
+//SVG
+import PlusSVG from "../SVG/PlusSVG";
 
 //Components
-import LabelPreview from '../Preview/LabelPreview';
-import SideNav from '../Navigation/SideNav';
-import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
+import LabelPreview from "../Preview/LabelPreview";
 
 function Labels(props) {
   const [project, setProject] = useState({});
   const projectId = props.match.params.projectId;
 
   useEffect(() => {
+    getProject();
+  }, [props.projects]);
+
+  const getProject = () => {
     axios
       .get(`/api/project/${projectId}`, {
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: localStorage.getItem("token") },
       })
       .then((response) => {
-        setProject(response.data);
+        if (response && response.data) {
+          setProject(response.data);
+          if (props.location.pathname.indexOf("team") > -1) {
+            props.setCurrentTeam(response.data.team);
+          }
+        }
       });
-  }, [props.projects]);
+  };
   return (
-    <div className="labels p-l-175-0">
-      <ProjectsTeamsHamburger />
-      <SideNav />
-      <h2 className="mt-md-4 mt-lg-0">Labels</h2>
-      {props.errors !== null &&
-        props.errors['label'] &&
-        !toast.isActive('labeltoast') &&
-        toast(props.errors.label, {
-          toastId: 'labeltoast',
-          type: 'error',
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 2000,
-          onClose: () => {
-            props.clearErrors();
-          },
-        })}
-      {Object.keys(project).length > 0 &&
-        project.labels.map((label, index) => (
-          <LabelPreview
-            label={label}
-            index={index}
-            projectId={project._id}
-            key={index}
-          />
-        ))}
-      <Link to={`/project/${project._id}/label/add`}>
-        <i className="fas fa-plus-square action-btn add-label"></i>
-      </Link>
+    <div className="label__wrapper label__wrapper--no-padding">
+      <div className="label__header">
+        <div className="label__name">
+          <h2>Labels</h2>
+        </div>
+        <div className="label__header-actions">
+          <Link
+            to={`${project.team !== null ? "/team/project/" : "/project/"}${
+              project._id
+            }/project/new/label`}
+          >
+            <Tooltip title="Add Label" position="bottom" size="small">
+              <PlusSVG />
+            </Tooltip>
+          </Link>
+        </div>
+      </div>
+      {Object.keys(project).length > 0 && (
+        <div className="label__label-container">
+          {project.labels.map((label, index) => (
+            <LabelPreview
+              label={label}
+              index={index}
+              projectId={project._id}
+              key={index}
+              getProject={getProject}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

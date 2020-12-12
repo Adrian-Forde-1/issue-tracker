@@ -33,6 +33,8 @@ import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 import DashboardNavbar from "../Navigation/DashboardNavbar";
 import Project from "../Projects/Project";
 import NewIssue from "../Issues/NewIssue";
+import Labels from "../Labels/Labels";
+import AddLabel from "../Labels/AddLabel";
 
 const IndividualTeam = lazy(() => {
   return import("./IndividualTeam");
@@ -86,9 +88,21 @@ function TeamDashboard(props) {
           return <Project {...props} setCurrentTeam={setCurrentTeam} />;
         }}
       />
+
       <Route
-        exact
+        path="/team/project/:projectId/project/new/label"
+        render={(props) => {
+          return <AddLabel {...props} setCurrentTeam={setCurrentTeam} />;
+        }}
+      />
+      <Route
         path="/team/project/:projectId/new/issue"
+        render={(props) => {
+          return <Labels {...props} setCurrentTeam={setCurrentTeam} />;
+        }}
+      />
+      <Route
+        path="/team/project/:projectId/project/labels"
         render={(props) => {
           return <NewIssue {...props} setCurrentTeam={setCurrentTeam} />;
         }}

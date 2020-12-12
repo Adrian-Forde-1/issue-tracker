@@ -344,4 +344,22 @@
       margin-left: 20px;
     }
   }
+
+  &__submit-btn {
+    border: none;
+    padding: 6px 20px;
+    background: $primary-color;
+    color: #fff;
+
+    &:hover {
+      filter: brightness(70%);
+    }
+  }
+
+  &__input {
+    width: 100%;
+    border: none;
+    background: $light-grey3;
+    padding: 5px;
+  }
 }

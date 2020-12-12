@@ -229,3 +229,56 @@
     }
   }
 }
+
+.label {
+  &__preview {
+    width: auto;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0px;
+    z-index: 20;
+
+    &-name {
+      min-width: 100px;
+      max-width: auto;
+      padding: 5px;
+      text-align: center;
+
+      span {
+        color: white;
+        font-size: 14px;
+      }
+    }
+
+    &-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      left: calc(100% + 30px);
+
+      div {
+        margin-right: 20px;
+        cursor: pointer;
+        svg {
+          font-size: 20px;
+          color: $text-color;
+        }
+
+        a {
+          svg {
+            font-size: 20px;
+            color: $text-color;
+          }
+        }
+        &:hover {
+          svg {
+            color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+}

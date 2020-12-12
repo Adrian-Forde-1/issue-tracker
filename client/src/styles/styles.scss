@@ -11,6 +11,7 @@
 @import "project";
 @import "issue";
 @import "modal";
+@import "labels";
 
 $red-color: #ff0000;
 $primary-color: #2e00b1;
@@ -571,39 +572,6 @@ a {
   }
 }
 
-.label-preview {
-  width: auto;
-  display: flex;
-  position: relative;
-  justify-content: space-around;
-  align-items: center;
-  margin: 10px 0px;
-  z-index: 20;
-
-  > div {
-    min-width: 100px;
-    max-width: auto;
-    padding: 10px 10px;
-    text-align: center;
-  }
-
-  p {
-    display: block;
-    margin: auto;
-    color: white;
-  }
-
-  i {
-    color: $text-color;
-    cursor: pointer;
-    margin: 0px 10px;
-  }
-}
-
-.label-preview-actions {
-  position: absolute;
-  right: -100px;
-}
 .color-picker {
   background: rgba(255, 255, 255, 0.1);
   border: none;

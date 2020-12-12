@@ -1,50 +1,65 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from "react";
+
+//Axios
+import axios from "axios";
+
+//Tippy
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
 
 //React Router DOM
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter } from "react-router-dom";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actiosn
-import { getUserProjects } from '../../redux/actions/projectActions';
+import { getUserProjects } from "../../redux/actions/projectActions";
 
-function LabelPreview(props) {
-  const { label, index, projectId } = props;
+//SVG
+import TrashSVG from "../SVG/TrashSVG";
+import EditSVG from "../SVG/EditSVG";
 
-  useEffect(() => {
-    document.querySelector(
-      `#label${index} div`
-    ).style.background = `${label.color}`;
-  }, []);
+const LabelPreview = (props) => {
+  const { label, index, projectId, getProject } = props;
 
   const deleteLabel = () => {
     axios
       .delete(`/api/project/${projectId}/label/${label._id}`, {
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: localStorage.getItem("token") },
       })
       .then(() => {
-        props.getUserProjects(localStorage.getItem('token'));
-        props.history.replace(`/project/${projectId}/labels`);
+        props.getUserProjects(localStorage.getItem("token"));
+        getProject();
       });
   };
   return (
-    <div className="label-preview" id={`label${index}`}>
-      <div>
-        <p>{label.name}</p>
+    <div
+      className="label__preview"
+      style={{ background: `${label.backgroundColor}` }}
+    >
+      <div className="label__preview-name">
+        <span style={{ color: `${label.fontColor}` }}>{label.name}</span>
       </div>
 
-      <div className="label-preview-actions">
-        <Link to={`/project/${projectId}/label/${label._id}/edit`}>
-          <i className="far fa-edit"></i>
-        </Link>
+      <div className="label__preview-actions">
+        <div>
+          <Link to={`/project/${projectId}/label/${label._id}/edit`}>
+            <Tooltip title="Edit Label" position="bottom" size="small">
+              <EditSVG />
+            </Tooltip>
+          </Link>
+        </div>
 
-        <i className="far fa-trash-alt" onClick={deleteLabel}></i>
+        <div onClick={deleteLabel}>
+          <Tooltip title="Delete Label" position="bottom" size="small">
+            <TrashSVG />
+          </Tooltip>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 const mapDispatchToProps = {
   getUserProjects,

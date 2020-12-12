@@ -13,7 +13,8 @@ const projectSchema = new mongoose.Schema(
     labels: [
       {
         name: String,
-        color: String,
+        fontColor: String,
+        backgroundColor: String,
       },
     ],
     issues: [
