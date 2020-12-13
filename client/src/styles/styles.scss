@@ -12,6 +12,7 @@
 @import "issue";
 @import "modal";
 @import "labels";
+@import "searchbar";
 
 $red-color: #ff0000;
 $primary-color: #2e00b1;
@@ -134,31 +135,6 @@ a {
   &#projects,
   &#teams {
     display: none;
-  }
-}
-
-.search {
-  min-width: 30%;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  font-size: 16px;
-  padding: 5px 10px;
-  z-index: 2;
-  box-shadow: 0.5px 0.5px 2px grey;
-
-  span {
-    margin-right: 5px;
-  }
-
-  input {
-    border: none;
-    flex: 1;
-
-    &:focus {
-      outline: $text-color;
-    }
   }
 }
 

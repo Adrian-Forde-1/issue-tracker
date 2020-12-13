@@ -17,7 +17,7 @@ import Signup from "./components/Signup";
 import IsAuthenticated from "./components/IsAuthenticated";
 import Navbar from "./components/Navigation/Navbar";
 import { connect } from "react-redux";
-import IndividualTeam from "./components/Teams/IndividualTeam";
+import Team from "./components/Teams/Team";
 import CreateTeam from "./components/Teams/CreateTeam";
 import Project from "./components/Projects/Project";
 import CreateProject from "./components/Projects/CreateProject";

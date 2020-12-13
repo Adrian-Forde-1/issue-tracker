@@ -1,16 +1,19 @@
-import React from 'react';
+import React from "react";
+
+//SVG
+import SearchSVG from "./SVG/SearchSVG";
 
 function SearchBar(props) {
   return (
-    <div className={`search ${props.extraClass}`}>
+    <div className={`search-bar__wrapper ${props.extraClass}`}>
       <span>
-        <i className="fas fa-search"></i>
+        <SearchSVG />
       </span>
       <input
         type="text"
         name="search"
         value={props.search}
-        placeholder="Search by name"
+        placeholder={props.placeholder || "Search by name"}
         onChange={props.onChange}
       />
     </div>

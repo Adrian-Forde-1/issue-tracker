@@ -70,8 +70,7 @@ function AllTeamProjects(props) {
   // }, [props.teamUpdated]);
 
   return (
-    <div className="d-flex flex-column">
-      {/* <SideNav /> */}
+    <React.Fragment>
       {projects && projects.length > 0 && props.search === ""
         ? projects.map((project) => {
             if (project.archived === false) {
@@ -98,7 +97,7 @@ function AllTeamProjects(props) {
                 />
               );
           })}
-    </div>
+    </React.Fragment>
   );
 }
 

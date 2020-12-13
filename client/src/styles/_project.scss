@@ -86,6 +86,29 @@
     }
   }
 
+  &__search-bar-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  &__filter-selector {
+    margin-left: 10px;
+    select {
+      padding: 5px;
+      border: 2px solid $primary-color;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+
+      option {
+        font-size: 14px;
+      }
+    }
+  }
+
   &__action-buttons-container {
     margin-left: auto;
     height: 100%;
@@ -111,6 +134,54 @@
         &:hover {
           color: $primary-color;
         }
+      }
+    }
+  }
+
+  &__action-bar {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    a {
+      background: $page-background;
+      padding: 5px 10px;
+      margin-right: 20px;
+      border: none;
+      color: $primary-color;
+      border: 1px solid $primary-color;
+
+      &:hover {
+        background: $primary-color;
+        color: $page-background;
+
+        i {
+          color: $page-background;
+        }
+      }
+      i {
+        color: $text-color;
+      }
+    }
+    button {
+      background: $page-background;
+      padding: 5px 10px;
+      border: none;
+      color: $primary-color;
+      border: 1px solid $primary-color;
+
+      &:nth-last-of-type(1) {
+        margin: 0;
+      }
+      &:hover {
+        background: $primary-color;
+        color: $page-background;
+
+        i {
+          color: $page-background;
+        }
+      }
+      i {
+        color: $text-color;
       }
     }
   }

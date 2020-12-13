@@ -1464,8 +1464,21 @@ header::after {
 .team__projects {
   width: 100%;
   height: calc(88% - 70px);
-  margin-top: 30px;
+  margin-top: 20px;
   padding-right: 20px;
+}
+
+.team__search-bar-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 20px;
 }
 
 .individual-container {
@@ -1956,6 +1969,10 @@ header::after {
   overflow: hidden;
   position: relative;
   cursor: pointer;
+}
+
+.project-preview:first-of-type {
+  margin-top: 0px;
 }
 
 .project-preview::after {
@@ -2815,6 +2832,36 @@ header::after {
   transition: all 300ms ease-in-out;
 }
 
+.project__search-bar-container {
+  margin-bottom: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.project__filter-selector {
+  margin-left: 10px;
+}
+
+.project__filter-selector select {
+  padding: 5px;
+  border: 2px solid #2e00b1;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.project__filter-selector select option {
+  font-size: 14px;
+}
+
 .project__action-buttons-container {
   margin-left: auto;
   height: 100%;
@@ -2850,6 +2897,63 @@ header::after {
 .project__action-buttons-container div svg:hover,
 .project__action-buttons-container div a svg:hover {
   color: #2e00b1;
+}
+
+.project__action-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.project__action-bar a {
+  background: #fdfcff;
+  padding: 5px 10px;
+  margin-right: 20px;
+  border: none;
+  color: #2e00b1;
+  border: 1px solid #2e00b1;
+}
+
+.project__action-bar a:hover {
+  background: #2e00b1;
+  color: #fdfcff;
+}
+
+.project__action-bar a:hover i {
+  color: #fdfcff;
+}
+
+.project__action-bar a i {
+  color: #0f003a;
+}
+
+.project__action-bar button {
+  background: #fdfcff;
+  padding: 5px 10px;
+  border: none;
+  color: #2e00b1;
+  border: 1px solid #2e00b1;
+}
+
+.project__action-bar button:nth-last-of-type(1) {
+  margin: 0;
+}
+
+.project__action-bar button:hover {
+  background: #2e00b1;
+  color: #fdfcff;
+}
+
+.project__action-bar button:hover i {
+  color: #fdfcff;
+}
+
+.project__action-bar button i {
+  color: #0f003a;
 }
 
 .project__issues-container {
@@ -3583,6 +3687,36 @@ header::after {
           align-items: center;
 }
 
+.search-bar__wrapper {
+  min-width: 30%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 14px;
+  padding: 5px 10px;
+  z-index: 2;
+  border: 2px solid #2e00b1;
+  border-radius: 20px;
+}
+
+.search-bar__wrapper span {
+  margin-right: 5px;
+}
+
+.search-bar__wrapper input {
+  border: none;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.search-bar__wrapper input:focus {
+  outline: #0f003a;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -3708,36 +3842,6 @@ a p {
 
 .hide#projects, .hide#teams {
   display: none;
-}
-
-.search {
-  min-width: 30%;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  font-size: 16px;
-  padding: 5px 10px;
-  z-index: 2;
-  -webkit-box-shadow: 0.5px 0.5px 2px grey;
-          box-shadow: 0.5px 0.5px 2px grey;
-}
-
-.search span {
-  margin-right: 5px;
-}
-
-.search input {
-  border: none;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-}
-
-.search input:focus {
-  outline: #0f003a;
 }
 
 .search-extra-info {

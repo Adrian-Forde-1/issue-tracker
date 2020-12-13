@@ -38,10 +38,14 @@ import CaretDownNoFillSVG from "../SVG/CaretDownNoFillSVG";
 //Components
 import SearchBar from "../SearchBar";
 import IssuePreview from "../Preview/IssuePreview";
-import SideNav from "../Navigation/SideNav";
-import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 
 const Project = (props) => {
+  const filterTypes = {
+    All: "All",
+    "New Issue": "New Issue",
+    "Work In Progress": "Work In Progress",
+    Fixed: "Fixed",
+  };
   const [project, setProject] = useState({});
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
@@ -186,24 +190,73 @@ const Project = (props) => {
       });
   };
 
+  const renderIssues = () => {
+    var projectIssues = [];
+
+    if (project.issues && project.issues.length > 0) {
+      project.issues.map((issue, index) => {
+        if (filter === filterTypes.All) {
+          if (search === "") {
+            projectIssues.push(
+              <IssuePreview
+                issue={issue}
+                labels={project.labels}
+                index={index}
+                pathname={props.location.pathname}
+                key={index}
+                getProjectData={getProjectData}
+              />
+            );
+          } else if (
+            issue.name.toLowerCase().indexOf(search.toLowerCase()) > -1
+          ) {
+            projectIssues.push(
+              <IssuePreview
+                issue={issue}
+                labels={project.labels}
+                index={index}
+                pathname={props.location.pathname}
+                key={index}
+                getProjectData={getProjectData}
+              />
+            );
+          }
+        } else {
+          if (issue.status.name === filter) {
+            if (search === "") {
+              projectIssues.push(
+                <IssuePreview
+                  issue={issue}
+                  index={index}
+                  labels={project.labels}
+                  pathname={props.location.pathname}
+                  key={index}
+                  getProjectData={getProjectData}
+                />
+              );
+            } else if (
+              issue.name.toLowerCase().indexOf(search.toLowerCase()) > -1
+            ) {
+              projectIssues.push(
+                <IssuePreview
+                  issue={issue}
+                  index={index}
+                  labels={project.labels}
+                  pathname={props.location.pathname}
+                  key={index}
+                  getProjectData={getProjectData}
+                />
+              );
+            }
+          }
+        }
+      });
+    }
+    return projectIssues;
+  };
+
   return (
     <div className="project__wrapper">
-      {/* <ProjectsTeamsHamburger /> */}
-      {/* <div className="under-nav-section">
-        <SearchBar
-          onChange={handleSearchChange}
-          search={search}
-          extraClass="search-extra-info"
-        />
-        <div className="select-container">
-            <select name="" id="" value={filter} onChange={handleFilterChange}>
-              <option value="All">All</option>
-              <option value="New Issue">New Issue</option>
-              <option value="Work In Progress">Work In Progress</option>
-              <option value="Fixed">Fixed</option>
-            </select>
-          </div>
-      </div> */}
       {Object.keys(project).length > 0 && (
         <React.Fragment>
           <div className="project__header">
@@ -256,7 +309,7 @@ const Project = (props) => {
             </div>
           </div>
 
-          <div className="action-bar">
+          <div className="project__action-bar">
             <Link
               to={`${project.team !== null ? "/team/project/" : "/project/"}${
                 project._id
@@ -272,58 +325,31 @@ const Project = (props) => {
               New Issue
             </Link>
           </div>
-          <div className="project__issues-container">
-            {project.issues &&
-              project.issues.length > 0 &&
-              project.issues.map((issue, index) =>
-                filter === "All" ? (
-                  search === "" ? (
-                    <IssuePreview
-                      issue={issue}
-                      labels={project.labels}
-                      index={index}
-                      pathname={props.location.pathname}
-                      key={index}
-                      getProjectData={getProjectData}
-                    />
-                  ) : (
-                    issue.name.toLowerCase().indexOf(search.toLowerCase()) >
-                      -1 && (
-                      <IssuePreview
-                        issue={issue}
-                        labels={project.labels}
-                        index={index}
-                        pathname={props.location.pathname}
-                        key={index}
-                        getProjectData={getProjectData}
-                      />
-                    )
-                  )
-                ) : (
-                  issue.status.name === filter &&
-                  (search === "" ? (
-                    <IssuePreview
-                      issue={issue}
-                      index={index}
-                      pathname={props.location.pathname}
-                      key={index}
-                      getProjectData={getProjectData}
-                    />
-                  ) : (
-                    issue.name.toLowerCase().indexOf(search.toLowerCase()) >
-                      -1 && (
-                      <IssuePreview
-                        issue={issue}
-                        index={index}
-                        pathname={props.location.pathname}
-                        key={index}
-                        getProjectData={getProjectData}
-                      />
-                    )
-                  ))
-                )
-              )}
+          <div className="project__search-bar-container">
+            <SearchBar
+              onChange={handleSearchChange}
+              search={search}
+              placeholder="Search by Issue name"
+              extraClass="search-extra-info"
+            />
+            <div className="project__filter-selector">
+              <select
+                name="filter-selector"
+                id="filter-selector"
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                <option value="All" hidden selected>
+                  All
+                </option>
+                {Object.keys(filterTypes).map((filterType, index) => (
+                  <option value={filterType} key={index}>
+                    {filterType}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
+          <div className="project__issues-container">{renderIssues()}</div>
         </React.Fragment>
       )}
     </div>

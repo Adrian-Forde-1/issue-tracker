@@ -36,8 +36,8 @@ import NewIssue from "../Issues/NewIssue";
 import Labels from "../Labels/Labels";
 import AddLabel from "../Labels/AddLabel";
 
-const IndividualTeam = lazy(() => {
-  return import("./IndividualTeam");
+const Team = lazy(() => {
+  return import("./Team");
 });
 
 function TeamDashboard(props) {
@@ -78,7 +78,7 @@ function TeamDashboard(props) {
         exact
         path="/team/:teamId"
         render={(props) => {
-          return <IndividualTeam {...props} setCurrentTeam={setCurrentTeam} />;
+          return <Team {...props} setCurrentTeam={setCurrentTeam} />;
         }}
       />
       <Route

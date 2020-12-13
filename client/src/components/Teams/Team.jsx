@@ -33,10 +33,9 @@ import PlusSVG from "../SVG/PlusSVG";
 
 //Components
 import AllTeamProjects from "./AllTeamProjects";
-import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 import SearchBar from "../SearchBar";
 
-function IndividualTeam(props) {
+function Team(props) {
   const [team, setTeam] = useState({});
   const [search, setSearch] = useState("");
   const [teamId, setTeamId] = useState(props.match.params.teamId);
@@ -80,27 +79,6 @@ function IndividualTeam(props) {
 
   return (
     <div className="team__profile-wrapper">
-      {/* <ProjectsTeamsHamburger /> */}
-      {/* <div className="under-nav-section">
-        <div className="search-and-filter">
-          <SearchBar
-            onChange={handleSearchChange}
-            search={search}
-            extraClass="search-extra-info"
-          />
-        </div>
-        <div className="under-nav-section-links">
-          <Link to={`/team/${team._id}/project/create`} className="action-btn">
-            <i className="fas fa-plus-square "></i>
-          </Link>
-          <Link
-            to={`/team/${team._id}/archived`}
-            className="action-btn extra-right"
-          >
-            <i className="fas fa-archive "></i>
-          </Link>
-        </div>
-      </div> */}
       {Object.keys(team).length > 0 && (
         <React.Fragment>
           <div className="team__header">
@@ -160,7 +138,13 @@ function IndividualTeam(props) {
               </div>
             </div>
           </div>
-
+          <div className="team__search-bar-container">
+            <SearchBar
+              onChange={handleSearchChange}
+              search={search}
+              extraClass="search-extra-info"
+            />
+          </div>
           <div className="team__projects">
             <AllTeamProjects search={search} teamId={teamId} />
           </div>
@@ -189,4 +173,4 @@ const mapStateToProps = (state) => ({
   currentId: state.user.currentId,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(IndividualTeam);
+export default connect(mapStateToProps, mapDispatchToProps)(Team);

@@ -63,6 +63,10 @@
   position: relative;
   cursor: pointer;
 
+  &:first-of-type {
+    margin-top: 0px;
+  }
+
   &::after {
     content: "";
     width: 100%;
