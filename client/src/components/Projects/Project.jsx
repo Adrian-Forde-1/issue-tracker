@@ -42,7 +42,7 @@ import SideNav from "../Navigation/SideNav";
 import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 
 const Project = (props) => {
-  const [project, changeProject] = useState({});
+  const [project, setProject] = useState({});
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
   const [showDescription, setShowDescription] = useState(false);
@@ -79,7 +79,11 @@ const Project = (props) => {
           headers: { Authorization: localStorage.getItem("token") },
         })
         .then((response) => {
-          changeProject(response.data);
+          if (response && response.data) {
+            setProject(response.data);
+          } else {
+            props.setErrors(["Something went wrong"]);
+          }
         })
         .catch((error) => {
           props.setErrors(error);
@@ -98,7 +102,7 @@ const Project = (props) => {
       })
       .then((response) => {
         if (response && response.data) {
-          changeProject(response.data);
+          setProject(response.data);
           if (
             props.match.params &&
             props.match.params.toString().indexOf("team" > -1)
@@ -141,7 +145,7 @@ const Project = (props) => {
             },
           })
           .then((response) => {
-            changeProject(response.data);
+            setProject(response.data);
           })
           .catch((error) => {
             props.setErrors(error);
@@ -169,7 +173,7 @@ const Project = (props) => {
             },
           })
           .then((response) => {
-            changeProject(response.data);
+            setProject(response.data);
           })
           .catch((error) => {
             props.setErrors(error);

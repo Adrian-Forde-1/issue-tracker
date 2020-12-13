@@ -140,7 +140,8 @@ const IssuePreview = (props) => {
                   return (
                     <div
                       style={{
-                        background: `${label.color}`,
+                        background: `${label.backgroundColor}`,
+                        color: `${label.fontColor}`,
                         textAlign: "center",
                       }}
                       className="issue-preview__label"

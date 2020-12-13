@@ -149,8 +149,8 @@ const NewIssue = (props) => {
               htmlFor={`check${index}`}
               className="standard-form__input-container__dropdown-item-label"
               style={{
-                background: `${label.color}`,
-                color: "white",
+                background: `${label.backgroundColor}`,
+                color: `${label.fontColor}`,
               }}
             >
               {label.name}

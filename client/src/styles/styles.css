@@ -2580,6 +2580,19 @@ header::after {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
+  overflow-y: auto;
+}
+
+.standard-form__input-container__dropdown::-webkit-scrollbar {
+  width: 7px;
+}
+
+.standard-form__input-container__dropdown::-webkit-scrollbar-thumb {
+  background-color: #0f003a;
+}
+
+.standard-form__input-container__dropdown::-webkit-scrollbar-track {
+  background: #eee;
 }
 
 .standard-form__input-container__dropdown-item {
@@ -2644,7 +2657,7 @@ header::after {
   height: 100%;
   max-height: 100%;
   max-width: 100%;
-  overflow: auto;
+  overflow-y: auto;
   background: #f6f6f6 !important;
   padding: 5px;
 }
@@ -3451,7 +3464,7 @@ header::after {
 }
 
 .label__label-container {
-  width: 100%;
+  width: calc(100% - 40px);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

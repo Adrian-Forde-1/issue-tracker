@@ -35,6 +35,28 @@ const AddLabel = (props) => {
   const [fontColor, setFontColor] = useState(labelFontColors.White);
   const [bgColor, setBgColor] = useState("#A020F0");
 
+  useEffect(() => {
+    const projectId = props.match.params.projectId;
+
+    axios
+      .get(`/api/project/${projectId}`, {
+        headers: { Authorization: localStorage.getItem("token") },
+      })
+      .then((response) => {
+        if (response && response.data) {
+          if (response.data.team) {
+            props.setCurrentTeam(response.data.team);
+          }
+        } else {
+          props.setErrors(["Something went wrong"]);
+        }
+      })
+      .catch((error) => {
+        props.setErrors(error);
+        props.history.push("/projects");
+      });
+  }, []);
+
   const sendRequest = (e) => {
     e.preventDefault();
 

@@ -284,7 +284,10 @@ const Issue = (props) => {
               {issueLabels.map((label, index) => (
                 <span
                   className="issue__label"
-                  style={{ background: `${label.color}` }}
+                  style={{
+                    background: `${label.backgroundColor}`,
+                    color: `${label.fontColor}`,
+                  }}
                   key={index}
                 >
                   {label.name}
