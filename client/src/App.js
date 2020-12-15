@@ -26,7 +26,7 @@ import EditLabel from "./components/Labels/EditLabel";
 import AddLabel from "./components/Labels/AddLabel";
 import Issue from "./components/Issues/Issue";
 import NewIssue from "./components/Issues/NewIssue";
-import EditBug from "./components/Issues/EditBug";
+import EditIssue from "./components/Issues/EditIssue";
 import AllProjects from "./components/Projects/AllProjects";
 import ArchivedProjects from "./components/Projects/ArchivedProjects";
 import ArchivedTeamProjects from "./components/Projects/ArchivedTeamProjects";
@@ -120,7 +120,7 @@ class App extends Component {
             <Route
               exact
               path="/project/:projectId/issue/:issueId/edit"
-              component={EditBug}
+              component={EditIssue}
             />
           </IsAuthenticated>
         </Switch>

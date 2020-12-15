@@ -242,7 +242,9 @@ const Issue = (props) => {
             <div className="issue__action-buttons-container">
               <div>
                 <Link
-                  to={`/project/${issue.project._id}/issue/${issue._id}/edit`}
+                  to={`${
+                    issue.project.team !== null ? "/team/project/" : "/project/"
+                  }${issue.project._id}/issue/${issue._id}/edit`}
                 >
                   <EditSVG />
                 </Link>

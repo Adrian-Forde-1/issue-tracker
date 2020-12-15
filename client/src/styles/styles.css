@@ -3147,7 +3147,7 @@ header::after {
   display: grid;
   gap: 5px;
   margin: 15px 0px;
-  max-width: 380px;
+  width: auto;
   margin-right: auto;
   -ms-grid-columns: (4fr)[3];
       grid-template-columns: repeat(3, 4fr);
@@ -3691,7 +3691,6 @@ header::after {
   min-width: 30%;
   background: transparent;
   border: none;
-  cursor: pointer;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

@@ -133,7 +133,8 @@
     display: grid;
     gap: 5px;
     margin: 15px 0px;
-    max-width: 380px;
+    // max-width: 380px;
+    width: auto;
     margin-right: auto;
     grid-template-columns: repeat(3, 4fr);
   }
