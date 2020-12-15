@@ -79,6 +79,7 @@ function AllTeamProjects(props) {
                   project={project}
                   key={project._id}
                   teamProject={true}
+                  getProjects={getProjects}
                 />
               );
             }
@@ -94,6 +95,7 @@ function AllTeamProjects(props) {
                   project={project}
                   key={project._id}
                   teamProject={true}
+                  getProjects={getProjects}
                 />
               );
           })}

@@ -2021,6 +2021,15 @@ header::after {
   color: #fff;
 }
 
+.project-preview:hover svg, .project-preview.selected svg {
+  color: #fff;
+}
+
+.project-preview__delete svg {
+  font-size: 20px;
+  color: #0f003a;
+}
+
 .issue-preview {
   height: 100%;
   width: 100%;

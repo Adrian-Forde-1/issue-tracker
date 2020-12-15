@@ -104,6 +104,17 @@
     i {
       color: #fff;
     }
+
+    svg {
+      color: #fff;
+    }
+  }
+
+  &__delete {
+    svg {
+      font-size: 20px;
+      color: $text-color;
+    }
   }
 }
 
