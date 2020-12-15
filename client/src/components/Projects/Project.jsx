@@ -5,9 +5,6 @@ import ReactMarkdown from "react-markdown";
 //Axios
 import axios from "axios";
 
-//Tostify
-import { toast } from "react-toastify";
-
 //React Router DOM
 import { Link } from "react-router-dom";
 
@@ -15,18 +12,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import {
-  getUserProjects,
-  setProjectUpdated,
-} from "../../redux/actions/projectActions";
-import { setErrors, clearErrors } from "../../redux/actions/userActions";
-
-import {
-  showModal,
-  setDeleteItem,
-  setItemType,
-  setCurrentLocation,
-} from "../../redux/actions/modalActions";
+import { setErrors, setMessages } from "../../redux/actions/userActions";
 
 //SVG
 import ArchiveSVG from "../SVG/ArchiveSVG";
@@ -38,6 +24,7 @@ import CaretDownNoFillSVG from "../SVG/CaretDownNoFillSVG";
 //Components
 import SearchBar from "../SearchBar";
 import IssuePreview from "../Preview/IssuePreview";
+import Modal from "../Modal/Modal";
 
 const Project = (props) => {
   const filterTypes = {
@@ -46,9 +33,15 @@ const Project = (props) => {
     "Work In Progress": "Work In Progress",
     Fixed: "Fixed",
   };
+  const modalTypes = {
+    "Delete Modal": "Delete Modal",
+  };
+
   const [project, setProject] = useState({});
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState("");
   const [showDescription, setShowDescription] = useState(false);
   const projectId = props.match.params.projectId;
 
@@ -57,13 +50,8 @@ const Project = (props) => {
     setSearch(e.target.value);
   };
 
-  const handleFilterChange = (e) => {
-    sessionStorage.setItem("project-filter", e.target.value);
-    setFilter(e.target.value);
-  };
-
   useEffect(() => {
-    props.getUserProjects(localStorage.getItem("token"));
+    // props.getUserProjects(localStorage.getItem("token"));
 
     if (sessionStorage.getItem("project-search") !== null) {
       setSearch(sessionStorage.getItem("project-search"));
@@ -76,27 +64,27 @@ const Project = (props) => {
     getProjectData();
   }, []);
 
-  useEffect(() => {
-    if (props.projectUpdated === true) {
-      axios
-        .get(`/api/project/${projectId}`, {
-          headers: { Authorization: localStorage.getItem("token") },
-        })
-        .then((response) => {
-          if (response && response.data) {
-            setProject(response.data);
-          } else {
-            props.setErrors(["Something went wrong"]);
-          }
-        })
-        .catch((error) => {
-          props.setErrors(error);
-          props.history.push("/projects");
-        });
+  // useEffect(() => {
+  //   if (props.projectUpdated === true) {
+  //     axios
+  //       .get(`/api/project/${projectId}`, {
+  //         headers: { Authorization: localStorage.getItem("token") },
+  //       })
+  //       .then((response) => {
+  //         if (response && response.data) {
+  //           setProject(response.data);
+  //         } else {
+  //           props.setErrors(["Something went wrong"]);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         props.setErrors(error);
+  //         props.history.push("/projects");
+  //       });
 
-      props.setProjectUpdated(false);
-    }
-  }, [props.projectUpdated]);
+  //     props.setProjectUpdated(false);
+  //   }
+  // }, [props.projectUpdated]);
 
   const getProjectData = () => {
     console.log("Get Project data called");
@@ -106,13 +94,23 @@ const Project = (props) => {
       })
       .then((response) => {
         if (response && response.data) {
-          setProject(response.data);
+          if (
+            response.data.team !== null &&
+            props.location.pathname.toString().indexOf("team") === -1
+          ) {
+            props.history.goBack();
+          } else {
+            setProject(response.data);
+          }
+
           if (
             props.match.params &&
             props.match.params.toString().indexOf("team" > -1)
           ) {
             props.setCurrentTeam(response.data.team);
           }
+        } else {
+          props.setErrors(["Something went wrong"]);
         }
       })
       .catch((error) => {
@@ -125,13 +123,6 @@ const Project = (props) => {
           );
         }
       });
-  };
-
-  const deleteModal = () => {
-    props.setDeleteItem(project);
-    props.setItemType("project");
-    props.setCurrentLocation(props.history.location.pathname.split("/"));
-    props.showModal();
   };
 
   const archiveProject = () => {
@@ -188,6 +179,69 @@ const Project = (props) => {
         props.setErrors(error);
         props.history.push("/projects");
       });
+  };
+
+  const deleteProject = () => {
+    axios
+      .delete(`/api/project/${project._id}`, {
+        headers: { Authorization: localStorage.getItem("token") },
+      })
+      .then((res) => {
+        if (res && res.data) {
+          setMessages(res.data);
+          props.history.goBack();
+        }
+      })
+      .catch((error) => {
+        if (error && error.response && error.response.data) {
+          setErrors(error);
+        }
+      });
+  };
+
+  const renderModal = () => {
+    if (showModal) {
+      switch (modalType) {
+        case modalTypes["Delete Modal"]:
+          return (
+            <Modal setShowModal={setShowModal} showModal={showModal}>
+              <div className="modal__delete-modal-body">
+                <div className="modal__delete-modal-body__message">
+                  Are you sure you want to delete <span>{project.name}</span>?
+                </div>
+                <div className="modal__delete-modal-body__action-container">
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteProject();
+                      setShowModal(false);
+                    }}
+                  >
+                    <span>Yes</span>
+                  </div>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowModal(false);
+                    }}
+                  >
+                    <span>No</span>
+                  </div>
+                </div>
+                <div
+                  className="modal__close"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowModal(false);
+                  }}
+                >
+                  &times;
+                </div>
+              </div>
+            </Modal>
+          );
+      }
+    }
   };
 
   const renderIssues = () => {
@@ -255,13 +309,14 @@ const Project = (props) => {
     return projectIssues;
   };
 
-  return (
-    <div className="project__wrapper">
-      {Object.keys(project).length > 0 && (
+  if (Object.keys(project).length > 0) {
+    return (
+      <div className="project__wrapper">
+        {renderModal()}
         <React.Fragment>
           <div className="project__header">
             <div className="project__name">{project.name}</div>
-            {project.createdBy.toString() === props.user._id.toString() && (
+            {project.createdBy._id.toString() === props.user._id.toString() && (
               <div className="project__action-buttons-container">
                 <div
                   onClick={() => {
@@ -280,7 +335,13 @@ const Project = (props) => {
                   </Link>
                 </div>
 
-                <div onClick={deleteModal}>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setModalType(modalTypes["Delete Modal"]);
+                    setShowModal(true);
+                  }}
+                >
                   {" "}
                   <TrashSVG />
                 </div>
@@ -336,11 +397,9 @@ const Project = (props) => {
               <select
                 name="filter-selector"
                 id="filter-selector"
+                value={filter}
                 onChange={(e) => setFilter(e.target.value)}
               >
-                <option value="All" hidden selected>
-                  All
-                </option>
                 {Object.keys(filterTypes).map((filterType, index) => (
                   <option value={filterType} key={index}>
                     {filterType}
@@ -351,20 +410,14 @@ const Project = (props) => {
           </div>
           <div className="project__issues-container">{renderIssues()}</div>
         </React.Fragment>
-      )}
-    </div>
-  );
+      </div>
+    );
+  } else return null;
 };
 
 const mapDispatchToProps = {
-  getUserProjects,
   setErrors,
-  clearErrors,
-  setProjectUpdated,
-  showModal,
-  setDeleteItem,
-  setItemType,
-  setCurrentLocation,
+  setMessages,
 };
 
 const mapStateToProps = (state) => ({

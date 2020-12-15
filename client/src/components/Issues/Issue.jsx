@@ -37,6 +37,10 @@ const Issue = (props) => {
   const [modalType, setModalType] = useState("");
 
   useEffect(() => {
+    getIssue();
+  }, []);
+
+  const getIssue = () => {
     const issueId = props.match.params.issueId;
     axios
       .get(`/api/issue/${issueId}`, {
@@ -44,19 +48,28 @@ const Issue = (props) => {
       })
       .then((response) => {
         if (response && response.data) {
-          var newLabels = [];
-          response.data.project.labels.forEach((label) => {
-            if (response.data.labels.includes(label._id)) {
-              newLabels.push(label);
-            }
-          });
-          setIssueLabels(newLabels);
+          if (
+            response.data.project.team !== null &&
+            props.location.pathname.toString().indexOf("team") === -1
+          ) {
+            props.history.goBack();
+          } else {
+            var newLabels = [];
+            response.data.project.labels.forEach((label) => {
+              if (response.data.labels.includes(label._id)) {
+                newLabels.push(label);
+              }
+            });
+            setIssueLabels(newLabels);
 
-          if (props.setCurrentTeam) {
-            props.setCurrentTeam(response.data.project.team);
+            if (props.setCurrentTeam) {
+              props.setCurrentTeam(response.data.project.team);
+            }
+            setIssue(response.data);
           }
+        } else {
+          props.setErrors(["Something went wrong"]);
         }
-        setIssue(response.data);
       })
       .catch((error) => {
         if (error && error.response && error.response.data) {
@@ -64,7 +77,7 @@ const Issue = (props) => {
           props.history.goBack();
         }
       });
-  }, []);
+  };
 
   useEffect(() => {
     if (Object.keys(issue).length > 0) {
@@ -76,16 +89,6 @@ const Issue = (props) => {
         document.querySelector("#fixed").classList.add("selected");
     }
   }, [issue]);
-
-  useEffect(() => {
-    if (showModal) {
-      window.addEventListener("keyup", (e) => {
-        if (e.key === "Escape") {
-          setShowModal(false);
-        }
-      });
-    }
-  }, [showModal]);
 
   const updateIssue = (e) => {
     const childNodes = e.target.parentNode.childNodes;
@@ -193,7 +196,7 @@ const Issue = (props) => {
       switch (modalType) {
         case modalTypes["Delete Modal"]:
           return (
-            <Modal setShowModal={setShowModal}>
+            <Modal setShowModal={setShowModal} showModal={showModal}>
               <div className="modal__delete-modal-body">
                 <div className="modal__delete-modal-body__message">
                   Are you sure you want to delete <span>{issue.name}</span>?
@@ -232,185 +235,192 @@ const Issue = (props) => {
     }
   };
 
-  return (
-    <div className="issue__wrapper">
-      {renderModal()}
-      {Object.keys(issue).length > 0 && (
-        <React.Fragment>
-          <div className="issue__header">
-            <div className="issue__name">{issue.name}</div>
-            <div className="issue__action-buttons-container">
-              <div>
-                <Link
-                  to={`${
-                    issue.project.team !== null ? "/team/project/" : "/project/"
-                  }${issue.project._id}/issue/${issue._id}/edit`}
-                >
-                  <EditSVG />
-                </Link>
-              </div>
+  if (Object.keys(issue).length > 0) {
+    return (
+      <div className="issue__wrapper">
+        {renderModal()}
+        {Object.keys(issue).length > 0 && (
+          <React.Fragment>
+            <div className="issue__header">
+              <div className="issue__name">{issue.name}</div>
+              <div className="issue__action-buttons-container">
+                <div>
+                  <Link
+                    to={`${
+                      issue.project.team !== null
+                        ? "/team/project/"
+                        : "/project/"
+                    }${issue.project._id}/issue/${issue._id}/edit`}
+                  >
+                    <EditSVG />
+                  </Link>
+                </div>
 
+                <div
+                  onClick={() => {
+                    setModalType(modalTypes["Delete Modal"]);
+                    setShowModal(true);
+                  }}
+                >
+                  <TrashSVG />
+                </div>
+              </div>
+            </div>
+            <div className="issue__creation-date">
+              Created By
+              <span> {issue.createdBy.username} </span>
+              <span> &middot; </span>
+              {new Date(issue.createdAt).toDateString()}
+            </div>
+            <div className="issue__description">
               <div
+                className="issue__description-name"
+                onClick={() => setShowDescription(!showDescription)}
+              >
+                <span>Description</span> <CaretDownNoFillSVG />
+              </div>
+              <div
+                className={`issue__description-dropdown ${
+                  showDescription && "visible"
+                }`}
+              >
+                <ReactMarkdown>{issue.description}</ReactMarkdown>
+              </div>
+            </div>
+            {issueLabels.length > 0 && (
+              <div className="issue__label-container">
+                {issueLabels.map((label, index) => (
+                  <span
+                    className="issue__label"
+                    style={{
+                      background: `${label.backgroundColor}`,
+                      color: `${label.fontColor}`,
+                    }}
+                    key={index}
+                  >
+                    {label.name}
+                  </span>
+                ))}
+              </div>
+            )}
+            {issue["assignees"] && issue.assignees.length > 0 && (
+              <div className="issue-creation-date issue__assignees">
+                <span className="mb-2">Assigned to:</span>
+                <ul className="list-group">
+                  {issue.assignees.map((assignee) => (
+                    <li className="list-group-item" key={assignee._id}>
+                      <div className="issue__assignee-img-container">
+                        <img
+                          src={assignee.image}
+                          alt="Assignee profile picture"
+                        />
+                      </div>
+                      <span>{assignee.username}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div
+              className="issue__status-container"
+              id="issue__status-container"
+            >
+              <div id="new-issue" onClick={updateIssue}>
+                New Issue
+              </div>
+              <div id="work-in-progress" onClick={updateIssue}>
+                Work In Progress
+              </div>
+              <div id="fixed" onClick={updateIssue}>
+                Fixed
+              </div>
+            </div>
+
+            <h2 className="issue__comments-title">Comments</h2>
+            {/* <Link to={`/issue/${issue._id}/comment/new`} className="add-comment">
+              <i className="fas fa-plus"></i>
+            </Link> */}
+            <div className="issue__comment-container">
+              <textarea
+                name="newComment"
+                id="new-comment"
+                cols="30"
+                rows="10"
+                maxLength="500"
+                value={comment}
+                placeholder="New Comment"
+                className="issue__comment-textarea"
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+              ></textarea>
+              <button
+                className="submit-comment"
                 onClick={() => {
-                  setModalType(modalTypes["Delete Modal"]);
-                  setShowModal(true);
+                  addComment();
                 }}
               >
-                <TrashSVG />
-              </div>
+                Comment
+              </button>
             </div>
-          </div>
-          <div className="issue__creation-date">
-            Created By
-            <span> {issue.createdBy.username} </span>
-            <span> &middot; </span>
-            {new Date(issue.createdAt).toDateString()}
-          </div>
-          <div className="issue__description">
-            <div
-              className="issue__description-name"
-              onClick={() => setShowDescription(!showDescription)}
-            >
-              <span>Description</span> <CaretDownNoFillSVG />
-            </div>
-            <div
-              className={`issue__description-dropdown ${
-                showDescription && "visible"
-              }`}
-            >
-              <ReactMarkdown>{issue.description}</ReactMarkdown>
-            </div>
-          </div>
-          {issueLabels.length > 0 && (
-            <div className="issue__label-container">
-              {issueLabels.map((label, index) => (
-                <span
-                  className="issue__label"
-                  style={{
-                    background: `${label.backgroundColor}`,
-                    color: `${label.fontColor}`,
-                  }}
-                  key={index}
-                >
-                  {label.name}
-                </span>
-              ))}
-            </div>
-          )}
-          {issue["assignees"] && issue.assignees.length > 0 && (
-            <div className="issue-creation-date issue__assignees">
-              <span className="mb-2">Assigned to:</span>
-              <ul className="list-group">
-                {issue.assignees.map((assignee) => (
-                  <li className="list-group-item" key={assignee._id}>
-                    <div className="issue__assignee-img-container">
-                      <img
-                        src={assignee.image}
-                        alt="Assignee profile picture"
-                      />
-                    </div>
-                    <span>{assignee.username}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <div className="issue__status-container" id="issue__status-container">
-            <div id="new-issue" onClick={updateIssue}>
-              New Issue
-            </div>
-            <div id="work-in-progress" onClick={updateIssue}>
-              Work In Progress
-            </div>
-            <div id="fixed" onClick={updateIssue}>
-              Fixed
-            </div>
-          </div>
-
-          <h2 className="issue__comments-title">Comments</h2>
-          {/* <Link to={`/issue/${issue._id}/comment/new`} className="add-comment">
-            <i className="fas fa-plus"></i>
-          </Link> */}
-          <div className="issue__comment-container">
-            <textarea
-              name="newComment"
-              id="new-comment"
-              cols="30"
-              rows="10"
-              maxLength="500"
-              value={comment}
-              placeholder="New Comment"
-              className="issue__comment-textarea"
-              onChange={(e) => {
-                setComment(e.target.value);
-              }}
-            ></textarea>
-            <button
-              className="submit-comment"
-              onClick={() => {
-                addComment();
-              }}
-            >
-              Comment
-            </button>
-          </div>
-          {issue.comments &&
-            issue.comments.length > 0 &&
-            issue.comments.map((comment) => (
-              <div className="issue__comment-container" key={comment._id}>
-                <div className="issue__comment">
-                  <p className="issue__comment-date">
-                    <span>{comment.createdBy}</span> &middot;
-                    <span> {moment(comment.createdAt).fromNow()}</span>
-                  </p>
-                  <p>{comment.comment}</p>
+            {issue.comments &&
+              issue.comments.length > 0 &&
+              issue.comments.map((comment) => (
+                <div className="issue__comment-container" key={comment._id}>
+                  <div className="issue__comment">
+                    <p className="issue__comment-date">
+                      <span>{comment.createdBy}</span> &middot;
+                      <span> {moment(comment.createdAt).fromNow()}</span>
+                    </p>
+                    <p>{comment.comment}</p>
+                  </div>
+                  <i
+                    className="far fa-trash-alt"
+                    onClick={() => {
+                      axios
+                        .delete(`/api/comment/${comment._id}`, {
+                          headers: {
+                            Authorization: localStorage.getItem("token"),
+                          },
+                        })
+                        .then(() => {
+                          const issueId = props.match.params.issueId;
+                          axios
+                            .get(`/api/issue/${issueId}`, {
+                              headers: {
+                                Authorization: localStorage.getItem("token"),
+                              },
+                            })
+                            .then((response) => {
+                              setIssue(response.data);
+                            })
+                            .catch((error) => {
+                              if (
+                                error &&
+                                error.response &&
+                                error.response.data
+                              ) {
+                                props.setErrors(error);
+                                props.history.goBack();
+                              }
+                            });
+                        })
+                        .catch((error) => {
+                          if (error && error.response && error.response.data) {
+                            props.setErrors(error);
+                            props.history.goBack();
+                          }
+                        });
+                    }}
+                  ></i>
                 </div>
-                <i
-                  className="far fa-trash-alt"
-                  onClick={() => {
-                    axios
-                      .delete(`/api/comment/${comment._id}`, {
-                        headers: {
-                          Authorization: localStorage.getItem("token"),
-                        },
-                      })
-                      .then(() => {
-                        const issueId = props.match.params.issueId;
-                        axios
-                          .get(`/api/issue/${issueId}`, {
-                            headers: {
-                              Authorization: localStorage.getItem("token"),
-                            },
-                          })
-                          .then((response) => {
-                            setIssue(response.data);
-                          })
-                          .catch((error) => {
-                            if (
-                              error &&
-                              error.response &&
-                              error.response.data
-                            ) {
-                              props.setErrors(error);
-                              props.history.goBack();
-                            }
-                          });
-                      })
-                      .catch((error) => {
-                        if (error && error.response && error.response.data) {
-                          props.setErrors(error);
-                          props.history.goBack();
-                        }
-                      });
-                  }}
-                ></i>
-              </div>
-            ))}
-        </React.Fragment>
-      )}
-    </div>
-  );
+              ))}
+          </React.Fragment>
+        )}
+      </div>
+    );
+  } else return null;
 };
 
 const mapDispatchToProps = {

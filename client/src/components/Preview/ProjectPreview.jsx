@@ -49,7 +49,7 @@ function ProjectPreview(props) {
       switch (modalType) {
         case modalTypes["Delete Modal"]:
           return (
-            <Modal setShowModal={setShowModal}>
+            <Modal setShowModal={setShowModal} showModal={showModal}>
               <div className="modal__delete-modal-body">
                 <div className="modal__delete-modal-body__message">
                   Are you sure you want to delete <span>{project.name}</span>?

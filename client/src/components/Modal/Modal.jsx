@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 
 const Modal = (props) => {
+  const { showModal, setShowModal, children } = props;
+
+  useEffect(() => {
+    console.log(showModal);
+    if (showModal) {
+      window.addEventListener("keyup", (e) => {
+        if (e.key === "Escape") {
+          setShowModal(false);
+        }
+      });
+    }
+  }, [showModal]);
+
   return ReactDOM.createPortal(
     <div
       className="modal__overlay"
       onClick={(e) => {
         e.stopPropagation();
-        if (props.setShowModal) {
-          props.setShowModal(false);
+        if (setShowModal) {
+          setShowModal(false);
         }
       }}
     >
-      {props.children}
+      {children}
     </div>,
     document.querySelector("#modal-root")
   );
