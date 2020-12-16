@@ -1,13 +1,13 @@
-const TeamModel = require('../models/TeamModel');
-const UserModel = require('../models/UserModel');
-const ProjectModel = require('../models/ProjectModel');
+const TeamModel = require("../models/TeamModel");
+const UserModel = require("../models/UserModel");
+const ProjectModel = require("../models/ProjectModel");
 
 module.exports = {
   //Create Team
   createTeam: async (req, res) => {
     if (req.body.team) {
-      let messages = {};
-      let errors = {};
+      let messages = [];
+      let errors = [];
       //Get name and password from body
       const { name, password } = req.body.team;
 
@@ -31,19 +31,19 @@ module.exports = {
             //Error occured? Notify user
             if (err) {
               console.error(err);
-              errors.user = 'Error occured';
+              errors.push("Error occured");
               return res.status(500).json(errors);
             }
 
             //Return a message if the team was successfully saved
-            messages.user = 'User successfully added to team';
+            messages.push("User successfully added to team");
           });
-          messages.team = 'Team successfully created';
+          messages.push("Team successfully created");
           return res.json(messages);
         })
         .catch((err) => {
           //Return an error if the team was not successfullt saved
-          errors.team = 'Error occured';
+          errors.push("Error occured");
           console.error(err);
           return res.status(500).json(errors);
         });
@@ -52,15 +52,15 @@ module.exports = {
   //Leave Team
   leaveTeam: (req, res) => {
     if (req.params.teamId) {
-      let messages = {};
-      let errors = {};
+      let messages = [];
+      let errors = [];
       const teamId = req.params.teamId;
 
       TeamModel.findById(teamId).exec(function (err, team) {
         //If an error occured when fetching team, return it
         if (err) {
           console.error(err);
-          errors.team = 'Opps! Something went wrong';
+          errors.push("Opps! Something went wrong");
           return res.status(500).json(errors);
         }
         if (team.createdBy.toString() !== req.user._id.toString()) {
@@ -78,8 +78,8 @@ module.exports = {
             //Error occured? Notify User
             if (err) {
               console.error(err);
-              let errors = {};
-              errors.team = 'Error occured';
+              let errors = [];
+              errors.push("Error occured");
               return res.status(500).json(errors);
             }
 
@@ -96,19 +96,20 @@ module.exports = {
               //If an error occured, notify the user
               if (err) {
                 console.error(err);
-                errors.team = 'Error occured';
+                errors.push("Error occured");
                 return res.status(500).json(errors);
               }
 
               //If everything went well, return a message to notify the user
-              messages.team = 'Successfully left team';
+              messages.push("Successfully left team");
               return res.json(messages);
             });
           });
         } else {
-          let errors = {};
-          errors.team =
-            'You cannot leave this team because you are the Admin. Try deleting it instead';
+          let errors = [];
+          errors.push(
+            "You cannot leave this team because you are the Admin. Try deleting it instead"
+          );
           return res.status(400).json(errors);
         }
       });
@@ -117,8 +118,8 @@ module.exports = {
   //Join Team
   joinTeam: async (req, res) => {
     if (req.body.team) {
-      let messages = {};
-      let errors = {};
+      let messages = [];
+      let errors = [];
       //Get the variables entered by the user
       const { teamId, password } = req.body.team;
 
@@ -127,7 +128,7 @@ module.exports = {
 
       //If the team was not found, notify user
       if (team === null) {
-        errors.team = 'Team not found';
+        errors.push("Team not found");
         return res.status(404).json(errors);
       }
 
@@ -136,7 +137,7 @@ module.exports = {
 
       //If the passwords don't match, notify user
       if (!isMatch) {
-        errors.password = 'Incorrect password';
+        errors.push("Incorrect password");
         return res.status(401).json(errors);
       }
 
@@ -145,7 +146,7 @@ module.exports = {
       );
 
       if (inTeam) {
-        errors.team = 'You are already part of this team';
+        errors.push("You are already part of this team");
         return res.status(401).json(errors);
       }
 
@@ -158,7 +159,7 @@ module.exports = {
           //If an error occured while updating team with new user, notify user
           if (err) {
             console.error(err);
-            errors.team = 'Error occured';
+            errors.push("Error occured");
             return res.status(500).json(errors);
           }
 
@@ -170,18 +171,18 @@ module.exports = {
             //If something went wrong when updating user with new team list, notify user
             if (err) {
               console.error(err);
-              errors.user = 'Error occured when updating user with new teams';
+              errors.push("Error occured when updating user with new teams");
               return res.status(500).json(errors);
             }
 
-            messages.team = 'Joined team successfully';
+            messages.push("Joined team successfully");
             return res.json(messages);
           });
         }
       );
     } else {
-      let errors = {};
-      errors.team = 'Opps! Something went wrong';
+      let errors = [];
+      errors.push("Opps! Something went wrong");
       return res.status(400).json(errors);
     }
   },
@@ -189,13 +190,13 @@ module.exports = {
   deleteTeam: (req, res) => {
     //Check to see if the teamId was included in the request params
     if (req.params.teamId) {
-      let messages = {};
-      let errors = {};
+      let messages = [];
+      let errors = [];
       const teamId = req.params.teamId;
       TeamModel.findByIdAndDelete(teamId).exec(async function (err, team) {
         if (err) {
           console.error(err);
-          errors.team = 'Error occured when leaving team';
+          errors.push("Error occured when leaving team");
           return res.status(500).jsno(errors);
         }
 
@@ -204,9 +205,10 @@ module.exports = {
           //If an error occurs, return an error string
           if (err) {
             console.error(err);
-            let errors = {};
-            errors.user =
-              'Error occured when getting all users that are in the team';
+            let errors = [];
+            errors.push(
+              "Error occured when getting all users that are in the team"
+            );
             return res.status(500).json(errors);
           }
           //Loop through all the users returns from query
@@ -222,8 +224,8 @@ module.exports = {
                 //If there was an error when updating the user teams, return an error string
                 if (err) {
                   console.error(err);
-                  let errors = {};
-                  errors.project = 'Error occured when removing team from user';
+                  let errors = [];
+                  errors.project = "Error occured when removing team from user";
                   return res.status(500).json(errors);
                 }
                 //If everything went well, return the user
@@ -239,15 +241,15 @@ module.exports = {
             //Error occured, notify user
             if (err) {
               console.error(err);
-              let errors = {};
-              errors.user = 'Error occured when removing project from team';
+              let errors = [];
+              errors.push("Error occured when removing project from team");
               return res.status(500).json(errors);
             }
           });
         });
 
         //When everything is done, return a message to inform the user
-        messages.team = 'Team successfully deleted';
+        messages.push("Team successfully deleted");
         return res.json(messages);
       });
     }
@@ -257,36 +259,36 @@ module.exports = {
       const teamId = req.params.teamId;
       //Get all the projects in a certain team by checking the g
       TeamModel.findById(teamId)
-        .populate('projects')
+        .populate("projects")
         .exec(function (err, team) {
           //If error occured, notify user
           if (err) {
             console.error(err);
-            let errors = {};
-            errors.team = 'Error occured when fetching team';
+            let errors = [];
+            errors.push("Error occured when fetching team");
             return res.status(500).json(errors);
           }
 
           return res.json(team.projects);
         });
     } else {
-      let errors = {};
-      errors.project = 'Opps! Something went wrong';
+      let errors = [];
+      errors.push("Opps! Something went wrong");
       return res.status(400).json(errors);
     }
   },
   getTeam: (req, res) => {
     if (req.params.teamId) {
-      let errors = {};
+      let errors = [];
       const teamId = req.params.teamId;
       TeamModel.findById(teamId)
-        .populate('projects')
-        .populate('users')
+        .populate("projects")
+        .populate("users")
         .exec(function (err, team) {
           //If something went wrong when fetching team, notify user
           if (err) {
             console.error(err);
-            errors.team = 'Error occured';
+            errors.push("Error occured");
             return res.status(500).json(errors);
           }
 
@@ -296,16 +298,16 @@ module.exports = {
     }
   },
   getTeams: (req, res) => {
-    let errors = {};
+    let errors = [];
     const userId = req.user._id;
 
     TeamModel.find({ users: { $elemMatch: { $eq: userId } } })
-      .populate('projects')
+      .populate("projects")
       .exec(function (err, teams) {
         //If error occured when fetching teams, notify user
         if (err) {
           console.error(err);
-          errors.teams = 'Error occured when fetching teams';
+          errors.push("Error occured when fetching teams");
           return res.status(500).json(teams);
         }
 
@@ -315,15 +317,15 @@ module.exports = {
   },
   getArchivedTeamProjects: (req, res) => {
     if (req.params.teamId) {
-      let errors = {};
+      let errors = [];
       const teamId = req.params.teamId;
 
       TeamModel.findById(teamId)
-        .populate('projects')
+        .populate("projects")
         .exec(function (err, team) {
           //Error occured? Notify User
           if (err) {
-            errors.team = 'Error Occured';
+            errors.push("Error Occured");
             return res.status(500).json(errors);
           }
 
@@ -335,8 +337,8 @@ module.exports = {
           return res.json(archivedProjects);
         });
     } else {
-      let errors = {};
-      errors.team = 'Error occured';
+      let errors = [];
+      errors.push("Error occured");
       return res.status(400).json(errors);
     }
   },

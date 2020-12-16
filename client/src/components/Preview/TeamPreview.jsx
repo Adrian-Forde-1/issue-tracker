@@ -57,9 +57,11 @@ function TeamPreview(props) {
                     props.getUserTeams(props.user._id);
                   })
                   .catch((error) => {
-                    props.setErrors(error.response.data);
-                    props.setCurrentSection("");
-                    props.setCurrentId("");
+                    if (error && error.response && error.response.data) {
+                      props.setErrors(error);
+                      props.setCurrentSection("");
+                      props.setCurrentId("");
+                    }
                   });
               }}
             ></i>

@@ -1,4 +1,7 @@
-import React, { useEffect, useState, lazy, Suspense, Children } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
+
+//Axios
+import axios from "axios";
 
 import { Route, Switch, Redirect } from "react-router-dom";
 
@@ -6,14 +9,8 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { Tooltip } from "react-tippy";
 import "react-tippy/dist/tippy.css";
 
-//Tostify
-import { toast } from "react-toastify";
-
 //Redux
 import { connect } from "react-redux";
-
-//Actions
-import { getUserTeams } from "../../redux/actions/teamActions";
 
 //React Router DOM
 import { Link } from "react-router-dom";
@@ -25,6 +22,8 @@ import PeopleWavingSVG from "../SVG/PeopleWavingSVG";
 
 //Compoenents
 import TeamPreview from "../Preview/TeamPreview";
+import CreateTeam from "../Teams/CreateTeam";
+import JoinTeam from "../Teams/JoinTeam";
 
 import SideNav from "../Navigation/SideNav";
 import DashboardNavbar from "../Navigation/DashboardNavbar";
@@ -56,15 +55,8 @@ function TeamDashboard(props) {
   const [currentCategory, setCurrentCategory] = useState(categories.Teams);
 
   useEffect(() => {
-    props.getUserTeams(localStorage.getItem("token"));
-    if (props.teams && props.teams.length > 0) {
-      setTeams(props.teams);
-    }
+    getTeams();
   }, []);
-
-  // useEffect(() => {
-  //   if (props.match.params.teamId) setCurrentTeam(props.match.params.teamId);
-  // }, [props.match.params]);
 
   useEffect(() => {
     setTeams(props.teams);
@@ -75,6 +67,26 @@ function TeamDashboard(props) {
       <Route exact path="/team">
         <h1>Teams stuff</h1>
       </Route>
+      <Route
+        exact
+        path="/team/create"
+        render={(props) => {
+          return <CreateTeam {...props} setCurrentTeam={setCurrentTeam} />;
+        }}
+      />
+      <Route
+        exact
+        path="/team/join"
+        render={(props) => {
+          return (
+            <JoinTeam
+              {...props}
+              setCurrentTeam={setCurrentTeam}
+              getTeams={getTeams}
+            />
+          );
+        }}
+      />
       <Route
         exact
         path="/team/:teamId"
@@ -147,6 +159,54 @@ function TeamDashboard(props) {
     </Switch>
   );
 
+  const getTeams = () => {
+    axios
+      .get("/api/teams", {
+        headers: { Authorization: localStorage.getItem("token") },
+      })
+      .then((response) => {
+        if (response && response.data) {
+          console.log(response.data);
+          setTeams(response.data);
+        }
+      })
+      .catch((error) => {
+        if (error && error.response && error.response.data) {
+          props.setErrors(error);
+        }
+      });
+  };
+
+  const renderTeams = () => {
+    var renderedTeams = [];
+    if (teams && teams.length > 0) {
+      if (search === "") {
+        teams.map((team) => {
+          renderedTeams.push(
+            <TeamPreview
+              team={team}
+              key={team._id}
+              currentTeam={currentTeam.toString() === team._id.toString()}
+            />
+          );
+        });
+      } else {
+        teams.map((team) => {
+          if (team.name.toLowerCase().indexOf(search.toLowerCase()) > -1) {
+            renderedTeams.push(
+              <TeamPreview
+                team={team}
+                key={team._id}
+                currentTeam={currentTeam.toString() === team._id.toString()}
+              />
+            );
+          }
+        });
+      }
+    }
+
+    return renderedTeams;
+  };
   return (
     <div className="teams__dashboard-wrapper" style={{ position: "relative" }}>
       <div className="teams__dashboard-side-nav">
@@ -189,30 +249,7 @@ function TeamDashboard(props) {
               </div>
             )}
             <div className="teams__dashboard-main-content-sidebar__team-list">
-              {teams && teams.length > 0 && search === ""
-                ? teams.map((team) => (
-                    <TeamPreview
-                      team={team}
-                      key={team._id}
-                      currentTeam={
-                        currentTeam.toString() === team._id.toString()
-                      }
-                    />
-                  ))
-                : teams.map((team) => {
-                    if (
-                      team.name.toLowerCase().indexOf(search.toLowerCase()) > -1
-                    )
-                      return (
-                        <TeamPreview
-                          team={team}
-                          key={team._id}
-                          currentTeam={
-                            currentTeam.toString() === team._id.toString()
-                          }
-                        />
-                      );
-                  })}
+              {renderTeams()}
             </div>
           </div>
           <div className="teams__dashboard-main-content-body">
@@ -220,32 +257,8 @@ function TeamDashboard(props) {
           </div>
         </div>
       </div>
-
-      {/* <h3 className="section-title">Teams</h3>
-      <div className="action-bar m-l-16">
-        <Link to="/join/team">Join Team</Link>
-      </div> */}
     </div>
   );
 }
 
-const mapDispatchToProps = {
-  getUserTeams,
-};
-
-const mapStateToProps = (state) => ({
-  teams: state.teams.teams,
-  errors: state.user.errors,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TeamDashboard);
-
-{
-  /* <ProjectsTeamsHamburger />
-          <div className="under-nav-section">
-            <SearchBar search={search} onChange={onChange} />
-            <Link to="/create/team" className="action-btn">
-              <i className="fas fa-plus-square "></i>
-            </Link>
-          </div> */
-}
+export default TeamDashboard;

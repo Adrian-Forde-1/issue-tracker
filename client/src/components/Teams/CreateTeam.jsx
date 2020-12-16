@@ -1,107 +1,101 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+
+//Axios
+import axios from "axios";
+
+//Tippy
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
-import { setErrors } from '../../redux/actions/userActions';
+import { setErrors, setMessages } from "../../redux/actions/userActions";
 
-import { getUserTeams } from '../../redux/actions/teamActions';
+const CreateTeam = (props) => {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
 
-//Components
-import SideNav from '../Navigation/SideNav';
-import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
+  useEffect(() => {
+    props.setCurrentTeam("");
+  }, []);
 
-class CreateTeam extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-
-    this.state = {
-      name: '',
-      password: '',
-    };
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    var teamName = this.state.name;
+    var teamName = name;
     teamName = teamName.charAt(0).toUpperCase() + teamName.slice(1);
 
     const team = {
       name: teamName,
-      password: this.state.password,
+      password: password,
     };
 
     axios
       .post(
-        '/api/team',
+        "/api/team",
         { team: team },
         {
-          headers: { Authorization: localStorage.getItem('token') },
+          headers: { Authorization: localStorage.getItem("token") },
         }
       )
-      .then(() => {
-        this.props.getUserTeams(localStorage.getItem('token'));
-        this.props.history.goBack();
+      .then((res) => {
+        if (res && res.data) {
+          props.setMessages(res.data);
+          props.history.goBack();
+        }
       })
-      .catch((error) => {
-        this.props.history.goBack();
+      .catch((err) => {
+        if (err && err.response && err.response.data) {
+          props.setErrors(err);
+          props.history.goBack();
+        }
       });
   };
-  render() {
-    return (
-      <div>
-        <ProjectsTeamsHamburger />
-        <SideNav />
-        <div className="form-container p-t-0">
-          <div className="container p-l-175">
-            <div className="auth-form">
-              <h2>Create Team</h2>
-              <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="name">Name</label>
-                  <br />
-                  <input
-                    type="text"
-                    name="name"
-                    value={this.state.name}
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <br />
-                  <input
-                    type="password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <button className="submit-btn">Create Team</button>
-              </form>
-            </div>
-          </div>
-        </div>
+  return (
+    <div className="standard-form__wrapper">
+      <div className="standard-form__header">
+        <h2>Create Team</h2>
       </div>
-    );
-  }
-}
+      <div className="standard-form__body">
+        <form
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          <div className="standard-form__input-container">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+          </div>
+          <div className="standard-form__input-container">
+            <label htmlFor="password">Passowrd</label>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </div>
+          <button>Create</button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 const mapDispatchToProps = {
   setErrors,
-  getUserTeams,
+  setMessages,
 };
 
 export default connect(null, mapDispatchToProps)(CreateTeam);
