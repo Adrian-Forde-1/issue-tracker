@@ -36,6 +36,7 @@ import NewIssue from "../Issues/NewIssue";
 import Labels from "../Labels/Labels";
 import AddLabel from "../Labels/AddLabel";
 import EditIssue from "../Issues/EditIssue";
+import EditProject from "../Projects/EditProject";
 
 const Team = lazy(() => {
   return import("./Team");
@@ -66,10 +67,6 @@ function TeamDashboard(props) {
     setTeams(props.teams);
   }, [props.teams]);
 
-  const onChange = (e) => {
-    setSearch(e.target.value);
-  };
-
   let routes = (
     <Switch>
       <Route exact path="/team">
@@ -87,6 +84,13 @@ function TeamDashboard(props) {
         path="/team/project/:projectId"
         render={(props) => {
           return <Project {...props} setCurrentTeam={setCurrentTeam} />;
+        }}
+      />
+      <Route
+        exact
+        path="/team/project/:projectId/edit"
+        render={(props) => {
+          return <EditProject {...props} setCurrentTeam={setCurrentTeam} />;
         }}
       />
 

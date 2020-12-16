@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import ReactMarkdown from "react-markdown";
 
+//Tippy
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
+
 //Axios
 import axios from "axios";
 
@@ -327,11 +331,37 @@ const Project = (props) => {
                     }
                   }}
                 >
-                  {project.archived ? <UnarchiveSVG /> : <ArchiveSVG />}
+                  {project.archived ? (
+                    <Tooltip
+                      title="Unarchive Project"
+                      position="bottom"
+                      size="small"
+                    >
+                      <UnarchiveSVG />
+                    </Tooltip>
+                  ) : (
+                    <Tooltip
+                      title="Archive Project"
+                      position="bottom"
+                      size="small"
+                    >
+                      <ArchiveSVG />
+                    </Tooltip>
+                  )}
                 </div>
                 <div>
-                  <Link to={`/project/${project._id}/edit`}>
-                    <EditSVG />
+                  <Link
+                    to={`${
+                      project.team !== null ? "/team/project/" : "/project/"
+                    }${project._id}/edit`}
+                  >
+                    <Tooltip
+                      title="Edit Project"
+                      position="bottom"
+                      size="small"
+                    >
+                      <EditSVG />
+                    </Tooltip>
                   </Link>
                 </div>
 
@@ -343,7 +373,13 @@ const Project = (props) => {
                   }}
                 >
                   {" "}
-                  <TrashSVG />
+                  <Tooltip
+                    title="Delete Project"
+                    position="bottom"
+                    size="small"
+                  >
+                    <TrashSVG />
+                  </Tooltip>
                 </div>
               </div>
             )}

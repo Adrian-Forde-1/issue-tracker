@@ -1,83 +1,156 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+
+//Axios
+import axios from "axios";
+
+//Tippy
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
-import { setErrors } from '../../redux/actions/userActions';
+import { setErrors, setMessages } from "../../redux/actions/userActions";
+
+//SVG
+import InfoSVG from "../SVG/InfoSVG";
 
 //Components
-import SideNav from '../Navigation/SideNav';
-import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
-class EditProject extends Component {
-  constructor(props) {
-    super(props);
+const EditProject = (props) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [project, setProject] = useState({});
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  useEffect(() => {
+    getProject();
+  }, []);
 
-    this.state = {
-      name: '',
-      description: '',
-      project: {},
-    };
-  }
+  const getProject = () => {
+    const projectId = props.match.params.projectId;
 
-  componentDidMount() {
-    const projectId = this.props.match.params.projectId;
     axios
       .get(`/api/project/${projectId}`, {
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: localStorage.getItem("token") },
       })
       .then((response) => {
-        this.setState({
-          name: response.data.name,
-          description: response.data.description,
-          project: response.data,
-        });
+        if (response && response.data) {
+          setName(response.data.name);
+          setDescription(response.data.description);
+          setProject(response.data);
+        } else {
+          props.setMessages(["Something went wrong"]);
+        }
       })
       .catch((error) => {
-        this.props.setErrors(error);
-        this.props.history.goBack();
+        if (error && error.response && error.response.data) {
+          props.setErrors(error);
+          props.history.goBack();
+        }
       });
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const project = {
-      name: this.state.name,
-      description: this.state.description,
+      name: name,
+      description: description,
     };
 
     axios
       .put(
-        `/api/project/${this.props.match.params.projectId}`,
+        `/api/project/${props.match.params.projectId}`,
         { project: project },
-        { headers: { Authorization: localStorage.getItem('token') } }
+        { headers: { Authorization: localStorage.getItem("token") } }
       )
-      .then(() => {
-        this.props.history.goBack();
+      .then((res) => {
+        if (res && res.data) {
+          props.setMessages(res.data);
+          props.history.goBack();
+        }
       })
       .catch((error) => {
-        this.props.setErrors(error);
-        this.props.history.goBack();
+        if (error && error.response && error.response.data) {
+          props.setErrors(error);
+          props.history.goBack();
+        }
       });
   };
-  render() {
+
+  if (Object.keys(project).length > 0) {
     return (
-      <div>
+      <div className="standard-form__wrapper">
+        <div className="standard-form__header">
+          <h2>Edit Project</h2>
+        </div>
+        <div className="standard-form__body standard-form__body--no-padding">
+          <form
+            onSubmit={(e) => {
+              handleSubmit(e);
+            }}
+          >
+            <div className="standard-form__split-double">
+              <section>
+                <div className="standard-form__input-container">
+                  <label htmlFor="name">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="standard-form__input-container standard-form__input-container--fill">
+                  <label htmlFor="description">Description</label>
+                  <textarea
+                    type="text"
+                    className="standard-form__input-container-textarea standard-form__input-container-textarea--fill"
+                    name="description"
+                    maxLength="500"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                  <div
+                    className={`standard-form__input-container__description-info`}
+                  >
+                    <Tooltip
+                      title="You can use markdown in your description"
+                      position="bottom"
+                      size="small"
+                    >
+                      <InfoSVG />
+                    </Tooltip>
+                  </div>
+                </div>
+                <button>Edit Project</button>
+              </section>
+              <section>
+                <div className="standard-form__preview-view">
+                  <ReactMarkdown>{description}</ReactMarkdown>
+                </div>
+              </section>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  } else return null;
+};
+
+const mapDispatchToProps = {
+  setErrors,
+  setMessages,
+};
+
+export default connect(null, mapDispatchToProps)(EditProject);
+
+{
+  /* <div>
         {Object.keys(this.state.project).length > 0 && (
           <div className="form-container no-top-nav ">
-            <SideNav />
             <div className="container p-l-175-0">
               <div className="auth-form">
                 <h2>Edit Project</h2>
@@ -110,16 +183,7 @@ class EditProject extends Component {
                 </form>
               </div>
             </div>
-            <ProjectsTeamsHamburger />
           </div>
         )}
-      </div>
-    );
-  }
+      </div> */
 }
-
-const mapDispatchToProps = {
-  setErrors,
-};
-
-export default connect(null, mapDispatchToProps)(EditProject);
