@@ -1,151 +1,210 @@
-import React, { Component } from 'react';
-import { generateColor } from '../../util/generateColor';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { generateColor } from "../../util/generateColor";
+import axios from "axios";
 
 //React Router DOM
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
-import { getUserProjects } from '../../redux/actions/projectActions';
-import { setErrors } from '../../redux/actions/userActions';
+import { setErrors, setMessages } from "../../redux/actions/userActions";
 
 //Components
-import SideNav from '../Navigation/SideNav';
-import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
 
-class EditLabel extends Component {
-  constructor(props) {
-    super(props);
+const EditLabel = (props) => {
+  const labelFontColors = {
+    White: "#fff",
+    Black: "#000000",
+  };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.sendRequest = this.sendRequest.bind(this);
+  const colorArray = [
+    "#A020F0",
+    "#CB410B",
+    "#FFAA1D",
+    "#891446",
+    "#0989AC",
+    "#a72608",
+    "#3e1929",
+    "#a71d31",
+    "#619b8a",
+    "#7fd8be",
+    "#083d77",
+    "#2d1e2f",
+    "#e83f6f",
+    "#2274a5",
+    "#32936f",
+  ];
 
-    this.state = {
-      name: '',
-      color: '#0989AC',
-    };
-  }
+  const [name, setName] = useState("");
+  const [fontColor, setFontColor] = useState("");
+  const [bgColor, setBgColor] = useState("");
+  const [project, setProject] = useState({});
 
-  componentDidMount() {
-    const projectId = this.props.match.params.projectId;
-    const labelId = this.props.match.params.labelId;
-    var label;
+  useEffect(() => {
+    getLabel();
+  }, []);
+
+  const getLabel = () => {
+    const projectId = props.match.params.projectId;
+    const labelId = props.match.params.labelId;
 
     axios
       .get(`/api/project/${projectId}`, {
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: localStorage.getItem("token") },
       })
       .then((response) => {
-        label = response.data.labels.find(
-          (label) => label._id.toString() === labelId.toString()
-        );
-
-        this.setState(
-          {
-            name: label.name,
-            color: label.color,
-          },
-          () => {
-            document.querySelector(
-              '.show-color'
-            ).style.background = `${this.state.color}`;
+        if (response && response.data) {
+          if (
+            response.data.team !== null &&
+            props.location.pathname.toString().indexOf("team") === -1
+          ) {
+            props.history.goBack();
+          } else {
+            var label = response.data.labels.find(
+              (label) => label._id.toString() === labelId.toString()
+            );
+            setProject(response.data);
+            setName(label.name);
+            setBgColor(label.backgroundColor);
+            setFontColor(label.fontColor);
           }
-        );
+        } else {
+          props.setErrors(["Something went wrong"]);
+        }
       })
       .catch((error) => {
-        this.props.setErrors(error);
-        this.props.history.goBack();
+        if (error && error.response && error.response.data) {
+          props.setErrors(error);
+          props.history.goBack();
+        }
       });
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
   };
 
-  sendRequest = (e) => {
+  const sendRequest = (e) => {
     e.preventDefault();
 
-    const projectId = this.props.match.params.projectId;
-    const labelId = this.props.match.params.labelId;
+    const projectId = props.match.params.projectId;
+    const labelId = props.match.params.labelId;
 
     const label = {
-      name: this.state.name,
-      color: this.state.color,
+      name: name,
+      fontColor: fontColor,
+      backgroundColor: bgColor,
     };
 
     axios
       .put(
         `/api/project/${projectId}/label/${labelId}/edit`,
         { label: label },
-        { headers: { Authorization: localStorage.getItem('token') } }
+        { headers: { Authorization: localStorage.getItem("token") } }
       )
-      .then(() => {
-        this.props.getUserProjects(localStorage.getItem('token')).then(() => {
-          this.props.history.goBack();
-        });
+      .then((response) => {
+        props.setMessages(response.data);
+        props.history.goBack();
       })
       .catch((error) => {
-        this.props.setErrors(error);
-        this.props.history.goBack();
+        if (error && error.response && error.response.data) {
+          props.setErrors(error);
+        }
       });
   };
-  render() {
-    const showColor = () => {
-      const getColor = generateColor();
 
-      this.setState(
-        {
-          color: getColor,
-        },
-        () => {
-          document.querySelector(
-            '.show-color'
-          ).style.background = `${this.state.color}`;
-        }
-      );
-    };
+  if (Object.keys(project).length > 0) {
     return (
-      <div>
-        <ProjectsTeamsHamburger />
-        <SideNav />
-        <div className="form-container p-t-0">
-          <div className="container p-l-175-0">
-            <div className="auth-form">
-              <h2>Edit Label</h2>
-              <div className="form-group">
+      <div className="standard-form__wrapper">
+        <div className="standard-form__header">
+          <h2>Edit Label</h2>
+        </div>
+        <div className="standard-form__body standard-form__body--no-padding">
+          <div className="standard-form__split-double">
+            <section>
+              <div className="standard-form__input-container">
                 <label htmlFor="name">Label Name</label>
                 <input
                   type="text"
                   name="name"
-                  value={this.state.name}
-                  onChange={this.handleChange}
+                  className="standard-form__input"
+                  maxLength="15"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  required
                 />
               </div>
-              <div className="w-50 d-flex justify-content-center mx-auto">
-                <button className="color-picker mr-2" onClick={showColor}>
-                  Generate Color <i className="fas fa-sync-alt"></i>
-                </button>
-                <div className="show-color"></div>
+              <div className="standard-form__input-container">
+                <label htmlFor="">Font Color</label>
+                <div className="label__font-color-container">
+                  <div
+                    className={`label__font-color ${
+                      fontColor === labelFontColors.White && "selected"
+                    }`}
+                    id="white-font"
+                    style={{ background: "#fff" }}
+                    onClick={() => {
+                      setFontColor(labelFontColors.White);
+                    }}
+                  ></div>
+                  <div
+                    className={`label__font-color ${
+                      fontColor === labelFontColors.Black && "selected"
+                    }`}
+                    id="black-font"
+                    style={{ background: "#000000" }}
+                    onClick={() => {
+                      setFontColor(labelFontColors.Black);
+                    }}
+                  ></div>
+                </div>
               </div>
-              <button className="submit-btn" onClick={this.sendRequest}>
+              <div className="standard-form__input-container">
+                <label htmlFor="name">Background Color</label>
+                <div className="label__background-colors-container">
+                  {colorArray.map((color, index) => (
+                    <div
+                      key={index}
+                      className={`label__background-color ${
+                        bgColor === color && "selected"
+                      }`}
+                      style={{ background: `${color}` }}
+                      onClick={() => {
+                        setBgColor(color);
+                      }}
+                    ></div>
+                  ))}
+                </div>
+              </div>
+              <button
+                className="standard-form__submit-btn"
+                onClick={(e) => {
+                  sendRequest(e);
+                }}
+              >
                 Edit Label
               </button>
-            </div>
+            </section>
+            <section>
+              <div className="label__new-label-preview-container">
+                <div
+                  className="label__new-label-preview"
+                  style={{ background: `${bgColor}` }}
+                >
+                  <span style={{ color: `${fontColor}` }}>{name}</span>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </div>
     );
-  }
-}
+  } else return null;
+};
 
 const mapDispatchToProps = {
   setErrors,
-  getUserProjects,
+  setMessages,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-//Tostify
-import { toast } from "react-toastify";
+//Tippy
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
 
 //React Router DOM
 import { Link } from "react-router-dom";
@@ -130,12 +131,14 @@ function Team(props) {
             <div className="team__header-actions-container">
               <div>
                 <Link to={`/team/${teamId}/project/create`}>
-                  <PlusSVG />
+                  <Tooltip title="Add project" position="bottom" size="small">
+                    <PlusSVG />
+                  </Tooltip>
                 </Link>
               </div>
-              <div>
+              {/* <div>
                 <ArchiveSVG />
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="team__search-bar-container">

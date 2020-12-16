@@ -37,9 +37,16 @@ const EditProject = (props) => {
       })
       .then((response) => {
         if (response && response.data) {
-          setName(response.data.name);
-          setDescription(response.data.description);
-          setProject(response.data);
+          if (
+            response.data.team !== null &&
+            props.location.pathname.toString().indexOf("team") === -1
+          ) {
+            props.history.goBack();
+          } else {
+            setName(response.data.name);
+            setDescription(response.data.description);
+            setProject(response.data);
+          }
         } else {
           props.setMessages(["Something went wrong"]);
         }

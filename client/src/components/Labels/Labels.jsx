@@ -52,7 +52,7 @@ function Labels(props) {
           <Link
             to={`${project.team !== null ? "/team/project/" : "/project/"}${
               project._id
-            }/project/new/label`}
+            }/new/label`}
           >
             <Tooltip title="Add Label" position="bottom" size="small">
               <PlusSVG />

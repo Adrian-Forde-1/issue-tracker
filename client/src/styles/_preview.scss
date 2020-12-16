@@ -255,6 +255,10 @@
     margin: 10px 0px;
     z-index: 20;
 
+    &:first-of-type {
+      margin-top: 0px;
+    }
+
     &-name {
       min-width: 100px;
       max-width: auto;

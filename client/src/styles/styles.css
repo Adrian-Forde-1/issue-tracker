@@ -2207,6 +2207,10 @@ header::after {
   z-index: 20;
 }
 
+.label__preview:first-of-type {
+  margin-top: 0px;
+}
+
 .label__preview-name {
   min-width: 100px;
   max-width: auto;

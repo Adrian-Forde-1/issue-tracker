@@ -261,6 +261,7 @@ const Project = (props) => {
                 labels={project.labels}
                 index={index}
                 pathname={props.location.pathname}
+                team={project.team}
                 key={index}
                 getProjectData={getProjectData}
               />
@@ -274,6 +275,7 @@ const Project = (props) => {
                 labels={project.labels}
                 index={index}
                 pathname={props.location.pathname}
+                team={project.team}
                 key={index}
                 getProjectData={getProjectData}
               />
@@ -288,6 +290,7 @@ const Project = (props) => {
                   index={index}
                   labels={project.labels}
                   pathname={props.location.pathname}
+                  team={project.team}
                   key={index}
                   getProjectData={getProjectData}
                 />
@@ -301,6 +304,7 @@ const Project = (props) => {
                   index={index}
                   labels={project.labels}
                   pathname={props.location.pathname}
+                  team={project.team}
                   key={index}
                   getProjectData={getProjectData}
                 />

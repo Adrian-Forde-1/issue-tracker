@@ -416,13 +416,15 @@ module.exports = {
       if (req.params.labelId) {
         let errors = [];
         let messages = [];
+
         const projectId = req.params.projectId;
         const labelId = req.params.labelId;
+
         ProjectModel.findById(projectId).exec(function (err, project) {
           //If error occured when fetching project, notfiy user
           if (err) {
             console.error(err);
-            errors.push("Error occured when fetching project");
+            errors.push("Error occured");
             return res.status(500).json(errors);
           }
 
@@ -435,8 +437,20 @@ module.exports = {
             (label) => label._id.toString() !== labelId.toString()
           );
 
+          //Check to see if the label already exists
+          const hasLabel = project.labels.find(
+            (label) => label.name.toString() === req.body.label.name.toString()
+          );
+
+          //If it does, notfiy user
+          if (hasLabel._id.toString() !== labelId.toString()) {
+            errors.push("That label already exists");
+            return res.status(400).json(errors);
+          }
+
           label.name = req.body.label.name;
-          label.color = req.body.label.color;
+          label.backgroundColor = req.body.label.backgroundColor;
+          label.fontColor = req.body.label.fontColor;
 
           newLabelsArray = [...newLabelsArray, label];
 
@@ -446,7 +460,7 @@ module.exports = {
             //If error occured when updating project labels, notfiy user
             if (err) {
               console.error(err);
-              errors.push("Error occured when updating project labels");
+              errors.push("Error occured");
               return res.status(500).json(errors);
             }
 

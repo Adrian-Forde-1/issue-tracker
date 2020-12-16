@@ -25,17 +25,20 @@ import PeopleWavingSVG from "../SVG/PeopleWavingSVG";
 
 //Compoenents
 import TeamPreview from "../Preview/TeamPreview";
-import CreateTeamProject from "./CreateTeamProject";
-import Issue from "../Issues/Issue";
-import SearchBar from "../SearchBar";
+
 import SideNav from "../Navigation/SideNav";
-import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 import DashboardNavbar from "../Navigation/DashboardNavbar";
-import Project from "../Projects/Project";
+
+import Issue from "../Issues/Issue";
 import NewIssue from "../Issues/NewIssue";
+import EditIssue from "../Issues/EditIssue";
+
 import Labels from "../Labels/Labels";
 import AddLabel from "../Labels/AddLabel";
-import EditIssue from "../Issues/EditIssue";
+import EditLabel from "../Labels/EditLabel";
+
+import CreateTeamProject from "./CreateTeamProject";
+import Project from "../Projects/Project";
 import EditProject from "../Projects/EditProject";
 
 const Team = lazy(() => {
@@ -95,7 +98,7 @@ function TeamDashboard(props) {
       />
 
       <Route
-        path="/team/project/:projectId/project/new/label"
+        path="/team/project/:projectId/new/label"
         render={(props) => {
           return <AddLabel {...props} setCurrentTeam={setCurrentTeam} />;
         }}
@@ -110,6 +113,12 @@ function TeamDashboard(props) {
         path="/team/project/:projectId/issue/:issueId/edit"
         render={(props) => {
           return <EditIssue {...props} setCurrentTeam={setCurrentTeam} />;
+        }}
+      />
+      <Route
+        path="/team/project/:projectId/label/:labelId/edit"
+        render={(props) => {
+          return <EditLabel {...props} setCurrentTeam={setCurrentTeam} />;
         }}
       />
       <Route

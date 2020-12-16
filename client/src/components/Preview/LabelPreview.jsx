@@ -21,7 +21,7 @@ import TrashSVG from "../SVG/TrashSVG";
 import EditSVG from "../SVG/EditSVG";
 
 const LabelPreview = (props) => {
-  const { label, index, projectId, getProject } = props;
+  const { label, index, projectId, getProject, team } = props;
 
   const deleteLabel = () => {
     axios
@@ -44,7 +44,11 @@ const LabelPreview = (props) => {
 
       <div className="label__preview-actions">
         <div>
-          <Link to={`/project/${projectId}/label/${label._id}/edit`}>
+          <Link
+            to={`${
+              team !== null ? "/team/project/" : "/project/"
+            }${projectId}/label/${label._id}/edit`}
+          >
             <Tooltip title="Edit Label" position="bottom" size="small">
               <EditSVG />
             </Tooltip>
