@@ -69,6 +69,7 @@ const EditLabel = (props) => {
             setName(label.name);
             setBgColor(label.backgroundColor);
             setFontColor(label.fontColor);
+            props.setCurrentTeam(response.data.team);
           }
         } else {
           props.setErrors(["Something went wrong"]);

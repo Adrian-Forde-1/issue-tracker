@@ -46,6 +46,7 @@ const EditProject = (props) => {
             setName(response.data.name);
             setDescription(response.data.description);
             setProject(response.data);
+            props.setCurrentTeam(response.data.team);
           }
         } else {
           props.setMessages(["Something went wrong"]);
