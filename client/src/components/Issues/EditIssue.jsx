@@ -44,32 +44,34 @@ const EditIssue = (props) => {
             props.history.goBack();
           } else {
             setIssue(response.data);
-          }
-
-          if (
-            props.location &&
-            props.location.pathname &&
-            props.location.pathname.toString().indexOf("team") > -1
-          ) {
             props.setCurrentTeam(response.data.project.team);
-          }
 
-          if (response.data.project && response.data.project.team !== null) {
-            axios
-              .get(`/api/team/${response.data.project.team}`, {
-                headers: { Authorization: localStorage.getItem("token") },
-              })
-              .then((response) => {
-                if (response && response.data) {
-                  setMembers(response.data.users);
-                } else {
-                  props.setErrors(["Something went wrong"]);
-                }
-              })
-              .catch((error) => {
-                props.setErrors(error);
-                props.history.goBack();
+            if (response.data.assignees) {
+              var newAssignedMembers = [];
+              response.data.assignees.forEach((assignee) => {
+                newAssignedMembers.push(assignee._id.toString());
               });
+
+              setAssignedMembers(newAssignedMembers);
+            }
+
+            if (response.data.project && response.data.project.team !== null) {
+              axios
+                .get(`/api/team/${response.data.project.team}`, {
+                  headers: { Authorization: localStorage.getItem("token") },
+                })
+                .then((response) => {
+                  if (response && response.data) {
+                    setMembers(response.data.users);
+                  } else {
+                    props.setErrors(["Something went wrong"]);
+                  }
+                })
+                .catch((error) => {
+                  props.setErrors(error);
+                  props.history.goBack();
+                });
+            }
           }
         } else {
           props.setErrors(["Something went wrong"]);
