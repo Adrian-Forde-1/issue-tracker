@@ -1,103 +1,123 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+
+//Axios
+import axios from "axios";
+
+//Tippy
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
-import { setErrors } from '../../redux/actions/userActions';
+import { setErrors, setMessages } from "../../redux/actions/userActions";
 
-//Components
-import SideNav from '../Navigation/SideNav';
-import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
+//SVG
+import InfoSVG from "../SVG/InfoSVG";
 
-class CreateProject extends Component {
-  constructor(props) {
-    super(props);
+const CreateProject = (props) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  useEffect(() => {
+    if (props.location.pathname.indexOf("team") > -1)
+      props.setCurrentTeam(props.match.params.teamId);
+    else props.setCurrentProject("");
+  }, []);
 
-    this.state = {
-      name: '',
-      description: '',
-    };
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
+    const teamId = props.match.params.teamId;
+
     const project = {
-      name: this.state.name,
-      description: this.state.description,
+      name: name,
+      description: description,
+      teamId,
     };
 
     axios
       .post(
-        '/api/project',
+        "/api/project",
         { project: project },
         {
-          headers: { Authorization: localStorage.getItem('token') },
+          headers: { Authorization: localStorage.getItem("token") },
         }
       )
-      .then(() => {
-        this.props.history.goBack();
+      .then((res) => {
+        if (res && res.data) {
+          props.setMessages(res.data);
+          props.history.goBack();
+        }
       })
       .catch((error) => {
-        this.props.setErrors(error);
-        this.props.history.goBack();
+        props.setErrors(error);
+        props.history.goBack();
       });
   };
-  render() {
-    return (
-      <div>
-        <ProjectsTeamsHamburger />
-        <SideNav />
-        <div className="form-container p-t-0">
-          <div className="container p-l-175">
-            <div className="auth-form">
-              <h2>Create Project</h2>
-              <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="name">Name</label>
-                  <br />
-                  <input
-                    type="text"
-                    name="name"
-                    maxLength="30"
-                    value={this.state.name}
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="description">Description</label>
-                  <br />
-                  <textarea
-                    type="text"
-                    name="description"
-                    maxLength="500"
-                    value={this.state.description}
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <button className="submit-btn">Create Project</button>
-              </form>
-            </div>
-          </div>
-        </div>
+  return (
+    <div className="standard-form__wrapper">
+      <div className="standard-form__header">
+        <h2>Create Project</h2>
       </div>
-    );
-  }
-}
+      <div className="standard-form__body standard-form__body--no-padding">
+        <form
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          <div className="standard-form__split-double">
+            <section>
+              <div className="standard-form__input-container">
+                <label htmlFor="name">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="standard-form__input-container standard-form__input-container--fill">
+                <label htmlFor="description">Description</label>
+                <textarea
+                  type="text"
+                  className="standard-form__input-container-textarea standard-form__input-container-textarea--fill"
+                  name="description"
+                  maxLength="500"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+                <div
+                  className={`standard-form__input-container__description-info`}
+                >
+                  <Tooltip
+                    title="You can use markdown in your description"
+                    position="bottom"
+                    size="small"
+                  >
+                    <InfoSVG />
+                  </Tooltip>
+                </div>
+              </div>
+              <button>Create Project</button>
+            </section>
+            <section>
+              <div className="standard-form__preview-view">
+                <ReactMarkdown>{description}</ReactMarkdown>
+              </div>
+            </section>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 const mapDispatchToProps = {
   setErrors,
+  setMessages,
 };
 
 export default connect(null, mapDispatchToProps)(CreateProject);

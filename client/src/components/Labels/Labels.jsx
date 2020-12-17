@@ -38,6 +38,8 @@ function Labels(props) {
           setProject(response.data);
           if (props.location.pathname.indexOf("team") > -1) {
             props.setCurrentTeam(response.data.team);
+          } else {
+            props.setCurrentProject(response.data._id);
           }
         }
       });
@@ -50,7 +52,7 @@ function Labels(props) {
         </div>
         <div className="label__header-actions">
           <Link
-            to={`${project.team !== null ? "/team/project/" : "/project/"}${
+            to={`${project.team !== null ? "/team/project/" : "/projects/"}${
               project._id
             }/new/label`}
           >

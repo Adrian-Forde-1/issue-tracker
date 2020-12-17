@@ -44,8 +44,17 @@ const AddLabel = (props) => {
       })
       .then((response) => {
         if (response && response.data) {
-          if (response.data.team) {
-            props.setCurrentTeam(response.data.team);
+          if (
+            (response.data.team !== null &&
+              props.location.pathname.toString().indexOf("team") === -1) ||
+            (response.data.team === null &&
+              props.location.pathname.toString().indexOf("team") > -1)
+          ) {
+            props.history.goBack();
+          } else {
+            if (props.location.pathname.toString().indexOf("team") > -1)
+              props.setCurrentTeam(response.data.team);
+            else props.setCurrentProject(response.data._id);
           }
         } else {
           props.setErrors(["Something went wrong"]);
@@ -53,7 +62,7 @@ const AddLabel = (props) => {
       })
       .catch((error) => {
         props.setErrors(error);
-        props.history.push("/projects");
+        props.history.push("/project");
       });
   }, []);
 

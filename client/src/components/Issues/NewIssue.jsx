@@ -41,32 +41,38 @@ const NewIssue = (props) => {
       })
       .then((response) => {
         if (response && response.data) {
-          setProject(response.data);
-
-          //If project is in a team, get all the members from that team
-          if (response.data.team !== null) {
-            axios
-              .get(`/api/team/${response.data.team}`, {
-                headers: { Authorization: localStorage.getItem("token") },
-              })
-              .then((response) => {
-                if (response && response.data) {
-                  setMembers(response.data.users);
-                }
-              })
-              .catch((error) => {
-                if (error && error.response) {
-                  props.setErrors(error);
-                  props.history.goBack();
-                }
-              });
-          }
-
           if (
-            props.match.params &&
-            props.match.params.toString().indexOf("team" > -1)
+            (response.data.team !== null &&
+              props.location.pathname.toString().indexOf("team") === -1) ||
+            (response.data.team === null &&
+              props.location.pathname.toString().indexOf("team") > -1)
           ) {
-            props.setCurrentTeam(response.data.team);
+            props.history.goBack();
+          } else {
+            if (props.location.pathname.toString().indexOf("team") > -1)
+              props.setCurrentTeam(response.data.team);
+            else props.setCurrentProject(response.data._id);
+
+            setProject(response.data);
+
+            //If project is in a team, get all the members from that team
+            if (response.data.team !== null) {
+              axios
+                .get(`/api/team/${response.data.team}`, {
+                  headers: { Authorization: localStorage.getItem("token") },
+                })
+                .then((response) => {
+                  if (response && response.data) {
+                    setMembers(response.data.users);
+                  }
+                })
+                .catch((error) => {
+                  if (error && error.response) {
+                    props.setErrors(error);
+                    props.history.goBack();
+                  }
+                });
+            }
           }
         }
       })

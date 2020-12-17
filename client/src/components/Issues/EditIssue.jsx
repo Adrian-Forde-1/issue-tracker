@@ -38,13 +38,18 @@ const EditIssue = (props) => {
       .then((response) => {
         if (response && response.data) {
           if (
-            response.data.project.team !== null &&
-            props.location.pathname.toString().indexOf("team") === -1
+            (response.data.team !== null &&
+              props.location.pathname.toString().indexOf("team") === -1) ||
+            (response.data.team === null &&
+              props.location.pathname.toString().indexOf("team") > -1)
           ) {
             props.history.goBack();
           } else {
+            if (props.location.pathname.toString().indexOf("team") > -1)
+              props.setCurrentTeam(response.data.team);
+            else props.setCurrentProject(response.data._id);
+
             setIssue(response.data);
-            props.setCurrentTeam(response.data.project.team);
 
             if (response.data.assignees) {
               var newAssignedMembers = [];
@@ -67,10 +72,14 @@ const EditIssue = (props) => {
                     props.setErrors(["Something went wrong"]);
                   }
                 })
-                .catch((error) => {
-                  props.setErrors(error);
-                  props.history.goBack();
+                .catch((err) => {
+                  if (err && err.response && err.response.data) {
+                    props.setErrors(err);
+                    props.history.goBack();
+                  }
                 });
+            } else {
+              props.setErrors(["Something went wrong"]);
             }
           }
         } else {

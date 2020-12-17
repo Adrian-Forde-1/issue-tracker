@@ -17,24 +17,24 @@ import Signup from "./components/Signup";
 import IsAuthenticated from "./components/IsAuthenticated";
 import Navbar from "./components/Navigation/Navbar";
 import { connect } from "react-redux";
-import Team from "./components/Teams/Team";
-import CreateTeam from "./components/Teams/CreateTeam";
-import Project from "./components/Projects/Project";
-import CreateProject from "./components/Projects/CreateProject";
-import Labels from "./components/Labels/Labels";
-import EditLabel from "./components/Labels/EditLabel";
-import AddLabel from "./components/Labels/AddLabel";
-import Issue from "./components/Issues/Issue";
-import NewIssue from "./components/Issues/NewIssue";
-import EditIssue from "./components/Issues/EditIssue";
-import AllProjects from "./components/Projects/AllProjects";
+// import Team from "./components/Teams/Team";
+// import CreateTeam from "./components/Teams/CreateTeam";
+// import Project from "./components/Projects/Project";
+// import CreateProject from "./components/Projects/CreateProject";
+// import Labels from "./components/Labels/Labels";
+// import EditLabel from "./components/Labels/EditLabel";
+// import AddLabel from "./components/Labels/AddLabel";
+// import Issue from "./components/Issues/Issue";
+// import NewIssue from "./components/Issues/NewIssue";
+// import EditIssue from "./components/Issues/EditIssue";
+import ProjectDashboard from "./components/Projects/ProjectDashboard";
 import ArchivedProjects from "./components/Projects/ArchivedProjects";
 import ArchivedTeamProjects from "./components/Projects/ArchivedTeamProjects";
 import CreateTeamProject from "./components/Teams/CreateTeamProject";
-import JoinTeam from "./components/Teams/JoinTeam";
-import EditProject from "./components/Projects/EditProject";
+// import JoinTeam from "./components/Teams/JoinTeam";
+// import EditProject from "./components/Projects/EditProject";
 import TeamChat from "./components/Chat/TeamChat";
-import DeleteModal from "./components/DeleteModal";
+// import DeleteModal from "./components/DeleteModal";
 import ErrorBoundary from "./components/ErrorBoundary";
 import TeamChatLandingPage from "./components/Chat/TeamChatLandingPage";
 import ToastComponent from "./components/Toast/ToastComponent";
@@ -62,7 +62,7 @@ class App extends Component {
 
           <IsAuthenticated>
             {/* Team */}
-            <Route exact path="/create/team" component={CreateTeam} />
+            {/* <Route exact path="/create/team" component={CreateTeam} /> */}
             <Route path="/team" component={TeamDashboard} />
             <Route exact path="/teams/chat" component={TeamChatLandingPage} />
             <ErrorBoundary>
@@ -74,57 +74,57 @@ class App extends Component {
               path="/team/:teamId/archived"
               component={ArchivedTeamProjects}
             />
-            <Route exact path="/join/team" component={JoinTeam} />
+            {/* <Route exact path="/join/team" component={JoinTeam} /> */}
 
             {/* Project */}
             <ErrorBoundary>
-              <Route exact path="/projects" component={AllProjects} />
+              <Route path="/project" component={ProjectDashboard} />
             </ErrorBoundary>
-            <Route exact path="/project/:projectId" component={Project} />
-            <Route
+            {/* <Route exact path="/project/:projectId" component={Project} /> */}
+            {/* <Route
               exact
               path="/project/:projectId/edit"
               component={EditProject}
-            />
-            <Route exact path="/create/project" component={CreateProject} />
-            <Route
+            /> */}
+            {/* <Route exact path="/create/project" component={CreateProject} /> */}
+            {/* <Route
               exact
               path="/projects/archived"
               component={ArchivedProjects}
-            />
+            /> */}
 
             {/* Labels */}
-            <Route exact path="/project/:projectId/labels" component={Labels} />
-            <Route
+            {/* <Route exact path="/project/:projectId/labels" component={Labels} /> */}
+            {/* <Route
               exact
               path="/project/:projectId/label/:labelId/edit"
               component={EditLabel}
-            />
-            <Route
+            /> */}
+            {/* <Route
               exact
               path="/project/:projectId/label/add"
               component={AddLabel}
-            />
+            /> */}
 
             {/* Issue */}
-            <Route
+            {/* <Route
               exact
               path="/project/:projectId/issue/:issueId"
               component={Issue}
-            />
-            <Route
+            /> */}
+            {/* <Route
               exact
               path="/project/:projectId/new/issue"
               component={NewIssue}
-            />
-            <Route
+            /> */}
+            {/* <Route
               exact
               path="/project/:projectId/issue/:issueId/edit"
               component={EditIssue}
-            />
+            /> */}
           </IsAuthenticated>
         </Switch>
-        {this.props.showModal && <DeleteModal />}
+        {/* {this.props.showModal && <DeleteModal />} */}
       </div>
     );
   }

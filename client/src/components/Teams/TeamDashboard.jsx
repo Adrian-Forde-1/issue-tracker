@@ -12,6 +12,9 @@ import "react-tippy/dist/tippy.css";
 //Redux
 import { connect } from "react-redux";
 
+//Actions
+import { setErrors } from "../../redux/actions/userActions";
+
 //React Router DOM
 import { Link } from "react-router-dom";
 
@@ -116,7 +119,7 @@ function TeamDashboard(props) {
         }}
       />
       <Route
-        path="/team/project/:projectId/new/issue"
+        path="/team/project/:projectId/labels"
         render={(props) => {
           return <Labels {...props} setCurrentTeam={setCurrentTeam} />;
         }}
@@ -134,7 +137,7 @@ function TeamDashboard(props) {
         }}
       />
       <Route
-        path="/team/project/:projectId/project/labels"
+        path="/team/project/:projectId/new/issue"
         render={(props) => {
           return <NewIssue {...props} setCurrentTeam={setCurrentTeam} />;
         }}
@@ -208,15 +211,15 @@ function TeamDashboard(props) {
     return renderedTeams;
   };
   return (
-    <div className="teams__dashboard-wrapper" style={{ position: "relative" }}>
-      <div className="teams__dashboard-side-nav">
+    <div className="dashboard__wrapper" style={{ position: "relative" }}>
+      <div className="dashboard__side-nav">
         <SideNav />
       </div>
-      <div className="teams__dashboard-main-content">
+      <div className="dashboard__main-content">
         <DashboardNavbar />
-        <div className="teams__dashboard-main-content-container">
-          <div className="teams__dashboard-main-content-sidebar">
-            <div className="teams__dashboard-main-content-sidebar__category-selector-container">
+        <div className="dashboard__main-content-container">
+          <div className="dashboard__main-content-sidebar">
+            <div className="dashboard__main-content-sidebar__category-selector-container">
               <div
                 className={`${
                   currentCategory === categories.Teams && "selected"
@@ -235,7 +238,7 @@ function TeamDashboard(props) {
               </div>
             </div>
             {currentCategory === categories.Teams && (
-              <div className="teams__dashboard__quick-links-container">
+              <div className="dashboard__quick-links-container">
                 <Link to={`/team/create`}>
                   <Tooltip title="Create Team" position="bottom" size="small">
                     <PlusSVG />
@@ -248,11 +251,11 @@ function TeamDashboard(props) {
                 </Link>
               </div>
             )}
-            <div className="teams__dashboard-main-content-sidebar__team-list">
+            <div className="dashboard__main-content-sidebar__team-list">
               {renderTeams()}
             </div>
           </div>
-          <div className="teams__dashboard-main-content-body">
+          <div className="dashboard__main-content-body">
             <Suspense fallback="Loading">{routes}</Suspense>
           </div>
         </div>
@@ -261,4 +264,8 @@ function TeamDashboard(props) {
   );
 }
 
-export default TeamDashboard;
+const mapDispatchToProps = {
+  setErrors,
+};
+
+export default connect(null, mapDispatchToProps)(TeamDashboard);

@@ -1,0 +1,235 @@
+import React, { useEffect, useState, Suspense, lazy } from "react";
+
+//Axios
+import axios from "axios";
+
+//Tippy
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
+
+//Redux
+import { connect } from "react-redux";
+
+//React Router DOM
+import { Link, Route, Switch, Redirect } from "react-router-dom";
+
+//SVG
+import ArchiveSVG from "../SVG/ArchiveSVG";
+import PlusSVG from "../SVG/PlusSVG";
+import PeopleWavingSVG from "../SVG/PeopleWavingSVG";
+
+//Actions
+import { setErrors } from "../../redux/actions/userActions";
+
+//Components
+import ProjectPreview from "../Preview/ProjectPreview";
+import SearchBar from "../SearchBar";
+
+import SideNav from "../Navigation/SideNav";
+import DashboardNavbar from "../Navigation/DashboardNavbar";
+
+import Issue from "../Issues/Issue";
+import NewIssue from "../Issues/NewIssue";
+import EditIssue from "../Issues/EditIssue";
+
+import Labels from "../Labels/Labels";
+import AddLabel from "../Labels/AddLabel";
+import EditLabel from "../Labels/EditLabel";
+
+import Project from "./Project";
+import CreateProject from "./CreateProject";
+import EditProject from "./EditProject";
+
+function ProjectDashboard(props) {
+  const [projects, setProjects] = useState([]);
+  const [currentProject, setCurrentProject] = useState("");
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    getProjects();
+  }, []);
+
+  const onChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const getProjects = () => {
+    axios
+      .get("/api/projects", {
+        headers: { Authorization: localStorage.getItem("token") },
+      })
+      .then((res) => {
+        if (res && res.data) {
+          setProjects(res.data);
+        }
+      })
+      .catch((err) => {
+        if (err && err.response && err.response.data) {
+          props.setErrors(err);
+        }
+      });
+  };
+
+  let routes = (
+    <Switch>
+      <Route exact path="/project">
+        <h1>Project stuff</h1>
+      </Route>
+      <Route
+        exact
+        path="/project/create"
+        render={(props) => {
+          return (
+            <CreateProject {...props} setCurrentProject={setCurrentProject} />
+          );
+        }}
+      />
+      <Route
+        exact
+        path="/project/:projectId"
+        render={(props) => {
+          return <Project {...props} setCurrentProject={setCurrentProject} />;
+        }}
+      />
+      <Route
+        path="/project/:projectId/labels"
+        render={(props) => {
+          return <Labels {...props} setCurrentProject={setCurrentProject} />;
+        }}
+      />
+      <Route
+        path="/project/:projectId/new/label"
+        render={(props) => {
+          return <AddLabel {...props} setCurrentProject={setCurrentProject} />;
+        }}
+      />
+      <Route
+        path="/project/:projectId/issue/:issueId/edit"
+        render={(props) => {
+          return <EditIssue {...props} setCurrentProject={setCurrentProject} />;
+        }}
+      />
+      <Route
+        path="/project/:projectId/label/:labelId/edit"
+        render={(props) => {
+          return <EditLabel {...props} setCurrentProject={setCurrentProject} />;
+        }}
+      />
+      <Route
+        path="/project/:projectId/new/issue"
+        render={(props) => {
+          return <NewIssue {...props} setCurrentProject={setCurrentProject} />;
+        }}
+      />
+      <Route
+        exact
+        path="/project/:projectId/issue/:issueId"
+        render={(props) => {
+          return <Issue {...props} setCurrentProject={setCurrentProject} />;
+        }}
+      />
+    </Switch>
+  );
+
+  const renderProjects = () => {
+    var renderedProjects = [];
+    if (projects && projects.length > 0) {
+      if (search === "") {
+        projects.map((project) => {
+          renderedProjects.push(
+            <ProjectPreview
+              project={project}
+              key={project._id}
+              small={true}
+              selected={project._id.toString() === currentProject.toString()}
+            />
+          );
+        });
+      } else {
+        projects.map((project) => {
+          if (
+            project.name.toLowerCase().indexOf(search.toLowerCase()) > -1 &&
+            project.archived === false
+          ) {
+            renderedProjects.push(
+              <ProjectPreview
+                project={project}
+                key={project._id}
+                small={true}
+                selected={project._id.toString() === currentProject.toString()}
+              />
+            );
+          }
+        });
+      }
+    }
+    return renderedProjects;
+  };
+
+  return (
+    <div className="dashboard__wrapper" style={{ position: "relative" }}>
+      <div className="dashboard__side-nav">
+        <SideNav />
+      </div>
+      <div className="dashboard__main-content">
+        <DashboardNavbar />
+        <div className="dashboard__main-content-container">
+          <div className="dashboard__main-content-sidebar">
+            <div
+              className="dashboard__quick-links-container"
+              style={{ marginBottom: "10px" }}
+            >
+              <Link to={`/project/create`}>
+                <Tooltip title="Create Project" position="bottom" size="small">
+                  <PlusSVG />
+                </Tooltip>
+              </Link>
+            </div>
+            <div className="dashboard__main-content-sidebar__team-list">
+              {renderProjects()}
+            </div>
+          </div>
+          <div className="dashboard__main-content-body">
+            <Suspense fallback="Loading">{routes}</Suspense>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    // <div
+    //   className="d-flex flex-column p-l-175"
+    //   style={{ position: "relative" }}
+    // >
+    //   <div className="under-nav-section">
+    //     <SearchBar search={search} onChange={onChange} />
+    //     <div className="under-nav-section-links">
+    //       <Link to="/create/project" className="action-btn">
+    //         <i className="fas fa-plus-square "></i>
+    //       </Link>
+    //       <Link to={`/projects/archived`} className="action-btn extra-right">
+    //         <i className="fas fa-archive "></i>
+    //       </Link>
+    //     </div>
+    //   </div>
+    //   <h3 className="section-title">Projects</h3>
+    //   {projects && projects.length > 0 && search === ""
+    //     ? projects.map((project) => {
+    //         if (project.archived === false)
+    //           return <ProjectPreview project={project} key={project._id} />;
+    //       })
+    //     : projects.map((project) => {
+    //         if (
+    //           project.name.toLowerCase().indexOf(search.toLowerCase()) > -1 &&
+    //           project.archived === false
+    //         )
+    //           return <ProjectPreview project={project} key={project._id} />;
+    //       })}
+    // </div>
+  );
+}
+
+const mapDispatchToProps = {
+  setErrors,
+};
+
+export default connect(null, mapDispatchToProps)(ProjectDashboard);

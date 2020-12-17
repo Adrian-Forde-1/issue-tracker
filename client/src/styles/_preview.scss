@@ -3,7 +3,6 @@
 .team-preview {
   width: 100%;
   border: 1px solid $text-color;
-  padding: 5px 20px;
   border-radius: 50px;
   margin-top: 10px;
   overflow: hidden;
@@ -26,6 +25,7 @@
     width: 100%;
     height: 100%;
     font-size: 14px;
+    padding: 5px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -56,7 +56,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 20px;
   border-radius: 50px;
   margin-top: 10px;
   overflow: hidden;
@@ -76,22 +75,8 @@
     top: 0;
     left: 0;
     z-index: -1;
-    transform: translateY(100%);
+    transform: translateY(102%);
     transition: all 200ms ease-in-out;
-  }
-
-  a {
-    width: 100%;
-    height: 100%;
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-
-    span {
-      color: $text-color;
-    }
   }
 
   &:hover,
@@ -100,7 +85,7 @@
       transform: translateY(0%);
     }
 
-    a span,
+    div span,
     i {
       color: #fff;
     }
@@ -109,12 +94,58 @@
       color: #fff;
     }
   }
+  &__container {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    span {
+      color: $text-color;
+    }
+
+    div {
+      width: 5%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      &:first-of-type {
+        margin-left: auto;
+      }
+    }
+  }
 
   &__delete {
+    // margin-left: auto;
+    svg {
+      font-size: 16px;
+      color: $text-color;
+    }
+
+    &--wide {
+      width: 15% !important;
+    }
+  }
+
+  &__archive-btn {
     svg {
       font-size: 20px;
       color: $text-color;
     }
+  }
+
+  &__small-name {
+    display: block;
+    width: 85%;
+    max-width: 85%;
+    // margin-right: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 

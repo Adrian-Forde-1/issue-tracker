@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 
 //SVG
 import TrashSVG from "../SVG/TrashSVG";
+import ArchiveSVG from "../SVG/ArchiveSVG";
+import UnarchiveSVG from "../SVG/UnarchiveSVG";
 
 //Actions
 import { setErrors, setMessages } from "../../redux/actions/userActions";
@@ -17,7 +19,14 @@ import { setErrors, setMessages } from "../../redux/actions/userActions";
 import Modal from "../Modal/Modal";
 
 function ProjectPreview(props) {
-  const { project, getProjects, setMessages, setErrors } = props;
+  const {
+    project,
+    getProjects,
+    setMessages,
+    setErrors,
+    small = false,
+    selected = false,
+  } = props;
 
   const modalTypes = {
     "Delete Modal": "Delete Modal",
@@ -89,77 +98,99 @@ function ProjectPreview(props) {
     }
   };
 
-  return (
-    <div className="project-preview">
-      {renderModal()}
-      <Link
-        to={`${props.teamProject ? "/team/project/" : "/project/"}${
-          project._id
-        }`}
-      >
-        <span>{project.name}</span>
-      </Link>
+  const gotoProject = () => {
+    props.history.push(
+      `${props.teamProject ? "/team/project/" : "/project/"}${project._id}`
+    );
+  };
 
-      <i
-        className={`fas fa-archive archive-btn ${props.extraIconClass}`}
-        onClick={() => {
-          if (project.archived === false) {
-            axios
-              .put(`/api/project/${project._id}/archive/add`, null, {
-                headers: {
-                  Authorization: localStorage.getItem("token"),
-                },
-              })
-              .then(() => {
-                if (project.team) {
-                  props.setTeamUpdated(true);
-                } else {
-                  axios
-                    .get(`/api/project/${project._id}`, {
-                      headers: {
-                        Authorization: localStorage.getItem("token"),
-                      },
-                    })
-                    .then(() => {
-                      props.getUserProjects(localStorage.getItem("token"));
-                    })
-                    .catch((error) => {
-                      props.setErrors(error.response.data);
-                      props.history.goBack();
-                    });
-                }
-              })
-              .catch((error) => {
-                props.setErrors(error.response.data);
-                props.history.location("/projects");
-              });
+  const manageArchive = () => {
+    if (project.archived === false) {
+      axios
+        .put(`/api/project/${project._id}/archive/add`, null, {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        })
+        .then(() => {
+          if (project.team) {
+            props.setTeamUpdated(true);
           } else {
             axios
-              .put(`/api/project/${project._id}/archive/remove`, null, {
+              .get(`/api/project/${project._id}`, {
                 headers: {
                   Authorization: localStorage.getItem("token"),
                 },
               })
               .then(() => {
-                props.resetProjects();
+                props.getUserProjects(localStorage.getItem("token"));
               })
-              .catch((error) => {
-                props.setErrors(error);
-                props.history.location("/projects/archived");
+              .catch((err) => {
+                if (err && err.response && err.response.data) {
+                  props.setErrors(err);
+                  props.history.goBack();
+                }
               });
           }
-        }}
-      ></i>
+        })
+        .catch((err) => {
+          if (err && err.response && err.response.data) {
+            props.setErrors(err);
+            props.history.location("/project");
+          }
+        });
+    } else {
+      axios
+        .put(`/api/project/${project._id}/archive/remove`, null, {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        })
+        .then(() => {
+          props.resetProjects();
+        })
+        .catch((error) => {
+          props.setErrors(error);
+          props.history.location("/project/archived");
+        });
+    }
+  };
 
+  return (
+    <div className={`project-preview ${selected && "selected"}`}>
+      {renderModal()}
       <div
-        className="project-preview__delete"
-        onClick={(e) => {
-          e.stopPropagation();
-          setModalType(modalTypes["Delete Modal"]);
-          setShowModal(true);
+        className="project-preview__container"
+        onClick={() => {
+          gotoProject();
         }}
       >
-        <TrashSVG />
+        <span className={`${small === true && "project-preview__small-name"}`}>
+          {project.name}
+        </span>
+        {small === false && (
+          <div
+            className="project-preview__archive-btn"
+            onClick={() => {
+              manageArchive();
+            }}
+          >
+            {project.archived ? <UnarchiveSVG /> : <ArchiveSVG />}
+          </div>
+        )}
+
+        <div
+          className={`project-preview__delete ${
+            small && "project-preview__delete--wide"
+          }`}
+          onClick={(e) => {
+            e.stopPropagation();
+            setModalType(modalTypes["Delete Modal"]);
+            setShowModal(true);
+          }}
+        >
+          <TrashSVG />
+        </div>
       </div>
     </div>
   );

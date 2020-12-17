@@ -47,7 +47,16 @@ const Project = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState("");
   const [showDescription, setShowDescription] = useState(false);
-  const projectId = props.match.params.projectId;
+  const [projectId, setProjectId] = useState(props.match.params.projectId);
+
+  useEffect(() => {
+    if (props.match.params.projectId)
+      setProjectId(props.match.params.projectId);
+  }, [props.match.params]);
+
+  useEffect(() => {
+    getProjectData();
+  }, [projectId]);
 
   const handleSearchChange = (e) => {
     sessionStorage.setItem("project-search", e.target.value);
@@ -68,28 +77,6 @@ const Project = (props) => {
     getProjectData();
   }, []);
 
-  // useEffect(() => {
-  //   if (props.projectUpdated === true) {
-  //     axios
-  //       .get(`/api/project/${projectId}`, {
-  //         headers: { Authorization: localStorage.getItem("token") },
-  //       })
-  //       .then((response) => {
-  //         if (response && response.data) {
-  //           setProject(response.data);
-  //         } else {
-  //           props.setErrors(["Something went wrong"]);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         props.setErrors(error);
-  //         props.history.push("/projects");
-  //       });
-
-  //     props.setProjectUpdated(false);
-  //   }
-  // }, [props.projectUpdated]);
-
   const getProjectData = () => {
     console.log("Get Project data called");
     axios
@@ -99,19 +86,20 @@ const Project = (props) => {
       .then((response) => {
         if (response && response.data) {
           if (
-            response.data.team !== null &&
-            props.location.pathname.toString().indexOf("team") === -1
+            (response.data.team !== null &&
+              props.location.pathname.toString().indexOf("team") === -1) ||
+            (response.data.team === null &&
+              props.location.pathname.toString().indexOf("team") > -1)
           ) {
             props.history.goBack();
           } else {
             setProject(response.data);
           }
 
-          if (
-            props.match.params &&
-            props.match.params.toString().indexOf("team" > -1)
-          ) {
+          if (props.location.pathname.toString().indexOf("team") > -1) {
             props.setCurrentTeam(response.data.team);
+          } else {
+            props.setCurrentProject(response.data._id);
           }
         } else {
           props.setErrors(["Something went wrong"]);
@@ -123,7 +111,7 @@ const Project = (props) => {
           props.history.push(
             props.location.pathname.toString().indexOf("team") > -1
               ? `/team/${props.match.params.teamId}`
-              : "/projects"
+              : "/project"
           );
         }
       });
@@ -148,12 +136,12 @@ const Project = (props) => {
           })
           .catch((error) => {
             props.setErrors(error);
-            props.history.push("/projects");
+            props.history.push("/project");
           });
       })
       .catch((error) => {
         props.setErrors(error);
-        props.history.push("/projects");
+        props.history.push("/project");
       });
   };
 
@@ -176,12 +164,12 @@ const Project = (props) => {
           })
           .catch((error) => {
             props.setErrors(error);
-            props.history.push("/projects");
+            props.history.push("/project");
           });
       })
       .catch((error) => {
         props.setErrors(error);
-        props.history.push("/projects");
+        props.history.push("/project");
       });
   };
 
@@ -414,7 +402,7 @@ const Project = (props) => {
             <Link
               to={`${project.team !== null ? "/team/project/" : "/project/"}${
                 project._id
-              }/project/labels`}
+              }/labels`}
             >
               Labels <i className="fas fa-tags"></i>
             </Link>

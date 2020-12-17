@@ -57,11 +57,17 @@ const EditLabel = (props) => {
       .then((response) => {
         if (response && response.data) {
           if (
-            response.data.team !== null &&
-            props.location.pathname.toString().indexOf("team") === -1
+            (response.data.team !== null &&
+              props.location.pathname.toString().indexOf("team") === -1) ||
+            (response.data.team === null &&
+              props.location.pathname.toString().indexOf("team") > -1)
           ) {
             props.history.goBack();
           } else {
+            if (props.location.pathname.toString().indexOf("team") > -1)
+              props.setCurrentTeam(response.data.team);
+            else props.setCurrentProject(response.data._id);
+
             var label = response.data.labels.find(
               (label) => label._id.toString() === labelId.toString()
             );
@@ -69,7 +75,6 @@ const EditLabel = (props) => {
             setName(label.name);
             setBgColor(label.backgroundColor);
             setFontColor(label.fontColor);
-            props.setCurrentTeam(response.data.team);
           }
         } else {
           props.setErrors(["Something went wrong"]);
