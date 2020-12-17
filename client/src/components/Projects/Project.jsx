@@ -319,7 +319,7 @@ const Project = (props) => {
             <div className="project__name">{project.name}</div>
             {project.createdBy._id.toString() === props.user._id.toString() && (
               <div className="project__action-buttons-container">
-                {/* <div
+                {/* `<div
                   onClick={() => {
                     if (project.archived === false) {
                       archiveProject();
@@ -345,7 +345,7 @@ const Project = (props) => {
                       <ArchiveSVG />
                     </Tooltip>
                   )}
-                </div> */}
+                </div>` */}
                 <div>
                   <Link
                     to={`${

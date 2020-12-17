@@ -53,6 +53,7 @@ function TeamDashboard(props) {
   };
   const [teams, setTeams] = useState([]);
   const [currentTeam, setCurrentTeam] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [currentCategory, setCurrentCategory] = useState(categories.Teams);
 
@@ -223,9 +224,16 @@ function TeamDashboard(props) {
         <SideNav />
       </div>
       <div className="dashboard__main-content">
-        <DashboardNavbar />
+        <DashboardNavbar
+          setSidebarOpen={setSidebarOpen}
+          sidebarOpen={sidebarOpen}
+        />
         <div className="dashboard__main-content-container">
-          <div className="dashboard__main-content-sidebar">
+          <div
+            className={`dashboard__main-content-sidebar ${
+              sidebarOpen && "open"
+            }`}
+          >
             <div className="dashboard__main-content-sidebar__category-selector-container">
               <div
                 className={`${
@@ -262,7 +270,11 @@ function TeamDashboard(props) {
               {renderTeams()}
             </div>
           </div>
-          <div className="dashboard__main-content-body">
+          <div
+            className={`dashboard__main-content-body ${
+              sidebarOpen && "shrink"
+            }`}
+          >
             <Suspense fallback="Loading">{routes}</Suspense>
           </div>
         </div>

@@ -7,6 +7,9 @@ import { connect } from "react-redux";
 //Actions
 import { logoutUser } from "../../redux/actions/userActions";
 
+//SVG
+import HamburgerNavSVG from "../SVG/HamburgerNavSVG";
+
 const DashboardNavbar = (props) => {
   const renderImage = () => {
     if (props.user.image && props.user.image !== null) {
@@ -18,6 +21,14 @@ const DashboardNavbar = (props) => {
   return (
     <div className="dashboard-navbar">
       <ul className="dashboard-navbar__nav-list">
+        <div
+          className="dashboard-navbar__hamburger-container"
+          onClick={() => {
+            props.setSidebarOpen(!props.sidebarOpen);
+          }}
+        >
+          <HamburgerNavSVG />
+        </div>
         <div className="dashboard-navbar__right-container">
           <div
             className="dashboard-navbar__profile-pic"
