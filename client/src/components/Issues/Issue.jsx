@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 //Axios
 import axios from "axios";
 
+//Tippy
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
+
 //Moment
 import moment from "moment";
 
@@ -49,11 +53,17 @@ const Issue = (props) => {
       .then((response) => {
         if (response && response.data) {
           if (
-            response.data.project.team !== null &&
-            props.location.pathname.toString().indexOf("team") === -1
+            (response.data.project.team !== null &&
+              props.location.pathname.toString().indexOf("team") === -1) ||
+            (response.data.project.team === null &&
+              props.location.pathname.toString().indexOf("team") > -1)
           ) {
             props.history.goBack();
           } else {
+            if (props.location.pathname.toString().indexOf("team") > -1)
+              props.setCurrentTeam(response.data.project.team);
+            else props.setCurrentProject(response.data.project._id);
+
             var newLabels = [];
             response.data.project.labels.forEach((label) => {
               if (response.data.labels.includes(label._id)) {
@@ -62,9 +72,6 @@ const Issue = (props) => {
             });
             setIssueLabels(newLabels);
 
-            if (props.setCurrentTeam) {
-              props.setCurrentTeam(response.data.project.team);
-            }
             setIssue(response.data);
           }
         } else {
@@ -197,7 +204,12 @@ const Issue = (props) => {
         case modalTypes["Delete Modal"]:
           return (
             <Modal setShowModal={setShowModal} showModal={showModal}>
-              <div className="modal__delete-modal-body">
+              <div
+                className="modal__delete-modal-body"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 <div className="modal__delete-modal-body__message">
                   Are you sure you want to delete <span>{issue.name}</span>?
                 </div>
@@ -252,7 +264,9 @@ const Issue = (props) => {
                         : "/project/"
                     }${issue.project._id}/issue/${issue._id}/edit`}
                   >
-                    <EditSVG />
+                    <Tooltip title="Edit Issue" position="bottom" size="small">
+                      <EditSVG />
+                    </Tooltip>
                   </Link>
                 </div>
 
@@ -262,7 +276,9 @@ const Issue = (props) => {
                     setShowModal(true);
                   }}
                 >
-                  <TrashSVG />
+                  <Tooltip title="Delete Issue" position="bottom" size="small">
+                    <TrashSVG />
+                  </Tooltip>
                 </div>
               </div>
             </div>

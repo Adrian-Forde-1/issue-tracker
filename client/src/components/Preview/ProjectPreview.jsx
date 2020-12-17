@@ -59,7 +59,12 @@ function ProjectPreview(props) {
         case modalTypes["Delete Modal"]:
           return (
             <Modal setShowModal={setShowModal} showModal={showModal}>
-              <div className="modal__delete-modal-body">
+              <div
+                className="modal__delete-modal-body"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 <div className="modal__delete-modal-body__message">
                   Are you sure you want to delete <span>{project.name}</span>?
                 </div>
@@ -168,7 +173,7 @@ function ProjectPreview(props) {
         <span className={`${small === true && "project-preview__small-name"}`}>
           {project.name}
         </span>
-        {small === false && (
+        {/* {small === false && (
           <div
             className="project-preview__archive-btn"
             onClick={() => {
@@ -177,7 +182,7 @@ function ProjectPreview(props) {
           >
             {project.archived ? <UnarchiveSVG /> : <ArchiveSVG />}
           </div>
-        )}
+        )} */}
 
         <div
           className={`project-preview__delete ${

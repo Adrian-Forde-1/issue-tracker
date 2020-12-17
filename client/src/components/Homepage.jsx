@@ -66,7 +66,7 @@ function Homepage(props) {
                     you all the best.
                   </p>
                   <div className="header-links">
-                    <Link to="/projects" className="main-header-link">
+                    <Link to="/project" className="main-header-link">
                       Projects
                     </Link>
                     <Link to="/team" className="main-header-link">

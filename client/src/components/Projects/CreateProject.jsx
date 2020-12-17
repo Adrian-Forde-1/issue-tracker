@@ -49,6 +49,7 @@ const CreateProject = (props) => {
       .then((res) => {
         if (res && res.data) {
           props.setMessages(res.data);
+          props.getProjects();
           props.history.goBack();
         }
       })

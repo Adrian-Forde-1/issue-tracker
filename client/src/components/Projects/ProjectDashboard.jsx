@@ -80,7 +80,11 @@ function ProjectDashboard(props) {
         path="/project/create"
         render={(props) => {
           return (
-            <CreateProject {...props} setCurrentProject={setCurrentProject} />
+            <CreateProject
+              {...props}
+              setCurrentProject={setCurrentProject}
+              getProjects={getProjects}
+            />
           );
         }}
       />
@@ -89,6 +93,14 @@ function ProjectDashboard(props) {
         path="/project/:projectId"
         render={(props) => {
           return <Project {...props} setCurrentProject={setCurrentProject} />;
+        }}
+      />
+      <Route
+        path="/project/:projectId/edit"
+        render={(props) => {
+          return (
+            <EditProject {...props} setCurrentProject={setCurrentProject} />
+          );
         }}
       />
       <Route
@@ -142,6 +154,7 @@ function ProjectDashboard(props) {
               key={project._id}
               small={true}
               selected={project._id.toString() === currentProject.toString()}
+              getProjects={getProjects}
             />
           );
         });
@@ -157,6 +170,7 @@ function ProjectDashboard(props) {
                 key={project._id}
                 small={true}
                 selected={project._id.toString() === currentProject.toString()}
+                getProjects={getProjects}
               />
             );
           }

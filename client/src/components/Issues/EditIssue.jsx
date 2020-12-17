@@ -38,16 +38,16 @@ const EditIssue = (props) => {
       .then((response) => {
         if (response && response.data) {
           if (
-            (response.data.team !== null &&
+            (response.data.project.team !== null &&
               props.location.pathname.toString().indexOf("team") === -1) ||
-            (response.data.team === null &&
+            (response.data.project.team === null &&
               props.location.pathname.toString().indexOf("team") > -1)
           ) {
             props.history.goBack();
           } else {
             if (props.location.pathname.toString().indexOf("team") > -1)
-              props.setCurrentTeam(response.data.team);
-            else props.setCurrentProject(response.data._id);
+              props.setCurrentTeam(response.data.project.team);
+            else props.setCurrentProject(response.data.project._id);
 
             setIssue(response.data);
 

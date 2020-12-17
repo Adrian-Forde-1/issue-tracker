@@ -35,6 +35,10 @@
     span {
       color: $text-color;
     }
+
+    svg {
+      font-size: 20px;
+    }
   }
 
   &:hover,
@@ -43,9 +47,52 @@
       transform: translateY(0%);
     }
 
-    a span,
+    div span,
     span i {
       color: #fff;
+    }
+
+    svg {
+      color: #fff;
+    }
+  }
+
+  &__container {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    span {
+      color: $text-color;
+      display: block;
+      width: 85%;
+      max-width: 85%;
+      // margin-right: auto;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    div {
+      width: 15%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      &:first-of-type {
+        margin-left: auto;
+      }
+    }
+  }
+
+  &__delete {
+    svg {
+      font-size: 20px;
+      color: $text-color;
     }
   }
 }
@@ -122,11 +169,12 @@
   &__delete {
     // margin-left: auto;
     svg {
-      font-size: 16px;
+      font-size: 20px;
       color: $text-color;
     }
 
     &--wide {
+      font-size: 16px;
       width: 15% !important;
     }
   }

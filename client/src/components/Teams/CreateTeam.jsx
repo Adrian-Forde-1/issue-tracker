@@ -41,10 +41,10 @@ const CreateTeam = (props) => {
         }
       )
       .then((res) => {
-        if (res && res.data) {
-          props.setMessages(res.data);
-          props.history.goBack();
-        }
+        if (res && res.data) props.setMessages(res.data);
+
+        props.getTeams();
+        props.history.goBack();
       })
       .catch((err) => {
         if (err && err.response && err.response.data) {

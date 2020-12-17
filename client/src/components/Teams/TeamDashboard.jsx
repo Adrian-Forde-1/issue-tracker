@@ -19,7 +19,6 @@ import { setErrors } from "../../redux/actions/userActions";
 import { Link } from "react-router-dom";
 
 //SVG
-import ArchiveSVG from "../SVG/ArchiveSVG";
 import PlusSVG from "../SVG/PlusSVG";
 import PeopleWavingSVG from "../SVG/PeopleWavingSVG";
 
@@ -74,7 +73,13 @@ function TeamDashboard(props) {
         exact
         path="/team/create"
         render={(props) => {
-          return <CreateTeam {...props} setCurrentTeam={setCurrentTeam} />;
+          return (
+            <CreateTeam
+              {...props}
+              setCurrentTeam={setCurrentTeam}
+              getTeams={getTeams}
+            />
+          );
         }}
       />
       <Route
@@ -190,6 +195,7 @@ function TeamDashboard(props) {
               team={team}
               key={team._id}
               currentTeam={currentTeam.toString() === team._id.toString()}
+              getTeams={getTeams}
             />
           );
         });
@@ -201,6 +207,7 @@ function TeamDashboard(props) {
                 team={team}
                 key={team._id}
                 currentTeam={currentTeam.toString() === team._id.toString()}
+                getTeams={getTeams}
               />
             );
           }

@@ -38,15 +38,20 @@ const EditProject = (props) => {
       .then((response) => {
         if (response && response.data) {
           if (
-            response.data.team !== null &&
-            props.location.pathname.toString().indexOf("team") === -1
+            (response.data.team !== null &&
+              props.location.pathname.toString().indexOf("team") === -1) ||
+            (response.data.team === null &&
+              props.location.pathname.toString().indexOf("team") > -1)
           ) {
             props.history.goBack();
           } else {
+            if (props.location.pathname.toString().indexOf("team") > -1)
+              props.setCurrentTeam(response.data.team);
+            else props.setCurrentProject(response.data._id);
+
             setName(response.data.name);
             setDescription(response.data.description);
             setProject(response.data);
-            props.setCurrentTeam(response.data.team);
           }
         } else {
           props.setMessages(["Something went wrong"]);
@@ -117,7 +122,6 @@ const EditProject = (props) => {
                     type="text"
                     className="standard-form__input-container-textarea standard-form__input-container-textarea--fill"
                     name="description"
-                    maxLength="500"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />

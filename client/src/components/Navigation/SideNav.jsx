@@ -42,7 +42,7 @@ function SideNav(props) {
       </div>
       <ul>
         <li id="project-link">
-          <Link to="/projects">
+          <Link to="/project">
             <TaskSVG />
             <span>Projects</span>
           </Link>

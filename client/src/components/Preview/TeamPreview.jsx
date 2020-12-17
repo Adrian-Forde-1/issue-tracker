@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+//Axios
 import axios from "axios";
 
 //React Router DOM
@@ -8,78 +10,198 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import {
-  setCurrentId,
-  setCurrentSection,
-} from "../../redux/actions/userActions";
+import { setErrors, setMessages } from "../../redux/actions/userActions";
 
-import { getUserTeams } from "../../redux/actions/teamActions";
+//SVG
+import TrashSVG from "../SVG/TrashSVG";
+import LeaveFillSVG from "../SVG/LeaveFillSVG";
 
-import {
-  showModal,
-  setDeleteItem,
-  setItemType,
-  setCurrentLocation,
-} from "../../redux/actions/modalActions";
+//Components
+import Modal from "../Modal/Modal";
 
-function TeamPreview(props) {
+const TeamPreview = (props) => {
   const { team } = props;
 
-  const deleteModal = () => {
-    props.setDeleteItem(team);
-    props.setItemType("team");
-    props.setCurrentLocation(props.history.location.pathname.split("/"));
-    props.showModal();
+  const modalTypes = {
+    "Delete Modal": "Delete Modal",
+    "Leave Modal": "Leave Modal",
   };
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState("");
+
+  const deleteTeam = () => {
+    axios
+      .delete(`/api/team/${team._id}`, {
+        headers: { Authorization: localStorage.getItem("token") },
+      })
+      .then((res) => {
+        if (res && res.data) props.setMessages(res.data);
+        props.getTeams();
+      })
+      .catch((error) => {
+        if (error && error.response && error.response.data) {
+          setErrors(error);
+        }
+      });
+  };
+
+  const leaveTeam = () => {
+    axios
+      .put(`/api/leave/team/${team._id}`, null, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        if (res && res.data) props.setMessages(res.data);
+        props.getTeams();
+      })
+      .catch((error) => {
+        if (error && error.response && error.response.data) {
+          props.setErrors(error);
+        }
+      });
+  };
+
+  const gotoTeam = () => {
+    props.history.push(`/team/${team._id}`);
+  };
+
+  const renderModal = () => {
+    if (showModal) {
+      switch (modalType) {
+        case modalTypes["Delete Modal"]:
+          return (
+            <Modal setShowModal={setShowModal} showModal={showModal}>
+              <div
+                className="modal__delete-modal-body"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                <div className="modal__delete-modal-body__message">
+                  Are you sure you want to delete <span>{team.name}</span>?
+                </div>
+                <div className="modal__delete-modal-body__action-container">
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteTeam();
+                      setShowModal(false);
+                    }}
+                  >
+                    <span>Yes</span>
+                  </div>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowModal(false);
+                    }}
+                  >
+                    <span>No</span>
+                  </div>
+                </div>
+                <div
+                  className="modal__close"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowModal(false);
+                  }}
+                >
+                  &times;
+                </div>
+              </div>
+            </Modal>
+          );
+        case modalTypes["Leave Modal"]:
+          return (
+            <Modal setShowModal={setShowModal} showModal={showModal}>
+              <div
+                className="modal__delete-modal-body"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                <div className="modal__delete-modal-body__message">
+                  Are you sure you want to leave <span>{team.name}</span>?
+                </div>
+                <div className="modal__delete-modal-body__action-container">
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      leaveTeam();
+                      setShowModal(false);
+                    }}
+                  >
+                    <span>Yes</span>
+                  </div>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowModal(false);
+                    }}
+                  >
+                    <span>No</span>
+                  </div>
+                </div>
+                <div
+                  className="modal__close"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowModal(false);
+                  }}
+                >
+                  &times;
+                </div>
+              </div>
+            </Modal>
+          );
+      }
+    }
+  };
+
   return (
     <div className={`team-preview ${props.currentTeam && "selected"}`}>
-      <Link to={`/team/${team._id}`}>
+      {renderModal()}
+      <div
+        className="team-preview__container"
+        onClick={() => {
+          gotoTeam();
+        }}
+      >
         <span>{team.name}</span>
         {team.createdBy.toString() === props.user._id.toString() ? (
-          <span className="margin-left-auto">
-            <i
-              className="far fa-trash-alt delete-btn"
-              onClick={deleteModal}
-            ></i>
-          </span>
+          <div
+            className="team-preview__delete"
+            onClick={(e) => {
+              e.stopPropagation();
+              setModalType(modalTypes["Delete Modal"]);
+              setShowModal(true);
+            }}
+          >
+            <TrashSVG />
+          </div>
         ) : (
-          <span className="margin-left-auto">
-            <i
-              className="fas fa-door-open delete-btn"
-              onClick={() => {
-                axios
-                  .put(`/api/leave/team/${team._id}`, null, {
-                    headers: {
-                      Authorization: localStorage.getItem("token"),
-                    },
-                  })
-                  .then(() => {
-                    props.getUserTeams(props.user._id);
-                  })
-                  .catch((error) => {
-                    if (error && error.response && error.response.data) {
-                      props.setErrors(error);
-                      props.setCurrentSection("");
-                      props.setCurrentId("");
-                    }
-                  });
-              }}
-            ></i>
-          </span>
+          <div
+            className="team-preview__delete"
+            onClick={(e) => {
+              e.stopPropagation();
+              setModalType(modalTypes["Leave Modal"]);
+              setShowModal(true);
+            }}
+          >
+            <LeaveFillSVG />
+          </div>
         )}
-      </Link>
+      </div>
     </div>
   );
-}
+};
 
 const mapDispatchToProps = {
-  setCurrentSection,
-  setCurrentId,
-  getUserTeams,
-  showModal,
-  setDeleteItem,
-  setItemType,
-  setCurrentLocation,
+  setErrors,
+  setMessages,
 };
 
 const mapStateToProps = (state) => ({

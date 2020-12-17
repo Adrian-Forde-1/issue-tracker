@@ -83,8 +83,13 @@ const IssuePreview = (props) => {
       switch (modalType) {
         case modalTypes["Delete Modal"]:
           return (
-            <Modal setShowModal={setShowModal}>
-              <div className="modal__delete-modal-body">
+            <Modal setShowModal={setShowModal} showModal={showModal}>
+              <div
+                className="modal__delete-modal-body"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 <div className="modal__delete-modal-body__message">
                   Are you sure you want to delete <span>{issue.name}</span>?
                 </div>

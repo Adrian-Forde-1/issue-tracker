@@ -197,7 +197,12 @@ const Project = (props) => {
         case modalTypes["Delete Modal"]:
           return (
             <Modal setShowModal={setShowModal} showModal={showModal}>
-              <div className="modal__delete-modal-body">
+              <div
+                className="modal__delete-modal-body"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 <div className="modal__delete-modal-body__message">
                   Are you sure you want to delete <span>{project.name}</span>?
                 </div>
@@ -314,7 +319,7 @@ const Project = (props) => {
             <div className="project__name">{project.name}</div>
             {project.createdBy._id.toString() === props.user._id.toString() && (
               <div className="project__action-buttons-container">
-                <div
+                {/* <div
                   onClick={() => {
                     if (project.archived === false) {
                       archiveProject();
@@ -340,7 +345,7 @@ const Project = (props) => {
                       <ArchiveSVG />
                     </Tooltip>
                   )}
-                </div>
+                </div> */}
                 <div>
                   <Link
                     to={`${
