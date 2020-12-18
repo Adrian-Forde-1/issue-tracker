@@ -23,7 +23,16 @@ const IssuePreview = (props) => {
   };
   const [issueLabels, setIssueLabels] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [numLabels, setNumLabels] = useState(2);
   const [modalType, setModalType] = useState("");
+
+  const calculateNumberOfLabels = () => {
+    if (window.innerWidth <= 500) setNumLabels(0);
+    else if (window.innerWidth <= 768) setNumLabels(1);
+    else setNumLabels(2);
+  };
+
+  window.addEventListener("resize", calculateNumberOfLabels);
 
   useEffect(() => {
     var newLabels = [];
@@ -36,6 +45,8 @@ const IssuePreview = (props) => {
         });
       }
     }
+
+    calculateNumberOfLabels();
     setIssueLabels(newLabels);
   }, []);
 
@@ -139,7 +150,7 @@ const IssuePreview = (props) => {
             {issue["labels"] &&
               issueLabels.length > 0 &&
               issueLabels.map((label, index) => {
-                if (index > 2) {
+                if (index > numLabels) {
                   return null;
                 } else {
                   return (

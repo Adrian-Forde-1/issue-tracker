@@ -80,6 +80,19 @@
       width: 80%;
       height: 100%;
       position: relative;
+      overflow-y: auto;
+
+      // &::-webkit-scrollbar {
+      //   width: 7px;
+      // }
+
+      // &::-webkit-scrollbar-thumb {
+      //   background-color: $text-color;
+      // }
+
+      // &::-webkit-scrollbar-track {
+      //   background: #eee;
+      // }
     }
   }
 

@@ -43,6 +43,7 @@ import EditProject from "./EditProject";
 function ProjectDashboard(props) {
   const [projects, setProjects] = useState([]);
   const [currentProject, setCurrentProject] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -186,9 +187,16 @@ function ProjectDashboard(props) {
         <SideNav />
       </div>
       <div className="dashboard__main-content">
-        <DashboardNavbar />
+        <DashboardNavbar
+          setSidebarOpen={setSidebarOpen}
+          sidebarOpen={sidebarOpen}
+        />
         <div className="dashboard__main-content-container">
-          <div className="dashboard__main-content-sidebar">
+          <div
+            className={`dashboard__main-content-sidebar ${
+              sidebarOpen && "open"
+            }`}
+          >
             <div
               className="dashboard__quick-links-container"
               style={{ marginBottom: "10px" }}
@@ -203,7 +211,11 @@ function ProjectDashboard(props) {
               {renderProjects()}
             </div>
           </div>
-          <div className="dashboard__main-content-body">
+          <div
+            className={`dashboard__main-content-body ${
+              sidebarOpen && "shrink"
+            }`}
+          >
             <Suspense fallback="Loading">{routes}</Suspense>
           </div>
         </div>

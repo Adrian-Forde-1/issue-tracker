@@ -118,14 +118,12 @@
 
     div {
       margin-right: 45px;
+      cursor: pointer;
 
       &:last-of-type {
         margin-right: 0px;
       }
-    }
 
-    div {
-      cursor: pointer;
       svg,
       a svg {
         font-size: 24px;
@@ -192,5 +190,60 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .project {
+    &__filter-selector {
+      select {
+        font-size: 12px;
+
+        option {
+          font-size: 12px;
+        }
+      }
+    }
+
+    &__action-bar {
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .project {
+    &__name {
+      font-size: 20px;
+    }
+
+    &__action-bar {
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    &__filter-selector {
+      select {
+        font-size: 8px;
+
+        option {
+          font-size: 8px;
+        }
+      }
+    }
+
+    &__creation-date {
+      font-size: 10px;
+    }
+    &__action-buttons-container {
+      div {
+        margin-right: 20px;
+        svg,
+        a svg {
+          font-size: 20px;
+        }
+      }
+    }
   }
 }
