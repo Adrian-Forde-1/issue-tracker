@@ -3188,17 +3188,20 @@ header::after {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 1px solid #000000;
   margin-right: 30px;
   cursor: pointer;
 }
 
-.issue__status-container div svg {
+.issue__status-container div div {
+  border: 1px solid #000000;
+}
+
+.issue__status-container div div svg {
   font-size: 20px;
   pointer-events: none;
 }
 
-.issue__status-container div#new-issue span {
+.issue__status-container div div#new-issue span {
   font-family: "Nunito", sans-serif;
   font-size: 22px;
   font-weight: 700;
@@ -3224,13 +3227,13 @@ header::after {
   color: orange;
 }
 
-.issue__status-container:hover#fixed,
-.issue__status-container .selected#fixed {
+.issue__status-container:hover#completed,
+.issue__status-container .selected#completed {
   border-color: #1e90ff;
 }
 
-.issue__status-container:hover#fixed svg,
-.issue__status-container .selected#fixed svg {
+.issue__status-container:hover#completed svg,
+.issue__status-container .selected#completed svg {
   color: #1e90ff;
 }
 

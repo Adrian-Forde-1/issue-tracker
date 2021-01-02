@@ -90,19 +90,24 @@ const Issue = (props) => {
   };
 
   useEffect(() => {
-    if (Object.keys(issue).length > 0) {
+    if (Object.keys(issue).length > 0 && issue.status) {
       if (issue.status.name === "New Issue")
         document.querySelector("#new-issue").classList.add("selected");
       if (issue.status.name === "Work In Progress")
         document.querySelector("#work-in-progress").classList.add("selected");
-      if (issue.status.name === "Fixed")
-        document.querySelector("#fixed").classList.add("selected");
+      if (issue.status.name === "Completed")
+        document.querySelector("#completed").classList.add("selected");
     }
   }, [issue]);
 
   const updateIssue = (e, status) => {
-    const childNodes = e.target.parentNode.childNodes;
-    childNodes.forEach((child) => child.classList.remove("selected"));
+    console.log("Update issue called");
+    const elements = document.querySelectorAll(".issue__status");
+    elements.forEach((element) => {
+      if (element.classList.contains("selected")) {
+        element.classList.remove("selected");
+      }
+    });
 
     e.target.classList.add("selected");
 
@@ -115,8 +120,8 @@ const Issue = (props) => {
       newStatus.name = "Work In Progress";
       newStatus.color = "orange";
     }
-    if (status === "Fixed") {
-      newStatus.name = "Fixed";
+    if (status === "Completed") {
+      newStatus.name = "Completed";
       newStatus.color = "#1e90ff";
     }
 
@@ -348,7 +353,7 @@ const Issue = (props) => {
               <Tooltip title="New Issue" position="bottom" size="small">
                 <div
                   id="new-issue"
-                  style={{ border: "none" }}
+                  className="issue__status"
                   onClick={(e) => {
                     updateIssue(e, "New Issue");
                   }}
@@ -360,7 +365,7 @@ const Issue = (props) => {
               <Tooltip title="Work In Progress" position="bottom" size="small">
                 <div
                   id="work-in-progress"
-                  style={{ border: "none" }}
+                  className="issue__status"
                   onClick={(e) => {
                     updateIssue(e, "Work In Progress");
                   }}
@@ -370,10 +375,10 @@ const Issue = (props) => {
               </Tooltip>
               <Tooltip title="Completed" position="bottom" size="small">
                 <div
-                  id="fixed"
-                  style={{ border: "none" }}
+                  id="completed"
+                  className="issue__status"
                   onClick={(e) => {
-                    updateIssue(e, "Fixed");
+                    updateIssue(e, "Completed");
                   }}
                 >
                   <TickSVG />

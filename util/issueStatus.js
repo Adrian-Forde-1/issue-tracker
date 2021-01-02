@@ -7,8 +7,8 @@ module.exports = {
     name: "Work In Progress",
     color: "orange",
   },
-  FIXED: {
-    name: "Fixed",
+  COMPLETED: {
+    name: "Completed",
     color: "#1E90FF",
   },
 };

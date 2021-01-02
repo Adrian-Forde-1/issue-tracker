@@ -174,27 +174,31 @@ const IssuePreview = (props) => {
               })}
           </div>
           <div className="issue-preview__actions-container">
-            {issue.status.name === "New Issue" ? (
-              <span
-                className="issue-preview__status issue-preview__status--new-issue"
-                id={`issue-preview__status-${index}`}
-              >
-                <span>!</span>
-              </span>
-            ) : issue.status.name === "Work In Progress" ? (
-              <span
-                className="issue-preview__status issue-preview__status--work-in-progress"
-                id={`issue-preview__status-${index}`}
-              >
-                <ConstructionConeSVG />
-              </span>
-            ) : (
-              <span
-                className="issue-preview__status issue-preview__status--finished"
-                id={`issue-preview__status-${index}`}
-              >
-                <TickSVG />
-              </span>
+            {issue.status && (
+              <>
+                {issue.status.name === "New Issue" ? (
+                  <span
+                    className="issue-preview__status issue-preview__status--new-issue"
+                    id={`issue-preview__status-${index}`}
+                  >
+                    <span>!</span>
+                  </span>
+                ) : issue.status.name === "Work In Progress" ? (
+                  <span
+                    className="issue-preview__status issue-preview__status--work-in-progress"
+                    id={`issue-preview__status-${index}`}
+                  >
+                    <ConstructionConeSVG />
+                  </span>
+                ) : (
+                  <span
+                    className="issue-preview__status issue-preview__status--finished"
+                    id={`issue-preview__status-${index}`}
+                  >
+                    <TickSVG />
+                  </span>
+                )}
+              </>
             )}
             <div
               className="issue-preview__delete"
