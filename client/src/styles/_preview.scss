@@ -310,9 +310,29 @@
     display: inline-block;
     width: fit-content;
     text-align: center;
-    i {
-      text-align: center;
-      margin: auto;
+    svg {
+      font-size: 18px;
+    }
+
+    &--new-issue {
+      span {
+        font-family: "Nunito", sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: red;
+      }
+    }
+
+    &--work-in-progress {
+      svg {
+        color: orange;
+      }
+    }
+
+    &--finished {
+      svg {
+        color: #1e90ff;
+      }
     }
   }
 

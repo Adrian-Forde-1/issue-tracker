@@ -33,7 +33,7 @@ $page-background: #fdfcff;
     position: absolute;
     width: 350px;
     right: 0px;
-    top: 120%;
+    top: 100%;
     background: #fff;
     box-shadow: 0px 0px 2px 2px #eee;
     padding: 15px 0px;
@@ -198,6 +198,7 @@ $page-background: #fdfcff;
 }
 
 .nav-list {
+  height: 100%;
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -207,18 +208,43 @@ $page-background: #fdfcff;
 }
 
 .nav-item {
+  height: 100%;
   list-style: none;
-  margin: 0px 15px;
   text-transform: capitalize;
   font-weight: 300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: all 100ms ease-in-out;
 
   a {
+    height: 100%;
     font-size: 14px;
     color: #fff;
+    padding: 0px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+    &:after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      background: $primary-color;
+      position: absolute;
+      z-index: -1;
+      top: 0px;
+      left: 0px;
+      transform: translateY(100%);
+      transition: all 200ms ease-in-out;
+    }
 
     &:hover {
-      //   color: $primary-color;
+      &:after {
+        transform: translateY(0%);
+      }
     }
   }
 
@@ -230,17 +256,17 @@ $page-background: #fdfcff;
     font-weight: 300;
     transition: all 100ms linear;
 
-    &:hover {
-      // font-weight: 500;
-      transform: scale(1.01);
-      // color: $primary-color;
-    }
+    // &:hover {
+    //   // font-weight: 500;
+    //   transform: scale(1.01);
+    //   // color: $primary-color;
+    // }
   }
 
-  &:hover {
-    // font-weight: 500;
-    transform: scale(1.1);
-  }
+  // &:hover {
+  //   // font-weight: 500;
+  //   transform: scale(1.1);
+  // }
 }
 
 @media screen and (max-width: 992px) {

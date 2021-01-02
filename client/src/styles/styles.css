@@ -40,7 +40,7 @@
   position: absolute;
   width: 350px;
   right: 0px;
-  top: 120%;
+  top: 100%;
   background: #fff;
   -webkit-box-shadow: 0px 0px 2px 2px #eee;
           box-shadow: 0px 0px 2px 2px #eee;
@@ -244,6 +244,7 @@
 }
 
 .nav-list {
+  height: 100%;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -260,17 +261,59 @@
 }
 
 .nav-item {
+  height: 100%;
   list-style: none;
-  margin: 0px 15px;
   text-transform: capitalize;
   font-weight: 300;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-transition: all 100ms ease-in-out;
   transition: all 100ms ease-in-out;
 }
 
 .nav-item a {
+  height: 100%;
   font-size: 14px;
   color: #fff;
+  padding: 0px 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item a:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: #2e00b1;
+  position: absolute;
+  z-index: -1;
+  top: 0px;
+  left: 0px;
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+
+.nav-item a:hover:after {
+  -webkit-transform: translateY(0%);
+          transform: translateY(0%);
 }
 
 .nav-item button {
@@ -281,16 +324,6 @@
   font-weight: 300;
   -webkit-transition: all 100ms linear;
   transition: all 100ms linear;
-}
-
-.nav-item button:hover {
-  -webkit-transform: scale(1.01);
-          transform: scale(1.01);
-}
-
-.nav-item:hover {
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
 }
 
 @media screen and (max-width: 992px) {
@@ -2036,9 +2069,23 @@ header::after {
   text-align: center;
 }
 
-.issue-preview__status i {
-  text-align: center;
-  margin: auto;
+.issue-preview__status svg {
+  font-size: 18px;
+}
+
+.issue-preview__status--new-issue span {
+  font-family: "Nunito", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: red;
+}
+
+.issue-preview__status--work-in-progress svg {
+  color: orange;
+}
+
+.issue-preview__status--finished svg {
+  color: #1e90ff;
 }
 
 .issue-preview__delete {
@@ -3125,30 +3172,66 @@ header::after {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .issue__status-container div {
-  width: 150px;
-  padding: 5px 10px;
-  white-space: nowrap;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  margin-right: 30px;
   cursor: pointer;
-  text-align: center;
 }
 
+.issue__status-container div svg {
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.issue__status-container div#new-issue span {
+  font-family: "Nunito", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.issue__status-container:hover#new-issue,
 .issue__status-container .selected#new-issue {
-  border-bottom: 2px solid;
   border-color: red;
 }
 
+.issue__status-container:hover#new-issue span,
+.issue__status-container .selected#new-issue span {
+  color: red;
+}
+
+.issue__status-container:hover#work-in-progress,
 .issue__status-container .selected#work-in-progress {
-  border-bottom: 2px solid;
   border-color: orange;
 }
 
+.issue__status-container:hover#work-in-progress svg,
+.issue__status-container .selected#work-in-progress svg {
+  color: orange;
+}
+
+.issue__status-container:hover#fixed,
 .issue__status-container .selected#fixed {
-  border-bottom: 2px solid;
   border-color: #1e90ff;
+}
+
+.issue__status-container:hover#fixed svg,
+.issue__status-container .selected#fixed svg {
+  color: #1e90ff;
 }
 
 .issue__assignee-img-container {
@@ -3223,24 +3306,6 @@ header::after {
   position: relative;
   cursor: default;
   width: 100%;
-}
-
-.issue__comment-container i {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  cursor: pointer;
-  color: #0f003a;
-}
-
-.issue__comments-title {
-  margin-top: 50px;
-  text-align: center;
-  font-weight: 300;
-  color: #0f003a;
-}
-
-.issue__comment-container {
   width: 100%;
   position: relative;
   display: -webkit-box;
@@ -3253,9 +3318,25 @@ header::after {
   margin-bottom: 80px;
 }
 
+.issue__comment-container i {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  color: #0f003a;
+}
+
+.issue__comments-title {
+  margin-top: 40px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 300;
+  color: #0f003a;
+}
+
 .issue__comment-textarea {
   width: 100%;
-  height: 150px;
+  height: 100px;
   font-size: 14px;
   padding: 10px;
   -webkit-box-shadow: 1px 1px 2px grey;
@@ -3270,11 +3351,18 @@ header::after {
     font-size: 14px;
   }
   .issue__status-container div {
-    font-size: 14px;
+    width: 40px;
+    height: 40px;
+  }
+  .issue__status-container div svg {
+    font-size: 16px;
+  }
+  .issue__status-container div#new-issue svg {
+    font-size: 27px;
   }
   .issue__comment-textarea {
     font-size: 12px;
-    height: 150px;
+    height: 100px;
   }
   .issue__comment p {
     font-size: 14px;

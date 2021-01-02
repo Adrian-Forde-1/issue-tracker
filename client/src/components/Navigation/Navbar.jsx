@@ -104,12 +104,16 @@ function Navbar(props) {
           </li> */}
           {authenticated === false && (
             <li className="nav-item">
-              <Link to="/login">Login</Link>
+              <Link to="/login">
+                <span>Login</span>
+              </Link>
             </li>
           )}
           {authenticated === false && (
             <li className="nav-item">
-              <Link to="/signup">Sign Up</Link>
+              <Link to="/signup">
+                <span>Sign Up</span>
+              </Link>
             </li>
           )}
 

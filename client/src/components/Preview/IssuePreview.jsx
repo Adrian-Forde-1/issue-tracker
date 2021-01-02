@@ -8,6 +8,9 @@ import { connect } from "react-redux";
 
 //SVG
 import TrashSVG from "../SVG/TrashSVG";
+import TickSVG from "../SVG/TickSVG";
+import ExclamationSVG from "../SVG/ExclamationSVG";
+import ConstructionConeSVG from "../SVG/ConstructionConeSVG";
 
 //React Router DOM
 import { withRouter } from "react-router-dom";
@@ -173,33 +176,24 @@ const IssuePreview = (props) => {
           <div className="issue-preview__actions-container">
             {issue.status.name === "New Issue" ? (
               <span
-                className="issue-preview__status"
+                className="issue-preview__status issue-preview__status--new-issue"
                 id={`issue-preview__status-${index}`}
               >
-                <i
-                  style={{ color: `${issue.status.color}` }}
-                  className="fas fa-exclamation"
-                ></i>
+                <span>!</span>
               </span>
             ) : issue.status.name === "Work In Progress" ? (
               <span
-                className="issue-preview__status"
+                className="issue-preview__status issue-preview__status--work-in-progress"
                 id={`issue-preview__status-${index}`}
               >
-                <i
-                  style={{ color: `${issue.status.color}` }}
-                  className="fas fa-truck-loading"
-                ></i>
+                <ConstructionConeSVG />
               </span>
             ) : (
               <span
-                className="issue-preview__status"
+                className="issue-preview__status issue-preview__status--finished"
                 id={`issue-preview__status-${index}`}
               >
-                <i
-                  style={{ color: `${issue.status.color}` }}
-                  className="fas fa-check"
-                ></i>
+                <TickSVG />
               </span>
             )}
             <div

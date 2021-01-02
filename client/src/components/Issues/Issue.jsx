@@ -22,6 +22,9 @@ import { connect } from "react-redux";
 import TrashSVG from "../SVG/TrashSVG";
 import EditSVG from "../SVG/EditSVG";
 import CaretDownNoFillSVG from "../SVG/CaretDownNoFillSVG";
+import TickSVG from "../SVG/TickSVG";
+import ConstructionConeSVG from "../SVG/ConstructionConeSVG";
+import ExclamationSVG from "../SVG/ExclamationSVG";
 
 //Actions
 import { setErrors, setMessages } from "../../redux/actions/userActions";
@@ -97,22 +100,22 @@ const Issue = (props) => {
     }
   }, [issue]);
 
-  const updateIssue = (e) => {
+  const updateIssue = (e, status) => {
     const childNodes = e.target.parentNode.childNodes;
     childNodes.forEach((child) => child.classList.remove("selected"));
 
     e.target.classList.add("selected");
 
     const newStatus = {};
-    if (e.target.innerHTML === "New Issue") {
+    if (status === "New Issue") {
       newStatus.name = "New Issue";
       newStatus.color = "red";
     }
-    if (e.target.innerHTML === "Work In Progress") {
+    if (status === "Work In Progress") {
       newStatus.name = "Work In Progress";
       newStatus.color = "orange";
     }
-    if (e.target.innerHTML === "Fixed") {
+    if (status === "Fixed") {
       newStatus.name = "Fixed";
       newStatus.color = "#1e90ff";
     }
@@ -342,15 +345,40 @@ const Issue = (props) => {
               className="issue__status-container"
               id="issue__status-container"
             >
-              <div id="new-issue" onClick={updateIssue}>
-                New Issue
-              </div>
-              <div id="work-in-progress" onClick={updateIssue}>
-                Work In Progress
-              </div>
-              <div id="fixed" onClick={updateIssue}>
-                Fixed
-              </div>
+              <Tooltip title="New Issue" position="bottom" size="small">
+                <div
+                  id="new-issue"
+                  style={{ border: "none" }}
+                  onClick={(e) => {
+                    updateIssue(e, "New Issue");
+                  }}
+                >
+                  <span>!</span>
+                </div>
+              </Tooltip>
+
+              <Tooltip title="Work In Progress" position="bottom" size="small">
+                <div
+                  id="work-in-progress"
+                  style={{ border: "none" }}
+                  onClick={(e) => {
+                    updateIssue(e, "Work In Progress");
+                  }}
+                >
+                  <ConstructionConeSVG />
+                </div>
+              </Tooltip>
+              <Tooltip title="Completed" position="bottom" size="small">
+                <div
+                  id="fixed"
+                  style={{ border: "none" }}
+                  onClick={(e) => {
+                    updateIssue(e, "Fixed");
+                  }}
+                >
+                  <TickSVG />
+                </div>
+              </Tooltip>
             </div>
 
             <h2 className="issue__comments-title">Comments</h2>
