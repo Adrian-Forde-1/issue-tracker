@@ -35,7 +35,7 @@ const Project = (props) => {
     All: "All",
     "New Issue": "New Issue",
     "Work In Progress": "Work In Progress",
-    Fixed: "Fixed",
+    Completed: "Completed",
   };
   const modalTypes = {
     "Delete Modal": "Delete Modal",
