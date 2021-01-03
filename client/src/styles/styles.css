@@ -3029,6 +3029,11 @@ header::after {
 }
 
 @media screen and (max-width: 500px) {
+  .project__header {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
   .project__name {
     font-size: 20px;
   }
@@ -3045,8 +3050,18 @@ header::after {
   .project__creation-date {
     font-size: 10px;
   }
+  .project__action-buttons-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
   .project__action-buttons-container div {
-    margin-right: 20px;
+    margin-right: 0px;
+    margin-bottom: 5px;
+  }
+  .project__action-buttons-container div:last-of-type {
+    margin-bottom: 0px;
   }
   .project__action-buttons-container div svg,
   .project__action-buttons-container div a svg {
@@ -3201,15 +3216,12 @@ header::after {
 }
 
 .issue__action-buttons-container div {
+  cursor: pointer;
   margin-right: 45px;
 }
 
 .issue__action-buttons-container div:last-of-type {
   margin-right: 0px;
-}
-
-.issue__action-buttons-container div {
-  cursor: pointer;
 }
 
 .issue__action-buttons-container div svg,
@@ -3475,6 +3487,27 @@ header::after {
     max-width: 250px;
     -ms-grid-columns: (6fr)[2];
         grid-template-columns: repeat(2, 6fr);
+  }
+  .issue__name {
+    font-size: 20px;
+    color: #0f003a;
+  }
+  .issue__action-buttons-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .issue__action-buttons-container div {
+    margin-bottom: 5px;
+    margin-right: 0px;
+  }
+  .issue__action-buttons-container div:last-of-type {
+    margin-bottom: 0px;
+  }
+  .issue__action-buttons-container div a svg,
+  .issue__action-buttons-container div svg {
+    font-size: 20px;
   }
   .issue__statuc-container div {
     font-size: 10px;

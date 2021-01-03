@@ -108,15 +108,12 @@
     align-items: center;
 
     div {
+      cursor: pointer;
       margin-right: 45px;
 
       &:last-of-type {
         margin-right: 0px;
       }
-    }
-
-    div {
-      cursor: pointer;
       svg,
       a svg {
         font-size: 24px;
@@ -380,6 +377,27 @@
     &__label-container {
       max-width: 250px;
       grid-template-columns: repeat(2, 6fr);
+    }
+
+    &__name {
+      font-size: 20px;
+      color: $text-color;
+    }
+
+    &__action-buttons-container {
+      // display: flex;
+      flex-direction: column;
+      div {
+        margin-bottom: 5px;
+        margin-right: 0px;
+        &:last-of-type {
+          margin-bottom: 0px;
+        }
+        a svg,
+        svg {
+          font-size: 20px;
+        }
+      }
     }
 
     &__statuc-container {
