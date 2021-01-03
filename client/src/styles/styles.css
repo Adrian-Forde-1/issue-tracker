@@ -1726,6 +1726,12 @@ header::after {
   }
 }
 
+@media screen and (max-width: 400px) {
+  .dashboard-navbar__right-dropdown {
+    width: 300px;
+  }
+}
+
 .team-preview {
   width: 100%;
   border: 1px solid #0f003a;

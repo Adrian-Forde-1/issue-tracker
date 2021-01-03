@@ -225,3 +225,11 @@
 
 @media screen and (max-width: 500px) {
 }
+
+@media screen and (max-width: 400px) {
+  .dashboard-navbar {
+    &__right-dropdown {
+      width: 300px;
+    }
+  }
+}
