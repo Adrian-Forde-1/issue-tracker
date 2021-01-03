@@ -69,6 +69,7 @@ function Labels(props) {
               label={label}
               index={index}
               projectId={project._id}
+              team={project.team}
               key={index}
               getProject={getProject}
             />
