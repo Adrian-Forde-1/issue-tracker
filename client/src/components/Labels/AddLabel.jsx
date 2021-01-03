@@ -85,7 +85,7 @@ const AddLabel = (props) => {
       )
       .then((response) => {
         if (response && response.data) {
-          props.setMessages(response);
+          props.setMessages(response.data);
           setName("New Label");
           setBgColor("#A020F0");
           setFontColor(labelFontColors.White);

@@ -152,3 +152,12 @@
     }
   }
 }
+
+@media screen and (max-width: 500px) {
+  .label {
+    &__background-color {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}

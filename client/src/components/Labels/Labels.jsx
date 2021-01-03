@@ -52,7 +52,7 @@ function Labels(props) {
         </div>
         <div className="label__header-actions">
           <Link
-            to={`${project.team !== null ? "/team/project/" : "/projects/"}${
+            to={`${project.team !== null ? "/team/project/" : "/project/"}${
               project._id
             }/new/label`}
           >
