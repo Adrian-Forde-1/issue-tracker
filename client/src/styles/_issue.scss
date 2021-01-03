@@ -379,6 +379,10 @@
       grid-template-columns: repeat(2, 6fr);
     }
 
+    &__header {
+      align-items: flex-start;
+    }
+
     &__name {
       font-size: 20px;
       color: $text-color;
@@ -397,15 +401,6 @@
         svg {
           font-size: 20px;
         }
-      }
-    }
-
-    &__statuc-container {
-      div {
-        font-size: 10px;
-        padding: 5px 10px;
-
-        width: fit-content;
       }
     }
   }
