@@ -1263,9 +1263,9 @@ header::after {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -1274,7 +1274,7 @@ header::after {
 
 .team__header-actions-container div {
   cursor: pointer;
-  margin-left: 42px;
+  margin-right: 10px;
 }
 
 .team__header-actions-container div svg {
@@ -1282,11 +1282,17 @@ header::after {
   color: #0f003a;
 }
 
+.team__header-actions-container div:last-of-type {
+  margin-right: 0px;
+}
+
 .team__header-actions-container div:hover svg {
   color: #2e00b1;
 }
 
 .team__img-container {
+  min-width: 70px;
+  min-height: 70px;
   width: 70px;
   height: 70px;
   border-radius: 50%;
@@ -1419,6 +1425,33 @@ header::after {
     -webkit-box-ordinal-group: 3;
         -ms-flex-order: 2;
             order: 2;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .team__profile-wrapper {
+    padding: 10px;
+  }
+  .team__header-actions-container {
+    padding-right: 0px;
+  }
+  .team__name {
+    font-size: 22px;
+  }
+  .team__id {
+    font-size: 10px;
+  }
+  .team__projects {
+    padding-right: 0px;
+  }
+  .team__img-container {
+    min-width: 50px;
+    min-height: 50px;
+    width: 50px;
+    height: 50px;
+  }
+  .team__img-container div span {
+    font-size: 22px;
   }
 }
 
@@ -3730,11 +3763,20 @@ header::after {
 
 .label__background-colors-container {
   width: 100%;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (1fr)[8];
-      grid-template-columns: repeat(8, 1fr);
-  gap: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  gap: 5px;
 }
 
 .label__new-label-preview {

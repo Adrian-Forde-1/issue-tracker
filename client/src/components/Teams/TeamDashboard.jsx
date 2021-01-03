@@ -175,7 +175,6 @@ function TeamDashboard(props) {
       })
       .then((response) => {
         if (response && response.data) {
-          console.log(response.data);
           setTeams(response.data);
         }
       })

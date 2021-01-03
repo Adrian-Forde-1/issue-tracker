@@ -78,7 +78,6 @@ const Project = (props) => {
   }, []);
 
   const getProjectData = () => {
-    console.log("Get Project data called");
     axios
       .get(`/api/project/${projectId}`, {
         headers: { Authorization: localStorage.getItem("token") },

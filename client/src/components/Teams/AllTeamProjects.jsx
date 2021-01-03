@@ -34,7 +34,6 @@ function AllTeamProjects(props) {
       })
       .then((response) => {
         if (response && response.data) {
-          console.log(response.data);
           setProjects(response.data);
         }
       })

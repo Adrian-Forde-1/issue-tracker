@@ -121,9 +121,15 @@
 
   &__background-colors-container {
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 5px;
+    // display: grid;
+    // grid-template-columns: repeat(8, 1fr);
+    // gap: 10px;
   }
 
   &__new-label-preview {
