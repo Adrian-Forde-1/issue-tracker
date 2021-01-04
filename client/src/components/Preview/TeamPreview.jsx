@@ -50,6 +50,7 @@ const TeamPreview = (props) => {
       .then((res) => {
         if (res && res.data) props.setMessages(res.data);
         props.getTeams();
+        props.history.replace("/team");
       })
       .catch((error) => {
         if (error && error.response && error.response.data) {

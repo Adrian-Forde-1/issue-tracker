@@ -106,11 +106,11 @@ function Team(props) {
                         axios
                           .put(`/api/leave/team/${teamId}`, null)
                           .then(() => {
-                            props.history.replace("/teams");
+                            props.history.replace("/team");
                           })
                           .catch((error) => {
                             props.setErrors(error);
-                            props.history.push("/teams");
+                            props.history.push("/team");
                           });
                       }}
                     ></i>
