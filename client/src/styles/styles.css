@@ -1726,6 +1726,12 @@ header::after {
   }
 }
 
+@media screen and (max-width: 500px) {
+  .dashboard-navbar {
+    height: 50px;
+  }
+}
+
 @media screen and (max-width: 400px) {
   .dashboard-navbar__right-dropdown {
     width: 300px;
