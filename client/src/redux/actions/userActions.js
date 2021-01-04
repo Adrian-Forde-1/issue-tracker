@@ -14,19 +14,17 @@ import {
   CLEAR_CURRENT_SECTION_AND_ID,
 } from "./types";
 
+axios.defaults.withCredentials = true;
+
 export const loginUser = (user, history) => (dispatch) => {
   dispatch({ type: CLEAR_MESSAGES });
   dispatch({ type: CLEAR_ERRORS });
   dispatch({ type: SET_LOADING_UI });
   axios
     .post("/api/login", user)
-    .then((response) => {
-      localStorage.setItem("token", `Bearer ${response.data.token}`);
-    })
     .then(() => {
-      dispatch({ type: CLEAR_ERRORS });
       dispatch(getUser(history));
-      dispatch({ type: STOP_LOADING_UI });
+      // dispatch({ type: STOP_LOADING_UI });
     })
     .catch((error) => {
       if (error.response.data === "Unauthorized") {
@@ -47,8 +45,6 @@ export const loginUser = (user, history) => (dispatch) => {
 };
 
 export const signUpUser = (userData, history) => (dispatch) => {
-  dispatch({ type: CLEAR_MESSAGES });
-  dispatch({ type: CLEAR_ERRORS });
   dispatch({ type: SET_LOADING_UI });
   axios
     .post("/api/signup", { user: userData })
@@ -64,10 +60,21 @@ export const signUpUser = (userData, history) => (dispatch) => {
 };
 
 export const logoutUser = (history) => (dispatch) => {
-  dispatch({ type: CLEAR_MESSAGES });
-  dispatch({ type: CLEAR_ERRORS });
-  dispatch({ type: LOGOUT_USER });
-  localStorage.removeItem("token");
+  axios
+    .post("/api/logout")
+    .then((res) => {
+      if (res && res.data) {
+        dispatch({ type: LOGOUT_USER });
+        history.push("/login");
+        dispatch({ type: STOP_LOADING_UI });
+      }
+    })
+    .catch((err) => {
+      if (err && err.response && err.response.data) {
+        dispatch({ type: STOP_LOADING_UI });
+        dispatch({ type: SET_ERRORS, payload: err.response.data });
+      }
+    });
   history.push("/");
 };
 
@@ -81,12 +88,9 @@ export const setErrors = (error) => (dispatch) => {
 };
 
 export const getUser = (history) => (dispatch) => {
-  dispatch({ type: CLEAR_ERRORS });
   dispatch({ type: SET_LOADING_UI });
   axios
-    .get("/api/user", {
-      headers: { Authorization: localStorage.getItem("token") },
-    })
+    .get("/api/user")
     .then((response) => {
       dispatch({ type: SET_USER, payload: response.data });
       dispatch({ type: STOP_LOADING_UI });

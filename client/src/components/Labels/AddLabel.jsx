@@ -39,9 +39,7 @@ const AddLabel = (props) => {
     const projectId = props.match.params.projectId;
 
     axios
-      .get(`/api/project/${projectId}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .get(`/api/project/${projectId}`)
       .then((response) => {
         if (response && response.data) {
           if (
@@ -78,11 +76,7 @@ const AddLabel = (props) => {
     };
 
     axios
-      .post(
-        `/api/project/${projectId}/label/create`,
-        { label: label },
-        { headers: { Authorization: localStorage.getItem("token") } }
-      )
+      .post(`/api/project/${projectId}/label/create`, { label: label })
       .then((response) => {
         if (response && response.data) {
           props.setMessages(response.data);

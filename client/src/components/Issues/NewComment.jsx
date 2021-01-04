@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
 //React Router DOM
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter } from "react-router-dom";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
-import { setErrors } from '../../redux/actions/userActions';
+import { setErrors } from "../../redux/actions/userActions";
 
 class NewNote extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class NewNote extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-      note: '',
+      note: "",
     };
   }
 
@@ -41,13 +41,7 @@ class NewNote extends Component {
     const username = this.props.user.username;
 
     axios
-      .post(
-        '/api/note',
-        { note: newNote, bugId: bugId, username: username },
-        {
-          headers: { Authorization: localStorage.getItem('token') },
-        }
-      )
+      .post("/api/note", { note: newNote, bugId: bugId, username: username })
       .then(() => {
         this.props.history.goBack();
       })

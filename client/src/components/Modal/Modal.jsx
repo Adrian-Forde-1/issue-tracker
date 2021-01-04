@@ -5,7 +5,6 @@ const Modal = (props) => {
   const { showModal, setShowModal, children } = props;
 
   useEffect(() => {
-    console.log(showModal);
     if (showModal) {
       window.addEventListener("keyup", (e) => {
         if (e.key === "Escape") {

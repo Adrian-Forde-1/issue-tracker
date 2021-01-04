@@ -37,9 +37,7 @@ function ProjectPreview(props) {
 
   const deleteProject = () => {
     axios
-      .delete(`/api/project/${project._id}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .delete(`/api/project/${project._id}`)
       .then((res) => {
         if (res && res.data) {
           getProjects();
@@ -112,21 +110,13 @@ function ProjectPreview(props) {
   const manageArchive = () => {
     if (project.archived === false) {
       axios
-        .put(`/api/project/${project._id}/archive/add`, null, {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        })
+        .put(`/api/project/${project._id}/archive/add`, null)
         .then(() => {
           if (project.team) {
             props.setTeamUpdated(true);
           } else {
             axios
-              .get(`/api/project/${project._id}`, {
-                headers: {
-                  Authorization: localStorage.getItem("token"),
-                },
-              })
+              .get(`/api/project/${project._id}`)
               .then(() => {
                 props.getUserProjects(localStorage.getItem("token"));
               })
@@ -146,11 +136,7 @@ function ProjectPreview(props) {
         });
     } else {
       axios
-        .put(`/api/project/${project._id}/archive/remove`, null, {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        })
+        .put(`/api/project/${project._id}/archive/remove`, null)
         .then(() => {
           props.resetProjects();
         })

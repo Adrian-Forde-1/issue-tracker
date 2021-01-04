@@ -74,9 +74,7 @@ const IssuePreview = (props) => {
 
   const deleteIssue = () => {
     axios
-      .delete(`/api/issue/${issue._id}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .delete(`/api/issue/${issue._id}`)
       .then((res) => {
         if (res && res.data) {
           props.getProjectData();

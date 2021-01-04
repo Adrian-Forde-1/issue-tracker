@@ -32,9 +32,7 @@ const EditIssue = (props) => {
   const getIssue = () => {
     const issueId = props.match.params.issueId;
     axios
-      .get(`/api/issue/${issueId}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .get(`/api/issue/${issueId}`)
       .then((response) => {
         if (response && response.data) {
           if (
@@ -62,9 +60,7 @@ const EditIssue = (props) => {
 
             if (response.data.project && response.data.project.team !== null) {
               axios
-                .get(`/api/team/${response.data.project.team}`, {
-                  headers: { Authorization: localStorage.getItem("token") },
-                })
+                .get(`/api/team/${response.data.project.team}`)
                 .then((response) => {
                   if (response && response.data) {
                     setMembers(response.data.users);
@@ -137,11 +133,7 @@ const EditIssue = (props) => {
     };
 
     axios
-      .put(
-        `/api/issue/${issue._id}`,
-        { issue: newIssue },
-        { headers: { Authorization: localStorage.getItem("token") } }
-      )
+      .put(`/api/issue/${issue._id}`, { issue: newIssue })
       .then((response) => {
         if (response && response.data) {
           props.setMessages(response.data);

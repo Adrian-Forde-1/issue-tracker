@@ -36,9 +36,7 @@ const NewIssue = (props) => {
     const projectId = props.match.params.projectId;
 
     axios
-      .get(`/api/project/${projectId}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .get(`/api/project/${projectId}`)
       .then((response) => {
         if (response && response.data) {
           if (
@@ -58,9 +56,7 @@ const NewIssue = (props) => {
             //If project is in a team, get all the members from that team
             if (response.data.team !== null) {
               axios
-                .get(`/api/team/${response.data.team}`, {
-                  headers: { Authorization: localStorage.getItem("token") },
-                })
+                .get(`/api/team/${response.data.team}`)
                 .then((response) => {
                   if (response && response.data) {
                     setMembers(response.data.users);
@@ -123,11 +119,7 @@ const NewIssue = (props) => {
     };
 
     axios
-      .post(
-        "/api/issue",
-        { issue: issue },
-        { headers: { Authorization: localStorage.getItem("token") } }
-      )
+      .post("/api/issue", { issue: issue })
       .then((res) => {
         props.getUserProjects(localStorage.getItem("token"));
         props.setMessages(res.data);

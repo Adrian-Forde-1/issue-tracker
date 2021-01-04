@@ -170,9 +170,7 @@ function TeamDashboard(props) {
 
   const getTeams = () => {
     axios
-      .get("/api/teams", {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .get("/api/teams")
       .then((response) => {
         if (response && response.data) {
           setTeams(response.data);

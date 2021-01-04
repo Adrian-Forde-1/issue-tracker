@@ -56,9 +56,7 @@ function ProjectDashboard(props) {
 
   const getProjects = () => {
     axios
-      .get("/api/projects", {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .get("/api/projects")
       .then((res) => {
         if (res && res.data) {
           setProjects(res.data);

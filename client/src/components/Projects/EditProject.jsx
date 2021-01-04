@@ -32,9 +32,7 @@ const EditProject = (props) => {
     const projectId = props.match.params.projectId;
 
     axios
-      .get(`/api/project/${projectId}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .get(`/api/project/${projectId}`)
       .then((response) => {
         if (response && response.data) {
           if (
@@ -74,11 +72,7 @@ const EditProject = (props) => {
     };
 
     axios
-      .put(
-        `/api/project/${props.match.params.projectId}`,
-        { project: project },
-        { headers: { Authorization: localStorage.getItem("token") } }
-      )
+      .put(`/api/project/${props.match.params.projectId}`, { project: project })
       .then((res) => {
         if (res && res.data) {
           props.setMessages(res.data);

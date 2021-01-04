@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import io from 'socket.io-client';
-import moment from 'moment';
-import axios from 'axios';
+import React, { Component } from "react";
+import io from "socket.io-client";
+import moment from "moment";
+import axios from "axios";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Components
-import SideNav from '../Navigation/SideNav';
-import MessageList from './MessageList';
-import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
+import SideNav from "../Navigation/SideNav";
+import MessageList from "./MessageList";
+import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 
-import { setErrors } from '../../redux/actions/userActions';
+import { setErrors } from "../../redux/actions/userActions";
 
 class TeamChat extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class TeamChat extends Component {
     this.inputMessageRef = React.createRef();
 
     this.state = {
-      message: '',
+      message: "",
       messages: [],
     };
   }
@@ -34,21 +34,19 @@ class TeamChat extends Component {
     // this.socket = io(server);
     this.socket = io();
 
-    this.socket.on('Output Chat Message', (message) => {
+    this.socket.on("Output Chat Message", (message) => {
       this.setState((prevState) => ({
         messages: [...prevState.messages, message],
       }));
-      if (document.querySelector('.team-messages')) {
-        document.querySelector('.team-messages').scrollTo(0, 999999999999999);
+      if (document.querySelector(".team-messages")) {
+        document.querySelector(".team-messages").scrollTo(0, 999999999999999);
       }
     });
 
     // this.props.getChats(this.props.currentChatTeamID);
     const teamID = this.props.match.params.teamID;
     axios
-      .get(`/api/chats/${teamID}`, {
-        headers: { Authorization: localStorage.getItem('token') },
-      })
+      .get(`/api/chats/${teamID}`)
       .then((response) => {
         this.setState({
           messages: response.data,
@@ -74,9 +72,9 @@ class TeamChat extends Component {
     let currentTime = moment();
     let teamId = this.props.match.params.teamID;
     let message = this.state.message;
-    let type = 'Image';
+    let type = "Image";
 
-    this.socket.emit('Team Chat Message', {
+    this.socket.emit("Team Chat Message", {
       message,
       userId,
       username,
@@ -86,7 +84,7 @@ class TeamChat extends Component {
     });
 
     this.setState({
-      message: '',
+      message: "",
     });
 
     this.inputMessageRef.current.focus();

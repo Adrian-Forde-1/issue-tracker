@@ -3,15 +3,13 @@ import {
   RESET_CHATS,
   ADD_NEW_CHAT_MESSAGE,
   SET_CURRENT_CHAT_TEAM_ID,
-} from '../actions/types';
-import { setErrors } from './userActions';
-import axios from 'axios';
+} from "../actions/types";
+import { setErrors } from "./userActions";
+import axios from "axios";
 
 export const getChats = (teamID) => async (dispatch) => {
   axios
-    .get(`/api/chats/${teamID}`, {
-      headers: { Authorization: localStorage.getItem('token') },
-    })
+    .get(`/api/chats/${teamID}`)
     .then((response) => {
       dispatch({ type: SET_CHATS, payload: response.data });
     })

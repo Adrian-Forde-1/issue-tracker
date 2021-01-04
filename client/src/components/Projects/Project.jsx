@@ -79,9 +79,7 @@ const Project = (props) => {
 
   const getProjectData = () => {
     axios
-      .get(`/api/project/${projectId}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .get(`/api/project/${projectId}`)
       .then((response) => {
         if (response && response.data) {
           if (
@@ -118,18 +116,10 @@ const Project = (props) => {
 
   const archiveProject = () => {
     axios
-      .put(`/api/project/${project._id}/archive/add`, null, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      })
+      .put(`/api/project/${project._id}/archive/add`, null)
       .then(() => {
         axios
-          .get(`/api/project/${projectId}`, {
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
-          })
+          .get(`/api/project/${projectId}`)
           .then((response) => {
             setProject(response.data);
           })
@@ -146,18 +136,10 @@ const Project = (props) => {
 
   const unarchiveProject = () => {
     axios
-      .put(`/api/project/${project._id}/archive/remove`, null, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      })
+      .put(`/api/project/${project._id}/archive/remove`, null)
       .then(() => {
         axios
-          .get(`/api/project/${projectId}`, {
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
-          })
+          .get(`/api/project/${projectId}`)
           .then((response) => {
             setProject(response.data);
           })
@@ -174,9 +156,7 @@ const Project = (props) => {
 
   const deleteProject = () => {
     axios
-      .delete(`/api/project/${project._id}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .delete(`/api/project/${project._id}`)
       .then((res) => {
         if (res && res.data) {
           setMessages(res.data);

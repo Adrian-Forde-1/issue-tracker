@@ -24,14 +24,10 @@ const LabelPreview = (props) => {
   const { label, index, projectId, getProject, team } = props;
 
   const deleteLabel = () => {
-    axios
-      .delete(`/api/project/${projectId}/label/${label._id}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .then(() => {
-        props.getUserProjects(localStorage.getItem("token"));
-        getProject();
-      });
+    axios.delete(`/api/project/${projectId}/label/${label._id}`).then(() => {
+      props.getUserProjects(localStorage.getItem("token"));
+      getProject();
+    });
   };
   return (
     <div

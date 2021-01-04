@@ -26,11 +26,7 @@ const JoinTeam = (props) => {
     };
 
     axios
-      .post(
-        "/api/join/team",
-        { team: team },
-        { headers: { Authorization: localStorage.getItem("token") } }
-      )
+      .post("/api/join/team", { team: team })
       .then((res) => {
         if (res && res.data) {
           props.setMessages(res.data);

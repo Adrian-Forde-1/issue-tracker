@@ -51,9 +51,7 @@ const EditLabel = (props) => {
     const labelId = props.match.params.labelId;
 
     axios
-      .get(`/api/project/${projectId}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .get(`/api/project/${projectId}`)
       .then((response) => {
         if (response && response.data) {
           if (
@@ -101,11 +99,7 @@ const EditLabel = (props) => {
     };
 
     axios
-      .put(
-        `/api/project/${projectId}/label/${labelId}/edit`,
-        { label: label },
-        { headers: { Authorization: localStorage.getItem("token") } }
-      )
+      .put(`/api/project/${projectId}/label/${labelId}/edit`, { label: label })
       .then((response) => {
         props.setMessages(response.data);
         props.history.goBack();

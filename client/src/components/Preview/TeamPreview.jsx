@@ -32,9 +32,7 @@ const TeamPreview = (props) => {
 
   const deleteTeam = () => {
     axios
-      .delete(`/api/team/${team._id}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .delete(`/api/team/${team._id}`)
       .then((res) => {
         if (res && res.data) props.setMessages(res.data);
         props.getTeams();
@@ -48,11 +46,7 @@ const TeamPreview = (props) => {
 
   const leaveTeam = () => {
     axios
-      .put(`/api/leave/team/${team._id}`, null, {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
-      })
+      .put(`/api/leave/team/${team._id}`, null)
       .then((res) => {
         if (res && res.data) props.setMessages(res.data);
         props.getTeams();

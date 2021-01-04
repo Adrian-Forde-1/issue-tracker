@@ -27,16 +27,12 @@ const Profile = ({ user, getUser, setMessages }) => {
     const formData = new FormData();
     formData.append("profilePicture", profilePicture);
 
-    axios
-      .put("/api/edit-profile", formData, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .then((res) => {
-        if (res && res.data) {
-          getUser();
-          setMessages(res.data);
-        }
-      });
+    axios.put("/api/edit-profile", formData).then((res) => {
+      if (res && res.data) {
+        getUser();
+        setMessages(res.data);
+      }
+    });
   };
   return (
     <div className="profile__wrapper">

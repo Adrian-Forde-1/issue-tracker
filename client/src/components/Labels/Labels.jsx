@@ -29,20 +29,16 @@ function Labels(props) {
   }, [props.projects]);
 
   const getProject = () => {
-    axios
-      .get(`/api/project/${projectId}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .then((response) => {
-        if (response && response.data) {
-          setProject(response.data);
-          if (props.location.pathname.indexOf("team") > -1) {
-            props.setCurrentTeam(response.data.team);
-          } else {
-            props.setCurrentProject(response.data._id);
-          }
+    axios.get(`/api/project/${projectId}`).then((response) => {
+      if (response && response.data) {
+        setProject(response.data);
+        if (props.location.pathname.indexOf("team") > -1) {
+          props.setCurrentTeam(response.data.team);
+        } else {
+          props.setCurrentProject(response.data._id);
         }
-      });
+      }
+    });
   };
   return (
     <div className="label__wrapper label__wrapper--no-padding">

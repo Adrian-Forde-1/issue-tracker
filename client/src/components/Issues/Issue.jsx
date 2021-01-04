@@ -50,9 +50,7 @@ const Issue = (props) => {
   const getIssue = () => {
     const issueId = props.match.params.issueId;
     axios
-      .get(`/api/issue/${issueId}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .get(`/api/issue/${issueId}`)
       .then((response) => {
         if (response && response.data) {
           if (
@@ -126,11 +124,7 @@ const Issue = (props) => {
     }
 
     axios
-      .put(
-        `/api/issue/${issue._id}/status`,
-        { issue: newStatus },
-        { headers: { Authorization: localStorage.getItem("token") } }
-      )
+      .put(`/api/issue/${issue._id}/status`, { issue: newStatus })
       .catch((error) => {
         if (error && error.response && error.response.data) {
           props.setErrors(error);
@@ -141,9 +135,7 @@ const Issue = (props) => {
 
   const deleteIssue = () => {
     axios
-      .delete(`/api/issue/${issue._id}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .delete(`/api/issue/${issue._id}`)
       .then((res) => {
         if (res && res.data) {
           props.setMessages(res.data);
@@ -166,27 +158,15 @@ const Issue = (props) => {
 
     const username = props.user.username;
     axios
-      .post(
-        "/api/comment",
-        {
-          comment: newComment,
-          issueId: issue._id,
-          username: username,
-        },
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      )
+      .post("/api/comment", {
+        comment: newComment,
+        issueId: issue._id,
+        username: username,
+      })
       .then(() => {
         const issueId = props.match.params.issueId;
         axios
-          .get(`/api/issue/${issueId}`, {
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
-          })
+          .get(`/api/issue/${issueId}`)
           .then((response) => {
             setIssue(response.data);
             setComment("");
@@ -428,19 +408,11 @@ const Issue = (props) => {
                     className="far fa-trash-alt"
                     onClick={() => {
                       axios
-                        .delete(`/api/comment/${comment._id}`, {
-                          headers: {
-                            Authorization: localStorage.getItem("token"),
-                          },
-                        })
+                        .delete(`/api/comment/${comment._id}`)
                         .then(() => {
                           const issueId = props.match.params.issueId;
                           axios
-                            .get(`/api/issue/${issueId}`, {
-                              headers: {
-                                Authorization: localStorage.getItem("token"),
-                              },
-                            })
+                            .get(`/api/issue/${issueId}`)
                             .then((response) => {
                               setIssue(response.data);
                             })

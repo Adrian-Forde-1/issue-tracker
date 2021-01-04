@@ -33,13 +33,7 @@ const CreateTeam = (props) => {
     };
 
     axios
-      .post(
-        "/api/team",
-        { team: team },
-        {
-          headers: { Authorization: localStorage.getItem("token") },
-        }
-      )
+      .post("/api/team", { team: team })
       .then((res) => {
         if (res && res.data) props.setMessages(res.data);
 

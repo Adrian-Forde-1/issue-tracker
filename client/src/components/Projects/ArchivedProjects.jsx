@@ -1,33 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
-import { setErrors } from '../../redux/actions/userActions';
-import SearchBar from '../SearchBar';
+import { setErrors } from "../../redux/actions/userActions";
+import SearchBar from "../SearchBar";
 
 //Components
-import ProjectPreview from '../Preview/ProjectPreview';
-import SideNav from '../Navigation/SideNav';
-import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
+import ProjectPreview from "../Preview/ProjectPreview";
+import SideNav from "../Navigation/SideNav";
+import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 
 function ArchivedProjects(props) {
   const [projects, setProjects] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     axios
-      .get(`/api/projects/archived`, {
-        headers: { Authorization: localStorage.getItem('token') },
-      })
+      .get(`/api/projects/archived`)
       .then((response) => {
         setProjects(response.data);
       })
       .catch((error) => {
         props.setErrors(error);
-        props.history.push('/projects');
+        props.history.push("/projects");
       });
   }, []);
 
@@ -37,28 +35,26 @@ function ArchivedProjects(props) {
 
   const resetProjects = () => {
     axios
-      .get(`/api/projects/archived`, {
-        headers: { Authorization: localStorage.getItem('token') },
-      })
+      .get(`/api/projects/archived`)
       .then((response) => {
         setProjects(response.data);
       })
       .catch((error) => {
         props.setErrors(error);
-        props.history.push('/projects');
+        props.history.push("/projects");
       });
   };
 
   return (
     <div
       className="d-flex flex-column p-l-175"
-      style={{ position: 'relative' }}
+      style={{ position: "relative" }}
     >
       <ProjectsTeamsHamburger />
       <SideNav />
       <SearchBar search={search} onChange={onChange} />
       <h3 className="section-title">Archived Projects</h3>
-      {projects && projects.length > 0 && search === ''
+      {projects && projects.length > 0 && search === ""
         ? projects.map((project) => {
             if (project.archived === true)
               return (

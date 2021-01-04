@@ -51,9 +51,7 @@ function Team(props) {
 
   const getTeam = () => {
     axios
-      .get(`/api/team/${teamId}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .get(`/api/team/${teamId}`)
       .then((response) => {
         if (response.data) {
           setTeam(response.data);
@@ -106,11 +104,7 @@ function Team(props) {
                       className="fas fa-door-open"
                       onClick={() => {
                         axios
-                          .put(`/api/leave/team/${teamId}`, null, {
-                            headers: {
-                              Authorization: localStorage.getItem("token"),
-                            },
-                          })
+                          .put(`/api/leave/team/${teamId}`, null)
                           .then(() => {
                             props.history.replace("/teams");
                           })

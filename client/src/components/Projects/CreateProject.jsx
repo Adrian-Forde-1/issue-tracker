@@ -39,13 +39,7 @@ const CreateProject = (props) => {
     };
 
     axios
-      .post(
-        "/api/project",
-        { project: project },
-        {
-          headers: { Authorization: localStorage.getItem("token") },
-        }
-      )
+      .post("/api/project", { project: project })
       .then((res) => {
         if (res && res.data) {
           props.setMessages(res.data);

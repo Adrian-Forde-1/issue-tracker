@@ -1,11 +1,9 @@
-import { SET_TEAMS, SET_ERRORS, SET_TEAM_UPDATED } from './types';
-import axios from 'axios';
+import { SET_TEAMS, SET_ERRORS, SET_TEAM_UPDATED } from "./types";
+import axios from "axios";
 
 export const getUserTeams = (userId) => async (dispatch) => {
   axios
-    .get('/api/teams', {
-      headers: { Authorization: localStorage.getItem('token') },
-    })
+    .get("/api/teams")
     .then((response) => {
       return dispatch({ type: SET_TEAMS, payload: response.data });
     })

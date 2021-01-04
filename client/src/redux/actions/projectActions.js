@@ -1,11 +1,9 @@
-import { SET_PROJECTS, SET_ERRORS, SET_PROJECT_UPDATED } from './types';
-import axios from 'axios';
+import { SET_PROJECTS, SET_ERRORS, SET_PROJECT_UPDATED } from "./types";
+import axios from "axios";
 
 export const getUserProjects = (userId) => async (dispatch) => {
   axios
-    .get('/api/projects', {
-      headers: { Authorization: localStorage.getItem('token') },
-    })
+    .get("/api/projects")
     .then((response) => {
       dispatch({ type: SET_PROJECTS, payload: response.data });
     })

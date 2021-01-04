@@ -29,9 +29,7 @@ function AllTeamProjects(props) {
 
   const getProjects = () => {
     axios
-      .get(`/api/team/projects/${props.teamId}`, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
+      .get(`/api/team/projects/${props.teamId}`)
       .then((response) => {
         if (response && response.data) {
           setProjects(response.data);
@@ -49,18 +47,16 @@ function AllTeamProjects(props) {
   //   if (props.teamUpdated === true) {
   //     const teamId = props.match.params.teamId;
 
-  //     axios
-  //       .get(`/api/team/${teamId}`, {
-  //         headers: { Authorization: localStorage.getItem("token") },
-  //       })
-  //       .then((response) => {
-  //         const team = response.data;
-  //         setProjects(team.projects);
-  //       })
-  //       .catch((error) => {
-  //         props.setErrors(error);
-  //         props.clearCurrentSectionAndId();
-  //       });
+  // axios
+  //   .get(`/api/team/${teamId}`)
+  //   .then((response) => {
+  //     const team = response.data;
+  //     setProjects(team.projects);
+  //   })
+  //   .catch((error) => {
+  //     props.setErrors(error);
+  //     props.clearCurrentSectionAndId();
+  //   });
 
   //     props.getUserTeams(props.userId);
 

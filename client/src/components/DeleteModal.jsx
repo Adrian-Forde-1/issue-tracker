@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+import React from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
 import {
@@ -11,23 +11,23 @@ import {
   removeDeleteItem,
   removeItemType,
   removeCurrentLocation,
-} from '../redux/actions/modalActions';
+} from "../redux/actions/modalActions";
 
 import {
   getUserProjects,
   setProjectUpdated,
-} from '../redux/actions/projectActions';
+} from "../redux/actions/projectActions";
 
-import { getUserTeams, setTeamUpdated } from '../redux/actions/teamActions';
+import { getUserTeams, setTeamUpdated } from "../redux/actions/teamActions";
 
-import { setErrors } from '../redux/actions/userActions';
+import { setErrors } from "../redux/actions/userActions";
 
 //React Router DOM
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 function DeleteModal(props) {
   // const { item, type, teamId, reRoute } = props;
-  const modalRoot = document.getElementById('modal-root');
+  const modalRoot = document.getElementById("modal-root");
 
   const closeModal = (cb) => {
     props.closeModal();
@@ -39,15 +39,13 @@ function DeleteModal(props) {
   const deleteItem = () => {
     const { item, itemType } = props;
     axios
-      .delete(`/api/${itemType}/${item._id}`, {
-        headers: { Authorization: localStorage.getItem('token') },
-      })
+      .delete(`/api/${itemType}/${item._id}`)
       .then(() => {
-        if (itemType === 'project') {
-          props.getUserProjects(localStorage.getItem('token'));
+        if (itemType === "project") {
+          props.getUserProjects(localStorage.getItem("token"));
           closeModal();
 
-          if (item.team !== null && props.currentLocation.includes('project')) {
+          if (item.team !== null && props.currentLocation.includes("project")) {
             props.setTeamUpdated(true);
             props.history.goBack();
           } else if (item.team !== null) {
@@ -55,19 +53,19 @@ function DeleteModal(props) {
           }
         }
 
-        if (itemType === 'bug') {
+        if (itemType === "bug") {
           props.setProjectUpdated(true);
           closeModal();
-          if (props.currentLocation.includes('bug')) {
+          if (props.currentLocation.includes("bug")) {
             props.history.goBack();
           }
         }
 
-        if (itemType === 'team') {
-          props.getUserTeams(localStorage.getItem('token'));
+        if (itemType === "team") {
+          props.getUserTeams(localStorage.getItem("token"));
           closeModal();
 
-          if (props.currentLocation.includes('team')) {
+          if (props.currentLocation.includes("team")) {
             props.history.goBack();
           }
         }

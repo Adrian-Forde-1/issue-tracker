@@ -1,31 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 //Actions
-import { getUserGroups } from '../../redux/actions/teamActions';
-import { setErrors } from '../../redux/actions/userActions';
-import { SET_ERRORS } from '../../redux/actions/types';
+import { getUserGroups } from "../../redux/actions/teamActions";
+import { setErrors } from "../../redux/actions/userActions";
+import { SET_ERRORS } from "../../redux/actions/types";
 
 //Components
-import ProjectPreview from '../Preview/ProjectPreview';
-import SearchBar from '../SearchBar';
-import SideNav from '../Navigation/SideNav';
-import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
+import ProjectPreview from "../Preview/ProjectPreview";
+import SearchBar from "../SearchBar";
+import SideNav from "../Navigation/SideNav";
+import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
 
 function ArchivedGroupProjects(props) {
   const [projects, changeProjects] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const teamId = props.match.params.teamId;
 
     axios
-      .get(`/api/team/${teamId}/projects/archived`, {
-        headers: { Authorization: localStorage.getItem('token') },
-      })
+      .get(`/api/team/${teamId}/projects/archived`)
       .then((response) => {
         changeProjects(response.data);
       })
@@ -38,9 +36,7 @@ function ArchivedGroupProjects(props) {
   const resetProjects = () => {
     const teamId = props.match.params.teamId;
     axios
-      .get(`/api/team/${teamId}/projects/archived`, {
-        headers: { Authorization: localStorage.getItem('token') },
-      })
+      .get(`/api/team/${teamId}/projects/archived`)
       .then((response) => {
         changeProjects(response.data);
       })
@@ -57,14 +53,14 @@ function ArchivedGroupProjects(props) {
   return (
     <div
       className="d-flex flex-column p-l-175"
-      style={{ position: 'relative' }}
+      style={{ position: "relative" }}
     >
       <ProjectsTeamsHamburger />
       <SideNav />
       <SearchBar search={search} onChange={onChange} />
       <h3 className="section-title">Archived Team Projects</h3>
 
-      {projects && projects.length > 0 && search === ''
+      {projects && projects.length > 0 && search === ""
         ? projects.map((project) => {
             if (project.archived === true)
               return (
