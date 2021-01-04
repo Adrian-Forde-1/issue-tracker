@@ -303,6 +303,7 @@ module.exports = {
 
     TeamModel.find({ users: { $elemMatch: { $eq: userId } } })
       .populate("projects")
+      .sort("name")
       .exec(function (err, teams) {
         //If error occured when fetching teams, notify user
         if (err) {
