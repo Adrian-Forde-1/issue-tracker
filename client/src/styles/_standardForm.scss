@@ -8,13 +8,15 @@
 .standard-form {
   &__wrapper {
     width: 100%;
+    min-height: 100%;
     height: 100%;
-    max-height: 100%;
+    max-height: auto;
     background: #fff;
+    overflow: auto;
   }
 
   &__header {
-    height: calc(15% - 8px);
+    height: 80px;
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -59,9 +61,10 @@
 
   &__body {
     width: 100%;
-    height: 85%;
-    max-height: 85%;
-    display: flex;
+    flex: 1 1 100%;
+    height: calc(100% - 80px);
+    // max-height: 85%;
+    // display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
@@ -88,6 +91,7 @@
 
       textarea {
         resize: none;
+        min-height: 200px;
         height: 200px;
       }
 
@@ -113,7 +117,8 @@
 
     section {
       width: 50%;
-      height: 100%;
+      min-height: 100%;
+      height: auto;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -332,9 +337,10 @@
 
   &__preview-view {
     width: 100%;
-    height: 100%;
-    max-height: 100%;
-    max-width: 100%;
+    // height: 100%;
+    // max-height: 100%;
+    // max-width: 100%;
+    flex: 1 1 100%;
     overflow-y: auto;
 
     &::-webkit-scrollbar {

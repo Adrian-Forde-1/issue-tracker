@@ -272,6 +272,7 @@ $page-background: #fdfcff;
 
 @media screen and (max-width: 992px) {
   .navbar {
+    height: 50px;
     &__logo {
       font-size: 24px;
     }

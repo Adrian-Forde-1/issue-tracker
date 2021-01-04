@@ -214,6 +214,7 @@
 
 @media screen and (max-width: 992px) {
   .dashboard-navbar {
+    height: 50px;
     &__hamburger-container {
       display: flex;
     }
@@ -224,9 +225,6 @@
 }
 
 @media screen and (max-width: 500px) {
-  .dashboard-navbar {
-    height: 50px;
-  }
 }
 
 @media screen and (max-width: 400px) {
