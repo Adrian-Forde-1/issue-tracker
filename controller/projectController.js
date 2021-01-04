@@ -443,7 +443,7 @@ module.exports = {
           );
 
           //If it does, notfiy user
-          if (hasLabel._id.toString() !== labelId.toString()) {
+          if (hasLabel && hasLabel._id.toString() !== labelId.toString()) {
             errors.push("That label already exists");
             return res.status(400).json(errors);
           }
