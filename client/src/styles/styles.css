@@ -4057,7 +4057,8 @@ header::after {
   }
   .dashboard__main-content {
     width: 100%;
-    height: calc(100vh - 50px);
+    height: calc(100vh);
+    padding-bottom: 50px;
     -webkit-box-ordinal-group: 2;
         -ms-flex-order: 1;
             order: 1;
@@ -4087,6 +4088,9 @@ header::after {
     -webkit-box-ordinal-group: 3;
         -ms-flex-order: 2;
             order: 2;
+    position: fixed;
+    bottom: 0;
+    left: 0px;
   }
 }
 

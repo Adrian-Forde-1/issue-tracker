@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 //SVG
 import TrashSVG from "../SVG/TrashSVG";
 import TickSVG from "../SVG/TickSVG";
-import ExclamationSVG from "../SVG/ExclamationSVG";
 import ConstructionConeSVG from "../SVG/ConstructionConeSVG";
 
 //React Router DOM
