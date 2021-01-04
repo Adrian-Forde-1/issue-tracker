@@ -1,7 +1,7 @@
 .navbar {
   width: 100%;
   height: 7vh;
-  padding: 0px 9%;
+  padding: 0px 5%;
   position: relative;
   top: 0;
   left: 0;
@@ -24,6 +24,7 @@
 }
 
 .navbar__right-container {
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -331,6 +332,7 @@
     font-size: 24px;
   }
   .nav-list {
+    padding-top: 7vh;
     width: 240px;
     height: 100vh;
     position: fixed;
@@ -358,13 +360,14 @@
     color: white;
   }
   .nav-item {
-    margin-top: 50px;
-  }
-  .nav-item:nth-of-type(1) {
-    margin-top: 100px;
+    height: auto;
+    width: 100%;
   }
   .nav-item a,
   .nav-item button {
+    padding: 20px 0px;
+    width: 100%;
+    height: 100%;
     color: white;
     text-align: center;
   }
@@ -394,6 +397,9 @@
 @media screen and (max-width: 500px) {
   .navbar__logo {
     font-size: 20px;
+  }
+  .navbar__right-dropdown {
+    width: 300px;
   }
 }
 
