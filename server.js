@@ -10,16 +10,21 @@ const path = require("path");
 const dotenv = require("dotenv");
 const io = require("socket.io")(http);
 const Chat = require("./models/ChatModel");
-const bcrypt = require("bcryptjs");
+const cookieParser = require("cookie-parser");
 
 const PORT = process.env.PORT || 5000;
+const CORS_ORIGIN =
+  process.env.NODE_ENV === "production"
+    ? "http://af-bug-tracker.herokuapp.com/"
+    : "localhost:3000";
 
 //Using .env variables for dev
 dotenv.config();
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: CORS_ORIGIN }));
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 // app.use(express.static());
 app.use(

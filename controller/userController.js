@@ -1,7 +1,5 @@
 const { json } = require("express");
-const multer = require("multer");
 const User = require("../models/UserModel");
-const path = require("path");
 
 const { validateLoginData, validateSignUpData } = require("../util/authUtil");
 const { signToken, decodeToken } = require("../util/authUtil");
@@ -30,8 +28,17 @@ module.exports = {
     //Generate token
     const token = signToken(req.user);
 
+    res
+      .status(200)
+      .cookie("jwtIss", token, {
+        sameSite: "strict",
+        path: "/",
+        httpOnly: true,
+      })
+      .send("Returning cookie");
+
     //Return the token as json
-    res.json({ token });
+    // res.json({ token });
     // }
   },
 
@@ -106,7 +113,12 @@ module.exports = {
       // res.json({ token });
     }
   },
-
+  // Logout
+  logout: (req, res) => {
+    if (req.cookies["jwtIss"])
+      res.status(200).clearCookie("jwtIss").send("Clearing cookie");
+    else res.status(404).send("Token not found");
+  },
   //Delete User
   deleteUser: (req, res) => {
     if (req.user) {
@@ -131,10 +143,10 @@ module.exports = {
     }
   },
   getUser: (req, res) => {
-    const token = req.headers.authorization;
-    const splitToken = token.split("Bearer ")[1];
+    //Get token from cookies
+    const token = req.cookies.jwtIss;
     //Decode token the was sent by user
-    const decodedToken = decodeToken(splitToken);
+    const decodedToken = decodeToken(token);
     //Get user id from token sub
     const userId = decodedToken.sub;
     //Find user in databse

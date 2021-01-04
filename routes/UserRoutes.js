@@ -34,6 +34,7 @@ const passportConfig = require("../passport");
 const {
   login,
   signUp,
+  logout,
   getUser,
   editProfile,
 } = require("../controller/userController");
@@ -90,6 +91,7 @@ const passportJWT = passport.authenticate("jwt", { session: true });
 //User Routes
 router.post("/login", passportLocal, login);
 router.post("/signup", signUp);
+router.post("/logout", passportJWT, logout);
 router.get("/user", passportJWT, getUser);
 router.put(
   "/edit-profile",

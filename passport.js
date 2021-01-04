@@ -1,16 +1,24 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
 
 //Models
-const UserModel = require('./models/UserModel');
+const UserModel = require("./models/UserModel");
+
+const getCookie = (req) => {
+  let jwt = null;
+
+  if (req && req.cookies) jwt = req.cookies["jwtIss"];
+
+  return jwt;
+};
 
 // LOCAL STRATEGY
 passport.use(
   new LocalStrategy(
     {
-      usernameField: 'email',
+      usernameField: "email",
     },
     async (email, password, done) => {
       try {
@@ -43,7 +51,7 @@ passport.use(
 passport.use(
   new JwtStrategy(
     {
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken('authorization'),
+      jwtFromRequest: getCookie,
       secretOrKey: process.env.jwt_secret,
     },
     async (payload, done) => {
@@ -51,7 +59,7 @@ passport.use(
         //Find user specified in token
         const user = await UserModel.findById(payload.sub);
 
-        console.log(payload.sub);
+        // console.log(payload.sub);
 
         //If user doesn't exists, handle it
         if (!user) {
