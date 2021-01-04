@@ -256,7 +256,7 @@ module.exports = {
 
       ProjectModel.findById(projectId)
         .populate("createdBy")
-        .populate("issues")
+        .populate({ path: "issues", options: { sort: { "status.name": 1 } } })
         .exec(function (err, project) {
           //If something went wrong when looking for project, notify user
           if (err) {
@@ -277,6 +277,7 @@ module.exports = {
     ProjectModel.find({
       $and: [{ createdBy: userId }, { team: null }, { archived: false }],
     })
+      .sort("name")
       .populate("issues")
       .exec(function (err, projects) {
         //If something went wrong when fetching projects, notify user
