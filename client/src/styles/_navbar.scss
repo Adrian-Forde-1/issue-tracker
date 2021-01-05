@@ -1,8 +1,5 @@
+@import "variables";
 $red-color: #ff0000;
-$primary-color: #2e00b1;
-$text-color: #0f003a;
-$vector-background: #e4e3ff;
-$page-background: #fdfcff;
 
 .navbar {
   width: 100%;
@@ -46,6 +43,7 @@ $page-background: #fdfcff;
       height: 100%;
       padding-top: 10px;
       list-style: none;
+      margin-bottom: 0px;
       li {
         width: 100%;
         font-family: "Montserrat", sans-serif;
@@ -233,7 +231,7 @@ $page-background: #fdfcff;
       content: "";
       width: 100%;
       height: 100%;
-      background: $primary-color;
+      background: $main-cyan;
       position: absolute;
       z-index: -1;
       top: 0px;
@@ -243,6 +241,7 @@ $page-background: #fdfcff;
     }
 
     &:hover {
+      color: $text-color;
       &:after {
         transform: translateY(0%);
       }

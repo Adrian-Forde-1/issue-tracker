@@ -114,7 +114,7 @@ const Signup = (props) => {
               <button className="auth-form__submit-btn">Sign Up</button>
             </form>
             <div className="auth-form__no-account">
-              Already have an account? Try <Link to="/login">Loggin in!</Link>
+              Already have an account? Try <Link to="/login">Logging in!</Link>
             </div>
           </div>
         </div>

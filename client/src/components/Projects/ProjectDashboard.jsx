@@ -37,6 +37,7 @@ import AddLabel from "../Labels/AddLabel";
 import EditLabel from "../Labels/EditLabel";
 
 import Project from "./Project";
+import ProjectDashboardLandingPage from "./ProjectDashboardLandingPage";
 import CreateProject from "./CreateProject";
 import EditProject from "./EditProject";
 
@@ -71,9 +72,18 @@ function ProjectDashboard(props) {
 
   let routes = (
     <Switch>
-      <Route exact path="/project">
-        <h1>Project stuff</h1>
-      </Route>
+      <Route
+        exact
+        path="/project"
+        render={(props) => {
+          return (
+            <ProjectDashboardLandingPage
+              {...props}
+              setCurrentProject={setCurrentProject}
+            />
+          );
+        }}
+      />
       <Route
         exact
         path="/project/create"

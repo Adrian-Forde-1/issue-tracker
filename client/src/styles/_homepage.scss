@@ -81,7 +81,7 @@ header {
     color: $text-color;
 
     span {
-      color: $primary-color;
+      color: $main-green;
     }
   }
 
@@ -120,7 +120,7 @@ header {
   margin-left: 0px !important;
   padding: 5px 20px;
   font-weight: 300;
-  background: $primary-color;
+  background: $text-color;
   color: $page-background !important;
 }
 

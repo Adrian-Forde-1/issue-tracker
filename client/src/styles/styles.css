@@ -16,7 +16,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background: #0f003a;
+  background: #080021;
 }
 
 .navbar__logo {
@@ -55,12 +55,13 @@
   height: 100%;
   padding-top: 10px;
   list-style: none;
+  margin-bottom: 0px;
 }
 
 .navbar__right-dropdown ul li {
   width: 100%;
   font-family: "Montserrat", sans-serif;
-  color: #0f003a;
+  color: #080021;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -69,7 +70,7 @@
 
 .navbar__right-dropdown ul li a {
   list-style: none;
-  color: #0f003a;
+  color: #080021;
 }
 
 .navbar__right-dropdown ul li:hover {
@@ -180,7 +181,7 @@
 .navbar__profile-pic span {
   font-weight: bold;
   font-size: 14px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .navbar__profile-pic img {
@@ -212,7 +213,7 @@
           align-items: center;
   padding: 0px 5%;
   z-index: 1000;
-  background: #0f003a;
+  background: #080021;
 }
 
 .projects-teams-hamburger i {
@@ -237,7 +238,7 @@
 }
 
 .logo span {
-  color: #0f003a;
+  color: #080021;
 }
 
 .logo img {
@@ -301,7 +302,7 @@
   content: "";
   width: 100%;
   height: 100%;
-  background: #2e00b1;
+  background: #22ffca;
   position: absolute;
   z-index: -1;
   top: 0px;
@@ -310,6 +311,10 @@
           transform: translateY(100%);
   -webkit-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
+}
+
+.nav-item a:hover {
+  color: #080021;
 }
 
 .nav-item a:hover:after {
@@ -353,7 +358,7 @@
     -webkit-box-pack: start;
         -ms-flex-pack: start;
             justify-content: flex-start;
-    background: #0f003a;
+    background: #080021;
   }
   .nav-list.nav-open {
     -webkit-transform: translateX(0px);
@@ -477,7 +482,7 @@
   border-radius: 20px;
   margin: auto;
   z-index: 10;
-  background: #0f003a;
+  background: #080021;
 }
 
 .auth-form h2 {
@@ -593,7 +598,7 @@ header::after {
 }
 
 .premade-accounts table {
-  background: #0f003a;
+  background: #080021;
   color: white;
   width: 60%;
 }
@@ -615,21 +620,21 @@ header::after {
   letter-spacing: 2px;
   text-align: left;
   text-transform: capitalize;
-  color: #0f003a;
+  color: #080021;
 }
 
 .header-content h1 span {
-  color: #2e00b1;
+  color: #22ff53;
 }
 
 .header-content p {
-  color: #0f003a;
+  color: #080021;
   margin-bottom: 20px;
   text-align: left;
 }
 
 .header-content a {
-  color: #0f003a;
+  color: #080021;
   font-weight: 300;
   margin: 0px 10px;
 }
@@ -654,7 +659,7 @@ header::after {
   margin-left: 0px !important;
   padding: 5px 20px;
   font-weight: 300;
-  background: #2e00b1;
+  background: #080021;
   color: #fdfcff !important;
 }
 
@@ -839,8 +844,8 @@ header::after {
   width: 100%;
   height: 100%;
   z-index: 1;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(46, 0, 177, 0.7)), to(rgba(15, 0, 58, 0.7)));
-  background: linear-gradient(rgba(46, 0, 177, 0.7), rgba(15, 0, 58, 0.7));
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(34, 255, 83, 0.5)), to(rgba(34, 255, 202, 0.5)));
+  background: linear-gradient(rgba(34, 255, 83, 0.5), rgba(34, 255, 202, 0.5));
   pointer-events: none;
 }
 
@@ -871,7 +876,7 @@ header::after {
 }
 
 .auth-form__input-container__input-name {
-  color: #0f003a;
+  color: #080021;
   font-size: 14px;
 }
 
@@ -879,14 +884,14 @@ header::after {
   width: 100%;
   border: none;
   background: #dedede;
-  padding: 3px;
+  padding: 3px 10px;
   font-size: 14px;
 }
 
 .auth-form__submit-btn {
   padding: 8px 24px;
   font-size: 16px;
-  background: #2e00b1;
+  background: #080021;
   margin-top: 20px;
   color: #fff;
   border: none;
@@ -898,7 +903,7 @@ header::after {
 }
 
 .auth-form__no-account {
-  color: #0f003a;
+  color: #080021;
   font-size: 14px;
   margin-top: 20px;
 }
@@ -1006,7 +1011,7 @@ header::after {
 
 .profile__header__img-container form button {
   border: none;
-  background: #0f003a;
+  background: #080021;
   color: #fff;
   font-size: 10px;
   padding: 5px 10px;
@@ -1066,7 +1071,7 @@ header::after {
 }
 
 .profile__default-img span {
-  color: #0f003a;
+  color: #080021;
   font-size: 80px;
   font-weight: bold;
 }
@@ -1103,7 +1108,7 @@ header::after {
   height: 100vh;
   z-index: 1000;
   z-index: 10000;
-  background: #0f003a;
+  background: #080021;
 }
 
 .side-nav a {
@@ -1180,7 +1185,7 @@ header::after {
 }
 
 .side-nav__top a svg {
-  font-size: 20px;
+  font-size: 28px;
 }
 
 @media screen and (max-width: 992px) {
@@ -1300,7 +1305,7 @@ header::after {
 
 .team__header-actions-container div svg {
   font-size: 24px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .team__header-actions-container div:last-of-type {
@@ -1345,7 +1350,7 @@ header::after {
 }
 
 .team__img-container div span {
-  color: #0f003a;
+  color: #080021;
   font-size: 30px;
   font-weight: bold;
 }
@@ -1365,7 +1370,7 @@ header::after {
 }
 
 .team__name i {
-  color: #0f003a;
+  color: #080021;
   font-size: 16px;
   margin-left: 30px;
   cursor: pointer;
@@ -1380,7 +1385,7 @@ header::after {
 }
 
 .team__id span {
-  color: #0f003a;
+  color: #080021;
 }
 
 .team__projects {
@@ -1538,7 +1543,7 @@ header::after {
 .dashboard-navbar__right-dropdown ul li {
   width: 100%;
   font-family: "Montserrat", sans-serif;
-  color: #0f003a;
+  color: #080021;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -1547,7 +1552,7 @@ header::after {
 
 .dashboard-navbar__right-dropdown ul li a {
   list-style: none;
-  color: #0f003a;
+  color: #080021;
 }
 
 .dashboard-navbar__right-dropdown ul li:hover {
@@ -1658,7 +1663,7 @@ header::after {
 .dashboard-navbar__profile-pic span {
   font-weight: bold;
   font-size: 14px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .dashboard-navbar__profile-pic img {
@@ -1732,7 +1737,7 @@ header::after {
 }
 
 .dashboard-navbar__hamburger-container:hover svg {
-  color: #0f003a;
+  color: #080021;
 }
 
 .dashboard-navbar__hamburger-container svg {
@@ -1758,7 +1763,7 @@ header::after {
 
 .team-preview {
   width: 100%;
-  border: 1px solid #0f003a;
+  border: 1px solid #080021;
   border-radius: 50px;
   margin-top: 10px;
   overflow: hidden;
@@ -1769,7 +1774,7 @@ header::after {
   content: "";
   width: 100%;
   height: 100%;
-  background: #0f003a;
+  background: #080021;
   position: absolute;
   top: 0;
   left: 0;
@@ -1795,11 +1800,11 @@ header::after {
       -ms-flex-align: center;
           align-items: center;
   cursor: pointer;
-  color: #0f003a;
+  color: #080021;
 }
 
 .team-preview a span {
-  color: #0f003a;
+  color: #080021;
 }
 
 .team-preview a svg {
@@ -1839,7 +1844,7 @@ header::after {
 }
 
 .team-preview__container span {
-  color: #0f003a;
+  color: #080021;
   display: block;
   width: 85%;
   max-width: 85%;
@@ -1867,12 +1872,12 @@ header::after {
 
 .team-preview__delete svg {
   font-size: 20px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .project-preview {
   width: 100%;
-  border: 1px solid #0f003a;
+  border: 1px solid #080021;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1897,7 +1902,7 @@ header::after {
   content: "";
   width: 100%;
   height: 100%;
-  background: #0f003a;
+  background: #080021;
   position: absolute;
   top: 0;
   left: 0;
@@ -1941,7 +1946,7 @@ header::after {
 }
 
 .project-preview__container span {
-  color: #0f003a;
+  color: #080021;
 }
 
 .project-preview__container div {
@@ -1963,7 +1968,7 @@ header::after {
 
 .project-preview__delete svg {
   font-size: 20px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .project-preview__delete--wide {
@@ -1973,7 +1978,7 @@ header::after {
 
 .project-preview__archive-btn svg {
   font-size: 20px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .project-preview__small-name {
@@ -2024,7 +2029,7 @@ header::after {
   position: relative;
   margin-bottom: 20px;
   border-radius: 50px;
-  border: 1px solid #0f003a;
+  border: 1px solid #080021;
   width: 100%;
   -webkit-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
@@ -2100,7 +2105,7 @@ header::after {
 }
 
 .issue-preview__description {
-  color: #0f003a;
+  color: #080021;
   width: auto;
   text-align: left;
   position: relative;
@@ -2159,7 +2164,7 @@ header::after {
 
 .issue-preview__delete svg {
   font-size: 20px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .label__preview {
@@ -2215,12 +2220,12 @@ header::after {
 
 .label__preview-actions div svg {
   font-size: 20px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .label__preview-actions div a svg {
   font-size: 20px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .label__preview-actions div:hover svg {
@@ -2331,7 +2336,7 @@ header::after {
 
 .standard-form__header h2 {
   z-index: 10px;
-  color: #0f003a;
+  color: #080021;
   margin-left: 20px;
   margin-bottom: 0px;
 }
@@ -2543,7 +2548,7 @@ header::after {
 
 .standard-form__input-container label {
   font-size: 14px;
-  color: #0f003a;
+  color: #080021;
   cursor: pointer;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2586,7 +2591,7 @@ header::after {
 }
 
 .standard-form__input-container-textarea::-webkit-scrollbar-thumb {
-  background-color: #0f003a;
+  background-color: #080021;
 }
 
 .standard-form__input-container-textarea::-webkit-scrollbar-track {
@@ -2608,7 +2613,7 @@ header::after {
 
 .standard-form__input-container__description-info svg {
   font-size: 24px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .standard-form__input-container__dropdown {
@@ -2636,7 +2641,7 @@ header::after {
 }
 
 .standard-form__input-container__dropdown::-webkit-scrollbar-thumb {
-  background-color: #0f003a;
+  background-color: #080021;
 }
 
 .standard-form__input-container__dropdown::-webkit-scrollbar-track {
@@ -2667,7 +2672,7 @@ header::after {
   font-size: 14px !important;
   font-weight: 400 !important;
   font-family: "Montserrat", sans-serif;
-  color: #0f003a !important;
+  color: #080021 !important;
 }
 
 .standard-form__input-container__dropdown-item-input {
@@ -2697,7 +2702,7 @@ header::after {
 
 .standard-form__description-preview-btn svg {
   font-size: 24px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .standard-form__preview-view {
@@ -2715,7 +2720,7 @@ header::after {
 }
 
 .standard-form__preview-view::-webkit-scrollbar-thumb {
-  background-color: #0f003a;
+  background-color: #080021;
 }
 
 .standard-form__preview-view::-webkit-scrollbar-track {
@@ -2769,7 +2774,7 @@ header::after {
     width: 7px;
   }
   .standard-form__split-double::-webkit-scrollbar-thumb {
-    background-color: #0f003a;
+    background-color: #080021;
   }
   .standard-form__split-double::-webkit-scrollbar-track {
     background: #eee;
@@ -2805,6 +2810,42 @@ header::after {
   padding: 20px;
 }
 
+.project__dashboard-landing-wrapper {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.project__dashboard-landing-wrapper svg {
+  font-size: 60px;
+}
+
+.project__dashboard-landing-wrapper h6 {
+  font-size: 16px;
+  margin-top: 20px;
+  color: #080021;
+}
+
+.project__dashboard-landing-wrapper a {
+  margin-top: 10px;
+  background: #080021;
+  color: #fdfcff;
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
 .project__header {
   width: 100%;
   display: -webkit-box;
@@ -2820,7 +2861,7 @@ header::after {
 
 .project__name {
   font-size: 24px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .project__creation-date {
@@ -2889,7 +2930,7 @@ header::after {
 }
 
 .project__description-dropdown::-webkit-scrollbar-thumb {
-  background-color: #0f003a;
+  background-color: #080021;
 }
 
 .project__description-dropdown::-webkit-scrollbar-track {
@@ -2960,7 +3001,7 @@ header::after {
 .project__action-buttons-container div svg,
 .project__action-buttons-container div a svg {
   font-size: 24px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .project__action-buttons-container div svg:hover,
@@ -2997,7 +3038,7 @@ header::after {
 }
 
 .project__action-bar a i {
-  color: #0f003a;
+  color: #080021;
 }
 
 .project__action-bar button {
@@ -3022,7 +3063,7 @@ header::after {
 }
 
 .project__action-bar button i {
-  color: #0f003a;
+  color: #080021;
 }
 
 .project__issues-container {
@@ -3122,7 +3163,7 @@ header::after {
 }
 
 .issue__wrapper::-webkit-scrollbar-thumb {
-  background-color: #0f003a;
+  background-color: #080021;
 }
 
 .issue__wrapper::-webkit-scrollbar-track {
@@ -3144,7 +3185,7 @@ header::after {
 
 .issue__name {
   font-size: 24px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .issue__creation-date {
@@ -3213,7 +3254,7 @@ header::after {
 }
 
 .issue__description-dropdown::-webkit-scrollbar-thumb {
-  background-color: #0f003a;
+  background-color: #080021;
 }
 
 .issue__description-dropdown::-webkit-scrollbar-track {
@@ -3254,7 +3295,7 @@ header::after {
 .issue__action-buttons-container div svg,
 .issue__action-buttons-container div a svg {
   font-size: 24px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .issue__action-buttons-container div svg:hover,
@@ -3402,7 +3443,7 @@ header::after {
   margin-bottom: 30px;
   text-align: left;
   background: #fdfcff;
-  color: #0f003a;
+  color: #080021;
   cursor: pointer;
 }
 
@@ -3423,7 +3464,7 @@ header::after {
 }
 
 .issue__comment-date span:nth-of-type(2) {
-  color: #0f003a;
+  color: #080021;
 }
 
 .issue__comment-container {
@@ -3447,7 +3488,7 @@ header::after {
   top: 15px;
   right: 15px;
   cursor: pointer;
-  color: #0f003a;
+  color: #080021;
 }
 
 .issue__comments-title {
@@ -3455,7 +3496,7 @@ header::after {
   font-size: 20px;
   text-align: center;
   font-weight: 300;
-  color: #0f003a;
+  color: #080021;
 }
 
 .issue__comment-textarea {
@@ -3522,7 +3563,7 @@ header::after {
   }
   .issue__name {
     font-size: 20px;
-    color: #0f003a;
+    color: #080021;
   }
   .issue__action-buttons-container {
     -webkit-box-orient: vertical;
@@ -3611,7 +3652,7 @@ header::after {
 .modal__delete-modal-body__action-container div {
   width: 70px;
   height: 35px;
-  border: 2px solid #0f003a;
+  border: 2px solid #080021;
   background: transparent;
   border-radius: 10px;
   overflow: hidden;
@@ -3631,7 +3672,7 @@ header::after {
 .modal__delete-modal-body__action-container div span {
   -webkit-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
-  color: #0f003a;
+  color: #080021;
   z-index: 10;
 }
 
@@ -3639,7 +3680,7 @@ header::after {
   content: "";
   width: 100%;
   height: 100%;
-  background: #0f003a;
+  background: #080021;
   position: absolute;
   top: 0;
   left: 0;
@@ -3664,7 +3705,7 @@ header::after {
   top: 10px;
   right: 10px;
   font-size: 20px;
-  color: #0f003a;
+  color: #080021;
   cursor: pointer;
 }
 
@@ -3713,7 +3754,7 @@ header::after {
 
 .label__header h2 {
   z-index: 10px;
-  color: #0f003a;
+  color: #080021;
   margin-left: 20px;
   margin-bottom: 0px;
 }
@@ -3738,7 +3779,7 @@ header::after {
 
 .label__header-actions a svg {
   font-size: 24px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .label__header-actions a svg:hover {
@@ -3747,7 +3788,7 @@ header::after {
 
 .label__name {
   font-size: 24px;
-  color: #0f003a;
+  color: #080021;
 }
 
 .label__label-container {
@@ -3776,7 +3817,7 @@ header::after {
 }
 
 .label__label-container::-webkit-scrollbar-thumb {
-  background-color: #0f003a;
+  background-color: #080021;
 }
 
 .label__label-container::-webkit-scrollbar-track {
@@ -3912,7 +3953,7 @@ header::after {
 }
 
 .search-bar__wrapper input:focus {
-  outline: #0f003a;
+  outline: #080021;
 }
 
 @media screen and (max-width: 768px) {
@@ -4029,11 +4070,11 @@ header::after {
 }
 
 .dashboard__main-content-sidebar__category-selector-container div.selected {
-  border-color: #0f003a;
+  border-color: #080021;
 }
 
 .dashboard__main-content-sidebar__category-selector-container div span {
-  color: #0f003a;
+  color: #080021;
   font-size: 12px;
 }
 
@@ -4067,7 +4108,7 @@ header::after {
 }
 
 .dashboard__quick-links-container a svg {
-  color: #0f003a;
+  color: #080021;
   font-size: 24px;
 }
 
