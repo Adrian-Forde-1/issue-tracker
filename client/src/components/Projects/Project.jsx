@@ -160,6 +160,7 @@ const Project = (props) => {
       .then((res) => {
         if (res && res.data) {
           setMessages(res.data);
+          if (props.getProjects) props.getProjects();
           props.history.goBack();
         }
       })

@@ -91,7 +91,13 @@ function ProjectDashboard(props) {
         exact
         path="/project/:projectId"
         render={(props) => {
-          return <Project {...props} setCurrentProject={setCurrentProject} />;
+          return (
+            <Project
+              {...props}
+              setCurrentProject={setCurrentProject}
+              getProjects={getProjects}
+            />
+          );
         }}
       />
       <Route
