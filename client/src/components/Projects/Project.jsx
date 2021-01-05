@@ -55,6 +55,7 @@ const Project = (props) => {
   }, [props.match.params]);
 
   useEffect(() => {
+    console.log("new project");
     getProjectData();
   }, [projectId]);
 
@@ -64,8 +65,6 @@ const Project = (props) => {
   };
 
   useEffect(() => {
-    // props.getUserProjects(localStorage.getItem("token"));
-
     if (sessionStorage.getItem("project-search") !== null) {
       setSearch(sessionStorage.getItem("project-search"));
     }
@@ -73,11 +72,10 @@ const Project = (props) => {
     if (sessionStorage.getItem("project-filter") !== null) {
       setFilter(sessionStorage.getItem("project-filter"));
     }
-
-    getProjectData();
   }, []);
 
   const getProjectData = () => {
+    setProject({});
     axios
       .get(`/api/project/${projectId}`)
       .then((response) => {

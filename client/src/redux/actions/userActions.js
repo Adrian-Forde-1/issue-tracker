@@ -75,7 +75,6 @@ export const logoutUser = (history) => (dispatch) => {
         dispatch({ type: SET_ERRORS, payload: err.response.data });
       }
     });
-  history.push("/");
 };
 
 export const setMessages = (messages) => (dispatch) => {
