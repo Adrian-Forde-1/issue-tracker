@@ -222,6 +222,11 @@
 
 @media screen and (max-width: 768px) {
   .project {
+    &__dashboard-landing-wrapper {
+      svg {
+        font-size: 45px;
+      }
+    }
     &__filter-selector {
       select {
         font-size: 12px;
@@ -241,6 +246,16 @@
 
 @media screen and (max-width: 500px) {
   .project {
+    &__dashboard-landing-wrapper {
+      svg {
+        font-size: 35px;
+      }
+
+      h6 {
+        font-size: 14px;
+      }
+    }
+
     &__header {
       align-items: flex-start;
     }
@@ -278,6 +293,25 @@
         a svg {
           font-size: 20px;
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .project {
+    &__dashboard-landing-wrapper {
+      svg {
+        font-size: 25px;
+      }
+
+      h6 {
+        font-size: 12px;
+      }
+
+      a {
+        font-size: 10px;
+        padding: 4px 10px;
       }
     }
   }

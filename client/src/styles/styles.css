@@ -1925,7 +1925,7 @@ header::after {
 }
 
 .project-preview:hover svg, .project-preview.selected svg {
-  color: #fff;
+  color: #22ffca;
 }
 
 .project-preview__container {
@@ -3084,6 +3084,9 @@ header::after {
 }
 
 @media screen and (max-width: 768px) {
+  .project__dashboard-landing-wrapper svg {
+    font-size: 45px;
+  }
   .project__filter-selector select {
     font-size: 12px;
   }
@@ -3097,6 +3100,12 @@ header::after {
 }
 
 @media screen and (max-width: 500px) {
+  .project__dashboard-landing-wrapper svg {
+    font-size: 35px;
+  }
+  .project__dashboard-landing-wrapper h6 {
+    font-size: 14px;
+  }
   .project__header {
     -webkit-box-align: start;
         -ms-flex-align: start;
@@ -3134,6 +3143,19 @@ header::after {
   .project__action-buttons-container div svg,
   .project__action-buttons-container div a svg {
     font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .project__dashboard-landing-wrapper svg {
+    font-size: 25px;
+  }
+  .project__dashboard-landing-wrapper h6 {
+    font-size: 12px;
+  }
+  .project__dashboard-landing-wrapper a {
+    font-size: 10px;
+    padding: 4px 10px;
   }
 }
 
