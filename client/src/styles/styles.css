@@ -4189,6 +4189,18 @@ header::after {
   overflow-y: auto;
 }
 
+.dashboard__main-content-body::-webkit-scrollbar {
+  width: 7px;
+}
+
+.dashboard__main-content-body::-webkit-scrollbar-thumb {
+  background-color: #080021;
+}
+
+.dashboard__main-content-body::-webkit-scrollbar-track {
+  background: #eee;
+}
+
 .dashboard__quick-links-container {
   width: 100%;
   height: 10%;

@@ -288,7 +288,7 @@ const Project = (props) => {
     return projectIssues;
   };
 
-  if (Object.keys(project).length > 0) {
+  if (props && props.user && Object.keys(project).length > 0) {
     return (
       <div className="project__wrapper">
         {renderModal()}
