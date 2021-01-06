@@ -4192,6 +4192,128 @@ header::after {
   }
 }
 
+#sitting-computer__square-top-left {
+  -webkit-animation: sittingComputerSqaureRotate 3s linear infinite forwards;
+          animation: sittingComputerSqaureRotate 3s linear infinite forwards;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  transform-box: fill-box;
+}
+
+#sitting-computer__square-top-right {
+  animation: sittingComputerSqaureRotate 6s linear 200ms infinite reverse;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  transform-box: fill-box;
+}
+
+#sitting-computer__square-bottom-left {
+  -webkit-animation: sittingComputerSqaureRotate 10s linear 400ms infinite forwards;
+          animation: sittingComputerSqaureRotate 10s linear 400ms infinite forwards;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  transform-box: fill-box;
+}
+
+#sitting-computer__computer-top-right-square {
+  -webkit-animation: sittingComputerSqaureRotate 6s linear 400ms infinite forwards;
+          animation: sittingComputerSqaureRotate 6s linear 400ms infinite forwards;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  transform-box: fill-box;
+}
+
+#sitting-computer__computer-left-unfilled-circle {
+  -webkit-animation: sittingComputerSqaureRotate 6s linear 400ms infinite forwards;
+          animation: sittingComputerSqaureRotate 6s linear 400ms infinite forwards;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+}
+
+#sitting-computer__computer-line-1,
+#sitting-computer__computer-line-2,
+#sitting-computer__computer-line-3,
+#sitting-computer__computer-line-4,
+#sitting-computer__computer-line-5 {
+  -webkit-animation: sittingComputerLineShrink 6s ease-in-out 400ms infinite forwards;
+          animation: sittingComputerLineShrink 6s ease-in-out 400ms infinite forwards;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  transform-box: fill-box;
+}
+
+#sitting-computer__computer-line-2 {
+  -webkit-animation-delay: 1s;
+          animation-delay: 1s;
+}
+
+#sitting-computer__computer-line-3 {
+  -webkit-animation-delay: 4s;
+          animation-delay: 4s;
+}
+
+#sitting-computer__computer-line-4 {
+  -webkit-animation-delay: 3s;
+          animation-delay: 3s;
+}
+
+#sitting-computer__computer-line-5 {
+  -webkit-animation-delay: 2s;
+          animation-delay: 2s;
+}
+
+@-webkit-keyframes sittingComputerSqaureRotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes sittingComputerSqaureRotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes sittingComputerLineShrink {
+  0% {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+  }
+  50% {
+    -webkit-transform: scaleX(0.3);
+            transform: scaleX(0.3);
+  }
+  100% {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+  }
+}
+
+@keyframes sittingComputerLineShrink {
+  0% {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+  }
+  50% {
+    -webkit-transform: scaleX(0.3);
+            transform: scaleX(0.3);
+  }
+  100% {
+    -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+  }
+}
+
 * {
   margin: 0;
   padding: 0;

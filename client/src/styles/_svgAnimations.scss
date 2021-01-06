@@ -1,0 +1,72 @@
+#sitting-computer__square-top-left {
+  animation: sittingComputerSqaureRotate 3s linear infinite forwards;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+#sitting-computer__square-top-right {
+  animation: sittingComputerSqaureRotate 6s linear 200ms infinite reverse;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+#sitting-computer__square-bottom-left {
+  animation: sittingComputerSqaureRotate 10s linear 400ms infinite forwards;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+#sitting-computer__computer-top-right-square {
+  animation: sittingComputerSqaureRotate 6s linear 400ms infinite forwards;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+#sitting-computer__computer-left-unfilled-circle {
+  animation: sittingComputerSqaureRotate 6s linear 400ms infinite forwards;
+  transform-origin: center;
+  //   transform-box: fill-box;
+}
+
+#sitting-computer__computer-line-1,
+#sitting-computer__computer-line-2,
+#sitting-computer__computer-line-3,
+#sitting-computer__computer-line-4,
+#sitting-computer__computer-line-5 {
+  animation: sittingComputerLineShrink 6s ease-in-out 400ms infinite forwards;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+#sitting-computer__computer-line-2 {
+  animation-delay: 1s;
+}
+#sitting-computer__computer-line-3 {
+  animation-delay: 4s;
+}
+#sitting-computer__computer-line-4 {
+  animation-delay: 3s;
+}
+#sitting-computer__computer-line-5 {
+  animation-delay: 2s;
+}
+
+@keyframes sittingComputerSqaureRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sittingComputerLineShrink {
+  0% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(0.3);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
