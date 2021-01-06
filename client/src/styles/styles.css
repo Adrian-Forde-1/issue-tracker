@@ -1266,6 +1266,56 @@ header::after {
   padding: 20px 0px 20px 20px;
 }
 
+.team__dashboard-landing-wrapper {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.team__dashboard-landing-wrapper svg {
+  font-size: 80px;
+}
+
+.team__dashboard-landing-wrapper h6 {
+  font-size: 16px;
+  margin-top: 20px;
+  color: #080021;
+}
+
+.team__dashboard-landing-wrapper div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-column-gap: 10px;
+          column-gap: 10px;
+}
+
+.team__dashboard-landing-wrapper a {
+  margin-top: 10px;
+  background: #080021;
+  color: #fdfcff;
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
 .team__header {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1454,9 +1504,21 @@ header::after {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .team__dashboard-landing-wrapper svg {
+    font-size: 65px;
+  }
+}
+
 @media screen and (max-width: 500px) {
   .team__profile-wrapper {
     padding: 10px;
+  }
+  .team__dashboard-landing-wrapper svg {
+    font-size: 55px;
+  }
+  .team__dashboard-landing-wrapper h6 {
+    font-size: 14px;
   }
   .team__header-actions-container {
     padding-right: 0px;
@@ -1478,6 +1540,19 @@ header::after {
   }
   .team__img-container div span {
     font-size: 22px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .team__dashboard-landing-wrapper svg {
+    font-size: 45px;
+  }
+  .team__dashboard-landing-wrapper h6 {
+    font-size: 12px;
+  }
+  .team__dashboard-landing-wrapper a {
+    font-size: 10px;
+    padding: 4px 10px;
   }
 }
 
@@ -1823,7 +1898,7 @@ header::after {
 }
 
 .team-preview:hover svg, .team-preview.selected svg {
-  color: #fff;
+  color: #22ff53;
 }
 
 .team-preview__container {
@@ -1925,7 +2000,7 @@ header::after {
 }
 
 .project-preview:hover svg, .project-preview.selected svg {
-  color: #22ffca;
+  color: #22ff53;
 }
 
 .project-preview__container {
@@ -4230,6 +4305,37 @@ header::after {
           transform-origin: center;
 }
 
+#teamwork__left-plant {
+  -webkit-animation: plantShake 6s linear infinite forwards;
+          animation: plantShake 6s linear infinite forwards;
+  -webkit-transform-origin: bottom;
+          transform-origin: bottom;
+  transform-box: fill-box;
+}
+
+#teamwork__right-plant {
+  -webkit-animation: plantShake 6s linear 2s infinite forwards;
+          animation: plantShake 6s linear 2s infinite forwards;
+  -webkit-transform-origin: bottom;
+          transform-origin: bottom;
+  transform-box: fill-box;
+}
+
+#teamwork__circle-two-colors {
+  animation: sittingComputerSqaureRotate 10s linear infinite reverse;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  transform-box: fill-box;
+}
+
+#teamwork__lady-hair {
+  -webkit-animation: plantShake 6s linear 4s infinite forwards;
+          animation: plantShake 6s linear 4s infinite forwards;
+  -webkit-transform-origin: bottom;
+          transform-origin: bottom;
+  transform-box: fill-box;
+}
+
 #sitting-computer__computer-line-1,
 #sitting-computer__computer-line-2,
 #sitting-computer__computer-line-3,
@@ -4311,6 +4417,44 @@ header::after {
   100% {
     -webkit-transform: scaleX(1);
             transform: scaleX(1);
+  }
+}
+
+@-webkit-keyframes plantShake {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  25% {
+    -webkit-transform: rotate(20deg);
+            transform: rotate(20deg);
+  }
+  75% {
+    -webkit-transform: rotate(-20deg);
+            transform: rotate(-20deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+}
+
+@keyframes plantShake {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  25% {
+    -webkit-transform: rotate(20deg);
+            transform: rotate(20deg);
+  }
+  75% {
+    -webkit-transform: rotate(-20deg);
+            transform: rotate(-20deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
 }
 

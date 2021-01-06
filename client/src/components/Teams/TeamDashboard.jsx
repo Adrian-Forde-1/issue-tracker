@@ -24,8 +24,11 @@ import PeopleWavingSVG from "../SVG/PeopleWavingSVG";
 
 //Compoenents
 import TeamPreview from "../Preview/TeamPreview";
-import CreateTeam from "../Teams/CreateTeam";
-import JoinTeam from "../Teams/JoinTeam";
+
+import CreateTeam from "./CreateTeam";
+import JoinTeam from "./JoinTeam";
+import CreateTeamProject from "./CreateTeamProject";
+import TeamDashboardLandingPage from "./TeamDashboardLandingPage";
 
 import SideNav from "../Navigation/SideNav";
 import DashboardNavbar from "../Navigation/DashboardNavbar";
@@ -38,7 +41,6 @@ import Labels from "../Labels/Labels";
 import AddLabel from "../Labels/AddLabel";
 import EditLabel from "../Labels/EditLabel";
 
-import CreateTeamProject from "./CreateTeamProject";
 import Project from "../Projects/Project";
 import EditProject from "../Projects/EditProject";
 
@@ -67,9 +69,18 @@ function TeamDashboard(props) {
 
   let routes = (
     <Switch>
-      <Route exact path="/team">
-        <h1>Teams stuff</h1>
-      </Route>
+      <Route
+        exact
+        path="/team"
+        render={(props) => {
+          return (
+            <TeamDashboardLandingPage
+              {...props}
+              setCurrentTeam={setCurrentTeam}
+            />
+          );
+        }}
+      />
       <Route
         exact
         path="/team/create"

@@ -12,6 +12,40 @@
     padding: 20px 0px 20px 20px;
   }
 
+  &__dashboard-landing-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      font-size: 80px;
+    }
+
+    h6 {
+      font-size: 16px;
+      margin-top: 20px;
+      color: $text-color;
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      column-gap: 10px;
+    }
+
+    a {
+      margin-top: 10px;
+      background: $text-color;
+      color: $page-background;
+      padding: 8px 14px;
+      font-size: 14px;
+    }
+  }
+
   &__header {
     display: flex;
     justify-content: flex-start;
@@ -164,10 +198,30 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .team {
+    &__dashboard-landing-wrapper {
+      svg {
+        font-size: 65px;
+      }
+    }
+  }
+}
+
 @media screen and(max-width: 500px) {
   .team {
     &__profile-wrapper {
       padding: 10px;
+    }
+
+    &__dashboard-landing-wrapper {
+      svg {
+        font-size: 55px;
+      }
+
+      h6 {
+        font-size: 14px;
+      }
     }
 
     &__header {
@@ -198,6 +252,25 @@
         span {
           font-size: 22px;
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .team {
+    &__dashboard-landing-wrapper {
+      svg {
+        font-size: 45px;
+      }
+
+      h6 {
+        font-size: 12px;
+      }
+
+      a {
+        font-size: 10px;
+        padding: 4px 10px;
       }
     }
   }

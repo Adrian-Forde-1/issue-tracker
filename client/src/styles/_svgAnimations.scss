@@ -27,6 +27,30 @@
   //   transform-box: fill-box;
 }
 
+#teamwork__left-plant {
+  animation: plantShake 6s linear infinite forwards;
+  transform-origin: bottom;
+  transform-box: fill-box;
+}
+
+#teamwork__right-plant {
+  animation: plantShake 6s linear 2s infinite forwards;
+  transform-origin: bottom;
+  transform-box: fill-box;
+}
+
+#teamwork__circle-two-colors {
+  animation: sittingComputerSqaureRotate 10s linear infinite reverse;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+#teamwork__lady-hair {
+  animation: plantShake 6s linear 4s infinite forwards;
+  transform-origin: bottom;
+  transform-box: fill-box;
+}
+
 #sitting-computer__computer-line-1,
 #sitting-computer__computer-line-2,
 #sitting-computer__computer-line-3,
@@ -68,5 +92,20 @@
   }
   100% {
     transform: scaleX(1);
+  }
+}
+
+@keyframes plantShake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(20deg);
+  }
+  75% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }
