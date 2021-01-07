@@ -30,10 +30,14 @@ function Navbar(props) {
   const [navOpen, setNavOpen] = useState(false);
 
   const renderImage = () => {
-    if (props.user.image && props.user.image !== null) {
-      return <img src={props.user.image}></img>;
+    if (props && props.user && props.user.image && props.user.image !== null) {
+      return <img src={props.user && props.user.image}></img>;
     }
-    return <span>{props.user.username.toString().toUpperCase()[0]}</span>;
+    return (
+      <span>
+        {props.user && props.user.username.toString().toUpperCase()[0]}
+      </span>
+    );
   };
 
   const renderHamburger = () => {
@@ -151,8 +155,8 @@ function Navbar(props) {
                   </div>
                 </div>
                 <div className="navbar__right-dropdown__account-info-right">
-                  <span>{props.user.username}</span>
-                  <span>{props.user.email}</span>
+                  <span>{props.user && props.user.username}</span>
+                  <span>{props.user && props.user.email}</span>
                 </div>
               </div>
               <ul>

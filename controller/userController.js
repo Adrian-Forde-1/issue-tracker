@@ -2,7 +2,11 @@ const { json } = require("express");
 const User = require("../models/UserModel");
 
 const { validateLoginData, validateSignUpData } = require("../util/authUtil");
-const { signToken, decodeToken } = require("../util/authUtil");
+const {
+  signToken,
+  decodeToken,
+  generateRefreshToken,
+} = require("../util/authUtil");
 
 const UserModel = require("../models/UserModel");
 
@@ -26,11 +30,18 @@ module.exports = {
     //   if (!valid) return res.status(400).json(errors);
 
     //Generate token
-    const token = signToken(req.user);
+    const accessToken = signToken(req.user);
+    const refreshToken = generateRefreshToken(req.user);
+
+    res.status(200).cookie("jwtIss", accessToken, {
+      sameSite: "strict",
+      path: "/",
+      httpOnly: true,
+    });
 
     res
       .status(200)
-      .cookie("jwtIss", token, {
+      .cookie("jwtIssRef", refreshToken, {
         sameSite: "strict",
         path: "/",
         httpOnly: true,
@@ -115,9 +126,10 @@ module.exports = {
   },
   // Logout
   logout: (req, res) => {
-    if (req.cookies["jwtIss"])
-      res.status(200).clearCookie("jwtIss").send("Clearing cookie");
-    else res.status(404).send("Token not found");
+    if (req.cookies["jwtIss"] && req.cookies["jwtIssRef"]) {
+      res.status(200).clearCookie("jwtIss");
+      res.status(200).clearCookie("jwtIssRef").send("Clearing cookies");
+    } else res.status(404).send("Tokens not found");
   },
   //Delete User
   deleteUser: (req, res) => {
@@ -148,7 +160,7 @@ module.exports = {
     //Decode token the was sent by user
     const decodedToken = decodeToken(token);
     //Get user id from token sub
-    const userId = decodedToken.sub;
+    const userId = decodedToken.data;
     //Find user in databse
     UserModel.findById(userId)
       .populate("teams")

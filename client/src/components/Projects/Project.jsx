@@ -55,7 +55,6 @@ const Project = (props) => {
   }, [props.match.params]);
 
   useEffect(() => {
-    console.log("new project");
     getProjectData();
   }, [projectId]);
 

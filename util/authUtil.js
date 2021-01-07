@@ -1,8 +1,8 @@
-const JWT = require('jsonwebtoken');
-const UserModel = require('../models/UserModel');
+const JWT = require("jsonwebtoken");
+const UserModel = require("../models/UserModel");
 
 const isEmpty = (string) => {
-  if (string.trim() === '') return true;
+  if (string.trim() === "") return true;
   else return false;
 };
 
@@ -16,15 +16,15 @@ exports.validateSignUpData = (data) => {
   let errors = {};
 
   if (isEmpty(data.email)) {
-    errors.email = 'Must not be empty';
+    errors.email = "Must not be empty";
   } else if (!isEmail(data.email)) {
-    errors.email = 'Must be a valid email';
+    errors.email = "Must be a valid email";
   }
 
-  if (isEmpty(data.password)) errors.password = 'Must not be empty';
+  if (isEmpty(data.password)) errors.password = "Must not be empty";
   if (data.password !== data.confirmPassword)
-    errors.confirmPassword = 'Passwords must match';
-  if (isEmpty(data.username)) errors.username = 'Must not be empty';
+    errors.confirmPassword = "Passwords must match";
+  if (isEmpty(data.username)) errors.username = "Must not be empty";
 
   return { errors, valid: Object.keys(errors).length === 0 ? true : false };
 };
@@ -32,22 +32,22 @@ exports.validateSignUpData = (data) => {
 exports.validateLoginData = (data) => {
   let errors = {};
 
-  if (isEmpty(data.email)) errors.email = 'Must not be empty';
-  if (isEmpty(data.password)) errors.password = 'Must not be empty';
+  if (isEmpty(data.email)) errors.email = "Must not be empty";
+  if (isEmpty(data.password)) errors.password = "Must not be empty";
 
   return { errors, valid: Object.keys(errors).length === 0 ? true : false };
 };
 
 exports.signToken = (user) => {
-  return JWT.sign(
-    {
-      iss: 'AdrianFordeBugTracker',
-      sub: user._id,
-      iat: new Date().getTime(),
-      exp: new Date().setDate(new Date().getDate() + 1),
-    },
-    process.env.jwt_secret
-  );
+  return JWT.sign({ data: user._id }, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "10m",
+  });
+};
+
+exports.generateRefreshToken = (user) => {
+  return JWT.sign({ data: user._id }, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: "7d",
+  });
 };
 
 exports.decodeToken = (token) => {

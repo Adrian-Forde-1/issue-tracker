@@ -59,7 +59,7 @@ function Homepage(props) {
                   <div className="mt-5"></div>
                   <h1>
                     Welcome
-                    <br /> <span>{props.user.username}</span>.
+                    <br /> <span>{props.user && props.user.username}</span>.
                   </h1>
                   <p>
                     Hope you're able to solve those troublesome bugs today. Wish

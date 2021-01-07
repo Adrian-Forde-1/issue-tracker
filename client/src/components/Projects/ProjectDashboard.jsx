@@ -19,7 +19,7 @@ import PlusSVG from "../SVG/PlusSVG";
 import PeopleWavingSVG from "../SVG/PeopleWavingSVG";
 
 //Actions
-import { setErrors } from "../../redux/actions/userActions";
+import { setErrors, logoutUser } from "../../redux/actions/userActions";
 
 //Components
 import ProjectPreview from "../Preview/ProjectPreview";
@@ -64,8 +64,10 @@ function ProjectDashboard(props) {
         }
       })
       .catch((err) => {
+        console.log(err.response);
         if (err && err.response && err.response.data) {
-          props.setErrors(err);
+          if (err.response.status === 401) props.logoutUser(props.history);
+          else props.setErrors(err);
         }
       });
   };
@@ -270,6 +272,7 @@ function ProjectDashboard(props) {
 
 const mapDispatchToProps = {
   setErrors,
+  logoutUser,
 };
 
 export default connect(null, mapDispatchToProps)(ProjectDashboard);

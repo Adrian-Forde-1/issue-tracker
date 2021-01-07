@@ -52,12 +52,12 @@ passport.use(
   new JwtStrategy(
     {
       jwtFromRequest: getCookie,
-      secretOrKey: process.env.jwt_secret,
+      secretOrKey: process.env.ACCESS_TOKEN_SECRET,
     },
     async (payload, done) => {
       try {
         //Find user specified in token
-        const user = await UserModel.findById(payload.sub);
+        const user = await UserModel.findById(payload.data);
 
         // console.log(payload.sub);
 
@@ -69,6 +69,7 @@ passport.use(
         //Otherwise, return the token
         done(null, user);
       } catch (error) {
+        console.log(error);
         done(error, false);
       }
     }

@@ -91,7 +91,7 @@ const passportJWT = passport.authenticate("jwt", { session: true });
 //User Routes
 router.post("/login", passportLocal, login);
 router.post("/signup", signUp);
-router.post("/logout", passportJWT, logout);
+router.post("/logout", logout);
 router.get("/user", passportJWT, getUser);
 router.put(
   "/edit-profile",

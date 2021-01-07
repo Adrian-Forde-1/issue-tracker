@@ -63,15 +63,13 @@ export const logoutUser = (history) => (dispatch) => {
   axios
     .post("/api/logout")
     .then((res) => {
-      if (res && res.data) {
+      if (res) {
         dispatch({ type: LOGOUT_USER });
         history.push("/login");
-        dispatch({ type: STOP_LOADING_UI });
       }
     })
     .catch((err) => {
       if (err && err.response && err.response.data) {
-        dispatch({ type: STOP_LOADING_UI });
         dispatch({ type: SET_ERRORS, payload: err.response.data });
       }
     });
