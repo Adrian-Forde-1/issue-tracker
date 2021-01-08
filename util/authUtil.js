@@ -38,7 +38,7 @@ exports.validateLoginData = (data) => {
   return { errors, valid: Object.keys(errors).length === 0 ? true : false };
 };
 
-exports.signToken = (user) => {
+const signToken = (user) => {
   return JWT.sign({ data: user._id }, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "10m",
   });
@@ -50,6 +50,17 @@ exports.generateRefreshToken = (user) => {
   });
 };
 
+exports.verifyToken = (token, user) => {
+  let accessToken;
+  JWT.verify(token, process.env.REFRESH_TOKEN_SECRET, (err) => {
+    if (err) return resizeBy.sendStatus(403);
+    accessToken = signToken(user);
+  });
+  return accessToken;
+};
+
 exports.decodeToken = (token) => {
   return JWT.decode(token);
 };
+
+exports.signToken = signToken;

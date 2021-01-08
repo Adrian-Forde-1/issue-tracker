@@ -85,6 +85,9 @@ const {
 //Chat Controller Imports
 const { getChats } = require("../controller/chatController");
 
+//Auth Controller Imports
+const { refreshToken } = require("../controller/authController");
+
 const passportLocal = passport.authenticate("local", { session: true });
 const passportJWT = passport.authenticate("jwt", { session: true });
 
@@ -146,4 +149,7 @@ router.delete("/comment/:commentId", passportJWT, deleteComment);
 //Chat
 router.get("/chats/:teamID", passportJWT, getChats);
 // router.get('/chats', passportJWT, getChats);
+
+//Auth
+router.post("/token", refreshToken);
 module.exports = router;

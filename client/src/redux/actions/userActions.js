@@ -59,22 +59,6 @@ export const signUpUser = (userData, history) => (dispatch) => {
     });
 };
 
-export const logoutUser = (history) => (dispatch) => {
-  axios
-    .post("/api/logout")
-    .then((res) => {
-      if (res) {
-        dispatch({ type: LOGOUT_USER });
-        history.push("/login");
-      }
-    })
-    .catch((err) => {
-      if (err && err.response && err.response.data) {
-        dispatch({ type: SET_ERRORS, payload: err.response.data });
-      }
-    });
-};
-
 export const setMessages = (messages) => (dispatch) => {
   console.log("Set messages called");
   dispatch({ type: SET_MESSAGES, payload: messages });

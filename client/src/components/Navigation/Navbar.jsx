@@ -10,7 +10,10 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import { logoutUser } from "../../redux/actions/userActions";
+// import { logoutUser } from "../../redux/actions/userActions";
+
+//Util
+import { logoutUser } from "../../util/authUtil";
 
 //Components
 import NavbarLogoSVG from "../SVG/NavbarLogoSVG";
@@ -169,7 +172,7 @@ function Navbar(props) {
                 </li>
                 <li
                   onClick={() => {
-                    props.logoutUser(props.history);
+                    logoutUser(props.history);
                   }}
                 >
                   Logout
@@ -186,7 +189,7 @@ function Navbar(props) {
 }
 
 const mapDispatchToProps = {
-  logoutUser,
+  // logoutUser,
 };
 
 const mapStateToProps = (state) => ({

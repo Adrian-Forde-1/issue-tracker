@@ -5,7 +5,10 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import { logoutUser } from "../../redux/actions/userActions";
+// import { logoutUser } from "../../redux/actions/userActions";
+
+//Util
+import { logoutUser } from "../../util/authUtil";
 
 //SVG
 import HamburgerNavSVG from "../SVG/HamburgerNavSVG";
@@ -70,7 +73,7 @@ const DashboardNavbar = (props) => {
                 </li>
                 <li
                   onClick={() => {
-                    props.logoutUser(props.history);
+                    logoutUser(props.history);
                   }}
                 >
                   Logout
@@ -85,7 +88,7 @@ const DashboardNavbar = (props) => {
 };
 
 const mapDispatchToProps = {
-  logoutUser,
+  // logoutUser,
 };
 
 const mapStateToProps = (state) => ({
