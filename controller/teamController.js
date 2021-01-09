@@ -302,8 +302,8 @@ module.exports = {
     const userId = req.user._id;
 
     TeamModel.find({ users: { $elemMatch: { $eq: userId } } })
-      .populate("projects")
       .sort("name")
+      .select("name createdBy _id")
       .exec(function (err, teams) {
         //If error occured when fetching teams, notify user
         if (err) {

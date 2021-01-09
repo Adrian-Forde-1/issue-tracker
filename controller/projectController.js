@@ -278,7 +278,7 @@ module.exports = {
       $and: [{ createdBy: userId }, { team: null }, { archived: false }],
     })
       .sort("name")
-      .populate("issues")
+      .select("name _id")
       .exec(function (err, projects) {
         //If something went wrong when fetching projects, notify user
         if (err) {

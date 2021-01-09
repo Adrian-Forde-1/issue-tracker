@@ -10,6 +10,9 @@ import "react-tippy/dist/tippy.css";
 //Redux
 import { connect } from "react-redux";
 
+//Axios Api
+import { apiGet } from "../../api/axiosApi";
+
 //React Router DOM
 import { Link, Route, Switch, Redirect } from "react-router-dom";
 
@@ -58,22 +61,24 @@ function ProjectDashboard(props) {
     setSearch(e.target.value);
   };
 
-  const getProjects = () => {
-    axios
-      .get("/api/projects")
-      .then((res) => {
-        if (res && res.data) {
-          setProjects(res.data);
-        }
-      })
-      .catch(async (err) => {
-        if (err && err.response && err.response.data) {
-          if (err.response.status === 401) {
-            const refreshed = await refreshToken(props.history);
-            if (refreshed) getProjects();
-          } else props.setErrors(err);
-        }
-      });
+  const getProjects = async () => {
+    let response = await apiGet("/api/projects", props.history, getProjects);
+    if (response && response.data) setProjects(response.data);
+    // axios
+    //   .get("/api/projects")
+    //   .then((res) => {
+    //     if (res && res.data) {
+    //       setProjects(res.data);
+    //     }
+    //   })
+    //   .catch(async (err) => {
+    //     if (err && err.response && err.response.data) {
+    //       if (err.response.status === 401) {
+    //         const refreshed = await refreshToken(props.history);
+    //         if (refreshed) getProjects();
+    //       } else props.setErrors(err);
+    //     }
+    //   });
   };
 
   let routes = (
