@@ -40,7 +40,7 @@ exports.validateLoginData = (data) => {
 
 const signToken = (user) => {
   return JWT.sign({ data: user._id }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "10m",
+    expiresIn: "15s",
   });
 };
 
@@ -53,7 +53,7 @@ exports.generateRefreshToken = (user) => {
 exports.verifyToken = (token, user) => {
   let accessToken;
   JWT.verify(token, process.env.REFRESH_TOKEN_SECRET, (err) => {
-    if (err) return resizeBy.sendStatus(403);
+    if (err) return res.sendStatus(403);
     accessToken = signToken(user);
   });
   return accessToken;

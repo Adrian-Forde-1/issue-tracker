@@ -12,7 +12,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  user: null,
+  user: {},
   errors: [],
   messages: [],
   authenticated: false,

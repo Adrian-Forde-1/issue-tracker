@@ -3,8 +3,13 @@ const { verifyToken } = require("../util/authUtil");
 module.exports = {
   refreshToken: (req, res) => {
     const refreshToken = req.cookies["jwtIssRef"];
+    const user = req.body.user;
+
     if (refreshToken === null) return res.sendStatus(401);
-    const accessToken = verifyToken(refreshToken, req.user);
+    if (user === null || Object.keys(user).length <= 0)
+      return res.sendStatus(401);
+
+    const accessToken = verifyToken(refreshToken, user);
     res.status(200).clearCookie("jwtIss");
     res
       .status(200)
