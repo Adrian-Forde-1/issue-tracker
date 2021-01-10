@@ -308,9 +308,11 @@ const Project = (props) => {
         <React.Fragment>
           <div className="project__header">
             <div className="project__name">{project.name && project.name}</div>
-            {project.createdBy._id.toString() === props.user._id.toString() && (
-              <div className="project__action-buttons-container">
-                {/* `<div
+            {props.createdBy &&
+              project.createdBy._id.toString() ===
+                props.user._id.toString() && (
+                <div className="project__action-buttons-container">
+                  {/* `<div
                   onClick={() => {
                     if (project.archived === false) {
                       archiveProject();
@@ -337,40 +339,40 @@ const Project = (props) => {
                     </Tooltip>
                   )}
                 </div>` */}
-                <div>
-                  <Link
-                    to={`${
-                      project.team !== null ? "/team/project/" : "/project/"
-                    }${project._id}/edit`}
+                  <div>
+                    <Link
+                      to={`${
+                        project.team !== null ? "/team/project/" : "/project/"
+                      }${project._id}/edit`}
+                    >
+                      <Tooltip
+                        title="Edit Project"
+                        position="bottom"
+                        size="small"
+                      >
+                        <EditSVG />
+                      </Tooltip>
+                    </Link>
+                  </div>
+
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setModalType(modalTypes["Delete Modal"]);
+                      setShowModal(true);
+                    }}
                   >
+                    {" "}
                     <Tooltip
-                      title="Edit Project"
+                      title="Delete Project"
                       position="bottom"
                       size="small"
                     >
-                      <EditSVG />
+                      <TrashSVG />
                     </Tooltip>
-                  </Link>
+                  </div>
                 </div>
-
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setModalType(modalTypes["Delete Modal"]);
-                    setShowModal(true);
-                  }}
-                >
-                  {" "}
-                  <Tooltip
-                    title="Delete Project"
-                    position="bottom"
-                    size="small"
-                  >
-                    <TrashSVG />
-                  </Tooltip>
-                </div>
-              </div>
-            )}
+              )}
           </div>
           <div className="project__creation-date">
             Created By
