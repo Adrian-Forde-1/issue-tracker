@@ -53,7 +53,7 @@ exports.generateRefreshToken = (user) => {
 exports.verifyToken = (token, user) => {
   let accessToken;
   JWT.verify(token, process.env.REFRESH_TOKEN_SECRET, (err) => {
-    if (err) return res.sendStatus(403);
+    if (err) throw new Error(err);
     accessToken = signToken(user);
   });
   return accessToken;

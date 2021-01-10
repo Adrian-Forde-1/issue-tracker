@@ -9,15 +9,19 @@ module.exports = {
     if (user === null || Object.keys(user).length <= 0)
       return res.sendStatus(401);
 
-    const accessToken = verifyToken(refreshToken, user);
-    res.status(200).clearCookie("jwtIss");
-    res
-      .status(200)
-      .cookie("jwtIss", accessToken, {
-        sameSite: "strict",
-        path: "/",
-        httpOnly: true,
-      })
-      .send("Returning cookie");
+    try {
+      const accessToken = verifyToken(refreshToken, user);
+      res.status(200).clearCookie("jwtIss");
+      res
+        .status(200)
+        .cookie("jwtIss", accessToken, {
+          sameSite: "strict",
+          path: "/",
+          httpOnly: true,
+        })
+        .send("Returning cookie");
+    } catch (err) {
+      res.sendStatus(401);
+    }
   },
 };

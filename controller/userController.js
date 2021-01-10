@@ -129,7 +129,7 @@ module.exports = {
     if (req.cookies["jwtIss"] && req.cookies["jwtIssRef"]) {
       res.status(200).clearCookie("jwtIss");
       res.status(200).clearCookie("jwtIssRef").send("Clearing cookies");
-    } else res.status(404).send("Tokens not found");
+    } else res.status(400).send("Tokens not found");
   },
   //Delete User
   deleteUser: (req, res) => {

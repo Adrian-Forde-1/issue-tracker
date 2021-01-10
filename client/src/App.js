@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 //Axios
 import axios from "axios";
@@ -8,10 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 //Axios
-import { setErrors } from "./redux/actions/userActions";
-
-// import Breadcrumbs from './components/Breadcrumbs';
-// import IsNotAuthenticated from './components/IsNotAuthenticated.jsx';
+import { setErrors, logoutUser } from "./redux/actions/userActions";
 
 //React Router Dom
 import { Route, withRouter, Switch } from "react-router-dom";
@@ -23,24 +20,10 @@ import Signup from "./components/Signup";
 import IsAuthenticated from "./components/IsAuthenticated";
 import Navbar from "./components/Navigation/Navbar";
 import { connect } from "react-redux";
-// import Team from "./components/Teams/Team";
-// import CreateTeam from "./components/Teams/CreateTeam";
-// import Project from "./components/Projects/Project";
-// import CreateProject from "./components/Projects/CreateProject";
-// import Labels from "./components/Labels/Labels";
-// import EditLabel from "./components/Labels/EditLabel";
-// import AddLabel from "./components/Labels/AddLabel";
-// import Issue from "./components/Issues/Issue";
-// import NewIssue from "./components/Issues/NewIssue";
-// import EditIssue from "./components/Issues/EditIssue";
 import ProjectDashboard from "./components/Projects/ProjectDashboard";
 import ArchivedProjects from "./components/Projects/ArchivedProjects";
 import ArchivedTeamProjects from "./components/Projects/ArchivedTeamProjects";
-import CreateTeamProject from "./components/Teams/CreateTeamProject";
-// import JoinTeam from "./components/Teams/JoinTeam";
-// import EditProject from "./components/Projects/EditProject";
 import TeamChat from "./components/Chat/TeamChat";
-// import DeleteModal from "./components/DeleteModal";
 import ErrorBoundary from "./components/ErrorBoundary";
 import TeamChatLandingPage from "./components/Chat/TeamChatLandingPage";
 import ToastComponent from "./components/Toast/ToastComponent";
@@ -53,27 +36,36 @@ const App = (props) => {
   //   autoClose: 4000,
 
   // });
-  let refreshTokenInterval = null;
+  const [refreshTokenInterval, setRefreshTokenInterval] = useState(null);
 
   useEffect(() => {
-    if (props.user && Object.keys(props.user).length > 0) {
+    if (
+      props.user &&
+      Object.keys(props.user).length > 0 &&
+      props.authenticated
+    ) {
+      //
       let user = {
         _id: props.user._id,
       };
-      refreshTokenInterval = setInterval(() => {
-        axios.post("/api/token", { user }).catch((err) => {
-          if (err && err.response && err.response.data) props.setErrors(err);
-        });
-      }, 10 * 1000);
-    }
-
-    if (props.user && Object.keys(props.user).length <= 0) {
-      console.log("Clearing interval");
+      setRefreshTokenInterval(
+        setInterval(() => {
+          axios.post("/api/token", { user }).catch((err) => {
+            if (
+              err &&
+              err.response.status === 401 &&
+              props.authenticated === true
+            )
+              props.logoutUser();
+            if (err && err.response && err.response.data) props.setErrors(err);
+          });
+        }, 10 * 1000)
+      );
+    } else {
       clearInterval(refreshTokenInterval);
     }
-    // clearInterval(refreshToken);
-    // clearInterval(refreshToken);
-  }, [props.user]);
+  }, [props.user, props.authenticated]);
+
   return (
     <div className="App">
       <ToastContainer />
@@ -106,48 +98,6 @@ const App = (props) => {
           <ErrorBoundary>
             <Route path="/project" component={ProjectDashboard} />
           </ErrorBoundary>
-          {/* <Route exact path="/project/:projectId" component={Project} /> */}
-          {/* <Route
-            exact
-            path="/project/:projectId/edit"
-            component={EditProject}
-          /> */}
-          {/* <Route exact path="/create/project" component={CreateProject} /> */}
-          {/* <Route
-            exact
-            path="/projects/archived"
-            component={ArchivedProjects}
-          /> */}
-
-          {/* Labels */}
-          {/* <Route exact path="/project/:projectId/labels" component={Labels} /> */}
-          {/* <Route
-            exact
-            path="/project/:projectId/label/:labelId/edit"
-            component={EditLabel}
-          /> */}
-          {/* <Route
-            exact
-            path="/project/:projectId/label/add"
-            component={AddLabel}
-          /> */}
-
-          {/* Issue */}
-          {/* <Route
-            exact
-            path="/project/:projectId/issue/:issueId"
-            component={Issue}
-          /> */}
-          {/* <Route
-            exact
-            path="/project/:projectId/new/issue"
-            component={NewIssue}
-          /> */}
-          {/* <Route
-            exact
-            path="/project/:projectId/issue/:issueId/edit"
-            component={EditIssue}
-          /> */}
         </IsAuthenticated>
       </Switch>
       {/* {this.props.showModal && <DeleteModal />} */}
@@ -157,10 +107,12 @@ const App = (props) => {
 
 const mapDispatchToProps = {
   setErrors,
+  logoutUser,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user.user,
+  authenticated: state.user.authenticated,
   showModal: state.modal.showModal,
 });
 
