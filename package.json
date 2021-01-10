@@ -29,7 +29,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "nodemon server.js",
-    "build": "cd client && npm install && npm run build",
+    "build": "cd client && npm install && CI=false npm run build",
     "install-client": "cd client && npm install",
     "client": "cd client && set HTTPS=true && npm start",
     "dev": "concurrently -c 'red,blue' -n 'server,client'  \" nodemon server.js \" \" npm run client \"",
