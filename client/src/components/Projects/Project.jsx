@@ -307,7 +307,7 @@ const Project = (props) => {
         {renderModal()}
         <React.Fragment>
           <div className="project__header">
-            <div className="project__name">{project.name}</div>
+            <div className="project__name">{project.name && project.name}</div>
             {project.createdBy._id.toString() === props.user._id.toString() && (
               <div className="project__action-buttons-container">
                 {/* `<div

@@ -19,7 +19,7 @@ module.exports = {
         assignees,
       } = req.body.issue;
 
-      const issues = IssueModel.find({ name: name }).exec(function (
+      IssueModel.find({ name: name, project: projectId }).exec(function (
         err,
         issues
       ) {

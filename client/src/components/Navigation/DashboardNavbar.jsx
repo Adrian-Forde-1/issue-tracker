@@ -19,7 +19,12 @@ const DashboardNavbar = (props) => {
       if (props.user.image && props.user.image !== null) {
         return <img src={props.user.image}></img>;
       }
-      return <span>{props.user.username.toString().toUpperCase()[0]}</span>;
+      return (
+        <span>
+          {props.user.username &&
+            props.user.username.toString().toUpperCase()[0]}
+        </span>
+      );
     }
   };
 
