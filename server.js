@@ -15,7 +15,7 @@ const cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 5000;
 const CORS_ORIGIN =
   process.env.NODE_ENV === "production"
-    ? "http://af-bug-tracker.herokuapp.com/"
+    ? "https://af-issue-tracker.vercel.app/"
     : "localhost:3000";
 
 //Using .env variables for dev
