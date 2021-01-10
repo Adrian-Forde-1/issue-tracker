@@ -4470,6 +4470,33 @@ header::after {
   }
 }
 
+.not-found__wrapper {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.not-found__wrapper svg {
+  font-size: 60px;
+}
+
+.not-found__wrapper h6 {
+  margin-top: 20px;
+  color: #080021;
+}
+
 * {
   margin: 0;
   padding: 0;
