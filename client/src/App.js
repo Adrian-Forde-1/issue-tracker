@@ -59,7 +59,7 @@ const App = (props) => {
               props.logoutUser();
             if (err && err.response && err.response.data) props.setErrors(err);
           });
-        }, 10 * 1000)
+        }, 573 * 1000)
       );
     } else {
       clearInterval(refreshTokenInterval);

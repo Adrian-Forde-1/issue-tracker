@@ -265,8 +265,29 @@ module.exports = {
             return res.status(500).json(errors);
           }
 
-          //If everything went right, return project
-          return res.json(project);
+          if (
+            project.team === null &&
+            req.user._id.toString() !== project.createdBy._id.toString()
+          ) {
+            return res.sendStatus(404);
+          } else if (project.team !== null) {
+            TeamModel.findById(project.team).exec(function (err, team) {
+              if (err) {
+                console.error(err);
+                errors.push("Error occured");
+                return res.status(500).json(errors);
+              }
+
+              let inTeam = team.users.findIndex(
+                (user) => user.toString() === req.user._id.toString()
+              );
+              if (inTeam === -1) return res.sendStatus(404);
+              else return res.json(project);
+            });
+          } else {
+            //If everything went right, return project
+            return res.json(project);
+          }
         });
     }
   },
@@ -278,7 +299,7 @@ module.exports = {
       $and: [{ createdBy: userId }, { team: null }, { archived: false }],
     })
       .sort("name")
-      .select("name _id")
+      .select("name _id createdBy")
       .exec(function (err, projects) {
         //If something went wrong when fetching projects, notify user
         if (err) {

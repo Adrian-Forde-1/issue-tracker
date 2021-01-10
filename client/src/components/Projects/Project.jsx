@@ -99,9 +99,18 @@ const Project = (props) => {
           props.setErrors(["Something went wrong"]);
         }
       })
-      .catch((error) => {
-        if (error && error.response && error.response.data) {
-          props.setErrors(error);
+      .catch((err) => {
+        if (err && err.response && err.response.data) {
+          props.setErrors(err);
+        }
+        if (
+          err &&
+          err.response &&
+          err.response.status &&
+          err.response.status === 404
+        ) {
+          props.history.replace("/project/404");
+        } else {
           props.history.push(
             props.location.pathname.toString().indexOf("team") > -1
               ? `/team/${props.match.params.teamId}`
@@ -287,7 +296,12 @@ const Project = (props) => {
     return projectIssues;
   };
 
-  if (props && props.user && Object.keys(project).length > 0) {
+  if (
+    props &&
+    props.user &&
+    project.createdBy &&
+    Object.keys(project).length > 0
+  ) {
     return (
       <div className="project__wrapper">
         {renderModal()}

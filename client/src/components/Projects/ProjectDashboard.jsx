@@ -41,6 +41,8 @@ import ProjectDashboardLandingPage from "./ProjectDashboardLandingPage";
 import CreateProject from "./CreateProject";
 import EditProject from "./EditProject";
 
+import NotFound from "../Misc/NotFound";
+
 function ProjectDashboard(props) {
   const [projects, setProjects] = useState([]);
   const [currentProject, setCurrentProject] = useState("");
@@ -84,6 +86,13 @@ function ProjectDashboard(props) {
               setCurrentProject={setCurrentProject}
             />
           );
+        }}
+      />
+      <Route
+        exact
+        path="/project/404"
+        render={(props) => {
+          return <NotFound {...props} setCurrentProject={setCurrentProject} />;
         }}
       />
       <Route
