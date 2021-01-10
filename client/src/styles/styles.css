@@ -4489,12 +4489,39 @@ header::after {
 }
 
 .not-found__wrapper svg {
-  font-size: 60px;
+  font-size: 75px;
 }
 
 .not-found__wrapper h6 {
   margin-top: 20px;
   color: #080021;
+}
+
+@media screen and (max-width: 768px) {
+  .not-found__wrapper svg {
+    font-size: 65px;
+  }
+  .not-found__wrapper h6 {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .not-found__wrapper svg {
+    font-size: 55px;
+  }
+  .not-found__wrapper h6 {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .not-found__wrapper svg {
+    font-size: 45px;
+  }
+  .not-found__wrapper h6 {
+    font-size: 12px;
+  }
 }
 
 * {

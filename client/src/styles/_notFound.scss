@@ -10,12 +10,54 @@
     align-items: center;
 
     svg {
-      font-size: 60px;
+      font-size: 75px;
     }
 
     h6 {
       margin-top: 20px;
       color: $text-color;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .not-found {
+    &__wrapper {
+      svg {
+        font-size: 65px;
+      }
+
+      h6 {
+        font-size: 15px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .not-found {
+    &__wrapper {
+      svg {
+        font-size: 55px;
+      }
+
+      h6 {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .not-found {
+    &__wrapper {
+      svg {
+        font-size: 45px;
+      }
+
+      h6 {
+        font-size: 12px;
+      }
     }
   }
 }
