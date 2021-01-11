@@ -370,7 +370,7 @@ const Issue = (props) => {
             {/* <Link to={`/issue/${issue._id}/comment/new`} className="add-comment">
               <i className="fas fa-plus"></i>
             </Link> */}
-            <div className="issue__comment-container">
+            <div className="issue__new-comment-container">
               <textarea
                 name="newComment"
                 id="new-comment"

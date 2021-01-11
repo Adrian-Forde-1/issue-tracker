@@ -3537,11 +3537,9 @@ header::after {
   position: relative;
   display: block;
   padding: 15px;
-  margin-bottom: 30px;
   text-align: left;
   background: #fdfcff;
   color: #080021;
-  cursor: pointer;
 }
 
 .issue__comment p {
@@ -3564,11 +3562,11 @@ header::after {
   color: #080021;
 }
 
-.issue__comment-container {
+.issue__comment-container, .issue__new-comment-container {
   position: relative;
   cursor: default;
   width: 100%;
-  width: 100%;
+  height: auto;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -3577,15 +3575,20 @@ header::after {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin-bottom: 80px;
+  margin-bottom: 15px;
 }
 
-.issue__comment-container i {
+.issue__comment-container i, .issue__new-comment-container i {
   position: absolute;
   top: 15px;
   right: 15px;
   cursor: pointer;
   color: #080021;
+}
+
+.issue__new-comment-container {
+  height: 100%;
+  margin-bottom: 80px;
 }
 
 .issue__comments-title {

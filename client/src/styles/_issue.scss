@@ -242,11 +242,9 @@
     position: relative;
     display: block;
     padding: 15px;
-    margin-bottom: 30px;
     text-align: left;
     background: $page-background;
     color: $text-color;
-    cursor: pointer;
 
     p {
       font-size: 12px;
@@ -267,15 +265,16 @@
     }
   }
 
-  &__comment-container {
+  &__comment-container,
+  &__new-comment-container {
     position: relative;
     cursor: default;
     width: 100%;
-    width: 100%;
+    height: auto;
     position: relative;
     display: flex;
     flex-direction: column;
-    margin-bottom: 80px;
+    margin-bottom: 15px;
 
     i {
       position: absolute;
@@ -285,6 +284,11 @@
 
       color: $text-color;
     }
+  }
+
+  &__new-comment-container {
+    height: 100%;
+    margin-bottom: 80px;
   }
 
   &__comments-title {
