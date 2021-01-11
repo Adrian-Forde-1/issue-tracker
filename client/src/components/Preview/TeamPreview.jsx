@@ -76,7 +76,8 @@ const TeamPreview = (props) => {
                 }}
               >
                 <div className="modal__delete-modal-body__message">
-                  Are you sure you want to delete <span>{team.name}</span>?
+                  Are you sure you want to delete{" "}
+                  <span>{team.name && team.name}</span>?
                 </div>
                 <div className="modal__delete-modal-body__action-container">
                   <div
@@ -165,8 +166,9 @@ const TeamPreview = (props) => {
           gotoTeam();
         }}
       >
-        <span>{team.name}</span>
-        {team.createdBy.toString() === props.user._id.toString() ? (
+        <span>{team.name && team.name}</span>
+        {team.createdBy &&
+        team.createdBy.toString() === props.user._id.toString() ? (
           <div
             className="team-preview__delete"
             onClick={(e) => {

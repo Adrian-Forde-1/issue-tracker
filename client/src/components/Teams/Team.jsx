@@ -93,8 +93,9 @@ function Team(props) {
             <div className="team__header-content">
               {" "}
               <h2 className="team__name">
-                {team.name}{" "}
-                {team.createdBy.toString() === props.user._id.toString() ? (
+                {team.name && team.name}{" "}
+                {team.createdBy &&
+                team.createdBy.toString() === props.user._id.toString() ? (
                   <span>
                     <i className="far fa-trash-alt" onClick={deleteModal}></i>
                   </span>

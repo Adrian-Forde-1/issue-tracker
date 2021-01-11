@@ -126,10 +126,9 @@ module.exports = {
   },
   // Logout
   logout: (req, res) => {
-    if (req.cookies["jwtIss"] && req.cookies["jwtIssRef"]) {
-      res.status(200).clearCookie("jwtIss");
-      res.status(200).clearCookie("jwtIssRef").send("Clearing cookies");
-    } else res.status(400).send("Tokens not found");
+    if (req.cookies["jwtIss"]) res.status(200).clearCookie("jwtIss");
+    if (req.cookies["jwtIssRef"]) res.status(200).clearCookie("jwtIssRef");
+    return res.sendStatus(200);
   },
   //Delete User
   deleteUser: (req, res) => {
