@@ -166,8 +166,10 @@ const TeamPreview = (props) => {
           gotoTeam();
         }}
       >
-        <span>{team.name && team.name}</span>
+        {team.name && <span>{team.name}</span>}
         {team.createdBy &&
+        props.user &&
+        props.user._id &&
         team.createdBy.toString() === props.user._id.toString() ? (
           <div
             className="team-preview__delete"
