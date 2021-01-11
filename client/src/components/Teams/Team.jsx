@@ -95,6 +95,8 @@ function Team(props) {
               <h2 className="team__name">
                 {team.name && team.name}{" "}
                 {team.createdBy &&
+                props.user &&
+                props.user._id &&
                 team.createdBy.toString() === props.user._id.toString() ? (
                   <span>
                     <i className="far fa-trash-alt" onClick={deleteModal}></i>

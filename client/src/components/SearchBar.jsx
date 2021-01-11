@@ -12,6 +12,7 @@ function SearchBar(props) {
       <input
         type="text"
         name="search"
+        autoComplete="off"
         value={props.search}
         placeholder={props.placeholder || "Search by name"}
         onChange={props.onChange}
