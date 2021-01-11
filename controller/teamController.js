@@ -292,6 +292,12 @@ module.exports = {
             return res.status(500).json(errors);
           }
 
+          let belongsToTeam = team.users.findIndex(
+            (user) => user._id.toString() === req.user._id.toString()
+          );
+
+          if (belongsToTeam === -1) return res.sendStatus(404);
+
           //If everything went well, return team
           return res.json(team);
         });

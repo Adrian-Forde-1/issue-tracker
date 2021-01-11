@@ -44,6 +44,8 @@ import EditLabel from "../Labels/EditLabel";
 import Project from "../Projects/Project";
 import EditProject from "../Projects/EditProject";
 
+import NotFound from "../Misc/NotFound";
+
 const Team = lazy(() => {
   return import("./Team");
 });
@@ -79,6 +81,13 @@ function TeamDashboard(props) {
               setCurrentTeam={setCurrentTeam}
             />
           );
+        }}
+      />
+      <Route
+        exact
+        path="/team/404"
+        render={(props) => {
+          return <NotFound {...props} setCurrentTeam={setCurrentTeam} />;
         }}
       />
       <Route

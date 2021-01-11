@@ -58,9 +58,20 @@ function Team(props) {
         }
         props.setCurrentTeam(teamId);
       })
-      .catch((error) => {
-        props.setErrors(error);
-        props.history.goBack();
+      .catch((err) => {
+        if (err && err.response && err.response.data) {
+          props.setErrors(err);
+        }
+        if (
+          err &&
+          err.response &&
+          err.response.status &&
+          err.response.status === 404
+        ) {
+          props.history.replace("/team/404");
+        } else {
+          props.history.goBack();
+        }
       });
   };
 
