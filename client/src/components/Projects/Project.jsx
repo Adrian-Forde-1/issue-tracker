@@ -308,7 +308,8 @@ const Project = (props) => {
         <React.Fragment>
           <div className="project__header">
             <div className="project__name">{project.name && project.name}</div>
-            {props.createdBy &&
+            {props.user &&
+              props.user._id &&
               project.createdBy._id.toString() ===
                 props.user._id.toString() && (
                 <div className="project__action-buttons-container">
