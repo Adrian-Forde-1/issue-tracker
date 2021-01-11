@@ -16,7 +16,9 @@ const Profile = ({ user, getUser, setMessages }) => {
     }
     return (
       <div className="profile__default-img">
-        <span>{user.username.toString().toUpperCase()[0]}</span>
+        {user && user.username && (
+          <span>{user.username.toString().toUpperCase()[0]}</span>
+        )}
       </div>
     );
   };

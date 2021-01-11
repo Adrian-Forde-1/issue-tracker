@@ -94,11 +94,11 @@ const App = (props) => {
         <Route exact path="/" component={Homepage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
-        <Route exact path="/profile" component={Profile} />
 
         <IsAuthenticated>
           {/* Team */}
           {/* <Route exact path="/create/team" component={CreateTeam} /> */}
+          <Route exact path="/profile" component={Profile} />
           <Route path="/team" component={TeamDashboard} />
           <Route exact path="/teams/chat" component={TeamChatLandingPage} />
           <ErrorBoundary>
