@@ -82,6 +82,7 @@ const Issue = (props) => {
       .catch((err) => {
         if (err && err.response && err.response.data) {
           props.setErrors(err);
+          props.history.goBack();
         }
         if (
           err &&
@@ -90,8 +91,6 @@ const Issue = (props) => {
           err.response.status === 404
         ) {
           props.history.replace("/project/404");
-        } else {
-          props.history.goBack();
         }
       });
   };

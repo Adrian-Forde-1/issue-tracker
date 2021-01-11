@@ -82,10 +82,26 @@ const EditIssue = (props) => {
           props.setErrors(["Something went wrong"]);
         }
       })
-      .catch((error) => {
-        if (error && error.response && error.response.data) {
-          props.setErrors(error);
+      .catch((err) => {
+        if (
+          err &&
+          err.response &&
+          err.response.data &&
+          err.response.status &&
+          err.response.status !== 404
+        ) {
+          props.setErrors(err);
           props.history.goBack();
+        }
+        if (err && err.response)
+          console.log("Status code: ", err.response.status);
+        if (
+          err &&
+          err.response &&
+          err.response.status &&
+          err.response.status === 404
+        ) {
+          props.history.replace("/project/404");
         }
       });
   };
