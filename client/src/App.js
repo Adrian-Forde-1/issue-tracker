@@ -44,6 +44,24 @@ const App = (props) => {
       Object.keys(props.user).length > 0 &&
       props.authenticated
     ) {
+      let user = {
+        _id: props.user._id,
+      };
+
+      axios.post("/api/token", { user }).catch((err) => {
+        if (err && err.response.status === 401 && props.authenticated === true)
+          props.logoutUser();
+        if (err && err.response && err.response.data) props.setErrors(err);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (
+      props.user &&
+      Object.keys(props.user).length > 0 &&
+      props.authenticated
+    ) {
       //
       let user = {
         _id: props.user._id,
