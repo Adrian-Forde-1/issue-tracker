@@ -1,5 +1,6 @@
 const IssueModel = require("../models/IssueModel");
 const ProjectModal = require("../models/ProjectModel");
+const TeamModal = require("../models/TeamModel");
 
 const { NEW_ISSUE } = require("../util/issueStatus");
 
@@ -198,8 +199,34 @@ module.exports = {
             return res.status(500).json(errors);
           }
 
-          //If everything went right, return issue
-          return res.json(issue);
+          //Checks to see if the project the issue belongs too is part of a team
+          if (issue.project.team) {
+            //If the project is part of a team, get the team
+            TeamModal.findById(issue.project.team).exec(function (err, team) {
+              if (err) {
+                console.error(err);
+                errors.issue = "Error occured when fetching issue";
+                return res.status(500).json(errors);
+              }
+
+              //Check to see if the user is part of the team
+              let belongsToTeam = team.users.findIndex(
+                (user) => user.toString() === req.user._id.toString()
+              );
+
+              //If the user isn't part of the team, send a 404 response
+              if (belongsToTeam === -1) return res.sendStatus(404);
+
+              //If everything went right, return issue
+              return res.json(issue);
+            });
+          } else {
+            //If it isn't, check to see if the user trying to view the issue is the owner of the issue
+            if (issue.project.createdBy.toString() !== req.user._id.toString())
+              return res.sendStatus(404);
+            //If everything went right, return issue
+            return res.json(issue);
+          }
         });
     }
   },
