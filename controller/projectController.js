@@ -231,9 +231,32 @@ module.exports = {
                 return res.status(500).json(errors);
               }
 
-              //If everything went right, notify user
-              messages.push("Project was successfully deleted");
-              return res.json(messages);
+              UserModel.findById(req.user._id).exec(function (err, user) {
+                if (err) {
+                  console.error(err);
+                  errors.push("Error occured");
+                  return res.status(500).json(errors);
+                }
+
+                let newProjects = user.projects.filter(
+                  (userProject) =>
+                    userProject.toString() !== project._id.toString()
+                );
+
+                UserModel.findByIdAndUpdate(req.user._id, {
+                  projects: newProjects,
+                }).exec(function (err, user) {
+                  if (err) {
+                    console.error(err);
+                    errors.push("Error occured");
+                    return res.status(500).json(errors);
+                  }
+
+                  //If everything went right, notify user
+                  messages.push("Project was successfully deleted");
+                  return res.json(messages);
+                });
+              });
             });
           } else {
             //If the person trying to delete the project isn't the same person who created it, notify them
