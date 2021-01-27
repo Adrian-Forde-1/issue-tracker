@@ -34,7 +34,7 @@ const ToastNotification = ({
         },
       });
       if (toastPosition === "bottom-right" || toastPosition === "top-right") {
-        tl.to(toastElement.current, { duration: 0.3, x: 0, ease: "none" });
+        tl.to(toastElement.current, { duration: 0, x: 0, ease: "none" });
       }
       tl.to(toastTimer.current, { duration: 5, width: 0, ease: "none" });
     }
@@ -61,7 +61,7 @@ const ToastNotification = ({
       });
       tl.to(toastElement.current, {
         x: 700,
-        duration: 0.5,
+        duration: 0.3,
         ease: "none",
       });
     };
