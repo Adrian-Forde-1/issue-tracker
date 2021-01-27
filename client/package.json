@@ -7,8 +7,9 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap-select": "^1.13.16",
+    "gsap": "^3.6.0",
     "moment": "^2.24.0",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
@@ -23,7 +24,8 @@
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^2.3.0",
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

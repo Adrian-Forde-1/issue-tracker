@@ -3,10 +3,6 @@ import React, { useEffect, useState } from "react";
 //Axios
 import axios from "axios";
 
-//Tostify
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 //Axios
 import { setErrors, logoutUser } from "./redux/actions/userActions";
 
@@ -26,16 +22,11 @@ import ArchivedTeamProjects from "./components/Projects/ArchivedTeamProjects";
 import TeamChat from "./components/Chat/TeamChat";
 import ErrorBoundary from "./components/ErrorBoundary";
 import TeamChatLandingPage from "./components/Chat/TeamChatLandingPage";
-import ToastComponent from "./components/Toast/ToastComponent";
+import Toast from "./components/Toast/Toast";
 import Profile from "./components/Profile/Profile";
 import TeamDashboard from "./components/Teams/TeamDashboard";
 
 const App = (props) => {
-  // toast.configure({
-  //   position: toast.POSITION.TOP_CENTER,
-  //   autoClose: 4000,
-
-  // });
   const [refreshTokenInterval, setRefreshTokenInterval] = useState(null);
 
   useEffect(() => {
@@ -86,9 +77,8 @@ const App = (props) => {
 
   return (
     <div className="App">
-      <ToastContainer />
+      <Toast />
       <Navbar />
-      <ToastComponent />
       {/* <Breadcrumbs /> */}
       <Switch>
         <Route exact path="/" component={Homepage} />

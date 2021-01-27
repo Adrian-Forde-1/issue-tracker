@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 //Tostify
 import { toast } from "react-toastify";
@@ -23,10 +23,11 @@ import LogoSVG from "./SVG/LogoSVG";
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  let emailRef = useRef(null);
 
   useEffect(() => {
     if (props.authenticated === true) props.history.goBack();
-    // this.emailRef.current.focus();
+    emailRef.current.focus();
   }, []);
 
   const handleSubmit = (e) => {
@@ -55,6 +56,7 @@ const Login = (props) => {
                 </div>
                 <input
                   type="email"
+                  ref={emailRef}
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

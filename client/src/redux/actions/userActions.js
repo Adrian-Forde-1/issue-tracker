@@ -1,4 +1,5 @@
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 import {
   SET_USER,
   LOGOUT_USER,
@@ -12,13 +13,13 @@ import {
   SET_CURRENT_ID,
   SET_EXTRA_ID_INFO,
   CLEAR_CURRENT_SECTION_AND_ID,
+  REMOVE_MESSAGE,
+  REMOVE_ERROR,
 } from "./types";
 
 axios.defaults.withCredentials = true;
 
 export const loginUser = (user, history) => (dispatch) => {
-  dispatch({ type: CLEAR_MESSAGES });
-  dispatch({ type: CLEAR_ERRORS });
   dispatch({ type: SET_LOADING_UI });
   axios
     .post("/api/login", user)
@@ -27,17 +28,16 @@ export const loginUser = (user, history) => (dispatch) => {
       // dispatch({ type: STOP_LOADING_UI });
     })
     .catch((error) => {
-      if (error.response.data === "Unauthorized") {
+      if (error && error.response && error.response.data === "Unauthorized") {
         dispatch({
           type: SET_ERRORS,
-          payload: ["Wrong Credentials"],
+          payload: [
+            { id: uuidv4(), type: "error", message: "Wrong Credentials" },
+          ],
         });
         dispatch({ type: STOP_LOADING_UI });
       } else {
-        dispatch({
-          type: SET_ERRORS,
-          payload: error.response,
-        });
+        setErrors(error.response.data);
         dispatch({ type: STOP_LOADING_UI });
       }
       // dispatch({ type: SET_ERRORS, payload: error.response.data });
@@ -77,11 +77,36 @@ export const logoutUser = (history) => (dispatch) => {
 
 export const setMessages = (messages) => (dispatch) => {
   console.log("Set messages called");
-  dispatch({ type: SET_MESSAGES, payload: messages });
+
+  let newMessages = [];
+  messages.forEach((message) => {
+    newMessages.push({
+      id: uuidv4(),
+      type: "success",
+      message: message,
+    });
+  });
+  dispatch({ type: SET_MESSAGES, payload: newMessages });
 };
 
 export const setErrors = (error) => (dispatch) => {
-  dispatch({ type: SET_ERRORS, payload: error.response.data });
+  let newErrors = [];
+  error.response.data.forEach((error) => {
+    newErrors.push({
+      id: uuidv4(),
+      type: "error",
+      message: error,
+    });
+  });
+  dispatch({ type: SET_ERRORS, payload: newErrors });
+};
+
+export const removeMessage = (messageId) => (dispatch) => {
+  dispatch({ type: REMOVE_MESSAGE, payload: messageId });
+};
+
+export const removeError = (errorId) => (dispatch) => {
+  dispatch({ type: REMOVE_ERROR, payload: errorId });
 };
 
 export const getUser = (history) => (dispatch) => {
