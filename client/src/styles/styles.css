@@ -1263,7 +1263,6 @@ header::after {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  padding: 20px 0px 20px 20px;
 }
 
 .team__dashboard-landing-wrapper {
@@ -1328,6 +1327,7 @@ header::after {
           align-items: center;
   width: 100%;
   height: 12%;
+  padding: 20px 0px 0px 20px;
 }
 
 .team__header-content {
@@ -1441,8 +1441,22 @@ header::after {
 .team__projects {
   width: 100%;
   height: calc(88% - 70px);
+  max-height: calc(88% - 70px);
   margin-top: 20px;
-  padding-right: 20px;
+  padding: 0px 20px;
+  overflow-y: auto;
+}
+
+.team__projects::-webkit-scrollbar {
+  width: 7px;
+}
+
+.team__projects::-webkit-scrollbar-thumb {
+  background-color: #080021;
+}
+
+.team__projects::-webkit-scrollbar-track {
+  background: #eee;
 }
 
 .team__search-bar-container {
@@ -1455,7 +1469,7 @@ header::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-top: 20px;
+  margin: 20px 0px 0px 20px;
 }
 
 .individual-container {
@@ -1511,9 +1525,6 @@ header::after {
 }
 
 @media screen and (max-width: 500px) {
-  .team__profile-wrapper {
-    padding: 10px;
-  }
   .team__dashboard-landing-wrapper svg {
     font-size: 55px;
   }
@@ -1521,7 +1532,7 @@ header::after {
     font-size: 14px;
   }
   .team__header-actions-container {
-    padding-right: 0px;
+    padding-right: 20px;
   }
   .team__name {
     font-size: 22px;
@@ -1530,7 +1541,7 @@ header::after {
     font-size: 10px;
   }
   .team__projects {
-    padding-right: 0px;
+    padding: 0px 20px 0px 20px;
   }
   .team__img-container {
     min-width: 50px;
@@ -2884,7 +2895,6 @@ header::after {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  padding: 20px;
 }
 
 .project__dashboard-landing-wrapper {
@@ -2934,6 +2944,7 @@ header::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 20px 20px 0px 20px;
 }
 
 .project__name {
@@ -2944,10 +2955,11 @@ header::after {
 .project__creation-date {
   font-size: 11px;
   margin-bottom: 10px;
+  padding: 0px 20px;
 }
 
 .project__description {
-  width: 100%;
+  width: calc(100% - 40px);
   height: auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2963,7 +2975,7 @@ header::after {
       -ms-flex-align: start;
           align-items: flex-start;
   border-bottom: 1px solid #dedede;
-  margin-bottom: 10px;
+  margin: 0px auto 20px auto;
 }
 
 .project__description-name {
@@ -3023,7 +3035,6 @@ header::after {
 }
 
 .project__search-bar-container {
-  margin-bottom: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3033,6 +3044,7 @@ header::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin: 0px 0px 20px 20px;
 }
 
 .project__filter-selector {
@@ -3094,6 +3106,7 @@ header::after {
       -ms-flex-pack: start;
           justify-content: flex-start;
   margin-bottom: 20px;
+  padding: 0px 20px;
 }
 
 .project__action-bar a {
@@ -3145,6 +3158,7 @@ header::after {
 
 .project__issues-container {
   width: 100%;
+  max-height: 65%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3158,6 +3172,20 @@ header::after {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
+  overflow-y: auto;
+  padding: 0px 20px;
+}
+
+.project__issues-container::-webkit-scrollbar {
+  width: 7px;
+}
+
+.project__issues-container::-webkit-scrollbar-thumb {
+  background-color: #080021;
+}
+
+.project__issues-container::-webkit-scrollbar-track {
+  background: #eee;
 }
 
 @media screen and (max-width: 768px) {

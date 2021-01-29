@@ -91,14 +91,16 @@ export const setMessages = (messages) => (dispatch) => {
 
 export const setErrors = (error) => (dispatch) => {
   let newErrors = [];
-  error.response.data.forEach((error) => {
-    newErrors.push({
-      id: uuidv4(),
-      type: "error",
-      message: error,
+  if (error && error.response && error.response.data) {
+    error.response.data.forEach((error) => {
+      newErrors.push({
+        id: uuidv4(),
+        type: "error",
+        message: error,
+      });
     });
-  });
-  dispatch({ type: SET_ERRORS, payload: newErrors });
+    dispatch({ type: SET_ERRORS, payload: newErrors });
+  }
 };
 
 export const removeMessage = (messageId) => (dispatch) => {

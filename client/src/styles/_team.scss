@@ -9,7 +9,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 20px 0px 20px 20px;
+    // padding: 20px 0px 20px 20px;
   }
 
   &__dashboard-landing-wrapper {
@@ -52,6 +52,7 @@
     align-items: center;
     width: 100%;
     height: 12%;
+    padding: 20px 0px 0px 20px;
 
     &-content {
       margin-left: 20px;
@@ -142,15 +143,29 @@
   &__projects {
     width: 100%;
     height: calc(88% - 70px);
+    max-height: calc(88% - 70px);
     margin-top: 20px;
-    padding-right: 20px;
+    padding: 0px 20px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $text-color;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #eee;
+    }
   }
 
   &__search-bar-container {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 20px;
+    margin: 20px 0px 0px 20px;
   }
 }
 
@@ -210,10 +225,6 @@
 
 @media screen and(max-width: 500px) {
   .team {
-    &__profile-wrapper {
-      padding: 10px;
-    }
-
     &__dashboard-landing-wrapper {
       svg {
         font-size: 55px;
@@ -226,7 +237,7 @@
 
     &__header {
       &-actions-container {
-        padding-right: 0px;
+        padding-right: 20px;
       }
     }
 
@@ -239,7 +250,7 @@
     }
 
     &__projects {
-      padding-right: 0px;
+      padding: 0px 20px 0px 20px;
     }
 
     &__img-container {
