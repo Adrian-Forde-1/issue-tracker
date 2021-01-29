@@ -29,6 +29,7 @@ import CaretDownNoFillSVG from "../SVG/CaretDownNoFillSVG";
 import SearchBar from "../SearchBar";
 import IssuePreview from "../Preview/IssuePreview";
 import Modal from "../Modal/Modal";
+import Spinner from "../Misc/Spinner/Spinner";
 
 const Project = (props) => {
   const filterTypes = {
@@ -48,6 +49,7 @@ const Project = (props) => {
   const [modalType, setModalType] = useState("");
   const [showDescription, setShowDescription] = useState(false);
   const [projectId, setProjectId] = useState(props.match.params.projectId);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (props.match.params.projectId)
@@ -75,6 +77,7 @@ const Project = (props) => {
 
   const getProjectData = () => {
     setProject({});
+    setIsLoading(true);
     axios
       .get(`/api/project/${projectId}`)
       .then((response) => {
@@ -98,6 +101,7 @@ const Project = (props) => {
         } else {
           props.setErrors(["Something went wrong"]);
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         if (err && err.response && err.response.data) {
@@ -117,6 +121,7 @@ const Project = (props) => {
               : "/project"
           );
         }
+        setIsLoading(false);
       });
   };
 
@@ -439,7 +444,8 @@ const Project = (props) => {
         </React.Fragment>
       </div>
     );
-  } else return null;
+  } else if (isLoading) return <Spinner />;
+  else return null;
 };
 
 const mapDispatchToProps = {

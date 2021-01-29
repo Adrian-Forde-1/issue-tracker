@@ -18,11 +18,13 @@ import { setErrors, setMessages } from "../../redux/actions/userActions";
 import InfoSVG from "../SVG/InfoSVG";
 
 //Components
+import Spinner from "../Misc/Spinner/Spinner";
 
 const EditProject = (props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [project, setProject] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getProject();
@@ -30,7 +32,7 @@ const EditProject = (props) => {
 
   const getProject = () => {
     const projectId = props.match.params.projectId;
-
+    setIsLoading(true);
     axios
       .get(`/api/project/${projectId}`)
       .then((response) => {
@@ -54,12 +56,14 @@ const EditProject = (props) => {
         } else {
           props.setMessages(["Something went wrong"]);
         }
+        setIsLoading(false);
       })
       .catch((error) => {
         if (error && error.response && error.response.data) {
           props.setErrors(error);
           props.history.goBack();
         }
+        setIsLoading(false);
       });
   };
 
@@ -143,7 +147,8 @@ const EditProject = (props) => {
         </div>
       </div>
     );
-  } else return null;
+  } else if (isLoading) return <Spinner />;
+  else return null;
 };
 
 const mapDispatchToProps = {

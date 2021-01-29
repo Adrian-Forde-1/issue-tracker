@@ -45,6 +45,7 @@ import Project from "../Projects/Project";
 import EditProject from "../Projects/EditProject";
 
 import NotFound from "../Misc/NotFound";
+import Spinner from "../Misc/Spinner/Spinner";
 
 const Team = lazy(() => {
   return import("./Team");
@@ -60,6 +61,7 @@ function TeamDashboard(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [currentCategory, setCurrentCategory] = useState(categories.Teams);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getTeams();
@@ -189,17 +191,20 @@ function TeamDashboard(props) {
   );
 
   const getTeams = () => {
+    setIsLoading(true);
     axios
       .get("/api/teams")
       .then((response) => {
         if (response && response.data) {
           setTeams(response.data);
         }
+        setIsLoading(false);
       })
       .catch((error) => {
         if (error && error.response && error.response.data) {
           props.setErrors(error);
         }
+        setIsLoading(false);
       });
   };
 
@@ -284,7 +289,11 @@ function TeamDashboard(props) {
               </div>
             )}
             <div className="dashboard__main-content-sidebar__team-list">
-              {renderTeams()}
+              {teams && teams.length > 0 ? (
+                <>{renderTeams()}</>
+              ) : isLoading ? (
+                <Spinner />
+              ) : null}
             </div>
           </div>
           <div

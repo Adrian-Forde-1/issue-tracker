@@ -2449,14 +2449,16 @@ header::after {
 .standard-form__body form textarea {
   width: 100%;
   border: none;
-  background: #f6f6f6;
+  background: #dddddd;
   padding: 5px;
 }
 
 .standard-form__body form textarea {
   resize: none;
-  min-height: 200px;
-  height: 200px;
+  min-height: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 calc(100% - 30px);
+          flex: 1 1 calc(100% - 30px);
 }
 
 .standard-form__body form button {
@@ -2590,7 +2592,7 @@ header::after {
 }
 
 .standard-form__input-container--fixed-h {
-  height: 105px;
+  height: 70px;
 }
 
 .standard-form__input-container--bottom-border {
@@ -2645,7 +2647,7 @@ header::after {
 .standard-form__input-container-textarea {
   font-size: 12px !important;
   font-family: "Montserrat", sans-serif;
-  background: #f6f6f6 !important;
+  background: #dddddd !important;
   padding: 5px;
 }
 
@@ -2774,7 +2776,7 @@ header::after {
       -ms-flex: 1 1 100%;
           flex: 1 1 100%;
   overflow-y: auto;
-  background: #f6f6f6 !important;
+  background: #dddddd !important;
   padding: 5px;
 }
 
@@ -2809,7 +2811,7 @@ header::after {
 .standard-form__input {
   width: 100%;
   border: none;
-  background: #f6f6f6;
+  background: #dddddd;
   padding: 5px;
 }
 
@@ -2857,6 +2859,12 @@ header::after {
   }
   .standard-form__split-double section:first-of-type {
     border-right: none;
+  }
+  .standard-form__description-preview-btn {
+    top: calc(100% + 40px);
+  }
+  .standard-form__btn {
+    margin-top: 10px;
   }
 }
 
@@ -4853,7 +4861,7 @@ header::after {
   height: 100%;
   fill: none;
   stroke-width: 3;
-  stroke: #22ffca;
+  stroke: #2e00b1;
   stroke-linecap: round;
   stroke-dasharray: 155;
   stroke-dashoffset: 155;

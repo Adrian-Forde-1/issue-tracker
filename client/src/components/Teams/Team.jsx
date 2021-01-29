@@ -35,11 +35,13 @@ import PlusSVG from "../SVG/PlusSVG";
 //Components
 import AllTeamProjects from "./AllTeamProjects";
 import SearchBar from "../SearchBar";
+import Spinner from "../Misc/Spinner/Spinner";
 
 function Team(props) {
   const [team, setTeam] = useState({});
   const [search, setSearch] = useState("");
   const [teamId, setTeamId] = useState(props.match.params.teamId);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (props.match.params.teamId) setTeamId(props.match.params.teamId);
@@ -50,6 +52,8 @@ function Team(props) {
   }, [teamId]);
 
   const getTeam = () => {
+    setIsLoading(true);
+    setTeam({});
     axios
       .get(`/api/team/${teamId}`)
       .then((response) => {
@@ -57,6 +61,7 @@ function Team(props) {
           setTeam(response.data);
         }
         props.setCurrentTeam(teamId);
+        setIsLoading(false);
       })
       .catch((err) => {
         if (err && err.response && err.response.data) {
@@ -72,6 +77,7 @@ function Team(props) {
         } else {
           props.history.goBack();
         }
+        setIsLoading(false);
       });
   };
 
@@ -89,7 +95,7 @@ function Team(props) {
 
   return (
     <div className="team__profile-wrapper">
-      {Object.keys(team).length > 0 && (
+      {Object.keys(team).length > 0 ? (
         <React.Fragment>
           <div className="team__header">
             <div className="team__img-container">
@@ -160,7 +166,9 @@ function Team(props) {
             <AllTeamProjects search={search} teamId={teamId} />
           </div>
         </React.Fragment>
-      )}
+      ) : isLoading ? (
+        <Spinner />
+      ) : null}
     </div>
   );
 }

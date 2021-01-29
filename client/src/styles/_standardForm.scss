@@ -86,14 +86,15 @@
       textarea {
         width: 100%;
         border: none;
-        background: $light-grey3;
+        background: $light-grey4;
         padding: 5px;
       }
 
       textarea {
         resize: none;
-        min-height: 200px;
-        height: 200px;
+        min-height: 100%;
+        // height: 200px;
+        flex: 1 1 calc(100% - 30px);
       }
 
       button {
@@ -180,7 +181,7 @@
     transition: all 300ms ease-in-out;
 
     &--fixed-h {
-      height: 105px;
+      height: 70px;
     }
 
     &--bottom-border {
@@ -238,7 +239,7 @@
       &::-webkit-scrollbar-track {
         background: #eee;
       }
-      background: $light-grey3 !important;
+      background: $light-grey4 !important;
       padding: 5px;
       &--fill {
         height: 100% !important;
@@ -355,7 +356,7 @@
     &::-webkit-scrollbar-track {
       background: #eee;
     }
-    background: $light-grey3 !important;
+    background: $light-grey4 !important;
     padding: 5px;
   }
 
@@ -379,7 +380,7 @@
   &__input {
     width: 100%;
     border: none;
-    background: $light-grey3;
+    background: $light-grey4;
     padding: 5px;
   }
 }
@@ -439,6 +440,14 @@
           border-right: none;
         }
       }
+    }
+
+    &__description-preview-btn {
+      top: calc(100% + 40px);
+    }
+
+    &__btn {
+      margin-top: 10px;
     }
   }
 }

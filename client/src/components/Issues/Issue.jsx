@@ -31,6 +31,7 @@ import { setErrors, setMessages } from "../../redux/actions/userActions";
 
 //Components
 import Modal from "../Modal/Modal";
+import Spinner from "../Misc/Spinner/Spinner";
 
 const Issue = (props) => {
   const modalTypes = {
@@ -42,6 +43,7 @@ const Issue = (props) => {
   const [showDescription, setShowDescription] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getIssue();
@@ -49,6 +51,7 @@ const Issue = (props) => {
 
   const getIssue = () => {
     const issueId = props.match.params.issueId;
+    setIsLoading(true);
     axios
       .get(`/api/issue/${issueId}`)
       .then((response) => {
@@ -78,6 +81,7 @@ const Issue = (props) => {
         } else {
           props.setErrors(["Something went wrong"]);
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         if (err && err.response && err.response.data) {
@@ -92,6 +96,7 @@ const Issue = (props) => {
         ) {
           props.history.replace("/project/404");
         }
+        setIsLoading(false);
       });
   };
 
@@ -449,7 +454,8 @@ const Issue = (props) => {
         )}
       </div>
     );
-  } else return null;
+  } else if (isLoading) return <Spinner />;
+  else return null;
 };
 
 const mapDispatchToProps = {

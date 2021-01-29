@@ -19,9 +19,11 @@ import PlusSVG from "../SVG/PlusSVG";
 
 //Components
 import LabelPreview from "../Preview/LabelPreview";
+import Spinner from "../Misc/Spinner/Spinner";
 
 function Labels(props) {
   const [project, setProject] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const projectId = props.match.params.projectId;
 
   useEffect(() => {
@@ -29,16 +31,26 @@ function Labels(props) {
   }, [props.projects]);
 
   const getProject = () => {
-    axios.get(`/api/project/${projectId}`).then((response) => {
-      if (response && response.data) {
-        setProject(response.data);
-        if (props.location.pathname.indexOf("team") > -1) {
-          props.setCurrentTeam(response.data.team);
-        } else {
-          props.setCurrentProject(response.data._id);
+    setIsLoading(true);
+    axios
+      .get(`/api/project/${projectId}`)
+      .then((response) => {
+        if (response && response.data) {
+          setProject(response.data);
+          if (props.location.pathname.indexOf("team") > -1) {
+            props.setCurrentTeam(response.data.team);
+          } else {
+            props.setCurrentProject(response.data._id);
+          }
         }
-      }
-    });
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        if (err && err.response && err.response.data) {
+          props.setErrors(err);
+        }
+        setIsLoading(false);
+      });
   };
   return (
     <div className="label__wrapper label__wrapper--no-padding">
@@ -58,7 +70,7 @@ function Labels(props) {
           </Link>
         </div>
       </div>
-      {Object.keys(project).length > 0 && (
+      {Object.keys(project).length > 0 ? (
         <div className="label__label-container">
           {project.labels.map((label, index) => (
             <LabelPreview
@@ -71,7 +83,9 @@ function Labels(props) {
             />
           ))}
         </div>
-      )}
+      ) : isLoading ? (
+        <Spinner />
+      ) : null}
     </div>
   );
 }

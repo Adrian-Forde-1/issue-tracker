@@ -19,11 +19,15 @@ import CaretDownNoFillSVG from "../SVG/CaretDownNoFillSVG";
 import PreviewSVG from "../SVG/PreviewSVG";
 import InfoSVG from "../SVG/InfoSVG";
 
+//Components
+import Spinner from "../Misc/Spinner/Spinner";
+
 const EditIssue = (props) => {
   const [issue, setIssue] = useState({});
   const [members, setMembers] = useState([]);
   const [assignedMembers, setAssignedMembers] = useState([]);
   const [showPreview, setShowPreview] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getIssue();
@@ -31,6 +35,7 @@ const EditIssue = (props) => {
 
   const getIssue = () => {
     const issueId = props.match.params.issueId;
+    setIsLoading(true);
     axios
       .get(`/api/issue/${issueId}`)
       .then((response) => {
@@ -81,6 +86,7 @@ const EditIssue = (props) => {
         } else {
           props.setErrors(["Something went wrong"]);
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         if (
@@ -103,6 +109,7 @@ const EditIssue = (props) => {
         ) {
           props.history.replace("/project/404");
         }
+        setIsLoading(false);
       });
   };
 
@@ -405,7 +412,8 @@ const EditIssue = (props) => {
         </div>
       </div>
     );
-  } else return null;
+  } else if (isLoading) return <Spinner />;
+  else return null;
 };
 
 const mapDispatchToProps = {
