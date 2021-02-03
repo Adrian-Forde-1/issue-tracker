@@ -122,7 +122,6 @@ function TeamDashboard(props) {
       />
 
       <Route
-        exact
         path="/team/chat"
         render={(props) => {
           return (
@@ -247,6 +246,9 @@ function TeamDashboard(props) {
             <TeamPreview
               team={team}
               key={team._id}
+              currentCategory={currentCategory}
+              categories={categories}
+              setCurrentTeam={setCurrentTeam}
               currentTeam={currentTeam.toString() === team._id.toString()}
               getTeams={getTeams}
             />
@@ -337,7 +339,7 @@ function TeamDashboard(props) {
               sidebarOpen && "shrink"
             }`}
           >
-            <Suspense fallback="Loading">{routes}</Suspense>
+            <Suspense fallback={<Spinner />}>{routes}</Suspense>
           </div>
         </div>
       </div>

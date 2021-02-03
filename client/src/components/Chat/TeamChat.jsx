@@ -1,80 +1,68 @@
-import React, { Component } from "react";
+import React, { useEffect, useState, useRef } from "react";
+
+//Socket IO
 import io from "socket.io-client";
+
+//Moment
 import moment from "moment";
+
+//Axios
 import axios from "axios";
 
 //Redux
 import { connect } from "react-redux";
 
-//Components
-import SideNav from "../Navigation/SideNav";
-import MessageList from "./MessageList";
-import ProjectsTeamsHamburger from "../Navigation/ProjectsTeamsHamburger";
-
+//Actions
 import { setErrors } from "../../redux/actions/userActions";
 
-class TeamChat extends Component {
-  constructor(props) {
-    super(props);
+//Components
+import MessageList from "./MessageList";
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+const TeamChat = (props) => {
+  let socket;
+  let inputMessageRef = useRef(null);
 
-    this.inputMessageRef = React.createRef();
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
 
-    this.state = {
-      message: "",
-      messages: [],
-    };
-  }
+  useEffect(() => {
+    socket = io();
+    inputMessageRef.current.focus();
 
-  componentDidMount() {
-    // const server = 'http://127.0.0.1:5000';
+    socket.on("Output Chat Message", (message) => {
+      setMessages((prevState) => {
+        return [...prevState, message];
+      });
 
-    // this.socket = io(server);
-    this.socket = io();
-
-    this.socket.on("Output Chat Message", (message) => {
-      this.setState((prevState) => ({
-        messages: [...prevState.messages, message],
-      }));
       if (document.querySelector(".team-messages")) {
         document.querySelector(".team-messages").scrollTo(0, 999999999999999);
       }
     });
 
-    // this.props.getChats(this.props.currentChatTeamID);
-    const teamID = this.props.match.params.teamID;
+    const teamId = props.match.params.teamId;
+    // props.setCurrentTeam(`${teamId}`);
+    console.log(props);
+
     axios
-      .get(`/api/chats/${teamID}`)
-      .then((response) => {
-        this.setState({
-          messages: response.data,
-        });
+      .get(`/api/chats/${teamId}`)
+      .then((res) => {
+        if (res && res.data) setMessages(messages);
       })
       .catch((err) => {
-        this.props.setErrors(err);
+        if (err && err.response && err.response.data) props.setErrors(err);
       });
-  }
-
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  onSubmit = (e) => {
+  }, []);
+  const onSubmit = (e) => {
     e.preventDefault();
-    const { user } = this.props;
+    const { user } = props;
 
     let username = user.username;
     let userId = user._id;
     let currentTime = moment();
-    let teamId = this.props.match.params.teamID;
-    let message = this.state.message;
+    let teamId = props.match.params.teamId;
     let type = "Image";
 
-    this.socket.emit("Team Chat Message", {
+    socket.emit("Team Chat Message", {
       message,
       userId,
       username,
@@ -83,46 +71,45 @@ class TeamChat extends Component {
       type,
     });
 
-    this.setState({
-      message: "",
-    });
+    setMessage(message);
 
-    this.inputMessageRef.current.focus();
+    inputMessageRef.current.focus();
   };
-  render() {
-    return (
-      <div className="team-chat">
-        <SideNav />
-        <ProjectsTeamsHamburger />
-        {/* <div className="team-chat-user-groups">
-          <ul className="team-chat-user-groups-dropdown"></ul>
+  return (
+    <div className="team__chat">
+      {/* <div className="team__chat-user-groups">
+          <ul className="team__chat-user-groups-dropdown"></ul>
         </div> */}
-        <div className="team-chat-content">
-          {this.state.messages.length > 0 && (
-            <MessageList messages={this.state.messages} />
-          )}
+      <div className="team__chat-content">
+        {messages.length > 0 && <MessageList messages={messages} />}
 
-          <form className="team-chat-form" onSubmit={this.onSubmit}>
-            <input
-              className="team-my-message"
-              type="text"
-              name="message"
-              id="message"
-              placeholder="Say something cool"
-              autoComplete="off"
-              value={this.state.message}
-              ref={this.inputMessageRef}
-              onChange={this.onChange}
-            />
-            <button>
-              <i className="fas fa-level-down-alt"></i>
-            </button>
-          </form>
-        </div>
+        <form
+          className="team__chat-form"
+          onSubmit={() => {
+            onSubmit();
+          }}
+        >
+          <input
+            className="team-my-message"
+            type="text"
+            name="message"
+            id="message"
+            placeholder="Say something cool"
+            autoComplete="off"
+            value={message}
+            ref={inputMessageRef}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+          />
+          <button>
+            <i className="fas fa-level-down-alt"></i>
+          </button>
+        </form>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => ({
   user: state.user.user,

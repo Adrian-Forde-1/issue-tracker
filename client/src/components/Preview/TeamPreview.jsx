@@ -60,7 +60,12 @@ const TeamPreview = (props) => {
   };
 
   const gotoTeam = () => {
-    props.history.push(`/team/${team._id}`);
+    if (props.currentCategory === props.categories.Teams)
+      props.history.push(`/team/${team._id}`);
+    else if (props.currentCategory === props.categories.Chat) {
+      props.history.push(`/team/chat/${team._id}`);
+      props.setCurrentTeam(`${team._id}`);
+    }
   };
 
   const renderModal = () => {

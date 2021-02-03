@@ -5,11 +5,12 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 //Components
 import TeamChatLandingPage from "./TeamChatLandingPage";
+import TeamChat from "./TeamChat";
 
 const ChatWrapper = (props) => {
-  //   useEffect(() => {
-  //     props.setCurrentTeam("");
-  //   }, []);
+  useEffect(() => {
+    props.setCurrentTeam("");
+  }, []);
 
   let routes = (
     <Switch>
@@ -18,6 +19,13 @@ const ChatWrapper = (props) => {
         path="/team/chat"
         render={(props) => {
           return <TeamChatLandingPage {...props} />;
+        }}
+      />
+      <Route
+        exact
+        path="/team/chat/:teamId"
+        render={(props) => {
+          return <TeamChat {...props} />;
         }}
       />
     </Switch>

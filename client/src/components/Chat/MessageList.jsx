@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import moment from 'moment';
+import React, { useEffect } from "react";
+import moment from "moment";
 
 //Redux
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 function MessageList(props) {
   const { messages } = props;
 
-  if (typeof messages === 'object' && messages.length > 0) {
+  if (typeof messages === "object" && messages.length > 0) {
     return (
       <div className="team-messages">
         {messages.map((message, index) => (
@@ -15,17 +15,17 @@ function MessageList(props) {
             className="row"
             key={index}
             style={{
-              width: '100%',
-              margin: '0px auto',
+              width: "100%",
+              margin: "0px auto",
             }}
           >
             <div className="col-12">
               {message.sender._id.toString() === props.user._id.toString() ? (
-                <div className="team-chat-message" style={{ float: 'right' }}>
+                <div className="team__chat-message" style={{ float: "right" }}>
                   <div key={message.id}>
                     <p
-                      className="team-chat-message-content"
-                      style={{ padding: '5px' }}
+                      className="team__chat-message-content"
+                      style={{ padding: "5px" }}
                     >
                       {message.message}
                     </p>
@@ -35,12 +35,12 @@ function MessageList(props) {
                   </div>
                 </div>
               ) : (
-                <div className="team-chat-message" style={{ float: 'left' }}>
+                <div className="team__chat-message" style={{ float: "left" }}>
                   <div key={message.id}>
-                    <p className="team-chat-message-username">
+                    <p className="team__chat-message-username">
                       {message.sender.username}
                     </p>
-                    <p className="team-chat-message-content">
+                    <p className="team__chat-message-content">
                       {message.message}
                     </p>
                     <p className="team-message-posted-at">
