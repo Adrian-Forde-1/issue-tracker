@@ -4374,6 +4374,46 @@ header::after {
   transform-box: fill-box;
 }
 
+#chat-woman-right-hair {
+  -webkit-animation: hairShake 6s linear infinite forwards;
+          animation: hairShake 6s linear infinite forwards;
+  -webkit-transform-origin: top;
+          transform-origin: top;
+  transform-box: fill-box;
+}
+
+#chat-ball-one {
+  -webkit-animation: chatBallAnimation 6s linear infinite forwards;
+          animation: chatBallAnimation 6s linear infinite forwards;
+  -webkit-transform-origin: top;
+          transform-origin: top;
+  transform-box: fill-box;
+}
+
+#chat-ball-two {
+  -webkit-animation: chatBallAnimation 6s linear 1s infinite forwards;
+          animation: chatBallAnimation 6s linear 1s infinite forwards;
+  -webkit-transform-origin: top;
+          transform-origin: top;
+  transform-box: fill-box;
+}
+
+#chat-ball-three {
+  -webkit-animation: chatBallAnimation 6s linear 2s infinite forwards;
+          animation: chatBallAnimation 6s linear 2s infinite forwards;
+  -webkit-transform-origin: top;
+          transform-origin: top;
+  transform-box: fill-box;
+}
+
+#chat-chat {
+  -webkit-animation: chatSway 12s linear 2s infinite forwards;
+          animation: chatSway 12s linear 2s infinite forwards;
+  -webkit-transform-origin: top;
+          transform-origin: top;
+  transform-box: fill-box;
+}
+
 #teamwork__lady-hair {
   -webkit-animation: plantShake 6s linear 4s infinite forwards;
           animation: plantShake 6s linear 4s infinite forwards;
@@ -4501,6 +4541,140 @@ header::after {
   100% {
     -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
+  }
+}
+
+@-webkit-keyframes hairShake {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  25% {
+    -webkit-transform: rotate(7deg);
+            transform: rotate(7deg);
+  }
+  75% {
+    -webkit-transform: rotate(-3deg);
+            transform: rotate(-3deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+}
+
+@keyframes hairShake {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  25% {
+    -webkit-transform: rotate(7deg);
+            transform: rotate(7deg);
+  }
+  75% {
+    -webkit-transform: rotate(-3deg);
+            transform: rotate(-3deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+}
+
+@-webkit-keyframes chatSway {
+  0%,
+  100% {
+    -webkit-transform: translate(0px, 0px);
+            transform: translate(0px, 0px);
+  }
+  20% {
+    -webkit-transform: translate(-10px, -10px);
+            transform: translate(-10px, -10px);
+  }
+  40% {
+    -webkit-transform: translate(-10px, 10px);
+            transform: translate(-10px, 10px);
+  }
+  60% {
+    -webkit-transform: translate(10px, -10px);
+            transform: translate(10px, -10px);
+  }
+  80% {
+    -webkit-transform: translate(10px, 10px);
+            transform: translate(10px, 10px);
+  }
+}
+
+@keyframes chatSway {
+  0%,
+  100% {
+    -webkit-transform: translate(0px, 0px);
+            transform: translate(0px, 0px);
+  }
+  20% {
+    -webkit-transform: translate(-10px, -10px);
+            transform: translate(-10px, -10px);
+  }
+  40% {
+    -webkit-transform: translate(-10px, 10px);
+            transform: translate(-10px, 10px);
+  }
+  60% {
+    -webkit-transform: translate(10px, -10px);
+            transform: translate(10px, -10px);
+  }
+  80% {
+    -webkit-transform: translate(10px, 10px);
+            transform: translate(10px, 10px);
+  }
+}
+
+@-webkit-keyframes chatBallAnimation {
+  0%,
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  25% {
+    opacity: 0.7;
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  75% {
+    opacity: 0.7;
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+}
+
+@keyframes chatBallAnimation {
+  0%,
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  25% {
+    opacity: 0.7;
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  75% {
+    opacity: 0.7;
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
   }
 }
 
@@ -4944,6 +5118,102 @@ header::after {
   100% {
     -webkit-transform: rotateZ(360deg);
             transform: rotateZ(360deg);
+  }
+}
+
+.chat__wrapper {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.chat__dashboard {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.chat__dashboard h6 {
+  font-size: 16px;
+  margin-top: 20px;
+  color: #080021;
+}
+
+.chat__dashboard div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-column-gap: 10px;
+          column-gap: 10px;
+}
+
+.chat__dashboard a {
+  margin-top: 10px;
+  background: #080021;
+  color: #fdfcff;
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+.chat__dashboard svg {
+  font-size: 70px;
+}
+
+@media screen and (max-width: 768px) {
+  .chat__dashboard svg {
+    font-size: 55px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .chat__dashboard h6 {
+    font-size: 14px;
+  }
+  .chat__dashboard svg {
+    font-size: 45px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .chat__dashboard h6 {
+    font-size: 12px;
+  }
+  .chat__dashboard a {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+  .chat__dashboard svg {
+    font-size: 35px;
   }
 }
 

@@ -14,22 +14,32 @@ function SideNav(props) {
     if (props.location.pathname.indexOf("project") > -1)
       document.querySelector("#project-link").classList.add("selected-section");
     if (props.location.pathname.indexOf("team") > -1) {
-      document
-        .querySelector("#project-link")
-        .classList.remove("selected-section");
-      document.querySelector("#team-link").classList.add("selected-section");
+      if (document.querySelector("#project-link"))
+        document
+          .querySelector("#project-link")
+          .classList.remove("selected-section");
+
+      if (document.querySelector("#team-link"))
+        document.querySelector("#team-link").classList.add("selected-section");
     }
     if (
       props.location.pathname.indexOf("team") > -1 &&
       props.location.pathname.indexOf("chat") > -1
     ) {
-      document
-        .querySelector("#project-link")
-        .classList.remove("selected-section");
-      document.querySelector("#team-link").classList.remove("selected-section");
-      document
-        .querySelector("#chatroom-link")
-        .classList.add("selected-section");
+      if (document.querySelector("#project-link"))
+        document
+          .querySelector("#project-link")
+          .classList.remove("selected-section");
+
+      if (document.querySelector("#team-link"))
+        document
+          .querySelector("#team-link")
+          .classList.remove("selected-section");
+
+      if (document.querySelector("#chatroom-link"))
+        document
+          .querySelector("#chatroom-link")
+          .classList.add("selected-section");
     }
   }, []);
 

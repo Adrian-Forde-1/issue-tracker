@@ -45,6 +45,36 @@
   transform-box: fill-box;
 }
 
+#chat-woman-right-hair {
+  animation: hairShake 6s linear infinite forwards;
+  transform-origin: top;
+  transform-box: fill-box;
+}
+
+#chat-ball-one {
+  animation: chatBallAnimation 6s linear infinite forwards;
+  transform-origin: top;
+  transform-box: fill-box;
+}
+
+#chat-ball-two {
+  animation: chatBallAnimation 6s linear 1s infinite forwards;
+  transform-origin: top;
+  transform-box: fill-box;
+}
+
+#chat-ball-three {
+  animation: chatBallAnimation 6s linear 2s infinite forwards;
+  transform-origin: top;
+  transform-box: fill-box;
+}
+
+#chat-chat {
+  animation: chatSway 12s linear 2s infinite forwards;
+  transform-origin: top;
+  transform-box: fill-box;
+}
+
 #teamwork__lady-hair {
   animation: plantShake 6s linear 4s infinite forwards;
   transform-origin: bottom;
@@ -107,5 +137,59 @@
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+
+@keyframes hairShake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(7deg);
+  }
+  75% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes chatSway {
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+  }
+  20% {
+    transform: translate(-10px, -10px);
+  }
+  40% {
+    transform: translate(-10px, 10px);
+  }
+  60% {
+    transform: translate(10px, -10px);
+  }
+  80% {
+    transform: translate(10px, 10px);
+  }
+}
+
+@keyframes chatBallAnimation {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  25% {
+    opacity: 0.7;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  75% {
+    opacity: 0.7;
+    transform: scale(1.2);
   }
 }

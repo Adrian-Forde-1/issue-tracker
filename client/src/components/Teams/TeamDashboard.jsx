@@ -44,6 +44,8 @@ import EditLabel from "../Labels/EditLabel";
 import Project from "../Projects/Project";
 import EditProject from "../Projects/EditProject";
 
+import ChatWrapper from "../Chat/ChatWrapper";
+
 import NotFound from "../Misc/NotFound";
 import Spinner from "../Misc/Spinner/Spinner";
 
@@ -66,6 +68,19 @@ function TeamDashboard(props) {
   useEffect(() => {
     getTeams();
   }, []);
+
+  useEffect(() => {
+    if (
+      props.location.pathname.indexOf("chat") === -1 &&
+      currentCategory === categories.Chat
+    )
+      setCurrentCategory(categories.Teams);
+    else if (
+      props.location.pathname.indexOf("chat") > -1 &&
+      currentCategory === categories.Teams
+    )
+      setCurrentCategory(categories.Chat);
+  }, [props.location.pathname]);
 
   useEffect(() => {
     setTeams(props.teams);
@@ -105,6 +120,21 @@ function TeamDashboard(props) {
           );
         }}
       />
+
+      <Route
+        exact
+        path="/team/chat"
+        render={(props) => {
+          return (
+            <ChatWrapper
+              {...props}
+              setCurrentTeam={setCurrentTeam}
+              getTeams={getTeams}
+            />
+          );
+        }}
+      />
+
       <Route
         exact
         path="/team/join"
@@ -261,7 +291,10 @@ function TeamDashboard(props) {
                 className={`${
                   currentCategory === categories.Teams && "selected"
                 }`}
-                onClick={() => setCurrentCategory(categories.Teams)}
+                onClick={() => {
+                  setCurrentCategory(categories.Teams);
+                  props.history.push("/team");
+                }}
               >
                 <span>Team</span>
               </div>
@@ -269,7 +302,10 @@ function TeamDashboard(props) {
                 className={`${
                   currentCategory === categories.Chat && "selected"
                 }`}
-                onClick={() => setCurrentCategory(categories.Chat)}
+                onClick={() => {
+                  setCurrentCategory(categories.Chat);
+                  props.history.push("/team/chat");
+                }}
               >
                 <span>Chat</span>
               </div>

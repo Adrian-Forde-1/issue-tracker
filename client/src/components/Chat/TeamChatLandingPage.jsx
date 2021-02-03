@@ -1,41 +1,21 @@
-import React from 'react';
+import React from "react";
 
 //React Router
-import { Link } from 'react-router-dom';
-
-//Resources
-import group_chat_image from '../../resources/Images/group_chat_image.svg';
+import { Link } from "react-router-dom";
 
 //Redux
-import { connect } from 'react-redux';
-import SideNav from '../Navigation/SideNav';
-import ProjectsTeamsHamburger from '../Navigation/ProjectsTeamsHamburger';
+import { connect } from "react-redux";
+
+//SVG
+import TeamChatSVG from "../SVG/TeamChatSVG";
 
 function TeamChatLandingPage(props) {
   return (
-    <div>
-      <ProjectsTeamsHamburger />
-      <SideNav />
-      <div className="container team-chat-landing-page">
-        <div className="img-container">
-          <img src={group_chat_image} alt="" />
-          {props.user.teams.length > 0 ? (
-            <h5>Select a team to start chating</h5>
-          ) : (
-            <h5>Join a team to start chating</h5>
-          )}
-          {props.teams.length > 0 && (
-            <div className="team-chat-landing-page-user-teams">
-              <ul className="list-group">
-                {props.teams.map((team, i) => (
-                  <li className="list-group-item" key={i}>
-                    <Link to={`/teams/chat/${team._id}`}>{team.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
+    <div className="chat__dashboard">
+      <TeamChatSVG />
+      <h6>Join a team to start chatting</h6>
+      <div>
+        <Link to="/team/join">Join Team</Link>
       </div>
     </div>
   );

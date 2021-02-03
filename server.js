@@ -100,6 +100,12 @@ io.on("connection", (socket) => {
       }
     });
   });
+
+  socket.on("disconnect", () => {
+    console.log("User has left");
+  });
 });
 
-http.listen(PORT, console.log(`Server is up and running on port ${PORT}`));
+http.listen(PORT, () => {
+  console.log(`Server is up and running on port ${PORT}`);
+});

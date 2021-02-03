@@ -1,0 +1,89 @@
+@import "variables";
+
+.chat {
+  &__wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__dashboard {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h6 {
+      font-size: 16px;
+      margin-top: 20px;
+      color: $text-color;
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      column-gap: 10px;
+    }
+
+    a {
+      margin-top: 10px;
+      background: $text-color;
+      color: $page-background;
+      padding: 8px 14px;
+      font-size: 14px;
+    }
+
+    svg {
+      font-size: 70px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .chat {
+    &__dashboard {
+      svg {
+        font-size: 55px;
+      }
+    }
+  }
+}
+
+@media screen and(max-width: 500px) {
+  .chat {
+    &__dashboard {
+      h6 {
+        font-size: 14px;
+      }
+
+      svg {
+        font-size: 45px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .chat {
+    &__dashboard {
+      h6 {
+        font-size: 12px;
+      }
+
+      a {
+        font-size: 10px;
+        padding: 4px 10px;
+      }
+
+      svg {
+        font-size: 35px;
+      }
+    }
+  }
+}
