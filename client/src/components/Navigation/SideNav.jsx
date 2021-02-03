@@ -32,14 +32,7 @@ function SideNav(props) {
           .classList.remove("selected-section");
 
       if (document.querySelector("#team-link"))
-        document
-          .querySelector("#team-link")
-          .classList.remove("selected-section");
-
-      if (document.querySelector("#chatroom-link"))
-        document
-          .querySelector("#chatroom-link")
-          .classList.add("selected-section");
+        document.querySelector("#team-link").classList.add("selected-section");
     }
   }, []);
 

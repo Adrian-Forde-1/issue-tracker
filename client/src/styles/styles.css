@@ -1140,10 +1140,8 @@ header::after {
   color: #fdfcff;
   cursor: pointer;
   font-weight: 300;
-}
-
-.side-nav ul li.selected-section {
-  background: rgba(255, 255, 255, 0.3);
+  -webkit-transition: background 300ms linear;
+  transition: background 300ms linear;
 }
 
 .side-nav ul li a {
@@ -1168,6 +1166,10 @@ header::after {
 
 .side-nav ul li a span {
   font-size: 10px;
+}
+
+.side-nav ul li:hover, .side-nav ul li.selected-section {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .side-nav__top {
