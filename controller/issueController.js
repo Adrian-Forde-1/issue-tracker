@@ -1,8 +1,16 @@
 const IssueModel = require("../models/IssueModel");
 const ProjectModal = require("../models/ProjectModel");
 const TeamModal = require("../models/TeamModel");
+const _ = require("lodash");
 
 const { NEW_ISSUE } = require("../util/issueStatus");
+
+const issueUpdateTypes = {
+  "STATUS UPDATE": "STATUS UPDATE",
+  "DESCRIPTION UPDATE": "DESCRIPTION UPDATE",
+  "NAME UPDATE": "NAME UPDATE",
+  "LABEL UPDATE": "LABEL UPDATE",
+};
 
 module.exports = {
   //Create Issue
@@ -97,14 +105,7 @@ module.exports = {
 
         const issueInfo = req.body.issue;
 
-        IssueModel.findByIdAndUpdate(issueId, {
-          $set: {
-            name: issueInfo.name,
-            description: issueInfo.description,
-            labels: issueInfo.labels,
-            assignees: issueInfo.assignees,
-          },
-        }).exec(function (err, issue) {
+        IssueModel.findById(issueId).exec(function (err, issue) {
           //If error occured, notify user
           if (err) {
             console.error(err);
@@ -112,9 +113,62 @@ module.exports = {
             return res.status(500).json(errors);
           }
 
-          //If everything went well, notify user
-          messages.push("Successfully updated issue");
-          return res.json(messages);
+          let newUpdates = [...issue.updates];
+
+          let oldDescription = issue.description;
+          let oldName = issue.name;
+          let oldLabels = issue.labels;
+
+          if (oldDescription.toString() !== issueInfo.description.toString()) {
+            let newUpdate = {
+              date: Date.now(),
+              updateType: issueUpdateTypes["DESCRIPTION UPDATE"],
+              updateInfo: issueInfo.description,
+              updatedBy: req.body.username,
+            };
+            newUpdates.push(newUpdate);
+          }
+
+          if (oldName.toString() !== issueInfo.name.toString()) {
+            let newUpdate = {
+              date: Date.now(),
+              updateType: issueUpdateTypes["NAME UPDATE"],
+              updateInfo: issueInfo.name,
+              updatedBy: req.body.username,
+            };
+            newUpdates.push(newUpdate);
+          }
+
+          if (!_.isEqual(oldLabels, issueInfo.labels)) {
+            let newUpdate = {
+              date: Date.now(),
+              updateType: issueUpdateTypes["LABEL UPDATE"],
+              updateInfo: issueInfo.labels.join(" "),
+              updatedBy: req.body.username,
+            };
+            newUpdates.push(newUpdate);
+          }
+
+          IssueModel.findByIdAndUpdate(issueId, {
+            $set: {
+              name: issueInfo.name,
+              description: issueInfo.description,
+              labels: issueInfo.labels,
+              assignees: issueInfo.assignees,
+              updates: newUpdates,
+            },
+          }).exec(function (err, issue) {
+            //If error occured, notify user
+            if (err) {
+              console.error(err);
+              errors.push("Error occured when updating issue");
+              return res.status(500).json(errors);
+            }
+
+            //If everything went well, notify user
+            messages.push("Successfully updated issue");
+            return res.json(messages);
+          });
         });
       } else {
         let errors = [];
@@ -135,9 +189,33 @@ module.exports = {
         const issueId = req.params.issueId;
 
         const newStatus = req.body.issue;
+        IssueModel.findById(issueId).exec(function (err, issue) {
+          //If error occured, notify user
+          if (err) {
+            console.error(err);
+            error.push("Error occured when updating issue");
+            return res.status(500).json(errors);
+          }
 
-        IssueModel.findByIdAndUpdate(issueId, { status: newStatus }).exec(
-          function (err, issue) {
+          let newCompletedOn;
+          if (newStatus["name"] === "Completed") newCompletedOn = Date.now();
+          else newCompletedOn = null;
+
+          let newUpdates = [...issue.updates];
+          let newUpdate = {
+            date: Date.now(),
+            updateType: issueUpdateTypes["STATUS UPDATE"],
+            updateInfo: newStatus["name"] ? newStatus["name"] : "undefined",
+            updatedBy: req.body.username,
+          };
+
+          newUpdates.push(newUpdate);
+
+          IssueModel.findByIdAndUpdate(issueId, {
+            status: newStatus,
+            completedOn: newCompletedOn,
+            updates: newUpdates,
+          }).exec(function (err, issue) {
             //If error occured, notify user
             if (err) {
               console.error(err);
@@ -148,8 +226,8 @@ module.exports = {
             //If everything went well, notify user
             messages.push("Successfully updated issue");
             return res.json(messages);
-          }
-        );
+          });
+        });
       } else {
         let errors = [];
         errors.push("Issue Not Found");

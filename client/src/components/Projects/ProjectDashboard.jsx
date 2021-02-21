@@ -31,6 +31,7 @@ import DashboardNavbar from "../Navigation/DashboardNavbar";
 import Issue from "../Issues/Issue";
 import NewIssue from "../Issues/NewIssue";
 import EditIssue from "../Issues/EditIssue";
+import IssueHistory from "../Issues/IssueHistory";
 
 import Labels from "../Labels/Labels";
 import AddLabel from "../Labels/AddLabel";
@@ -144,6 +145,14 @@ function ProjectDashboard(props) {
         path="/project/:projectId/new/label"
         render={(props) => {
           return <AddLabel {...props} setCurrentProject={setCurrentProject} />;
+        }}
+      />
+      <Route
+        path="/project/issue/:issueId/history"
+        render={(props) => {
+          return (
+            <IssueHistory {...props} setCurrentProject={setCurrentProject} />
+          );
         }}
       />
       <Route

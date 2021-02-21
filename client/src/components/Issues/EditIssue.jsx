@@ -156,7 +156,10 @@ const EditIssue = (props) => {
     };
 
     axios
-      .put(`/api/issue/${issue._id}`, { issue: newIssue })
+      .put(`/api/issue/${issue._id}`, {
+        issue: newIssue,
+        username: props.user.username,
+      })
       .then((response) => {
         if (response && response.data) {
           props.setMessages(response.data);
@@ -416,9 +419,13 @@ const EditIssue = (props) => {
   else return null;
 };
 
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+});
+
 const mapDispatchToProps = {
   setErrors,
   setMessages,
 };
 
-export default connect(null, mapDispatchToProps)(EditIssue);
+export default connect(mapStateToProps, mapDispatchToProps)(EditIssue);

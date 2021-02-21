@@ -42,6 +42,18 @@ const issueSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  completedOn: {
+    type: Date,
+    default: null,
+  },
+  updates: [
+    {
+      date: Date,
+      updateType: String,
+      updateInfo: String,
+      updatedBy: String,
+    },
+  ],
 });
 
 const IssueModel = mongoose.model("issue", issueSchema);

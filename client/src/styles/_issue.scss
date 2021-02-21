@@ -314,6 +314,169 @@
   }
 }
 
+.issue-history {
+  &__wrapper {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $text-color;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #eee;
+    }
+  }
+
+  &__history-header {
+    width: 100%;
+    height: 80px;
+    padding: 20px 20px 0px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  &__issue-name {
+    font-size: 24px;
+    color: $text-color;
+  }
+
+  &__history-heading {
+    margin-top: 10px;
+    font-size: 18px;
+    color: $primary-color;
+  }
+
+  &__history-wrapper {
+    width: 100%;
+    height: calc(100% - 80px);
+    max-height: calc(100% - 80px);
+    padding: 0px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 15px;
+    margin-top: 20px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $text-color;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #eee;
+    }
+  }
+
+  &__update-block {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid $text-color;
+
+    &:hover {
+      background: $text-color;
+      color: #fff !important;
+      span {
+        color: #fff !important;
+      }
+
+      h6 {
+        color: $main-green;
+      }
+    }
+
+    &__update-type {
+      color: $primary-color;
+      font-size: 14px;
+    }
+
+    &__update-info {
+      font-size: 12px;
+      font-weight: 400;
+      width: 100%;
+      overflow-x: hidden;
+      word-wrap: normal;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      &-desc {
+        font-weight: 300;
+      }
+    }
+
+    &__updater-info {
+      margin-top: 10px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      color: $text-color;
+      font-size: 10px;
+      font-weight: 400;
+    }
+
+    &__updated-by {
+      color: $primary-color;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    &__date {
+      color: $text-color;
+      font-size: 10px;
+      font-weight: 400;
+    }
+
+    &__updated-labels-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    &__updated-label {
+      border-radius: 75px;
+      font-size: 10px;
+      min-width: 100px;
+      width: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2px 0px;
+    }
+  }
+
+  &__no-history {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    h1 {
+      color: $text-color;
+      font-size: 20px;
+    }
+  }
+}
+
 @media screen and (max-width: 768px) {
   .issue {
     &__label {

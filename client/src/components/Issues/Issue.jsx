@@ -24,7 +24,7 @@ import EditSVG from "../SVG/EditSVG";
 import CaretDownNoFillSVG from "../SVG/CaretDownNoFillSVG";
 import TickSVG from "../SVG/TickSVG";
 import ConstructionConeSVG from "../SVG/ConstructionConeSVG";
-import ExclamationSVG from "../SVG/ExclamationSVG";
+import HistorySVG from "../SVG/HistorySVG";
 
 //Actions
 import { setErrors, setMessages } from "../../redux/actions/userActions";
@@ -112,7 +112,6 @@ const Issue = (props) => {
   }, [issue]);
 
   const updateIssue = (e, status) => {
-    console.log("Update issue called");
     const elements = document.querySelectorAll(".issue__status");
     elements.forEach((element) => {
       if (element.classList.contains("selected")) {
@@ -137,7 +136,13 @@ const Issue = (props) => {
     }
 
     axios
-      .put(`/api/issue/${issue._id}/status`, { issue: newStatus })
+      .put(`/api/issue/${issue._id}/status`, {
+        issue: newStatus,
+        username: props.user.username,
+      })
+      .then(() => {
+        getIssue();
+      })
       .catch((error) => {
         if (error && error.response && error.response.data) {
           props.setErrors(error);
@@ -263,6 +268,19 @@ const Issue = (props) => {
                       issue.project.team !== null
                         ? "/team/project/"
                         : "/project/"
+                    }issue/${issue._id}/history`}
+                  >
+                    <Tooltip title="History" position="bottom" size="small">
+                      <HistorySVG />
+                    </Tooltip>
+                  </Link>
+                </div>
+                <div>
+                  <Link
+                    to={`${
+                      issue.project.team !== null
+                        ? "/team/project/"
+                        : "/project/"
                     }${issue.project._id}/issue/${issue._id}/edit`}
                   >
                     <Tooltip title="Edit Issue" position="bottom" size="small">
@@ -289,6 +307,16 @@ const Issue = (props) => {
               <span> &middot; </span>
               {new Date(issue.createdAt).toDateString()}
             </div>
+            {issue.completedOn !== null && (
+              <div
+                className="issue__creation-date"
+                style={{ marginTop: "-10px" }}
+              >
+                Completed On
+                <span> &middot; </span>
+                {new Date(issue.createdAt).toDateString()}
+              </div>
+            )}
             <div className="issue__description">
               <div
                 className="issue__description-name"
