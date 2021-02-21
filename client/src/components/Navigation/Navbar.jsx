@@ -114,28 +114,20 @@ function Navbar(props) {
             document.querySelector('.nav-list').classList.toggle('nav-open');
           }}
         ></i> */}
-        <ul className="nav-list">
-          {/* <li className="nav-item">
-            <Link to="/aboutus">About Us</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/pricing">Pricing</Link>
-          </li> */}
-          {authenticated === false && (
+        {!authenticated && (
+          <ul className="nav-list">
             <li className="nav-item">
               <Link to="/login">
                 <span>Login</span>
               </Link>
             </li>
-          )}
-          {authenticated === false && (
             <li className="nav-item">
               <Link to="/signup">
                 <span>Sign Up</span>
               </Link>
             </li>
-          )}
-        </ul>
+          </ul>
+        )}
         {authenticated === true && (
           <div className="navbar__right-container">
             <div

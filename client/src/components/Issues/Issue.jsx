@@ -314,7 +314,7 @@ const Issue = (props) => {
               >
                 Completed On
                 <span> &middot; </span>
-                {new Date(issue.createdAt).toDateString()}
+                {new Date(issue.completedOn).toDateString()}
               </div>
             )}
             <div className="issue__description">

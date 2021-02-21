@@ -69,7 +69,12 @@ export const logoutUser = (history) => (dispatch) => {
       history.push("/login");
     })
     .catch((err) => {
-      if (err && err.response && err.response.data) {
+      if (
+        err &&
+        err.response &&
+        err.response.data &&
+        Array.isArray(err.response.data)
+      ) {
         dispatch({ type: SET_ERRORS, payload: err.response.data });
       }
     });
@@ -91,7 +96,12 @@ export const setMessages = (messages) => (dispatch) => {
 
 export const setErrors = (error) => (dispatch) => {
   let newErrors = [];
-  if (error && error.response && error.response.data) {
+  if (
+    error &&
+    error.response &&
+    error.response.data &&
+    Array.isArray(error.response.data)
+  ) {
     error.response.data.forEach((error) => {
       newErrors.push({
         id: uuidv4(),
