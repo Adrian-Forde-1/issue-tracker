@@ -1479,6 +1479,8 @@ header::after {
   min-height: 100%;
   height: auto;
   position: relative;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.6)), to(rgba(255, 255, 255, 0.6))), url("../resources/Images/Chat_Background.png");
+  background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url("../resources/Images/Chat_Background.png");
 }
 
 .team__chat-select {
@@ -1516,6 +1518,7 @@ header::after {
 }
 
 .team__chat-message p {
+  font-weight: 300;
   margin: 0px;
 }
 
@@ -1529,6 +1532,23 @@ header::after {
 .team__chat-message-content {
   text-align: left;
   padding: 0px 10px;
+  font-size: 12px;
+}
+
+.team__chat-message-posted-at {
+  float: right;
+  padding: 5px 10px;
+  font-size: 8px;
+  color: #000000;
+}
+
+.team__chat-message--mine {
+  background: #080021;
+  color: #fff;
+}
+
+.team__chat-message--mine p {
+  color: #fff !important;
 }
 
 .team__chat-form {
@@ -5513,6 +5533,40 @@ header::after {
 
 .chat__dashboard svg {
   font-size: 70px;
+}
+
+.chat__message-wrapper {
+  height: calc(100% - 55px);
+  max-height: calc(100% - 55px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-top: 10px;
+}
+
+.chat__message-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.chat__message-wrapper::-webkit-scrollbar-thumb {
+  background: #2e00b1;
+}
+
+.chat__my-message {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  max-height: 35px;
+  height: 35px;
+  padding: 5px 10px;
+  border: 1px solid #2e00b1;
+  resize: none;
+  border-right: none;
+}
+
+.chat__my-message:focus {
+  outline: none;
+  border: 2px solid #000000;
+  border-right: none;
 }
 
 @media screen and (max-width: 768px) {

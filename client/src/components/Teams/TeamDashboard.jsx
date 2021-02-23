@@ -30,6 +30,9 @@ import JoinTeam from "./JoinTeam";
 import CreateTeamProject from "./CreateTeamProject";
 import TeamDashboardLandingPage from "./TeamDashboardLandingPage";
 
+import TeamChat from "../Chat/TeamChat";
+import TeamChatLandingPage from "../Chat/TeamChatLandingPage";
+
 import SideNav from "../Navigation/SideNav";
 import DashboardNavbar from "../Navigation/DashboardNavbar";
 
@@ -44,8 +47,6 @@ import EditLabel from "../Labels/EditLabel";
 
 import Project from "../Projects/Project";
 import EditProject from "../Projects/EditProject";
-
-import ChatWrapper from "../Chat/ChatWrapper";
 
 import NotFound from "../Misc/NotFound";
 import Spinner from "../Misc/Spinner/Spinner";
@@ -123,13 +124,21 @@ function TeamDashboard(props) {
       />
 
       <Route
+        exact
         path="/team/chat"
         render={(props) => {
           return (
-            <ChatWrapper
-              {...props}
-              setCurrentTeam={setCurrentTeam}
-              getTeams={getTeams}
+            <Route
+              exact
+              path="/team/chat"
+              render={(props) => {
+                return (
+                  <TeamChatLandingPage
+                    {...props}
+                    setCurrentTeam={setCurrentTeam}
+                  />
+                );
+              }}
             />
           );
         }}
@@ -157,11 +166,19 @@ function TeamDashboard(props) {
       />
       <Route
         exact
+        path="/team/chat/:teamID"
+        render={(props) => {
+          return <TeamChat {...props} setCurrentTeam={setCurrentTeam} />;
+        }}
+      />
+      <Route
+        exact
         path="/team/project/:projectId"
         render={(props) => {
           return <Project {...props} setCurrentTeam={setCurrentTeam} />;
         }}
       />
+
       <Route
         exact
         path="/team/project/:projectId/edit"

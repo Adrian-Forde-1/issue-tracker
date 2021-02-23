@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 //React Router
 import { Link } from "react-router-dom";
@@ -10,6 +10,9 @@ import { connect } from "react-redux";
 import TeamChatSVG from "../SVG/TeamChatSVG";
 
 function TeamChatLandingPage(props) {
+  useEffect(() => {
+    if (props.setCurrentTeam) props.setCurrentTeam("");
+  }, []);
   return (
     <div className="chat__dashboard">
       <TeamChatSVG />

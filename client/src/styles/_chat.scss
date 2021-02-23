@@ -43,6 +43,36 @@
       font-size: 70px;
     }
   }
+
+  &__message-wrapper {
+    height: calc(100% - 55px);
+    max-height: calc(100% - 55px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-top: 10px;
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $primary-color;
+    }
+  }
+
+  &__my-message {
+    flex-grow: 1;
+    max-height: 35px;
+    height: 35px;
+    padding: 5px 10px;
+    border: 1px solid $primary-color;
+    resize: none;
+    border-right: none;
+
+    &:focus {
+      outline: none;
+      border: 2px solid #000000;
+      border-right: none;
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {

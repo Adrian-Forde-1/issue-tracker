@@ -90,10 +90,7 @@ const App = (props) => {
           {/* <Route exact path="/create/team" component={CreateTeam} /> */}
           <Route exact path="/profile" component={Profile} />
           <Route path="/team" component={TeamDashboard} />
-          <Route exact path="/teams/chat" component={TeamChatLandingPage} />
-          <ErrorBoundary>
-            <Route exact path="/teams/chat/:teamID" component={TeamChat} />
-          </ErrorBoundary>
+          {/* <Route exact path="/teams/chat" component={TeamChatLandingPage} /> */}
 
           <Route
             exact

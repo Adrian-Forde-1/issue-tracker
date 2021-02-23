@@ -173,6 +173,11 @@
     min-height: 100%;
     height: auto;
     position: relative;
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0.6)
+      ),
+      url("../resources/Images/Chat_Background.png");
 
     &-select {
       margin: 10px auto 0px auto;
@@ -208,6 +213,7 @@
       color: black;
 
       p {
+        font-weight: 300;
         margin: 0px;
       }
 
@@ -221,6 +227,23 @@
       &-content {
         text-align: left;
         padding: 0px 10px;
+        font-size: 12px;
+      }
+
+      &-posted-at {
+        float: right;
+        padding: 5px 10px;
+        font-size: 8px;
+        color: #000000;
+      }
+
+      &--mine {
+        background: $text-color;
+        color: #fff;
+
+        p {
+          color: #fff !important;
+        }
       }
     }
 

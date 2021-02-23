@@ -10,7 +10,7 @@ const TeamChatSVG = ({ classes }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g id="undraw_Group_chat_re_frmo 1" clip-path="url(#clip0)">
+      <g id="undraw_Group_chat_re_frmo 1" clipPath="url(#clip0)">
         <g id="chat-guy-right">
           <path
             id="Vector"

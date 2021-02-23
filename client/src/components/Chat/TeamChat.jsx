@@ -19,39 +19,44 @@ import { setErrors } from "../../redux/actions/userActions";
 import MessageList from "./MessageList";
 
 const TeamChat = (props) => {
-  let socket;
   let inputMessageRef = useRef(null);
-
+  let socket = io("http://localhost:5000");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
+  const messageWrapperRef = useRef(null);
+
   useEffect(() => {
-    socket = io();
+    console.log("Team CHat");
     inputMessageRef.current.focus();
 
     socket.on("Output Chat Message", (message) => {
       setMessages((prevState) => {
         return [...prevState, message];
       });
+      setMessage("");
 
-      if (document.querySelector(".team-messages")) {
-        document.querySelector(".team-messages").scrollTo(0, 999999999999999);
-      }
+      if (messageWrapperRef.current)
+        messageWrapperRef.current.scrollTop =
+          messageWrapperRef.current.scrollHeight;
     });
 
     const teamId = props.match.params.teamId;
+    if (teamId && props.setCurrentTeam) props.setCurrentTeam(teamId);
     // props.setCurrentTeam(`${teamId}`);
-    console.log(props);
 
     axios
       .get(`/api/chats/${teamId}`)
       .then((res) => {
-        if (res && res.data) setMessages(messages);
+        if (res && res.data) {
+          setMessages(res.data);
+        }
       })
       .catch((err) => {
         if (err && err.response && err.response.data) props.setErrors(err);
       });
   }, []);
+
   const onSubmit = (e) => {
     e.preventDefault();
     const { user } = props;
@@ -81,16 +86,21 @@ const TeamChat = (props) => {
           <ul className="team__chat-user-groups-dropdown"></ul>
         </div> */}
       <div className="team__chat-content">
-        {messages.length > 0 && <MessageList messages={messages} />}
+        {messages.length > 0 && (
+          <MessageList
+            messages={messages}
+            messageWrapperRef={messageWrapperRef}
+          />
+        )}
 
         <form
           className="team__chat-form"
-          onSubmit={() => {
-            onSubmit();
+          onSubmit={(e) => {
+            onSubmit(e);
           }}
         >
           <input
-            className="team-my-message"
+            className="chat__my-message"
             type="text"
             name="message"
             id="message"

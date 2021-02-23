@@ -72,6 +72,8 @@ app.get("/*", (req, res) => {
 
 io.on("connection", (socket) => {
   socket.on("Team Chat Message", (data) => {
+    console.log("Message data");
+    console.log(data);
     connect.then((db) => {
       try {
         let chat = new Chat({
