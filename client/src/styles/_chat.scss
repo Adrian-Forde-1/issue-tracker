@@ -45,11 +45,14 @@
   }
 
   &__message-wrapper {
-    height: calc(100% - 55px);
-    max-height: calc(100% - 55px);
-    overflow-y: scroll;
+    // height: calc(100% - 55px);
+    // max-height: calc(100% - 55px);
+    height: calc(84vh - 55px);
+    max-height: calc(84vh - 55px);
+    overflow-y: auto;
     overflow-x: hidden;
     padding-top: 10px;
+
     &::-webkit-scrollbar {
       width: 10px;
     }

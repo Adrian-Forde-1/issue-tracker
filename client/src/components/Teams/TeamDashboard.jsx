@@ -166,7 +166,7 @@ function TeamDashboard(props) {
       />
       <Route
         exact
-        path="/team/chat/:teamID"
+        path="/team/chat/:teamId"
         render={(props) => {
           return <TeamChat {...props} setCurrentTeam={setCurrentTeam} />;
         }}

@@ -20,14 +20,13 @@ import MessageList from "./MessageList";
 
 const TeamChat = (props) => {
   let inputMessageRef = useRef(null);
-  let socket = io("http://localhost:5000");
+  let socket = io("https://af-issue-tracker.herokuapp.com/");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   const messageWrapperRef = useRef(null);
 
   useEffect(() => {
-    console.log("Team CHat");
     inputMessageRef.current.focus();
 
     socket.on("Output Chat Message", (message) => {
@@ -41,13 +40,23 @@ const TeamChat = (props) => {
           messageWrapperRef.current.scrollHeight;
     });
 
-    const teamId = props.match.params.teamId;
-    if (teamId && props.setCurrentTeam) props.setCurrentTeam(teamId);
+    if (props.setCurrentTeam) props.setCurrentTeam(props.match.params.teamId);
     // props.setCurrentTeam(`${teamId}`);
 
+    getMessages();
+  }, []);
+
+  useEffect(() => {
+    getMessages();
+  }, [props.location.pathname]);
+
+  const getMessages = () => {
+    setMessages([]);
+    setMessage("");
     axios
-      .get(`/api/chats/${teamId}`)
+      .get(`/api/chats/${props.match.params.teamId}`)
       .then((res) => {
+        console.log("Team CHat api");
         if (res && res.data) {
           setMessages(res.data);
         }
@@ -55,7 +64,7 @@ const TeamChat = (props) => {
       .catch((err) => {
         if (err && err.response && err.response.data) props.setErrors(err);
       });
-  }, []);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -92,31 +101,30 @@ const TeamChat = (props) => {
             messageWrapperRef={messageWrapperRef}
           />
         )}
-
-        <form
-          className="team__chat-form"
-          onSubmit={(e) => {
-            onSubmit(e);
-          }}
-        >
-          <input
-            className="chat__my-message"
-            type="text"
-            name="message"
-            id="message"
-            placeholder="Say something cool"
-            autoComplete="off"
-            value={message}
-            ref={inputMessageRef}
-            onChange={(e) => {
-              setMessage(e.target.value);
-            }}
-          />
-          <button>
-            <i className="fas fa-level-down-alt"></i>
-          </button>
-        </form>
       </div>
+      <form
+        className="team__chat-form"
+        onSubmit={(e) => {
+          onSubmit(e);
+        }}
+      >
+        <input
+          className="chat__my-message"
+          type="text"
+          name="message"
+          id="message"
+          placeholder="Say something cool"
+          autoComplete="off"
+          value={message}
+          ref={inputMessageRef}
+          onChange={(e) => {
+            setMessage(e.target.value);
+          }}
+        />
+        <button>
+          <i className="fas fa-level-down-alt"></i>
+        </button>
+      </form>
     </div>
   );
 };
