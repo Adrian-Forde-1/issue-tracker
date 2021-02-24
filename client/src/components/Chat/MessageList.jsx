@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import moment from "moment";
-import ScrollToBottom from "react-scroll-to-bottom";
 
 //Redux
 import { connect } from "react-redux";

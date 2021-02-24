@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 
 //Socket IO
 import io from "socket.io-client";
@@ -26,8 +26,23 @@ const TeamChat = (props) => {
   let socket = io("http://localhost:5000");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-
   const messageWrapperRef = useRef(null);
+
+  // const onRefChange = useCallback((node) => {
+  //   setMessageWrapperRef(node);
+
+  //   if (
+  //     node &&
+  //     node !== undefined &&
+  //     node !== null &&
+  //     node.current !== undefined
+  //   ) {
+  //     node.current.focus();
+  //     node.current.scrollTop = node.current.scrollHeight;
+  //   }
+  // });
+
+  // const messageWrapperRef = useRef(null);
 
   useEffect(() => {
     inputMessageRef.current.focus();
@@ -59,10 +74,12 @@ const TeamChat = (props) => {
     axios
       .get(`/api/chats/${props.match.params.teamId}`)
       .then((res) => {
-        console.log("Team CHat api");
         if (res && res.data) {
           setMessages(res.data);
         }
+
+        messageWrapperRef.current.scrollTop =
+          messageWrapperRef.current.scrollHeight;
       })
       .catch((err) => {
         if (err && err.response && err.response.data) props.setErrors(err);

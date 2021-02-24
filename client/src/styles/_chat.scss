@@ -47,11 +47,12 @@
   &__message-wrapper {
     // height: calc(100% - 55px);
     // max-height: calc(100% - 55px);
-    height: calc(92vh - 55px);
-    max-height: calc(92vh - 55px);
+    height: calc(93vh - 100px);
+    max-height: calc(93vh - 100px);
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding-bottom: 10px;
     overflow-y: auto;
     overflow-x: hidden;
     padding-top: 10px;
