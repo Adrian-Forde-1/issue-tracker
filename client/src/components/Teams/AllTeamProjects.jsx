@@ -66,8 +66,9 @@ function AllTeamProjects(props) {
 
   return (
     <React.Fragment>
-      {projects && projects.length > 0 && props.search === ""
-        ? projects.map((project) => {
+      {projects && projects.length > 0 ? (
+        props.search === "" ? (
+          projects.map((project) => {
             if (project.archived === false) {
               return (
                 <ProjectPreview
@@ -79,7 +80,8 @@ function AllTeamProjects(props) {
               );
             }
           })
-        : projects.map((project) => {
+        ) : (
+          projects.map((project) => {
             if (
               project.name.toLowerCase().indexOf(props.search.toLowerCase()) >
                 -1 &&
@@ -93,7 +95,13 @@ function AllTeamProjects(props) {
                   getProjects={getProjects}
                 />
               );
-          })}
+          })
+        )
+      ) : (
+        <div className="team__no-projects">
+          <p>No projects found</p>
+        </div>
+      )}
     </React.Fragment>
   );
 }

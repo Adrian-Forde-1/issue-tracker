@@ -47,8 +47,8 @@
   &__message-wrapper {
     // height: calc(100% - 55px);
     // max-height: calc(100% - 55px);
-    height: calc(84vh - 55px);
-    max-height: calc(84vh - 55px);
+    height: calc(92vh - 55px);
+    max-height: calc(92vh - 55px);
     overflow-y: auto;
     overflow-x: hidden;
     padding-top: 10px;
@@ -74,6 +74,14 @@
       outline: none;
       border: 2px solid #000000;
       border-right: none;
+    }
+  }
+}
+@media screen and (max-width: 992px) {
+  .chat {
+    &__message-wrapper {
+      height: calc(86vh - 55px);
+      max-height: calc(86vh - 55px);
     }
   }
 }

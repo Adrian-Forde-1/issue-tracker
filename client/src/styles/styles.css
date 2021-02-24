@@ -1579,6 +1579,20 @@ header::after {
           transform: rotate(90deg);
 }
 
+.team__no-projects {
+  width: 100%;
+  color: #080021;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .individual-container {
   width: 100%;
   background: #fdfcff;
@@ -5516,8 +5530,8 @@ header::after {
 }
 
 .chat__message-wrapper {
-  height: calc(84vh - 55px);
-  max-height: calc(84vh - 55px);
+  height: calc(92vh - 55px);
+  max-height: calc(92vh - 55px);
   overflow-y: auto;
   overflow-x: hidden;
   padding-top: 10px;
@@ -5547,6 +5561,13 @@ header::after {
   outline: none;
   border: 2px solid #000000;
   border-right: none;
+}
+
+@media screen and (max-width: 992px) {
+  .chat__message-wrapper {
+    height: calc(86vh - 55px);
+    max-height: calc(86vh - 55px);
+  }
 }
 
 @media screen and (max-width: 768px) {

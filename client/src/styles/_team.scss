@@ -270,6 +270,14 @@
       }
     }
   }
+
+  &__no-projects {
+    width: 100%;
+    color: $text-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .individual-container {
