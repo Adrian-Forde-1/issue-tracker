@@ -23,7 +23,7 @@ import MessageList from "./MessageList";
 
 const TeamChat = (props) => {
   let inputMessageRef = useRef(null);
-  let socket = io("http://localhost:5000");
+  let socket = io("https://af-issue-tracker.herokuapp.com/");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const messageWrapperRef = useRef(null);
