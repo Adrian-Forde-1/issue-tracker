@@ -49,6 +49,9 @@
     // max-height: calc(100% - 55px);
     height: calc(92vh - 55px);
     max-height: calc(92vh - 55px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     overflow-y: auto;
     overflow-x: hidden;
     padding-top: 10px;
@@ -62,18 +65,25 @@
   }
 
   &__my-message {
-    flex-grow: 1;
+    width: 100%;
+    border-radius: 20px;
     max-height: 35px;
     height: 35px;
-    padding: 5px 10px;
+    padding: 10px 70px 10px 10px;
     border: 1px solid $primary-color;
     resize: none;
-    border-right: none;
 
     &:focus {
       outline: none;
       border: 2px solid #000000;
-      border-right: none;
+    }
+
+    &-container {
+      width: 80%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
     }
   }
 }
@@ -93,6 +103,11 @@
         font-size: 55px;
       }
     }
+    &__my-message {
+      &-container {
+        width: 90%;
+      }
+    }
   }
 }
 
@@ -106,6 +121,14 @@
       svg {
         font-size: 45px;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .chat {
+    &__my-message {
+      padding-right: 50px;
     }
   }
 }
@@ -125,6 +148,10 @@
       svg {
         font-size: 35px;
       }
+    }
+
+    &__my-message {
+      padding-right: 70px;
     }
   }
 }

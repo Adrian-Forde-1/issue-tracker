@@ -15,12 +15,15 @@ import { connect } from "react-redux";
 //Actions
 import { setErrors } from "../../redux/actions/userActions";
 
+//SVG
+import SendSVG from "../SVG/SendSVG";
+
 //Components
 import MessageList from "./MessageList";
 
 const TeamChat = (props) => {
   let inputMessageRef = useRef(null);
-  let socket = io("https://af-issue-tracker.herokuapp.com/");
+  let socket = io("http://localhost:5000");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
@@ -108,22 +111,25 @@ const TeamChat = (props) => {
           onSubmit(e);
         }}
       >
-        <input
-          className="chat__my-message"
-          type="text"
-          name="message"
-          id="message"
-          placeholder="Say something cool"
-          autoComplete="off"
-          value={message}
-          ref={inputMessageRef}
-          onChange={(e) => {
-            setMessage(e.target.value);
-          }}
-        />
-        <button>
-          <i className="fas fa-level-down-alt"></i>
-        </button>
+        <div className="chat__my-message-container">
+          <input
+            className="chat__my-message"
+            type="text"
+            name="message"
+            id="message"
+            placeholder="Type a message"
+            autoComplete="off"
+            value={message}
+            ref={inputMessageRef}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+          />
+          <button>
+            <SendSVG />
+            {/* <i className="fas fa-level-down-alt"></i> */}
+          </button>
+        </div>
       </form>
     </div>
   );
