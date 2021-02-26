@@ -297,7 +297,12 @@ const Project = (props) => {
           }
         }
       });
-    }
+    } else
+      return (
+        <div className="project__no-issues">
+          <p>No Issues found</p>
+        </div>
+      );
     return projectIssues;
   };
 

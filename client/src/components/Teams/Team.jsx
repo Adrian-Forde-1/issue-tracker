@@ -52,7 +52,6 @@ function Team(props) {
   }, [teamId]);
 
   const getTeam = () => {
-    setIsLoading(true);
     setTeam({});
     axios
       .get(`/api/team/${teamId}`)
@@ -61,7 +60,6 @@ function Team(props) {
           setTeam(response.data);
         }
         props.setCurrentTeam(teamId);
-        setIsLoading(false);
       })
       .catch((err) => {
         if (err && err.response && err.response.data) {
@@ -77,7 +75,6 @@ function Team(props) {
         } else {
           props.history.goBack();
         }
-        setIsLoading(false);
       });
   };
 
@@ -163,7 +160,12 @@ function Team(props) {
             />
           </div>
           <div className="team__projects">
-            <AllTeamProjects search={search} teamId={teamId} />
+            <AllTeamProjects
+              search={search}
+              teamId={teamId}
+              setIsLoading={setIsLoading}
+              isLoading={isLoading}
+            />
           </div>
         </React.Fragment>
       ) : isLoading ? (

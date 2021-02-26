@@ -24,23 +24,24 @@ function AllTeamProjects(props) {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    getProjects();
+    if (props.teamId !== null) getProjects();
   }, [props.teamId]);
 
   const getProjects = () => {
+    props.setIsLoading(true);
     axios
       .get(`/api/team/projects/${props.teamId}`)
       .then((response) => {
         if (response && response.data) {
           setProjects(response.data);
         }
+        props.setIsLoading(false);
       })
       .catch((error) => {
         props.setErrors(error);
         props.clearCurrentSectionAndId();
+        props.setIsLoading(false);
       });
-
-    props.getUserTeams(props.userId);
   };
 
   // useEffect(() => {
@@ -66,42 +67,44 @@ function AllTeamProjects(props) {
 
   return (
     <React.Fragment>
-      {projects && projects.length > 0 ? (
-        props.search === "" ? (
-          projects.map((project) => {
-            if (project.archived === false) {
-              return (
-                <ProjectPreview
-                  project={project}
-                  key={project._id}
-                  teamProject={true}
-                  getProjects={getProjects}
-                />
-              );
-            }
-          })
-        ) : (
-          projects.map((project) => {
-            if (
-              project.name.toLowerCase().indexOf(props.search.toLowerCase()) >
-                -1 &&
-              project.archived === false
-            )
-              return (
-                <ProjectPreview
-                  project={project}
-                  key={project._id}
-                  teamProject={true}
-                  getProjects={getProjects}
-                />
-              );
-          })
-        )
-      ) : (
-        <div className="team__no-projects">
-          <p>No projects found</p>
-        </div>
-      )}
+      {projects && projects.length > 0
+        ? props.search === ""
+          ? projects.map((project) => {
+              if (project.archived === false) {
+                return (
+                  <ProjectPreview
+                    project={project}
+                    key={project._id}
+                    teamProject={true}
+                    getProjects={() => {
+                      getProjects();
+                    }}
+                  />
+                );
+              }
+            })
+          : projects.map((project) => {
+              if (
+                project.name.toLowerCase().indexOf(props.search.toLowerCase()) >
+                  -1 &&
+                project.archived === false
+              )
+                return (
+                  <ProjectPreview
+                    project={project}
+                    key={project._id}
+                    teamProject={true}
+                    getProjects={() => {
+                      getProjects();
+                    }}
+                  />
+                );
+            })
+        : props.isLoading === false && (
+            <div className="team__no-projects">
+              <p>No projects found</p>
+            </div>
+          )}
     </React.Fragment>
   );
 }
