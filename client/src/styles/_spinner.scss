@@ -10,8 +10,8 @@
     background: #fff;
 
     svg {
-      width: 60px;
-      height: 60px;
+      width: 38px;
+      height: 38px;
       position: relative;
       animation: rotateSpinner 2s linear infinite;
 
@@ -19,11 +19,11 @@
         width: 100%;
         height: 100%;
         fill: none;
-        stroke-width: 3;
+        stroke-width: 1;
         stroke: $primary-color;
         stroke-linecap: round;
-        stroke-dasharray: 155;
-        stroke-dashoffset: 155;
+        stroke-dasharray: 93;
+        stroke-dashoffset: 93;
         transform: translate(5px, 5px);
         animation: animateSpinnerStroke 4s linear infinite;
       }
@@ -34,13 +34,13 @@
 @keyframes animateSpinnerStroke {
   0%,
   100% {
-    stroke-dashoffset: 155;
+    stroke-dashoffset: 93;
   }
   50% {
     stroke-dashoffset: 0;
   }
   50.1% {
-    stroke-dashoffset: 310;
+    stroke-dashoffset: 186;
   }
 }
 

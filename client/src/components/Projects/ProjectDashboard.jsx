@@ -259,7 +259,7 @@ function ProjectDashboard(props) {
               sidebarOpen && "shrink"
             }`}
           >
-            <Suspense fallback="Loading">{routes}</Suspense>
+            <Suspense fallback={<Spinner />}>{routes}</Suspense>
           </div>
         </div>
       </div>

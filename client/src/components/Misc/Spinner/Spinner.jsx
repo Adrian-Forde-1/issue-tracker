@@ -4,7 +4,7 @@ const Spinner = () => {
   return (
     <div className="spinner__wrapper">
       <svg className="spinner">
-        <circle cx="25" cy="25" r="25"></circle>
+        <circle cx="15" cy="15" r="15"></circle>
       </svg>
     </div>
   );
