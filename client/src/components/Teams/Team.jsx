@@ -33,7 +33,7 @@ import ArchiveSVG from "../SVG/ArchiveSVG";
 import PlusSVG from "../SVG/PlusSVG";
 
 //Components
-import AllTeamProjects from "./AllTeamProjects";
+import TeamProjects from "./TeamProjects";
 import SearchBar from "../SearchBar";
 import Spinner from "../Misc/Spinner/Spinner";
 
@@ -48,13 +48,13 @@ function Team(props) {
   }, [props.match.params]);
 
   useEffect(() => {
-    getTeam();
+    if (teamId !== null) getTeam();
   }, [teamId]);
 
   const getTeam = () => {
     setTeam({});
     axios
-      .get(`/api/team/${teamId}`)
+      .get(`/api/team/projects/${teamId}`)
       .then((response) => {
         if (response.data) {
           setTeam(response.data);
@@ -88,6 +88,29 @@ function Team(props) {
     props.setItemType("project");
     props.setCurrentLocation(props.history.location.pathname.split("/"));
     props.showModal();
+  };
+
+  const renderActionBar = () => {
+    if (
+      (team.createdBy &&
+        props.user &&
+        Object.keys(props.user).length > 0 &&
+        team.createdBy.toString() === props.user._id.toString()) ||
+      (props.user &&
+        team.admins &&
+        Object.keys(props.user).length > 0 &&
+        Array.isArray(team.admins) &&
+        team.admins.findIndex(
+          (admin) => admin.toString() === props.user._id.toString()
+        ) > -1)
+    ) {
+      return (
+        <div className="team__action-bar">
+          <Link to={`/team/management/${teamId}`}>Manage Team</Link>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -152,6 +175,8 @@ function Team(props) {
               </div> */}
             </div>
           </div>
+          <>{renderActionBar()}</>
+
           <div className="team__search-bar-container">
             <SearchBar
               onChange={handleSearchChange}
@@ -160,10 +185,12 @@ function Team(props) {
             />
           </div>
           <div className="team__projects">
-            <AllTeamProjects
+            <TeamProjects
               search={search}
               teamId={teamId}
               setIsLoading={setIsLoading}
+              projects={team.projects}
+              getTeam={getTeam}
               isLoading={isLoading}
             />
           </div>

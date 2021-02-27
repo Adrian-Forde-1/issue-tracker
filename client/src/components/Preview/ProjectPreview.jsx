@@ -21,7 +21,7 @@ import Modal from "../Modal/Modal";
 function ProjectPreview(props) {
   const {
     project,
-    getProjects,
+    getTeam,
     setMessages,
     setErrors,
     small = false,
@@ -40,7 +40,7 @@ function ProjectPreview(props) {
       .delete(`/api/project/${project._id}`)
       .then((res) => {
         if (res && res.data) {
-          getProjects();
+          getTeam();
           setMessages(res.data);
         }
       })

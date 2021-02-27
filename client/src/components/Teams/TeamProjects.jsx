@@ -19,71 +19,26 @@ import ProjectPreview from "../Preview/ProjectPreview";
 import SideNav from "../Navigation/SideNav";
 import SearchBar from "../SearchBar";
 
-function AllTeamProjects(props) {
-  const [projects, setProjects] = useState([]);
+function TeamProjects(props) {
   const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    if (props.teamId !== null) getProjects();
-  }, [props.teamId]);
-
-  const getProjects = () => {
-    props.setIsLoading(true);
-    axios
-      .get(`/api/team/projects/${props.teamId}`)
-      .then((response) => {
-        if (response && response.data) {
-          setProjects(response.data);
-        }
-        props.setIsLoading(false);
-      })
-      .catch((error) => {
-        props.setErrors(error);
-        props.clearCurrentSectionAndId();
-        props.setIsLoading(false);
-      });
-  };
-
-  // useEffect(() => {
-  //   if (props.teamUpdated === true) {
-  //     const teamId = props.match.params.teamId;
-
-  // axios
-  //   .get(`/api/team/${teamId}`)
-  //   .then((response) => {
-  //     const team = response.data;
-  //     setProjects(team.projects);
-  //   })
-  //   .catch((error) => {
-  //     props.setErrors(error);
-  //     props.clearCurrentSectionAndId();
-  //   });
-
-  //     props.getUserTeams(props.userId);
-
-  //     props.setTeamUpdated(false);
-  //   }
-  // }, [props.teamUpdated]);
 
   return (
     <React.Fragment>
-      {projects && projects.length > 0
+      {props.projects && props.projects.length > 0
         ? props.search === ""
-          ? projects.map((project) => {
+          ? props.projects.map((project) => {
               if (project.archived === false) {
                 return (
                   <ProjectPreview
                     project={project}
                     key={project._id}
                     teamProject={true}
-                    getProjects={() => {
-                      getProjects();
-                    }}
+                    getTeam={props.getTeam}
                   />
                 );
               }
             })
-          : projects.map((project) => {
+          : props.projects.map((project) => {
               if (
                 project.name.toLowerCase().indexOf(props.search.toLowerCase()) >
                   -1 &&
@@ -94,9 +49,7 @@ function AllTeamProjects(props) {
                     project={project}
                     key={project._id}
                     teamProject={true}
-                    getProjects={() => {
-                      getProjects();
-                    }}
+                    getTeam={props.getTeam}
                   />
                 );
             })
@@ -118,11 +71,10 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   currentId: state.user.currentId,
-  projects: state.projects.projects,
   teamUpdated: state.teams.teamUpdated,
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(AllTeamProjects));
+)(withRouter(TeamProjects));
