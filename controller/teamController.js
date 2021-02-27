@@ -349,4 +349,72 @@ module.exports = {
       return res.status(400).json(errors);
     }
   },
+  getTeamWithProjects: (req, res) => {
+    if (req.params.teamId) {
+      // let errors = [];
+      const teamId = req.params.teamId;
+
+      TeamModel.findById(teamId)
+        .populate({
+          path: "projects",
+          select: "name archived team",
+        })
+        .populate({
+          path: "users",
+          select: "username image",
+        })
+        .exec(function (err, team) {
+          if (err) {
+            return res.status(500).json(["Error occured"]);
+          }
+
+          let belongsToTeam = team.users.findIndex(
+            (user) => user._id.toString() === req.user._id.toString()
+          );
+
+          if (belongsToTeam === -1) return res.sendStatus(404);
+
+          return res.json(team);
+        });
+    } else {
+      return res.status(400).json(["Error occured"]);
+    }
+  },
+  getTeamManagementInfo: (req, res) => {
+    if (req.params.teamId) {
+      let errors = [];
+      const teamId = req.params.teamId;
+
+      TeamModel.findById(teamId)
+        .select("-createdAt -name -projects -password")
+        .populate({
+          path: "users",
+          select: "username image",
+        })
+        .populate({
+          path: "createdBy",
+          select: "username image",
+        })
+        .populate({
+          path: "admins",
+          select: "username image",
+        })
+        .populate({
+          path: "members",
+          select: "username image",
+        })
+        .exec(function (err, team) {
+          //If an error occured, notify the user
+          if (err) {
+            errors.push("Opps, Something went wrong!");
+            return res.status(500).json(errors);
+          }
+
+          //If everything went well, return the team
+          return res.json(team);
+        });
+    } else {
+      return res.status(400).json(["Error occured"]);
+    }
+  },
 };

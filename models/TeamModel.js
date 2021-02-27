@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const teamSchema = new mongoose.Schema({
   name: {
@@ -13,19 +13,31 @@ const teamSchema = new mongoose.Schema({
   users: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'user',
+      ref: "user",
       required: true,
+    },
+  ],
+  admins: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
+  ],
+  members: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
     },
   ],
   projects: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'project',
+      ref: "project",
     },
   ],
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
+    ref: "user",
   },
   createdAt: {
     type: Date,
@@ -33,7 +45,7 @@ const teamSchema = new mongoose.Schema({
   },
 });
 
-teamSchema.pre('save', async function (next) {
+teamSchema.pre("save", async function (next) {
   try {
     //Generate a bcrypt salt
     const salt = await bcrypt.genSalt(10);
@@ -58,6 +70,6 @@ teamSchema.methods.isValidPassword = async function (newPassword) {
   }
 };
 
-const TeamModel = mongoose.model('team', teamSchema);
+const TeamModel = mongoose.model("team", teamSchema);
 
 module.exports = TeamModel;

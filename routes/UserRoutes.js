@@ -1,29 +1,7 @@
 const router = require("express").Router();
-const multer = require("multer");
-const path = require("path");
 
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png")
-    cb(null, false);
-  cb(null, true);
-};
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./images");
-  },
-
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname);
-  },
-});
-const imageUpload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5,
-  },
-  fileFilter: fileFilter,
-});
+//Image Upload
+const { imageUpload } = require("../util/imageUpload");
 
 //passport
 const passport = require("passport");
@@ -48,6 +26,8 @@ const {
   getTeam,
   getTeams,
   getArchivedTeamProjects,
+  getTeamManagementInfo,
+  getTeamWithProjects,
 } = require("../controller/teamController");
 
 //Project Controller Imports
@@ -108,7 +88,8 @@ router.put(
 router.post("/team", passportJWT, createTeam);
 router.get("/teams", passportJWT, getTeams);
 router.get("/team/:teamId", passportJWT, getTeam);
-router.get("/team/projects/:teamId", passportJWT, getProjectsForTeam);
+router.get("/team/projects/:teamId", passportJWT, getTeamWithProjects);
+router.get("/team/management/:teamId", passportJWT, getTeamManagementInfo);
 router.put("/leave/team/:teamId", passportJWT, leaveTeam);
 router.delete("/team/:teamId", passportJWT, deleteTeam);
 router.post("/join/team", passportJWT, joinTeam);
