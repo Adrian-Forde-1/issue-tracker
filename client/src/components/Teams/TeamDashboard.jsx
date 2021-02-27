@@ -29,6 +29,7 @@ import CreateTeam from "./CreateTeam";
 import JoinTeam from "./JoinTeam";
 import CreateTeamProject from "./CreateTeamProject";
 import TeamDashboardLandingPage from "./TeamDashboardLandingPage";
+import TeamManagement from "./TeamManagement/TeamManagement";
 
 import TeamChat from "../Chat/TeamChat";
 import TeamChatLandingPage from "../Chat/TeamChatLandingPage";
@@ -169,6 +170,13 @@ function TeamDashboard(props) {
         path="/team/chat/:teamId"
         render={(props) => {
           return <TeamChat {...props} setCurrentTeam={setCurrentTeam} />;
+        }}
+      />
+      <Route
+        exact
+        path="/team/management/:teamId"
+        render={(props) => {
+          return <TeamManagement {...props} setCurrentTeam={setCurrentTeam} />;
         }}
       />
       <Route

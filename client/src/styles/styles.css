@@ -1248,7 +1248,7 @@ header::after {
   }
 }
 
-.team__profile-wrapper {
+.team__profile-wrapper, .team__wrapper {
   width: 100%;
   height: 100%;
   min-height: 100%;
@@ -1328,7 +1328,7 @@ header::after {
       -ms-flex-align: center;
           align-items: center;
   width: 100%;
-  height: 12%;
+  height: 15%;
   padding: 20px 0px 0px 20px;
 }
 
@@ -1587,6 +1587,64 @@ header::after {
   color: #2e00b1;
 }
 
+.team__action-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 20px;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  padding: 0px 20px;
+}
+
+.team__action-bar a {
+  background: #fdfcff;
+  padding: 5px 10px;
+  margin-right: 20px;
+  border: none;
+  color: #2e00b1;
+  border: 1px solid #2e00b1;
+}
+
+.team__action-bar a:hover {
+  background: #2e00b1;
+  color: #fdfcff;
+}
+
+.team__action-bar a:hover i {
+  color: #fdfcff;
+}
+
+.team__action-bar a i {
+  color: #080021;
+}
+
+.team__action-bar button {
+  background: #fdfcff;
+  padding: 5px 10px;
+  border: none;
+  color: #2e00b1;
+  border: 1px solid #2e00b1;
+}
+
+.team__action-bar button:nth-last-of-type(1) {
+  margin: 0;
+}
+
+.team__action-bar button:hover {
+  background: #2e00b1;
+  color: #fdfcff;
+}
+
+.team__action-bar button:hover i {
+  color: #fdfcff;
+}
+
+.team__action-bar button i {
+  color: #080021;
+}
+
 .team__no-projects {
   width: 100%;
   color: #080021;
@@ -1599,6 +1657,91 @@ header::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.team__management-section {
+  width: 100%;
+  padding: 0px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.team__management-section__heading {
+  margin-bottom: 10px;
+  padding: 20px 20px 0px 20px;
+}
+
+.team__management-section__heading h2 {
+  font-size: 24px;
+}
+
+.team__management-section__header {
+  width: 100%;
+  height: 30px;
+  margin-bottom: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid #dedede;
+}
+
+.team__management-section__header h4 {
+  font-size: 18px;
+  color: #2e00b1;
+}
+
+.team__management-section__empty {
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.team__management-section__user-container {
+  width: 100%;
+  height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0px 10px;
+  border-radius: 5px;
+  border: 1px solid #dedede;
+}
+
+.team__management-section__user {
+  font-size: 14px;
+}
+
+.team__management-section__user-role span {
+  color: #2e00b1;
+  font-size: 14px;
+}
+
+.team__management-section__user-role select {
+  font-size: 14px;
 }
 
 .individual-container {
@@ -5428,8 +5571,8 @@ header::after {
 }
 
 .spinner__wrapper svg {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   position: relative;
   -webkit-animation: rotateSpinner 2s linear infinite;
           animation: rotateSpinner 2s linear infinite;
@@ -5442,10 +5585,10 @@ header::after {
   stroke-width: 1;
   stroke: #2e00b1;
   stroke-linecap: round;
-  stroke-dasharray: 93;
-  stroke-dashoffset: 93;
-  -webkit-transform: translate(5px, 5px);
-          transform: translate(5px, 5px);
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  -webkit-transform: translate(4px, 4px);
+          transform: translate(4px, 4px);
   -webkit-animation: animateSpinnerStroke 4s linear infinite;
           animation: animateSpinnerStroke 4s linear infinite;
 }
@@ -5453,26 +5596,26 @@ header::after {
 @-webkit-keyframes animateSpinnerStroke {
   0%,
   100% {
-    stroke-dashoffset: 93;
+    stroke-dashoffset: 100;
   }
   50% {
     stroke-dashoffset: 0;
   }
   50.1% {
-    stroke-dashoffset: 186;
+    stroke-dashoffset: 200;
   }
 }
 
 @keyframes animateSpinnerStroke {
   0%,
   100% {
-    stroke-dashoffset: 93;
+    stroke-dashoffset: 100;
   }
   50% {
     stroke-dashoffset: 0;
   }
   50.1% {
-    stroke-dashoffset: 186;
+    stroke-dashoffset: 200;
   }
 }
 
