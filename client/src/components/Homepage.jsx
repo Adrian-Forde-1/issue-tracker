@@ -84,29 +84,6 @@ function Homepage(props) {
                 className="img-fluid header-img"
               />
             </div>
-            {props.authenticated === false && (
-              <div className="col-12 premade-accounts">
-                <h4>Premade Accounts</h4>
-                <table className="table table-borderless">
-                  <thead>
-                    <tr>
-                      <th>Email</th>
-                      <th>Password</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>user1@email.com</td>
-                      <td>user1password</td>
-                    </tr>
-                    <tr>
-                      <td>user2@email.com</td>
-                      <td>user2password</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            )}
           </div>
         </div>
       </div>
