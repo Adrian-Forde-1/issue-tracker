@@ -7,7 +7,11 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import { signUpUser } from "../redux/actions/userActions";
+import {
+  signUpUser,
+  clearErrors,
+  clearMessages,
+} from "../redux/actions/userActions";
 
 //Images
 import programmingImg from "../resources/Images/programmingImg.jpg";
@@ -25,6 +29,8 @@ const Signup = (props) => {
 
   useEffect(() => {
     if (props.authenticated === true) props.history.goBack();
+    props.clearErrors();
+    props.clearMessages();
     // this.usernameRef.current.focus();
   }, []);
 
@@ -59,7 +65,7 @@ const Signup = (props) => {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
-                {props.errors.username && (
+                {!Array.isArray(props.errors) && props.errors.username && (
                   <div className="auth-form__error">
                     {props.errors.username}
                   </div>
@@ -75,7 +81,7 @@ const Signup = (props) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {props.errors.email && (
+                {!Array.isArray(props.errors) && props.errors.email && (
                   <div className="auth-form__error">{props.errors.email}</div>
                 )}
               </div>
@@ -89,7 +95,7 @@ const Signup = (props) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {props.errors.password && (
+                {!Array.isArray(props.errors) && props.errors.password && (
                   <div className="auth-form__error">
                     {props.errors.password}
                   </div>
@@ -105,11 +111,12 @@ const Signup = (props) => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                {props.errors.confirmPassword && (
-                  <div className="auth-form__error">
-                    {props.errors.confirmPassword}
-                  </div>
-                )}
+                {!Array.isArray(props.errors) &&
+                  props.errors.confirmPassword && (
+                    <div className="auth-form__error">
+                      {props.errors.confirmPassword}
+                    </div>
+                  )}
               </div>
               <button className="auth-form__submit-btn">Sign Up</button>
             </form>
@@ -144,6 +151,8 @@ const Signup = (props) => {
 
 const mapDispatchToProps = {
   signUpUser,
+  clearErrors,
+  clearMessages,
 };
 
 const mapStateToProps = (state) => ({

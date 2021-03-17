@@ -49,23 +49,30 @@ export const signUpUser = (userData, history) => (dispatch) => {
   axios
     .post("/api/signup", { user: userData })
     .then((response) => {
-      history.push("/login");
       dispatch({ type: STOP_LOADING_UI });
-      dispatch({ type: SET_MESSAGES, payload: response.data });
+      dispatch({
+        type: SET_MESSAGES,
+        payload: { id: uuidv4(), type: "success", message: response.data },
+      });
+      history.push("/login");
     })
     .catch((err) => {
       dispatch({ type: STOP_LOADING_UI });
       if (err && err.response && err.response.data) {
         console.log("Got error");
-        if (err.response.data.length > 0) {
+        if (Array.isArray(err.response.data) && err.response.data.length > 0) {
           let newErrors = [];
           err.response.data.forEach((error) => {
             newErrors.push({ id: uuidv4(), type: "error", message: error });
           });
-
           dispatch({
             type: SET_ERRORS,
             payload: newErrors,
+          });
+        } else {
+          dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data,
           });
         }
       }
