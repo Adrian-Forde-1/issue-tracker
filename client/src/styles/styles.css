@@ -558,7 +558,6 @@ header {
   width: 100%;
   min-height: 93vh;
   height: auto;
-  max-height: 93vh;
   padding-top: 50px;
   position: relative;
   overflow-x: hidden;
@@ -577,35 +576,6 @@ header::after {
   background-position-x: center;
   z-index: 1;
   pointer-events: none;
-}
-
-.premade-accounts {
-  margin-top: 100px;
-  z-index: 2;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.premade-accounts table {
-  background: #080021;
-  color: white;
-  width: 60%;
-}
-
-.premade-accounts h4 {
-  text-align: center;
-  color: #2e00b1;
 }
 
 .header-content {
@@ -725,6 +695,12 @@ header::after {
   border: 2px solid #ff0000;
   background: none;
   height: 100%;
+}
+
+@media screen and (max-width: 992px) {
+  header {
+    min-height: calc(100vh - 50px);
+  }
 }
 
 .auth-form__wrapper {
@@ -855,6 +831,47 @@ header::after {
   height: 100%;
   z-index: -1;
   pointer-events: none;
+}
+
+.auth-form__right-section__premade-accounts {
+  z-index: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  padding-left: 100px;
+}
+
+.auth-form__right-section__premade-accounts table {
+  background: #080021;
+  color: white;
+  width: 60%;
+}
+
+.auth-form__right-section__premade-accounts table thead tr th {
+  font-size: 14px;
+}
+
+.auth-form__right-section__premade-accounts table tbody tr td {
+  font-size: 12px;
+}
+
+.auth-form__right-section__premade-accounts h4 {
+  text-align: left;
+  color: #2e00b1;
+  font-size: 16px;
 }
 
 .auth-form__input-container {
@@ -1763,6 +1780,26 @@ header::after {
 
 .team__management-section__user-role select {
   font-size: 14px;
+}
+
+.team__management-section__wrapper {
+  width: 100%;
+  height: 55%;
+  max-height: 55%;
+}
+
+.team__management-section__update-btn {
+  margin-left: auto;
+  margin-right: 20px;
+  padding: 8px 15px;
+  color: #fff;
+  background: #2e00b1;
+  border: none;
+}
+
+.team__management-section__update-btn:hover {
+  -webkit-filter: brightness(70%);
+          filter: brightness(70%);
 }
 
 .individual-container {
