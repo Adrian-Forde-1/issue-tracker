@@ -78,9 +78,9 @@ const IssueHistoryBlock = ({
       </div>
       <div className="issue-history__update-block__updater-info">
         <span className="issue-history__update-block__updated-by">
-          {updatedBy ? updatedBy : "-"} &nbsp;
+          {updatedBy ? updatedBy : "-"}
         </span>{" "}
-        <span>updated on</span>{" "}
+        <span>&nbsp;updated on</span>{" "}
         <span className="issue-history__update-block__date">
           &nbsp;
           {date

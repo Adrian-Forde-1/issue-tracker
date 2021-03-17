@@ -37,7 +37,7 @@ export const loginUser = (user, history) => (dispatch) => {
         });
         dispatch({ type: STOP_LOADING_UI });
       } else {
-        setErrors(error.response.data);
+        setErrors(error);
         dispatch({ type: STOP_LOADING_UI });
       }
       // dispatch({ type: SET_ERRORS, payload: error.response.data });
@@ -53,9 +53,22 @@ export const signUpUser = (userData, history) => (dispatch) => {
       dispatch({ type: STOP_LOADING_UI });
       dispatch({ type: SET_MESSAGES, payload: response.data });
     })
-    .catch((error) => {
+    .catch((err) => {
       dispatch({ type: STOP_LOADING_UI });
-      dispatch({ type: SET_ERRORS, payload: error.response.data });
+      if (err && err.response && err.response.data) {
+        console.log("Got error");
+        if (err.response.data.length > 0) {
+          let newErrors = [];
+          err.response.data.forEach((error) => {
+            newErrors.push({ id: uuidv4(), type: "error", message: error });
+          });
+
+          dispatch({
+            type: SET_ERRORS,
+            payload: newErrors,
+          });
+        }
+      }
     });
 };
 
@@ -96,6 +109,7 @@ export const setMessages = (messages) => (dispatch) => {
 
 export const setErrors = (error) => (dispatch) => {
   let newErrors = [];
+  console.log("Set errors called");
   if (
     error &&
     error.response &&
@@ -109,6 +123,8 @@ export const setErrors = (error) => (dispatch) => {
         message: error,
       });
     });
+    console.log("New Errors");
+    console.log(newErrors);
     dispatch({ type: SET_ERRORS, payload: newErrors });
   }
 };
