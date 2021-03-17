@@ -17,18 +17,30 @@ import programmingImg from "../resources/Images/programmingImg.jpg";
 import programmingImg2X from "../resources/Images/programmingImg2X.jpg";
 import programmingImg3X from "../resources/Images/programmingImg3X.jpg";
 
+//SVG
+import EyePlainSVG from "./SVG/EyePlainSVG";
+import EyeDisableSVG from "./SVG/EyeDisableSVG";
+
 //Components
 import LogoSVG from "./SVG/LogoSVG";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [visiblePassword, setVisiblePassword] = useState(false);
   let emailRef = useRef(null);
+  let passwordRef = useRef(null);
 
   useEffect(() => {
     if (props.authenticated === true) props.history.goBack();
-    emailRef.current.focus();
+    // emailRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    if (passwordRef && passwordRef.current !== null) {
+      console.log("Input type: ", passwordRef.current.type);
+    }
+  }, [passwordRef]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,8 +82,23 @@ const Login = (props) => {
                   type="password"
                   name="password"
                   value={password}
+                  ref={passwordRef}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <span
+                  className="auth-form__input-password-toggle"
+                  onClick={() => {
+                    if (passwordRef && passwordRef.current !== null) {
+                      if (passwordRef.current.type === "password")
+                        passwordRef.current.type = "text";
+                      else passwordRef.current.type = "password";
+
+                      setVisiblePassword(!visiblePassword);
+                    }
+                  }}
+                >
+                  {visiblePassword ? <EyeDisableSVG /> : <EyePlainSVG />}
+                </span>
               </div>
               <button className="auth-form__submit-btn">Login</button>
             </form>

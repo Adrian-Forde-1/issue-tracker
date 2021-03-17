@@ -20,12 +20,15 @@ const Toast = ({
 }) => {
   const [toasts, setToasts] = useState([]);
   useEffect(() => {
-    if (
-      (errors && Array.isArray(errors) && errors.length > 0) ||
-      (messages && Array.isArray(messages) && messages.length > 0)
-    ) {
-      setToasts([...errors, ...messages]);
+    let newToasts = [];
+    if (errors && Array.isArray(errors) && errors.length > 0) {
+      newToasts = [...newToasts, ...errors];
     }
+    if (messages && Array.isArray(messages) && messages.length > 0) {
+      newToasts = [...newToasts, ...messages];
+    }
+
+    setToasts(newToasts);
     showMessages();
   }, [errors, messages]);
 

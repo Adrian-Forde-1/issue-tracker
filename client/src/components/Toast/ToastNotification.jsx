@@ -55,7 +55,6 @@ const ToastNotification = ({
     const animateRemove = (cb) => {
       let tl = gsap.timeline({
         onComplete: () => {
-          console.log("Removing");
           cb(id);
         },
       });

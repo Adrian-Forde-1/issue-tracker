@@ -873,19 +873,40 @@ header::after {
       -ms-flex-align: start;
           align-items: flex-start;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .auth-form__input-container__input-name {
   color: #080021;
   font-size: 14px;
+  position: relative;
 }
 
 .auth-form__input-container input {
   width: 100%;
+  min-height: 30px;
+  max-height: 30px;
   border: none;
   background: #dedede;
-  padding: 3px 10px;
+  padding: 0px 40px 0px 10px;
   font-size: 14px;
+}
+
+.auth-form__input-password-toggle {
+  position: absolute;
+  bottom: 2px;
+  right: 10px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.auth-form__input-password-toggle:hover svg {
+  color: #2e00b1;
+}
+
+.auth-form__input-password-toggle svg {
+  font-size: 20px;
+  color: #080021;
 }
 
 .auth-form__submit-btn {
