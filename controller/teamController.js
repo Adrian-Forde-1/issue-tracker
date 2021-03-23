@@ -399,10 +399,6 @@ module.exports = {
           path: "admins",
           select: "username image",
         })
-        .populate({
-          path: "members",
-          select: "username image",
-        })
         .exec(function (err, team) {
           //If an error occured, notify the user
           if (err) {

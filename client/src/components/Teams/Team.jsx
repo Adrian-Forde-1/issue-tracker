@@ -175,7 +175,10 @@ function Team(props) {
               </div> */}
             </div>
           </div>
-          <>{renderActionBar()}</>
+          {/* <>{renderActionBar()}</> */}
+          <div className="team__action-bar">
+            <Link to={`/team/management/${teamId}`}>View Team</Link>
+          </div>
 
           <div className="team__search-bar-container">
             <SearchBar

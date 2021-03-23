@@ -1713,7 +1713,6 @@ header::after {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  gap: 10px;
   margin-bottom: 40px;
 }
 
@@ -1729,7 +1728,6 @@ header::after {
 .team__management-section__header {
   width: 100%;
   height: 30px;
-  margin-bottom: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1739,7 +1737,6 @@ header::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border-bottom: 1px solid #dedede;
 }
 
 .team__management-section__header h4 {
@@ -1800,6 +1797,50 @@ header::after {
 .team__management-section__update-btn:hover {
   -webkit-filter: brightness(70%);
           filter: brightness(70%);
+}
+
+.team__management-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.team__management-table thead {
+  width: 100%;
+}
+
+.team__management-table thead tr {
+  background: #080021;
+  width: 100%;
+}
+
+.team__management-table thead tr th {
+  width: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  padding: 5px 20px;
+}
+
+.team__management-table tbody {
+  width: 100%;
+}
+
+.team__management-table tbody tr {
+  width: 100%;
+  border-bottom: 1px solid #080021;
+}
+
+.team__management-table tbody tr td {
+  width: 50%;
+}
+
+.team__management-table tbody tr td div {
+  padding: 5px 20px;
+  font-weight: 300;
+}
+
+.team__management-table tbody tr td:nth-of-type(1) div {
+  margin-right: 1px solid #080021 !important;
 }
 
 .individual-container {
@@ -3883,8 +3924,29 @@ header::after {
   font-size: 12px;
 }
 
+.issue__assignees ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  gap: 5px;
+  width: 250px;
+}
+
 .issue__assignees ul li {
-  height: 60px;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #eee;
+  border-radius: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3894,8 +3956,6 @@ header::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border: none;
-  padding: none !important;
 }
 
 .issue__comment {

@@ -23,12 +23,6 @@ const teamSchema = new mongoose.Schema({
       ref: "user",
     },
   ],
-  members: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
-    },
-  ],
   projects: [
     {
       type: mongoose.Schema.Types.ObjectId,
