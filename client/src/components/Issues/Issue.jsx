@@ -351,15 +351,9 @@ const Issue = (props) => {
             {issue["assignees"] && issue.assignees.length > 0 && (
               <div className="issue-creation-date issue__assignees">
                 <span className="mb-2">Assigned to:</span>
-                <ul className="list-group">
+                <ul>
                   {issue.assignees.map((assignee) => (
-                    <li className="list-group-item" key={assignee._id}>
-                      <div className="issue__assignee-img-container">
-                        <img
-                          src={assignee.image}
-                          alt="Assignee profile picture"
-                        />
-                      </div>
+                    <li key={assignee._id}>
                       <span>{assignee.username}</span>
                     </li>
                   ))}
