@@ -38,7 +38,10 @@ function Navbar(props) {
     }
     return (
       <span>
-        {props.user && props.user.username.toString().toUpperCase()[0]}
+        {props.user &&
+          Object.keys(props.user).length > 0 &&
+          props.user.username &&
+          props.user.username.toString().toUpperCase()[0]}
       </span>
     );
   };
