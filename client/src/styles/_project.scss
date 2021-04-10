@@ -93,6 +93,7 @@
       font-family: "Montserrat", sans-serif;
       overflow-y: auto;
       transition: all 300ms ease-in-out;
+      white-space: pre-wrap;
 
       &::-webkit-scrollbar {
         width: 7px;

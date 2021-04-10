@@ -3375,6 +3375,7 @@ header::after {
   overflow-y: auto;
   -webkit-transition: all 300ms ease-in-out;
   transition: all 300ms ease-in-out;
+  white-space: pre-wrap;
 }
 
 .project__description-dropdown::-webkit-scrollbar {
@@ -3751,6 +3752,7 @@ header::after {
   overflow-y: auto;
   -webkit-transition: all 300ms ease-in-out;
   transition: all 300ms ease-in-out;
+  white-space: pre-wrap;
 }
 
 .issue__description-dropdown::-webkit-scrollbar {
