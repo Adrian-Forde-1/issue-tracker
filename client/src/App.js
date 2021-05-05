@@ -4,7 +4,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 //Axios
-import { setErrors, logoutUser } from "./redux/actions/userActions";
+import {
+  setErrors,
+  logoutUser,
+  clearErrors,
+} from "./redux/actions/userActions";
 
 //React Router Dom
 import { Route, withRouter, Switch } from "react-router-dom";
@@ -28,6 +32,7 @@ const App = (props) => {
   const [refreshTokenInterval, setRefreshTokenInterval] = useState(null);
 
   useEffect(() => {
+    props.clearErrors();
     if (
       props.user &&
       Object.keys(props.user).length > 0 &&
@@ -111,6 +116,7 @@ const App = (props) => {
 const mapDispatchToProps = {
   setErrors,
   logoutUser,
+  clearErrors,
 };
 
 const mapStateToProps = (state) => ({
