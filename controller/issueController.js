@@ -20,13 +20,8 @@ module.exports = {
       let messages = [];
 
       //Get variables user entered
-      const {
-        name,
-        description,
-        labels,
-        projectId,
-        assignees,
-      } = req.body.issue;
+      const { name, description, labels, projectId, assignees } =
+        req.body.issue;
 
       IssueModel.find({ name: name, project: projectId }).exec(function (
         err,
@@ -268,7 +263,8 @@ module.exports = {
       let errors = [];
       const issueId = req.params.issueId;
       IssueModel.findById(issueId)
-        .populate("createdBy comments project assignees")
+        .populate("createdBy comments project")
+        .populate({ path: "assignees", select: "username image" })
         .exec(function (err, issue) {
           //If something went wrong when fetching issue, notify user
           if (err) {

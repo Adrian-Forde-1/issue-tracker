@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-
-//Resources
-import bugLogo from "../../resources/Images/Bug_Logo.svg";
+import React, { useState, useEffect } from "react";
 
 //React Router DOM
 import { Link, withRouter } from "react-router-dom";
@@ -28,13 +25,28 @@ import NavbarLogoSVG from "../SVG/NavbarLogoSVG";
 //   }
 // };
 
-function Navbar(props) {
+const Navbar = (props) => {
   const { authenticated } = props;
   const [navOpen, setNavOpen] = useState(false);
 
+  useEffect(() => {
+    console.log("pathname changed");
+    if (document.querySelector(".hamburger"))
+      document.querySelector(".hamburger").classList.remove("nav-open");
+    if (document.querySelector(".nav-list"))
+      document.querySelector(".nav-list").classList.remove("nav-open");
+    if (document.querySelector("#navbar-dropdown"))
+      document.querySelector("#navbar-dropdown").classList.remove("open");
+    setNavOpen(false);
+  }, [props.location.pathname]);
+
+  useEffect(() => {
+    console.log(props);
+  }, [props]);
+
   const renderImage = () => {
     if (props && props.user && props.user.image && props.user.image !== null) {
-      return <img src={props.user && props.user.image}></img>;
+      return <img src={`/api/images/${props.user && props.user.image}`}></img>;
     }
     return (
       <span>
@@ -181,7 +193,7 @@ function Navbar(props) {
   } else {
     return null;
   }
-}
+};
 
 const mapDispatchToProps = {
   // logoutUser,

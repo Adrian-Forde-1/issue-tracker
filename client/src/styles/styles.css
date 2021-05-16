@@ -1126,12 +1126,6 @@ header::after {
             flex-direction: column;
   }
   .profile__header__img-container {
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
     width: 100%;
   }
   .profile__header__basic-info {
@@ -3927,8 +3921,33 @@ header::after {
 .issue__assignee-img-container img {
   width: 100%;
   height: 100%;
+  border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.issue__assignee-img-container div {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+  background: #eee;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.issue__assignee-img-container div span {
+  color: #080021;
+  font-weight: bold;
+  font-size: 16px;
+  text-transform: uppercase;
 }
 
 .issue__assignees {
@@ -6019,6 +6038,10 @@ a p {
 
 .m-l-16 {
   margin-left: 16px !important;
+}
+
+.mb-5 {
+  margin-bottom: 5px !important;
 }
 
 .alert {

@@ -17,7 +17,7 @@ const DashboardNavbar = (props) => {
   const renderImage = () => {
     if (props && props.user) {
       if (props.user.image && props.user.image !== null) {
-        return <img src={props.user.image}></img>;
+        return <img src={`/api/images/${props.user && props.user.image}`}></img>;
       }
       return (
         <span>

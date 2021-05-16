@@ -36,11 +36,6 @@ const Login = (props) => {
     // emailRef.current.focus();
   }, []);
 
-  useEffect(() => {
-    if (passwordRef && passwordRef.current !== null) {
-      console.log("Input type: ", passwordRef.current.type);
-    }
-  }, [passwordRef]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

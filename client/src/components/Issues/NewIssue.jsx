@@ -193,7 +193,7 @@ const NewIssue = (props) => {
                   name="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  maxLength="60"
+                  maxLength="150"
                   autoComplete="off"
                   required
                 />

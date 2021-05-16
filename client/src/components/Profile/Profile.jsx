@@ -12,7 +12,7 @@ const Profile = ({ user, getUser, setMessages }) => {
 
   const renderImage = () => {
     if (user.image && user.image !== null) {
-      return <img src={user.image} alt="" className="profile__image" />;
+      return <img src={`/api/images/${user && user.image}`} alt="" className="profile__image" />;
     }
     return (
       <div className="profile__default-img">

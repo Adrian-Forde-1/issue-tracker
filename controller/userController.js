@@ -1,7 +1,8 @@
 const { json } = require("express");
 const User = require("../models/UserModel");
+const {uploadFile} = require("../aws/S3");
 
-const { validateLoginData, validateSignUpData } = require("../util/authUtil");
+const { validateSignUpData } = require("../util/authUtil");
 const {
   signToken,
   decodeToken,
@@ -154,14 +155,15 @@ module.exports = {
     }
   },
   getUser: (req, res) => {
-    //Get token from cookies
+    try {
+         //Get token from cookies
     const token = req.cookies.jwtIss;
     //Decode token the was sent by user
     const decodedToken = decodeToken(token);
     //Get user id from token sub
     const userId = decodedToken.data;
     //Find user in databse
-    UserModel.findById(userId).exec(function (err, user) {
+    UserModel.findById(userId).select("username email image _id").exec(function (err, user) {
       //If error occured, notify user
       let errors = {};
       if (err) {
@@ -173,28 +175,50 @@ module.exports = {
       //If everything went well, return user
       return res.json(user);
     });
+    }
+    catch(err) {
+      console.error(err);
+      return res.status(500).json(["Error occured when fetching user data"]);
+    }
   },
-  editProfile: (req, res) => {
-    var errors = [];
-    var messages = [];
-    var file = req.file;
+  editProfile: async (req, res) => {
+    try {
+      var errors = [];
+      var messages = [];
+      var file = req.file;
+  
+      const userID = req.user._id;
+  
+      const uploadResult = await uploadFile(file);
+      console.log(uploadResult)
 
-    const userID = req.user._id;
-
-    User.findByIdAndUpdate(userID, {
-      $set: {
-        image: req.file.path,
-      },
-    }).exec(function (err, user) {
-      if (err) {
-        console.error(err);
-        errors.push("Error occured when updating profile");
-        return res.status(500).json(errors);
+      if(uploadResult.Key) {
+        User.findByIdAndUpdate(userID, {
+          $set: {
+            image: uploadResult.Key,
+          },
+        }).exec(function (err, user) {
+          if (err) {
+            console.error(err);
+            errors.push(["Error occured when updating profile"]);
+            return res.status(500).json(errors);
+          }
+    
+          //If everything went right, notify user
+          messages.push("Profile successfully updated");
+    
+          return res.json(messages);
+        });
+  
+      } else {
+        return res.status(500).json(["Error occured when updating profile"]);
       }
-
-      //If everything went right, notify user
-      messages.push("Profile successfully updated");
-      return res.json(messages);
-    });
+  
+     
+    } catch(err) {
+      console.log(err);
+      return res.status(500).json(["Error occured when updating profile"]);
+    }
+  
   },
 };

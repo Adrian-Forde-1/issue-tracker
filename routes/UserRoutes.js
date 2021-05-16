@@ -3,11 +3,14 @@ const router = require("express").Router();
 //Image Upload
 const { imageUpload } = require("../util/imageUpload");
 
+
 //passport
 const passport = require("passport");
 const passportConfig = require("../passport");
 
 //controllers
+// Image Controller
+const imageController = require("../controller/imageController");
 //User Controller Imports
 const {
   login,
@@ -85,6 +88,7 @@ router.put(
 
 //Team Routes
 // router.get('/projectsFromTeam/:teamId', passportJWT, getProjectsFromTeam);
+router.get("/images/:key", imageController.getImage)
 router.post("/team", passportJWT, createTeam);
 router.get("/teams", passportJWT, getTeams);
 router.get("/team/:teamId", passportJWT, getTeam);

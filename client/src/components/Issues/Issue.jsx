@@ -350,10 +350,24 @@ const Issue = (props) => {
             )}
             {issue["assignees"] && issue.assignees.length > 0 && (
               <div className="issue-creation-date issue__assignees">
-                <span className="mb-2">Assigned to:</span>
+                <span className="mb-5" style={{ display: "block" }}>
+                  Assigned to:
+                </span>
                 <ul>
                   {issue.assignees.map((assignee) => (
                     <li key={assignee._id}>
+                      <div className="issue__assignee-img-container">
+                        {assignee.image ? (
+                          <img
+                            src={`/api/images/${assignee && assignee.image}`}
+                            alt=""
+                          />
+                        ) : (
+                          <div>
+                            <span>{assignee.username.split("")[0]}</span>
+                          </div>
+                        )}
+                      </div>
                       <span>{assignee.username}</span>
                     </li>
                   ))}

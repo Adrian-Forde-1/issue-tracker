@@ -116,7 +116,6 @@ export const setMessages = (messages) => (dispatch) => {
 
 export const setErrors = (error) => (dispatch) => {
   let newErrors = [];
-  console.log("Set errors called");
   if (
     error &&
     error.response &&
@@ -149,6 +148,7 @@ export const getUser = (history) => (dispatch) => {
   axios
     .get("/api/user")
     .then((response) => {
+      console.log(response);
       dispatch({ type: SET_USER, payload: response.data });
       dispatch({ type: STOP_LOADING_UI });
       history.push("/");
