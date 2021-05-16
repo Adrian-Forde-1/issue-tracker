@@ -19,8 +19,8 @@ import { connect } from "react-redux";
 import { setErrors, setMessages } from "../../redux/actions/userActions";
 
 //SVG
-import ArchiveSVG from "../SVG/ArchiveSVG";
-import UnarchiveSVG from "../SVG/UnarchiveSVG";
+// import ArchiveSVG from "../SVG/ArchiveSVG";
+// import UnarchiveSVG from "../SVG/UnarchiveSVG";
 import TrashSVG from "../SVG/TrashSVG";
 import EditSVG from "../SVG/EditSVG";
 import CaretDownNoFillSVG from "../SVG/CaretDownNoFillSVG";
@@ -125,45 +125,45 @@ const Project = (props) => {
       });
   };
 
-  const archiveProject = () => {
-    axios
-      .put(`/api/project/${project._id}/archive/add`, null)
-      .then(() => {
-        axios
-          .get(`/api/project/${projectId}`)
-          .then((response) => {
-            setProject(response.data);
-          })
-          .catch((error) => {
-            props.setErrors(error);
-            props.history.push("/project");
-          });
-      })
-      .catch((error) => {
-        props.setErrors(error);
-        props.history.push("/project");
-      });
-  };
+  // const archiveProject = () => {
+  //   axios
+  //     .put(`/api/project/${project._id}/archive/add`, null)
+  //     .then(() => {
+  //       axios
+  //         .get(`/api/project/${projectId}`)
+  //         .then((response) => {
+  //           setProject(response.data);
+  //         })
+  //         .catch((error) => {
+  //           props.setErrors(error);
+  //           props.history.push("/project");
+  //         });
+  //     })
+  //     .catch((error) => {
+  //       props.setErrors(error);
+  //       props.history.push("/project");
+  //     });
+  // };
 
-  const unarchiveProject = () => {
-    axios
-      .put(`/api/project/${project._id}/archive/remove`, null)
-      .then(() => {
-        axios
-          .get(`/api/project/${projectId}`)
-          .then((response) => {
-            setProject(response.data);
-          })
-          .catch((error) => {
-            props.setErrors(error);
-            props.history.push("/project");
-          });
-      })
-      .catch((error) => {
-        props.setErrors(error);
-        props.history.push("/project");
-      });
-  };
+  // const unarchiveProject = () => {
+  //   axios
+  //     .put(`/api/project/${project._id}/archive/remove`, null)
+  //     .then(() => {
+  //       axios
+  //         .get(`/api/project/${projectId}`)
+  //         .then((response) => {
+  //           setProject(response.data);
+  //         })
+  //         .catch((error) => {
+  //           props.setErrors(error);
+  //           props.history.push("/project");
+  //         });
+  //     })
+  //     .catch((error) => {
+  //       props.setErrors(error);
+  //       props.history.push("/project");
+  //     });
+  // };
 
   const deleteProject = () => {
     axios
@@ -228,6 +228,7 @@ const Project = (props) => {
               </div>
             </Modal>
           );
+        default: return;
       }
     }
   };

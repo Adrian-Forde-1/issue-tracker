@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense, lazy } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 
 //Axios
 import axios from "axios";
@@ -11,19 +11,19 @@ import "react-tippy/dist/tippy.css";
 import { connect } from "react-redux";
 
 //React Router DOM
-import { Link, Route, Switch, Redirect } from "react-router-dom";
+import { Link, Route, Switch } from "react-router-dom";
 
 //SVG
-import ArchiveSVG from "../SVG/ArchiveSVG";
+// import ArchiveSVG from "../SVG/ArchiveSVG";
 import PlusSVG from "../SVG/PlusSVG";
-import PeopleWavingSVG from "../SVG/PeopleWavingSVG";
+// import PeopleWavingSVG from "../SVG/PeopleWavingSVG";
 
 //Actions
 import { setErrors, logoutUser } from "../../redux/actions/userActions";
 
 //Components
 import ProjectPreview from "../Preview/ProjectPreview";
-import SearchBar from "../SearchBar";
+// import SearchBar from "../SearchBar";
 
 import SideNav from "../Navigation/SideNav";
 import DashboardNavbar from "../Navigation/DashboardNavbar";
@@ -54,7 +54,7 @@ function ProjectDashboard(props) {
 
   useEffect(() => {
     getProjects();
-  }, []);
+  }, [props]);
 
   const onChange = (e) => {
     setSearch(e.target.value);

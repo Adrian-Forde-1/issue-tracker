@@ -10,7 +10,7 @@ const NotFound = (props) => {
     } else {
       props.setCurrentTeam("");
     }
-  }, []);
+  }, [props]);
   return (
     <div className="not-found__wrapper">
       <NoData />

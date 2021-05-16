@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import moment from "moment";
 
 //Redux
@@ -7,9 +7,6 @@ import { connect } from "react-redux";
 function MessageList(props) {
   const { messages, messageWrapperRef } = props;
 
-  useEffect(() => {
-    console.log("Message list called");
-  }, []);
 
   if (typeof messages === "object" && messages.length > 0) {
     return (

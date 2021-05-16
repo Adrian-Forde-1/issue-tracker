@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 //Socket IO
 import io from "socket.io-client";
@@ -62,7 +62,7 @@ const TeamChat = (props) => {
     // props.setCurrentTeam(`${teamId}`);
 
     getMessages();
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     getMessages();

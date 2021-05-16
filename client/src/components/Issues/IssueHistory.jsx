@@ -14,64 +14,66 @@ const IssueHistory = (props) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const getIssue = () => {
+      const issueId = props.match.params.issueId;
+      setIsLoading(true);
+      axios
+        .get(`/api/issue/${issueId}`)
+        .then((response) => {
+          if (response && response.data) {
+            if (
+              (response.data.project.team !== null &&
+                props.location.pathname.toString().indexOf("team") === -1) ||
+              (response.data.project.team === null &&
+                props.location.pathname.toString().indexOf("team") > -1)
+            ) {
+              props.history.goBack();
+            } else {
+              if (props.location.pathname.toString().indexOf("team") > -1)
+                props.setCurrentTeam(response.data.project.team);
+              else props.setCurrentProject(response.data.project._id);
+  
+              // var newLabels = [];
+              // response.data.project.labels.forEach((label) => {
+              //   if (response.data.labels.includes(label._id)) {
+              //     newLabels.push(label);
+              //   }
+              // });
+              // setIssueLabels(newLabels);
+  
+              setIssue(response.data);
+              setProject(response.data.project);
+              if (response.data["updates"]) {
+                let newUpdates = response.data.updates.reverse();
+                setUpdates(newUpdates);
+              }
+            }
+          } else {
+            props.setErrors(["Something went wrong"]);
+          }
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          if (err && err.response && err.response.data) {
+            props.setErrors(err);
+            props.history.goBack();
+          }
+          if (
+            err &&
+            err.response &&
+            err.response.status &&
+            err.response.status === 404
+          ) {
+            props.history.replace("/project/404");
+          }
+          setIsLoading(false);
+        });
+    };
+    
     getIssue();
   }, []);
 
-  const getIssue = () => {
-    const issueId = props.match.params.issueId;
-    setIsLoading(true);
-    axios
-      .get(`/api/issue/${issueId}`)
-      .then((response) => {
-        if (response && response.data) {
-          if (
-            (response.data.project.team !== null &&
-              props.location.pathname.toString().indexOf("team") === -1) ||
-            (response.data.project.team === null &&
-              props.location.pathname.toString().indexOf("team") > -1)
-          ) {
-            props.history.goBack();
-          } else {
-            if (props.location.pathname.toString().indexOf("team") > -1)
-              props.setCurrentTeam(response.data.project.team);
-            else props.setCurrentProject(response.data.project._id);
-
-            // var newLabels = [];
-            // response.data.project.labels.forEach((label) => {
-            //   if (response.data.labels.includes(label._id)) {
-            //     newLabels.push(label);
-            //   }
-            // });
-            // setIssueLabels(newLabels);
-
-            setIssue(response.data);
-            setProject(response.data.project);
-            if (response.data["updates"]) {
-              let newUpdates = response.data.updates.reverse();
-              setUpdates(newUpdates);
-            }
-          }
-        } else {
-          props.setErrors(["Something went wrong"]);
-        }
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        if (err && err.response && err.response.data) {
-          props.setErrors(err);
-          props.history.goBack();
-        }
-        if (
-          err &&
-          err.response &&
-          err.response.status &&
-          err.response.status === 404
-        ) {
-          props.history.replace("/project/404");
-        }
-        setIsLoading(false);
-      });
-  };
+ 
 
   if (Object.keys(issue).length > 0 && updates.length > 0) {
     return (

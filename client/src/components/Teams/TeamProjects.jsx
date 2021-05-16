@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 
 //Redux
 import { connect } from "react-redux";
@@ -16,43 +15,28 @@ import {
 
 //Components
 import ProjectPreview from "../Preview/ProjectPreview";
-import SideNav from "../Navigation/SideNav";
-import SearchBar from "../SearchBar";
 
 function TeamProjects(props) {
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
 
   return (
     <React.Fragment>
       {props.projects && props.projects.length > 0
         ? props.search === ""
-          ? props.projects.map((project) => {
-              if (project.archived === false) {
-                return (
-                  <ProjectPreview
-                    project={project}
-                    key={project._id}
-                    teamProject={true}
-                    getTeam={props.getTeam}
-                  />
-                );
-              }
-            })
-          : props.projects.map((project) => {
-              if (
-                project.name.toLowerCase().indexOf(props.search.toLowerCase()) >
-                  -1 &&
-                project.archived === false
-              )
-                return (
-                  <ProjectPreview
-                    project={project}
-                    key={project._id}
-                    teamProject={true}
-                    getTeam={props.getTeam}
-                  />
-                );
-            })
+          ? props.projects.map((project) => !project.archived && <ProjectPreview
+          project={project}
+          key={project._id}
+          teamProject={true}
+          getTeam={props.getTeam}
+        />)
+          : props.projects.map((project) => project.name.toLowerCase().indexOf(props.search.toLowerCase()) >
+          -1 &&
+        project.archived === false && <ProjectPreview
+        project={project}
+        key={project._id}
+        teamProject={true}
+        getTeam={props.getTeam}
+      />)
         : props.isLoading === false && (
             <div className="team__no-projects">
               <p>No projects found</p>

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 
 //Axios
 import axios from "axios";
 
 //React Router DOM
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 //Redux
 import { connect } from "react-redux";
@@ -158,6 +158,7 @@ const TeamPreview = (props) => {
               </div>
             </Modal>
           );
+          default: return;
       }
     }
   };

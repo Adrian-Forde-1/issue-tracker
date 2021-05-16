@@ -11,7 +11,7 @@ const TeamDashboardLandingPage = (props) => {
     if (props && props.setCurrentTeam) {
       props.setCurrentTeam("");
     }
-  }, []);
+  }, [props]);
   return (
     <div className="team__dashboard-landing-wrapper">
       <TeamworkSVG />

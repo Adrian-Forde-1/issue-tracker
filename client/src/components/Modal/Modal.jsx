@@ -12,7 +12,7 @@ const Modal = (props) => {
         }
       });
     }
-  }, [showModal]);
+  }, [showModal, setShowModal]);
 
   return ReactDOM.createPortal(
     <div

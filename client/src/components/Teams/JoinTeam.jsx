@@ -15,7 +15,7 @@ const JoinTeam = (props) => {
 
   useEffect(() => {
     props.setCurrentTeam("");
-  }, []);
+  }, [props]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

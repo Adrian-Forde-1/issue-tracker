@@ -11,7 +11,7 @@ const ProjectDashboardLandingPage = (props) => {
     if (props && props.setCurrentProject) {
       props.setCurrentProject("");
     }
-  }, []);
+  }, [props]);
   return (
     <div className="project__dashboard-landing-wrapper">
       <SittingNextToComputerSVG />

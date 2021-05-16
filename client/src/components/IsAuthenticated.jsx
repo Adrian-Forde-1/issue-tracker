@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 function IsAuthenticated(props) {
   useEffect(() => {
     props.authenticated === false && props.history.replace('/login');
-  }, [props.user]);
+  }, [props.user, props.authenticated, props.history]);
 
   return <div>{props.children}</div>;
 }
