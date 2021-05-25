@@ -1,5 +1,7 @@
 import React from "react";
 
+import ReactMarkdown from "react-markdown";
+
 const IssueHistoryBlock = ({
   date,
   updateType,
@@ -17,8 +19,11 @@ const IssueHistoryBlock = ({
 
   const renderUpdateInfo = () => {
     if (updateType !== issueUpdateTypes["LABEL UPDATE"]) {
-      if (updateInfo) return updateInfo;
-      else return "-";
+      if (updateInfo) {
+        if (updateType === issueUpdateTypes["DESCRIPTION UPDATE"])
+          return <ReactMarkdown>{updateInfo}</ReactMarkdown>;
+        return updateInfo;
+      } else return "-";
     } else {
       const renderLabels = () => {
         let labelList = [];
